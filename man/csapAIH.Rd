@@ -56,6 +56,7 @@ csapAIH(x, grupos = TRUE, sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
   }
 \item{x.procbst } {= TRUE (padrão) exclui as internações pelos seguintes procedimentos obstétricos:
 \itemize{
+\item{0310010012 } ASSISTENCIA AO PARTO S/ DISTOCIA
 \item{0310010020 } ATENDIMENTO AO RECÉM-NASCIDO EM SALA DE PARTO
 \item{0310010039 } PARTO NORMAL
 \item{0310010047 } PARTO NORMAL EM GESTAÇÃO DE ALTO RISCO 

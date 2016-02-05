@@ -31,6 +31,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     if (sihsus==TRUE) {
         #   Exclusão dos procedimentos obstétricos 
         #--------------------------------------------
+#        0310010012 ASSISTENCIA AO PARTO S/ DISTOCIA
 #        0310010020 ATEND AO RECEM-NASCIDO EM SALA DE PARTO
 #        0310010039 PARTO NORMAL                           
 #        0310010047 PARTO NORMAL EM GESTACAO DE ALTO RISCO 
@@ -40,7 +41,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
 #        0411010042 PARTO CESARIANO C/ LAQUEADURA TUBARIA  
 #        0411020013 CURETAGEM POS-ABORTAMENTO / PUERPERAL  
 #        0411020021 EMBRIOTOMIA
-        procobst <- c('0310010020', '0310010039', '0310010047', '0411010018', '0411010026', 
+        procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018', '0411010026', 
                       '0411010034', '0411010042', '0411020013', '0411020021')
         if (x.procobst==TRUE) {
             tamini <- length(x[,1])
