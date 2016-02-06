@@ -17,9 +17,9 @@ O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um
 %%~~ An overview of how to use the package, including the most important functions ~~
 }
 \author{
-\packageAuthor{csapAIH}
-
-Maintainer: \packageMaintainer{csapAIH}
+% \packageAuthor{csapAIH}
+Fúlvio B. Nedel
+Maintainer: Fúlvio B. Nedel % \packageMaintainer{csapAIH}
 }
 %\references{
 %%~~ Literature or other references for background information ~~
