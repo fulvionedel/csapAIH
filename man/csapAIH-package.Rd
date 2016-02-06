@@ -18,7 +18,7 @@ O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um
 }
 \author{
 % \packageAuthor{csapAIH}
-Fúlvio B. Nedel
+Fúlvio B. Nedel \\
 Maintainer: Fúlvio B. Nedel % \packageMaintainer{csapAIH}
 }
 %\references{
