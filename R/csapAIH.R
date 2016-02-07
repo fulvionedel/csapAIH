@@ -92,7 +92,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
                          )
         munres   <- x$MUNIC_RES
         munint   <- x$MUNIC_MOV
-        sexo     <- factor(x$SEXO, labels=c("masc", "fem"))
+        sexo     <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
         n.aih    <- as.character(x$N_AIH)
         proc.rea <- x$PROC_REA
         proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
