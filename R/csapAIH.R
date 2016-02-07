@@ -118,6 +118,9 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     #=====================================
     ## Criar as variáveis 'CSAP' e 'grupo'
     #=====================================
+    # Definir missings no cid:
+    cid[is.na(cid)] <- NA
+    cid[cid==""] <- NA
     #----------------------------------------------------------------------------
     #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA
     #               Portaria MS nº 221, de 17 de abril de 2008
