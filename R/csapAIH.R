@@ -107,11 +107,14 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
 #         if(x.procobst==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obst\u00E9trico'
         Hmisc::label(munres)   <- 'Municipio de residencia'
         Hmisc::label(munint)   <- 'Municipio de internacao'
+        attr(sexo, which="label") <- "Sexo"
         Hmisc::label(n.aih)    <- 'No. da AIH'
         Hmisc::label(proc.rea) <- 'Procedimento realizado'
         Hmisc::label(nasc)     <- 'Data de nascimento'
+        attr(idade, which="label") <- "Idade"
         Hmisc::label(fxetar)   <- 'Faixa etaria detalhada'
         Hmisc::label(fxetar5)  <- 'Faixa etaria quinquenal'
+        attr(cid, which="label") <- "CID-10"
         if(x.procobst==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obstetrico'
     }
 # 
@@ -174,12 +177,14 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     csap <- factor(ifelse(g01==1 | g02==1 | g03==1 | g04==1 | g05==1 | g06==1 | g07==1 | 
                           g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 | 
                           g15==1 | g16==1 | g17==1 | g18==1 | g19==1, 1, 2), labels=c('sim', "n\u00E3o"))
+    attr(csap, which="label") <- "CSAP"
     
     grupo <- ifelse(g01==1, "g01", ifelse(g02==1, "g02", ifelse(g03==1, "g03", ifelse(g04==1, "g04", 
              ifelse(g05==1, "g05", ifelse(g06==1, "g06", ifelse(g07==1, "g07", ifelse(g08==1, "g08", 
              ifelse(g09==1, "g09", ifelse(g10==1, "g10", ifelse(g11==1, "g11", ifelse(g12==1, "g12",
              ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16", 
              ifelse(g17==1, "g17", ifelse(g18==1, "g18", ifelse(g19==1, "g19", "n\u00E3o-CSAP")))))))))))))))))))
+    attr(grupo, which="label") <- "Grupo de causa CSAP"
     
 ############################
 ### Montar o objeto final
