@@ -114,7 +114,6 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
         attr(idade, which="label") <- "Idade"
         Hmisc::label(fxetar)   <- 'Faixa etaria detalhada'
         Hmisc::label(fxetar5)  <- 'Faixa etaria quinquenal'
-        attr(cid, which="label") <- "CID-10"
         if(x.procobst==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obstetrico'
     }
 # 
@@ -184,7 +183,9 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
              ifelse(g09==1, "g09", ifelse(g10==1, "g10", ifelse(g11==1, "g11", ifelse(g12==1, "g12",
              ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16", 
              ifelse(g17==1, "g17", ifelse(g18==1, "g18", ifelse(g19==1, "g19", "n\u00E3o-CSAP")))))))))))))))))))
-    attr(grupo, which="label") <- "Grupo de causa CSAP"
+   attr(grupo, which="label") <- "Grupo de causa CSAP"
+   attr(cid, which="label") <- "CID-10"
+
     
 ############################
 ### Montar o objeto final
