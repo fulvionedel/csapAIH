@@ -105,16 +105,6 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
 #         Hmisc::label(fxetar)   <- 'Faixa et\u00E1ria detalhada'
 #         Hmisc::label(fxetar5)  <- 'Faixa et\u00E1ria quinquenal'
 #         if(x.procobst==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obst\u00E9trico'
-        Hmisc::label(munres)   <- 'Municipio de residencia'
-        Hmisc::label(munint)   <- 'Municipio de internacao'
-        attr(sexo, which="label") <- "Sexo"
-        Hmisc::label(n.aih)    <- 'No. da AIH'
-        Hmisc::label(proc.rea) <- 'Procedimento realizado'
-        Hmisc::label(nasc)     <- 'Data de nascimento'
-        attr(idade, which="label") <- "Idade"
-        Hmisc::label(fxetar)   <- 'Faixa etaria detalhada'
-        Hmisc::label(fxetar5)  <- 'Faixa etaria quinquenal'
-        if(x.procobst==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obstetrico'
     }
 # 
     #=====================================
@@ -176,17 +166,13 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     csap <- factor(ifelse(g01==1 | g02==1 | g03==1 | g04==1 | g05==1 | g06==1 | g07==1 | 
                           g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 | 
                           g15==1 | g16==1 | g17==1 | g18==1 | g19==1, 1, 2), labels=c('sim', "n\u00E3o"))
-    attr(csap, which="label") <- "CSAP"
-    
+
     grupo <- ifelse(g01==1, "g01", ifelse(g02==1, "g02", ifelse(g03==1, "g03", ifelse(g04==1, "g04", 
              ifelse(g05==1, "g05", ifelse(g06==1, "g06", ifelse(g07==1, "g07", ifelse(g08==1, "g08", 
              ifelse(g09==1, "g09", ifelse(g10==1, "g10", ifelse(g11==1, "g11", ifelse(g12==1, "g12",
              ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16", 
              ifelse(g17==1, "g17", ifelse(g18==1, "g18", ifelse(g19==1, "g19", "n\u00E3o-CSAP")))))))))))))))))))
-   attr(grupo, which="label") <- "Grupo de causa CSAP"
-   attr(cid, which="label") <- "CID-10"
 
-    
 ############################
 ### Montar o objeto final
 ############################
@@ -194,19 +180,33 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     if (sihsus==TRUE) {
       banco <- data.frame(n.aih, munres, munint, sexo, nasc, idade, fxetar, fxetar5, 
                           csap, grupo, cid, proc.rea, data.inter, data.saida) 
+         attr(banco$n.aih, which = "label") <- "No. da AIH"
+         attr(banco$munres, which = "label") <- "Municipio de residencia"
+         attr(banco$munint, which = "label") <- "Municipio de internacao"
+         attr(banco$sexo, which = "label") <- "Sexo"
+         attr(banco$nasc, which = "label") <- "Data de nascimento"
+         attr(banco$idade, which = "label") <- "Idade"
+         attr(banco$fxetar, which = "label") <- "Faixa etaria detalhada"
+         attr(banco$fxetar5, which = "label") <- "Faixa etaria quinquenal"
+         attr(banco$csap, which = "label") <- "CSAP"
+         attr(banco$grupo, which = "label") <- "Grupo de causa CSAP"
+         attr(banco$cid, which = "label") <- "CID-10"
+         attr(banco$proc.rea, which = "label") <- "Procedimento realizado"
+         attr(banco$data.inter, which = "label") <- "Data de internacao"
+         attr(banco$data.saida, which = "label") <- "Data de saida"
       if (cep==TRUE) {  
         banco$cep <- x$CEP 
         # Hmisc::label(banco$cep) <- 'C\u00F3digo de Endere\u00E7amento Postal'
-        Hmisc::label(banco$cep) <- 'Codigo de Enderecamento Postal'
-      }
+         attr(banco$cep, which = "label") <- "Codigo de Enderecamento Postal"
+        }
       if (cnes==TRUE) {
         banco$cnes <- x$CNES 
         # Hmisc::label(banco$cnes) <- 'N\u00B0 do hospital no CNES'
-        Hmisc::label(banco$cnes) <- 'No. do hospital no CNES'
+         attr(banco$cnes, which = "label") <- "No. do hospital no CNES"
       }
       if (x.procobst==FALSE )  {
         banco$proc.obst <- proc.obst
-        Hmisc::label(banco$proc.obst) <- 'Procedimento obstetrico'
+         attr(banco$proc.obst, which = "label") <- "Procedimento obstetrico"
       }
       if (grupos==FALSE ) { banco <- subset(banco, select = - grupo) } 
     }
