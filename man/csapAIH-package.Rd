@@ -20,7 +20,7 @@ O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um
 %\packageAuthor{csapAIH}
 Fúlvio B. Nedel 
 
-Maintainer: Fúlvio B. Nedel <fulvio.nedel@ufsc.br>
+Maintainer: Fúlvio B. Nedel \email{fulvio.nedel@ufsc.br}
 %\packageMaintainer{csapAIH}
 }
 %\references{
