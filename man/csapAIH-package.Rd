@@ -13,7 +13,7 @@ O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um
 }
 \details{
 \packageDESCRIPTION{csapAIH}
-\packageIndices{csapAIH}
+% \packageIndices{csapAIH}
 %%~~ An overview of how to use the package, including the most important functions ~~
 }
 \author{
