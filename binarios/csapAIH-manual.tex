@@ -1,0 +1,315 @@
+\nonstopmode{}
+\documentclass[letterpaper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `csapAIH'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Classificar Condicoes Sensiveis a Atencao Primaria}
+\item[Version]\AsIs{0.0.1}
+\item[Date]\AsIs{2016-02-10}
+\item[Author]\AsIs{Fulvio B. Nedel}
+\item[Maintainer]\AsIs{Fulvio B. Nedel }\email{fulvio.nedel@ufsc.br}\AsIs{}
+\item[Description]\AsIs{Classifica um vetor com codigos da CID-10 segundo a Lista Brasileira de Condicoes Sensiveis a Atencao Primaria e oferece outras funcionalidades, especialmente para o manejo dos 'arquivos da AIH' (BD-SIH/SUS).}
+\item[License]\AsIs{GPL-3}
+\item[Suggests]\AsIs{foreign}
+\item[Encoding]\AsIs{UTF-8}
+\item[Language]\AsIs{pt-br}
+\item[RoxygenNote]\AsIs{5.0.1}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{csapAIH-package}{Classificar Condicoes Sensiveis a Atencao Primaria}{csapAIH.Rdash.package}
+\keyword{package}{csapAIH-package}
+\keyword{CSAP}{csapAIH-package}
+\keyword{AIH-SUS}{csapAIH-package}
+\keyword{ACSC}{csapAIH-package}
+%
+\begin{Description}\relax
+Classifica códigos da CID-10 segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos "arquivos da AIH" (RD??????.DBF; BD-SIH/SUS).
+\end{Description}
+%
+\begin{Details}\relax
+O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um objeto no espaço de trabalho ou ler um arquivo com os dados. Se os dados tiverem a estrutura dos "arquivos da AIH" com uma definição mínima de variáveis, é computada a idade em anos completos e em duas classificações etárias, são excluídas as AIHs de "longa permanência" e podem ser excluídas internações por alguns procedimentos obstétricos definidos. Veja o manual para detalhes.
+\end{Details}
+%
+\begin{Author}\relax
+Fúlvio B. Nedel \href{mailto:fulvio.nedel@ufsc.br}{fulvio.nedel@ufsc.br}
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{aih100}{Banco com 100 registros de um 'arquivo da AIH' (RD??????.DBF).}{aih100}
+\keyword{datasets}{aih100}
+%
+\begin{Description}\relax
+Contém todas as variáveis dos arquivos atualmente disponibilizados no DATASUS.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("aih100")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A data frame with 100 observations on the following 93 variables.
+\begin{description}
+\code{UF\_ZI}, \code{ANO\_CMPT}, \code{MES\_CMPT}, \code{ESPEC}, \code{CGC\_HOSP}, \code{N\_AIH}, \code{IDENT}, \code{CEP}, \code{MUNIC\_RES}, \code{NASC}, \code{SEXO}, \code{UTI\_MES\_IN}, \code{UTI\_MES\_AN}, \code{UTI\_MES\_AL}, \code{UTI\_MES\_TO}, \code{MARCA\_UTI}, \code{UTI\_INT\_IN}, \code{UTI\_INT\_AN}, \code{UTI\_INT\_AL}, \code{UTI\_INT\_TO}, \code{DIAR\_ACOM}, \code{QT\_DIARIAS}, \code{PROC\_SOLIC}, \code{PROC\_REA}, \code{VAL\_SH}, \code{VAL\_SP}, \code{VAL\_SADT}, \code{VAL\_RN}, \code{VAL\_ACOMP}, \code{VAL\_ORTP}, \code{VAL\_SANGUE}, \code{VAL\_SADTSR}, 
+\code{VAL\_TRANSP},
+\code{VAL\_OBSANG},
+\code{VAL\_PED1AC},
+\code{VAL\_TOT},
+\code{VAL\_UTI},
+\code{US\_TOT},
+\code{DT\_INTER},
+\code{DT\_SAIDA},
+\code{DIAG\_PRINC},
+\code{DIAG\_SECUN},
+\code{COBRANCA},
+\code{NATUREZA}, 
+\code{NAT\_JUR},
+\code{GESTAO},
+\code{RUBRICA},
+\code{IND\_VDRL},
+\code{MUNIC\_MOV},
+\code{COD\_IDADE},
+\code{IDADE},
+\code{DIAS\_PERM},
+\code{MORTE},
+\code{NACIONAL},
+\code{NUM\_PROC},
+\code{CAR\_INT},
+\code{TOT\_PT\_SP},
+\code{CPF\_AUT},
+\code{HOMONIMO},
+\code{NUM\_FILHOS},
+\code{INSTRU},
+\code{CID\_NOTIF},
+\code{CONTRACEP1},
+\code{CONTRACEP2},
+\code{GESTRISCO},
+\code{INSC\_PN},
+\code{SEQ\_AIH5},
+\code{CBOR},
+\code{CNAER},
+\code{VINCPREV},
+\code{GESTOR\_COD},
+\code{GESTOR\_TP},
+\code{GESTOR\_CPF},
+\code{GESTOR\_DT},
+\code{CNES},
+\code{CNPJ\_MANT},
+\code{INFEHOSP},
+\code{CID\_ASSO},
+\code{CID\_MORTE},
+\code{COMPLEX},
+\code{FINANC},
+\code{FAEC\_TP},
+\code{REGCT},
+\code{RACA\_COR},
+\code{ETNIA},
+\code{SEQUENCIA},
+\code{REMESSA},
+\code{AUD\_JUST},
+\code{SIS\_JUST},
+\code{VAL\_SH\_FED},
+\code{VAL\_SP\_FED},
+\code{VAL\_SH\_GES},
+\code{VAL\_SP\_GES}
+
+\end{description}
+ 
+\end{Format}
+%
+\begin{Source}\relax
+\url{http://www2.datasus.gov.br/DATASUS/index.php?area=0901}
+
+\end{Source}
+%
+\begin{References}\relax
+
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(aih100)
+str(aih100)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{csapAIH}{Classificar Condicoes Sensiveis a Atencao Primaria}{csapAIH}
+\keyword{CSAP}{csapAIH}
+\keyword{AIH-SUS}{csapAIH}
+\keyword{package}{csapAIH}
+\keyword{function}{csapAIH}
+%
+\begin{Description}\relax
+
+Classifica códigos da 10ª Revisão da Classificação Internacional de Doenças (CID-10) segundo a Lista Brasileira de Internação por Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos "arquivos da AIH" (RD??????.DBF; BD-SIH/SUS). 
+
+\end{Description}
+%
+\begin{Section}{Uso}
+csapAIH(x, grupos = TRUE, 
+sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
+cep = TRUE, cnes = TRUE, arquivo = TRUE, sep, ...)
+\end{Section}
+%
+\begin{Section}{Argumentos}
+\begin{itemize}
+\item \code{x}  alvo da função: um arquivo, banco de dados ou vetor com códigos da CID-10 (ver \code{detalhes}); 
+\item \code{grupos}  argumento lógico, obrigatório; \code{TRUE} (padrão) indica que as internações serão classificadas também em grupos de causas CSAP; 
+\item \code{sihsus}  argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH:
+\begin{itemize}
+\item DIAG\_PRINC diagnóstico principal da internação;
+\item NASC data de nascimento; 
+\item DT\_INTER 	data da internação; 
+\item DT\_SAIDA 	data da alta hospitalar; 
+\item COD\_IDADE 	código indicando a faixa etária a que se refere o valor registrado no campo idade; 
+\item IDADE	idade (tempo de vida acumulado) do paciente, na unidade indicada no campo COD\_IDADE;
+\item MUNIC\_RES	município de residência do paciente; 
+\item MUNIC\_MOV município de internação do paciente; 
+\item SEXO  sexo do paciente; 
+\item N\_AIH	 número da AIH; 
+\item  PROC\_REA	procedimento realizado, segundo a tabela do SIH/SUS; 
+
+\end{itemize}
+ 
+\item \code{x.procobst}:  argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento (\code{ver detalhes}); 
+\item \code{longa}: argumento lógico; \code{FALSE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE}; 
+\item \code{cep}:  argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o Código de Endereçamento Postal do indivíduo; argumento válido apenas se \code{sihsus=TRUE}; 
+\item \code{cnes}:  argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE}; 
+\item \code{arquivo}:  argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver sem seu nome as sequências "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com a estrutura citada acima podem ser lidos; 
+\item \code{sep}:  usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal. 
+
+\end{itemize}
+
+\end{Section}
+%
+\begin{Section}{Detalhes}
+\begin{itemize}
+\item x pode ser: 
+\begin{enumerate}
+ \item  um arquivo de dados armazenado num diretório;  
+\item  um banco de dados, ou um vetor da classe \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10. 
+\end{enumerate}
+
+Se for um *arquivo*, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBF ou dbf). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\LinkA{read.table}{read.table}} para leitura dos dados.
+
+Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(<objeto>)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(<objeto>, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(<objeto>))}.
+
+É retornada uma mensagem informando o número de registros lidos.
+
+\item x.procbst  = TRUE (padrão) exclui as internações pelos seguintes procedimentos obstétricos:
+\begin{itemize}
+\item 0310010012  ASSISTENCIA AO PARTO S/ DISTOCIA
+\item 0310010020  ATENDIMENTO AO RECÉM-NASCIDO EM SALA DE PARTO
+\item 0310010039  PARTO NORMAL
+\item 0310010047  PARTO NORMAL EM GESTAÇÃO DE ALTO RISCO 
+\item 0411010018  DESCOLAMENTO MANUAL DE PLACENTA
+\item 0411010026  PARTO CESARIANO EM GESTAÇÃO ALTO RISCO
+\item 0411010034  PARTO CESARIANO
+\item 0411010042  PARTO CESARIANO C/ LAQUEADURA TUBÁRIA
+\item 0411020013  CURETAGEM PÓS-ABORTAMENTO / PUERPERAL
+\item 0411020021  EMBRIOTOMIA
+\end{itemize}
+
+É retornada uma mensagem informando o número e proporção de registros excluídos e o total de registros importados.
+
+\item \code{sihsus}   A própria função define este argumento como \code{FALSE} quando "x" (o alvo da função) é um fator. Quando o alvo é um objeto da clase \code{data frame} sem a estrutura dos arquivos da AIH, a variável com os códigos da CID-10 deve ser trabalhada como um \code{factor}. 
+
+\end{itemize}
+ 
+\end{Section}
+%
+\begin{Section}{Valor}
+A função tem diferentes possibilidades de retorno, segundo a estrutura dos dados lidos e as opções de leitura:
+\begin{itemize}
+\item  Se for um arquivo ou \code{data frame} com a estrutura dos arquivos da AIH: um \code{data frame} com as variáveis nº da AIH, município de residência, município de internação, sexo, data de nascimento, idade em anos completos, faixa etária detalhada, faixa etária quinquenal, data da internação, data da saída, procedimento realizado, cid, CSAP, grupo csap, CEP e CNES do hospital
+	\begin{itemize}
+		\item Se os argumentos \code{grupo}, \code{cep} ou \code{cnes} forem definidos como \code{FALSE}, o banco é construído sem essas variáveis
+	\end{itemize}
+\item Se um fator ou data frame sem a estrutura dos arquivos da AIH:
+	\begin{itemize}
+	\item Se \code{grupos = TRUE}:  um banco de dados com as variáveis \code{csap} (sim ou não), \code{grupo} (subgrupo CSAP) e \code{cid} (código da CID-10);
+	\item Se \code{factor} e \code{grupos = FALSE}:  um fator com as observações classificadas como CSAP ou não-CSAP.    
+	\end{itemize}
+\end{itemize}
+\end{Section}
+%
+\begin{Section}{Autor}
+Fúlvio B. Nedel \href{mailto:fulvio.nedel@ufsc.br}{fulvio.nedel@ufsc.br}
+\begin{itemize}
+\item Departamento de Saúde Pública, CCS/UFSC
+\url{http://spb.ufsc.br/}
+\item Grups de Recerca d'Amèrica i Àfrica Llatines, GRAAL-UAB
+\url{http://graal.uab.cat}
+\end{itemize}
+\end{Section}
+%
+\begin{Section}{Referências}
+Alfradique et al., Internações por Condições Sensíveis à Atenção Primária: a construção da lista brasileira como ferramenta para medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil). Cad Saúde Pública 25(6):1337-49.
+
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
+
+\_\_\_\_\_\_\_\_\_\_. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2010. Manual técnico operacional do Sistema de Informação Hospitalar: orientações técnicas. Versão 01.2013. Ministério da Saúde: Brasília, 2013.
+\end{Section}
+%
+\begin{Note}\relax
+A função \code{\LinkA{read.dbf}{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pelas função \code{\LinkA{read.dbf}{read.dbf}}.
+\end{Note}
+%
+\begin{SeeAlso}\relax
+
+\code{\LinkA{read.table}{read.table}}  \code{\LinkA{read.csv}{read.csv}}
+\end{SeeAlso}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Uma lista de códigos da CID-10:
+##---------------------------------
+cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
+teste1 <- csapAIH(as.factor(cids)) ; class(teste1) ; teste1
+teste2 <- csapAIH(as.factor(cids),  grupo=FALSE) ; class(teste2) ; teste2
+
+## Um 'arquivo da AIH' armazenado no diretório de trabalho:
+##---------------------------------------------------------
+## Not run: 
+teste3 <- csapAIH("RDRS1301.dbf")
+str(teste3)
+
+## End(Not run)
+
+## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
+##-------------------------------------------------------
+data("aih100")
+str(aih100)
+teste4 <- csapAIH(aih100)
+str(teste4)
+
+## Uma base de dados com a estrutura dos 'arquivos da AIH' 
+## mas sem as variáveis CEP ou CNES:
+##--------------------------------------------------------
+aih <- subset(aih100, select = -c(CEP, CNES))
+teste5 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
+str(teste5)
+
+## Para uma base de dados sem a estrutura dos BD-SIH/SUS, apenas 
+## trabalhe a variável com os CIDs, como nos primeiros exemplos
+##--------------------------------------------------------------
+## teste6 <- csapAIH(BaseDeDados$VariavelcomCID)
+
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}
