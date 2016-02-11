@@ -1,6 +1,6 @@
 csapAIH <-
 function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cnes=TRUE,
-         arquivo=TRUE, ...) 
+         arquivo=TRUE, sep, ...) 
   {
     #===================
     ## Preparar os dados
@@ -12,13 +12,20 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
         sihsus=FALSE }
     # Leitura do arquivo de dados
     if (arquivo==TRUE) {
-        if (grepl('dbf', x, ignore.case=TRUE)==TRUE) { x <- foreign::read.dbf(x, as.is=TRUE, ...) }
-        else
-            warning('---------------------------------------------------------------------\n
-        ERRO DE LEITURA em ', deparse(substitute(x)), ' \n
-  O objeto deve ser da classe "factor"ou "data.frame", \n
-  ou um arquivo formato DBF (ou dbf). \n
------------------------------------------------------------------------\n ')    #}
+      if (grepl('dbf', x, ignore.case=TRUE)==TRUE) { 
+        x <- foreign::read.dbf(x, as.is=TRUE, ...) 
+      }
+      else
+        if (grepl('csv', x, ignore.case=T)==T) {
+          if (sep == ';') x = read.csv2(x, colClasses=c('PROC_REA'='character'), ...) 
+          if (sep == ',') x = read.csv(x, colClasses=c('PROC_REA'='character'), ...)
+        }
+      else
+        warning('------------------------------------------------------\n
+                  ERRO DE LEITURA em ', deparse(substitute(x)), ' \n
+                  O objeto deve ser da classe "factor" ou "data.frame", \n
+                  ou um arquivo no formato .dbf ou .csv (ou DBF, CSV). \n
+                  -----------------------------------------------------\n ')
 #
     # Total de registros importados
     suppressWarnings(message("Importados ", format(length(x[,1]), big.mark = "."), " registros."))

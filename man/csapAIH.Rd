@@ -12,14 +12,16 @@ Classifica códigos da 10ª Revisão da Classificação Internacional de Doença
 }
 
 \section{Uso}{
-csapAIH(x, grupos = TRUE, sihsus = TRUE, x.procobst = TRUE, longa = FALSE, 
-        cep = TRUE, cnes = TRUE, arquivo = TRUE, ...)
+csapAIH(x, grupos = TRUE, 
+        sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
+        cep = TRUE, cnes = TRUE, arquivo = TRUE, sep, ...)
 }
+
 \section{Argumentos}{
 \itemize{
   \item{\code{x}  }{alvo da função: um arquivo, banco de dados ou vetor com códigos da CID-10 (ver \code{detalhes}); }
-  \item{\code{grupos}  }{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que as internações serão classificadas também em grupos de CSAP; }
-  \item{\code{sihsus}  }{argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH: **ref** 
+  \item{\code{grupos}  }{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que as internações serão classificadas também em grupos de causas CSAP; }
+  \item{\code{sihsus}  }{argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH:
 \itemize{
 \item{DIAG_PRINC }{diagnóstico principal da internação;}
 \item NASC {data de nascimento; }
@@ -27,17 +29,18 @@ csapAIH(x, grupos = TRUE, sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
 \item DT_SAIDA {	data da alta hospitalar; }
 \item COD_IDADE {	código indicando a faixa etária a que se refere o valor registrado no campo idade; }
 \item IDADE	{idade (tempo de vida acumulado) do paciente, na unidade indicada no campo COD_IDADE;}
-\item MUNIC_RES	{município de residência do paciente;}
+\item MUNIC_RES	{município de residência do paciente; }
+\item MUNIC_MOV {município de internação do paciente; }
 \item SEXO { sexo do paciente; }
 \item N_AIH	{ número da AIH; }
 \item { PROC_REA	procedimento realizado, segundo a tabela do SIH/SUS; }
 } }
   \item{\code{x.procobst}:  }{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento (\code{ver detalhes}); }
-  \item{\code{longa}: }{argumento lógico; \code{FALSE} (padrão) exclui as AIH de longa permanência, retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE}; }
+  \item{\code{longa}: }{argumento lógico; \code{FALSE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE}; }
   \item{\code{cep}:  }{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o Código de Endereçamento Postal do indivíduo; argumento válido apenas se \code{sihsus=TRUE}; }
   \item{\code{cnes}:  }{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE}; }
-  \item{\code{arquivo}:  }{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; FALSE indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{fator}; }
-  \item{\code{\dots}: }{ permite a inclusão de argumentos da função \code{\link{read.table}}, para a leitura de arquivos em outros formatos. }
+  \item{\code{arquivo}:  }{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver sem seu nome as sequências "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com a estrutura citada acima podem ser lidos; }
+  \item{\code{sep}: }{ usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal. }
 }
 }
 
@@ -45,10 +48,10 @@ csapAIH(x, grupos = TRUE, sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
 \itemize{  
   \item{x pode ser:}{ 
   \enumerate{ \item{ }{um arquivo de dados armazenado num diretório; } 
-              \item{ }{um banco de dados, ou um vetor da classe \code{character} ou \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10. }
+              \item{ }{um banco de dados, ou um vetor da classe \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10. }
               }
 
-  Se for um __arquivo__, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBF ou dbf). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\link{read.table}} para leitura dos dados.
+  Se for um *arquivo*, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBF ou dbf). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\link{read.table}} para leitura dos dados.
   
   Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(<objeto>)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(<objeto>, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(<objeto>))}.
   
@@ -69,23 +72,20 @@ csapAIH(x, grupos = TRUE, sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
 }
  É retornada uma mensagem informando o número e proporção de registros excluídos e o total de registros importados.
  }
-}
-}
+  \item{\code{sihsus}  }{ A própria função define este argumento como \code{FALSE} quando "x" (o alvo da função) é um fator. Quando o alvo é um objeto da clase \code{data frame} sem a estrutura dos arquivos da AIH, a variável com os códigos da CID-10 deve ser trabalhada como um \code{factor}. }
+} }
 
 \section{Valor}{
 A função tem diferentes possibilidades de retorno, segundo a estrutura dos dados lidos e as opções de leitura:
 \itemize{
-  \item{Se \code{sihsus = FALSE}:}
+  \item{ Se for um arquivo ou \code{data frame} com a estrutura dos arquivos da AIH: um \code{data frame} com as variáveis nº da AIH, município de residência, município de internação, sexo, data de nascimento, idade em anos completos, faixa etária detalhada, faixa etária quinquenal, data da internação, data da saída, procedimento realizado, cid, CSAP, grupo csap, CEP e CNES do hospital}
+  \itemize{\item{Se os argumentos \code{grupo}, \code{cep} ou \code{cnes} forem definidos como \code{FALSE}, o banco é construído sem essas variáveis}}
+  \item{Se um fator ou data frame sem a estrutura dos arquivos da AIH:}
    \itemize{
-    \item{Se \code{factor} e \code{grupos = FALSE}: }{ um fator com as observações classificadas como CSAP ou não-CSAP};
-    \item{Se \code{factor} e \code{grupos = TRUE}: }{ um banco de dados com as variáveis \code{csap} (sim ou não), \code{grupo} (subgrupo CSAP) e \code{cid} (código da CID-10)};
-    }
-    \item{Se \code{data.frame} ou um arquivo: }{
-  \itemize{
-  \item{ }{ Se \code{sihsus=TRUE}: um banco de dados com as variáveis selecionadas da AIH (listadas acima) e as variáveis \code{csap} e, se \code{grupos=TRUE}, \code{grupo} ;}
-  \item{ }{  
-  } } }
-} } 
+    \item{Se \code{grupos = TRUE}: }{ um banco de dados com as variáveis \code{csap} (sim ou não), \code{grupo} (subgrupo CSAP) e \code{cid} (código da CID-10)};
+        \item{Se \code{factor} e \code{grupos = FALSE}: }{ um fator com as observações classificadas como CSAP ou não-CSAP}.    }
+  } 
+} 
 
 \section{Autor}{
 Fúlvio B. Nedel \email{fulvio.nedel@ufsc.br}
@@ -105,14 +105,12 @@ __________. Departamento de Regulação, Avaliação e Controle. Coordenação G
 }
 
 \note{
-A leitura de arquivos tem os limites das funções que usa, \code{\link{read.table}} e sua derivada \code{\link{read.dbf}}, do pacote \code{foreign}. 
-
-Assim, arquivos em formato DBF ou DTA contendo uma variável com todos os valores ausentes ('missings') retornará erro de leitura; essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pelas função \code{\link{read.dbf}}.
+A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pelas função \code{\link{read.dbf}}.
 }
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-\code{\link{read.table}}
+\code{\link{read.table}}  \code{\link{read.csv}}
 }
 
 \examples{
