@@ -9,9 +9,7 @@ Description: Classifica um vetor com codigos da CID-10 segundo a Lista
     Brasileira de Condicoes Sensiveis a Atencao Primaria e oferece outras
     funcionalidades, especialmente para o manejo dos 'arquivos da AIH' (BD-SIH/SUS).
 License: GPL-3
-Suggests:
-    foreign,
-    Hmisc
+Suggests: foreign
 Encoding: UTF-8
 Language: pt-br
 RoxygenNote: 5.0.1
