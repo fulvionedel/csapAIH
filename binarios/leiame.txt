@@ -1,1 +1,1 @@
-Pasta para os arquivos binários e o manual em PDF.
+Pasta para o manual.
