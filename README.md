@@ -26,9 +26,17 @@ O pacote `csapAIH` contém apenas uma função, homônima: `csapAIH`
 
 ### Exemplos de uso
 
-  - Ler um arquivo "RD??????.DBF" salvo no mesmo diretório da sessão de trabalho do *R*:
+  - A partir de um arquivo "RD??????.DBF" salvo no mesmo diretório da sessão de trabalho do **R**:
   
         csap = csapAIH::csapAIH("RD??????.DBF")
+  
+  - A paritr de um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
+  
+        csap = csapAIH::csapAIH(bancodedados)
+  
+  - A partir de uma variável com códigos da CID-10:
+  
+        csap = csapAIH::csapAIH(variavel)
   
 
 ***Veja o manual do pacote para mais detalhes***
