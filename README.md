@@ -39,4 +39,4 @@ O pacote `csapAIH` contém apenas uma função, homônima: `csapAIH`
         csap = csapAIH::csapAIH(variavel)
   
 
-***Veja o manual do pacote para mais detalhes***
+***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/csapAIH-manual.pdf
