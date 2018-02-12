@@ -15,10 +15,14 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
       if (grepl('dbf', x, ignore.case=TRUE)==TRUE) { 
         x <- foreign::read.dbf(x, as.is=TRUE, ...) 
       }
+      if (grepl('dbc', x, ignore.case=TRUE)==TRUE) { 
+        x <- read.dbc::read.dbc(x, ...) 
+      }
+      
       else
         if (grepl('csv', x, ignore.case=T)==T) {
-          if (sep == ';') x = read.csv2(x, colClasses=c('PROC_REA'='character'), ...) 
-          if (sep == ',') x = read.csv(x, colClasses=c('PROC_REA'='character'), ...)
+          if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...) 
+          if (sep == ',') x = utils::read.csv(x, colClasses=c('PROC_REA'='character'), ...)
         }
       else
         warning('------------------------------------------------------\n
@@ -179,7 +183,11 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
              ifelse(g09==1, "g09", ifelse(g10==1, "g10", ifelse(g11==1, "g11", ifelse(g12==1, "g12",
              ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16", 
              ifelse(g17==1, "g17", ifelse(g18==1, "g18", ifelse(g19==1, "g19", "n\u00E3o-CSAP")))))))))))))))))))
-
+    
+### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
+    niveis = c(paste0("g0", 1:9), paste0("g1", 0:9), "n\u00E3o-CSAP")
+    grupo = factor(grupo, levels = niveis)
+    
 ############################
 ### Montar o objeto final
 ############################

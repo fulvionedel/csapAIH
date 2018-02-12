@@ -110,7 +110,7 @@ A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos e
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-\code{\link{read.table}}  \code{\link{read.csv}}
+\code{\link{read.table}}  \code{\link{read.csv}}  \code{\link[read.dbc]{read.dbc}}
 }
 
 \examples{
@@ -123,8 +123,11 @@ teste2 <- csapAIH(as.factor(cids),  grupo=FALSE) ; class(teste2) ; teste2
 ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 ##---------------------------------------------------------
 \dontrun{
-teste3 <- csapAIH("RDRS1301.dbf")
-str(teste3)
+teste3.dbf <- csapAIH("RDRS1301.dbf")
+str(teste3.dbf)
+
+teste3d.dbc <- csapAIH("RDRS1301.dbc")
+str(teste3.dbc)
 }
 
 ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
