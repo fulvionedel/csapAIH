@@ -15,8 +15,14 @@ Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de
 \details{
 \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 }
+\examples{
+data(aih100)
+df = csapAIH(aih100)
+descreveCSAP(df$grupo)
+
+}
 \seealso{
-\code{\link{csapAIH}}, \code{\link{desenhaCSAP}}
+\code{\link{csapAIH}}, \code{\link{desenhaCSAP}}, \code{\link{nomesgruposCSAP}}
 }
 \author{
 Fúlvio B. Nedel

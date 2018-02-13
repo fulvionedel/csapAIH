@@ -18,7 +18,7 @@
 #' @return Devolve um objeto das classes "gg", "ggplot", com o gráfico.
 #' @details O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite adição de outros comandos ao objeto devolvido. \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 #' 
-#' @seealso \code{\link{csapAIH}}, \code{\link{desenhaCSAP}}, \code{\link[ggplot2]{ggplot2}}
+#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link[ggplot2]{ggplot2}}, \code{\link{nomesgruposCSAP}}
 
 #' @examples 
 #' data(aih100)

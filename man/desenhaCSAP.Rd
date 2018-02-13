@@ -42,7 +42,7 @@ desenhaCSAP(df)
 
 }
 \seealso{
-\code{\link{csapAIH}}, \code{\link{desenhaCSAP}}, \code{\link[ggplot2]{ggplot2}}
+\code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link[ggplot2]{ggplot2}}, \code{\link{nomesgruposCSAP}}
 }
 \author{
 Fúlvio B. Nedel

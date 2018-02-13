@@ -7,9 +7,9 @@
 #' @param grupos Vetor com os grupos de causa CSAP, de acordo com o resultado da função \code{\link{csapAIH}}
 #' @details  \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 #' 
-#' @seealso \code{\link{csapAIH}}, \code{\link{desenhaCSAP}}
+#' @seealso \code{\link{csapAIH}}, \code{\link{desenhaCSAP}}, \code{\link{nomesgruposCSAP}}
 #' 
-#' @example
+#' @examples
 #' data(aih100)
 #' df = csapAIH(aih100)
 #' descreveCSAP(df$grupo)

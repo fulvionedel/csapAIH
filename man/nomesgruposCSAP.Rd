@@ -9,6 +9,9 @@ nomesgruposCSAP()
 \description{
 Lista os 19 grupos de causa CSAP, em ordem crescente
 }
+\seealso{
+\code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}
+}
 \author{
 Fúlvio B. Nedel
 }

@@ -7,6 +7,11 @@
 #' @author Fúlvio B. Nedel
 #'
 #' @description Lista os 19 grupos de causa CSAP, em ordem crescente
+#' 
+#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}
+#' 
+#' @export
+#' 
 nomesgruposCSAP <- function() {
   nomesgrupos <- c("1.Prev. vacina\U00E7\U00E3o", 
                    "2.Gastroenterite", 
