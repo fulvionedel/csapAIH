@@ -22,13 +22,18 @@ O pacote `csapAIH` pode ser instalado no **R** através do pacote `devtools`, co
 
 ### Conteúdo
 
-O pacote `csapAIH` contém apenas uma função, homônima: `csapAIH`
+Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções ` descreveCSAP` e `desenhaCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira.
 
 ### Exemplos de uso
+#### Leitura dos arquivos
 
   - A partir de um arquivo "RD??????.DBF" salvo no mesmo diretório da sessão de trabalho do **R**:
   
         csap = csapAIH::csapAIH("RD??????.DBF")
+
+- A partir de um arquivo "RD??????.DBC" salvo no mesmo diretório da sessão de trabalho do **R**:
+  
+        csap = csapAIH::csapAIH("RD??????.DBC")
   
   - A paritr de um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
   
@@ -37,6 +42,40 @@ O pacote `csapAIH` contém apenas uma função, homônima: `csapAIH`
   - A partir de uma variável com códigos da CID-10:
   
         csap = csapAIH::csapAIH(variavel)
-  
-
+ 
+ #### Apresentação de resultados 
+       csap = csapAIH::csapAIH("RD??????.DBC")
+       \code{
+> csap =csapAIH("~/Dropbox/scripts/pacotes/RDSC1201.dbc")
+Importados 32.159 registros.
+Excluídos 5.123 (15,9%) registros de procedimentos obstétricos.
+Excluídos 575 (2,1%) registros de AIH de longa permanência.
+Exportados 26.461 (82.3%) registros.
+> descreveCSAP(csap$grupo)
+                                   Grupo Casos %Total %CSAP
+1                      1.Prev. vacinação    65   0,25  1,05
+2                       2.Gastroenterite   861   3,25 13,95
+3                               3.Anemia    30   0,11  0,49
+4                      4.Def. nutricion.   118   0,45  1,91
+5      5.Infec. ouvido, nariz e garganta    67   0,25  1,09
+6               6.Pneumonias bacterianas   360   1,36  5,83
+7                                 7.Asma   167   0,63  2,71
+8                    8.Pulmonares (DPOC)   699   2,64 11,33
+9                          9.Hipertensão   105   0,40  1,70
+10                             10.Angina   462   1,75  7,49
+11                    11.Insuf. cardíaca   877   3,31 14,21
+12                  12.Cerebrovasculares   671   2,54 10,88
+13                  13.Diabetes mellitus   358   1,35  5,80
+14                         14.Epilepsias   137   0,52  2,22
+15                    15.Infec. urinária   701   2,65 11,36
+16           16.Infec. pele e subcutâneo   239   0,90  3,87
+17 17.D. infl. órgãos pélvicos femininos    49   0,19  0,79
+18            18.Úlcera gastrointestinal    92   0,35  1,49
+19                  19.Pré-natal e parto   112   0,42  1,82
+20                            Total CSAP  6170  23,32   100
+21                              não-CSAP 20291  76,68    --
+22                  Total de internações 26461    100    --
+> 
+       }
+ 
 ***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/csapAIH-manual.pdf
