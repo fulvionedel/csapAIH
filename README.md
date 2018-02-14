@@ -49,7 +49,9 @@ Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homôni
          Excluídos 5.123 (15,9%) registros de procedimentos obstétricos.
          Excluídos 575 (2,1%) registros de AIH de longa permanência.
          Exportados 26.461 (82.3%) registros.
-       
+ 
+ **Tabela**      
+ 
        descreveCSAP(csap$grupo)
                                           Grupo Casos %Total %CSAP
        1                      1.Prev. vacinação    65   0,25  1,05
@@ -75,9 +77,9 @@ Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homôni
        21                              não-CSAP 20291  76,68    --
        22                  Total de internações 26461    100    --
  
-      desenhaCSAP(csap)
-      
+ **Gráfico**
+ 
       desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)
-[desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)](docs/desenhaCSAP2.jpeg)
+[Veja o gráfico aqui](docs/desenhaCSAP2.jpeg)
  
 ***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/csapAIH-manual.pdf
