@@ -14,26 +14,32 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     if (arquivo==TRUE) {
       if (grepl('dbf', x, ignore.case=TRUE)==TRUE) { 
         x <- foreign::read.dbf(x, as.is=TRUE, ...) 
-      }
-      if (grepl('dbc', x, ignore.case=TRUE)==TRUE) { 
-        x <- read.dbc::read.dbc(x, ...) 
-      }
-      
-      else
-        if (grepl('csv', x, ignore.case=T)==T) {
-          if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...) 
-          if (sep == ',') x = utils::read.csv(x, colClasses=c('PROC_REA'='character'), ...)
-        }
+      } else 
+        if (grepl('dbc', x, ignore.case=TRUE)==TRUE) { 
+          x <- read.dbc::read.dbc(x, ...) 
+          } else
+            if (grepl('csv', x, ignore.case=T)==T) {
+              if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...) 
+              if (sep == ',') x = utils::read.csv(x, colClasses=c('PROC_REA'='character'), ...)
+            } 
       else
         warning('------------------------------------------------------\n
                   ERRO DE LEITURA em ', deparse(substitute(x)), ' \n
                   O objeto deve ser da classe "factor" ou "data.frame", \n
-                  ou um arquivo no formato .dbf ou .csv (ou DBF, CSV). \n
+                  ou um arquivo no formato .dbc, .dbf ou .csv. \n
                   -----------------------------------------------------\n ')
-#
-    # Total de registros importados
-    suppressWarnings(message("Importados ", format(length(x[,1]), big.mark = "."), " registros."))
 }
+    # Total de registros importados
+      
+      nlidos = nrow(x)
+      message(paste(c("Importados ", 
+                      suppressWarnings(formatC(nlidos <- nrow(x), big.mark = ".")), 
+                      " registros.")))
+      importados = paste(c("Importados", 
+                           nlidos,
+                           100,
+                           "registros."))
+
     # Garantir o trabalho com operadores mais tarde, no CID    
     if (sihsus==FALSE) cid=as.character(cid)
 #--------------------------------------------------------------------------#
@@ -55,25 +61,72 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
         procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018', '0411010026', 
                       '0411010034', '0411010042', '0411020013', '0411020021')
         if (x.procobst==TRUE) {
-            tamini <- length(x[,1])
+            tamini <- nrow(x)
             x <- subset(x, subset=x$PROC_REA %in% procobst==FALSE )
             x <- droplevels(x)
-            tamfin <- length(x[,1])
+            tamfin <- nrow(x)
             fr <- suppressWarnings( format(tamini-tamfin, big.mark = ".") )
-            pfr <- format(round((tamini-tamfin)/tamini*100, 1), big.mark = ".", decimal.mark = ",")
-            message("Exclu\u00EDdos  ", fr, " (", pfr,
-                    "\u0025) registros de procedimentos obst\u00E9tricos.", sep="")
+            pfr <- format(round((tamini-tamfin)/tamini*100, 1), decimal.mark = ",")
+            frb <- tamini-tamfin
+            pfrb <- round((tamini-tamfin)/tamini*100, 1)
+            excluidos.obst = c("Exclu\u00EDdos", frb, pfrb, "registros de procedimentos obst\u00E9tricos.")
+      message( c("Exclu\u00EDdos ", fr, " (", pfr,
+                         "\u0025) "), "registros de procedimentos obst\u00E9tricos.")
         }
+        
         #   Exclusão das AIHs de longa permanência
         #--------------------------------------------
         if (longa==FALSE) {
           fr <- suppressWarnings(format(table(x$IDENT)[2], big.mark = "."))
-          pfr <- format(round(prop.table(table(x$IDENT))[2]*100,1), big.mark = ".", decimal.mark = ",")
-          x <- subset(x, x$IDENT==1)        
-          message("Exclu\u00EDdos  ", fr, " (", pfr,
-                  "\u0025) registros de AIH de longa perman\u00EAncia.", sep="")
+          pfr <- format(round(prop.table(table(x$IDENT))[2]*100,1), decimal.mark = ",")
+          frb <- table(x$IDENT)[2]
+          pfrb <- round(prop.table(table(x$IDENT))[2]*100,1)
+          x <- subset(x, x$IDENT==1)
+          excluidos.lp = c("Exclu\u00EDdos", frb, pfrb,
+                                "registros de AIH de longa perman\u00EAncia.")
+          message("Exclu\u00EDdos ", fr, " (", pfr, "\u0025) registros de AIH de longa perman\u00EAncia.")
         }
-        suppressWarnings(message("Exportados ", formatC(length(x[,1]), big.mark = "."), " registros."))
+        exportados = paste(c("Exportados", 
+                             nrow(x), 
+                             pexportados <- round((1-(nlidos-nrow(x))/nlidos)*100,1),
+                             "registros."))
+        exportados
+        message(paste(c("Exportados ", 
+                        suppressWarnings(formatC(length(x[,1]), big.mark = ".")), 
+                        " (", pexportados, "\u0025) registros.")))
+        
+        # resumo = rbind(suppressWarnings(importados), 
+        #                suppressWarnings(exists(excluidos.lp)),
+        #                suppressWarnings(excluidos.obst),
+        #                exportados)
+        resumo = rbind(importados, 
+                       # excluidos.lp,
+                       # suppressWarnings(excluidos.obst),
+                       exportados)
+        colnames(resumo) = c("acao", "freq", "perc", "objeto")
+        resumo
+
+        if (longa==FALSE) {
+          if (x.procobst==TRUE) {
+            resumo = rbind(resumo[1,],
+                           excluidos.lp,
+                           excluidos.obst,
+                           resumo[2,])
+          } else if (x.procobst==FALSE) {
+            resumo = rbind(resumo[1,],
+                           excluidos.lp,
+                           resumo[2,])
+          }
+        } else if (longa==TRUE) {
+          if (x.procobst==TRUE) {
+            resumo = rbind(resumo[1,],
+                           suppressWarnings(excluidos.obst),
+                           resumo[2,])
+          }
+        }
+        rownames(resumo) = NULL
+        resumo = as.data.frame(resumo)
+        
         
         #   Criar as variáveis do banco final
         #--------------------------------------------
@@ -209,6 +262,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
          attr(banco$proc.rea, which = "label") <- "Procedimento realizado"
          attr(banco$data.inter, which = "label") <- "Data de internacao"
          attr(banco$data.saida, which = "label") <- "Data de saida"
+         attr(banco, which = "resumo") <- resumo
       if (cep==TRUE) {  
         banco$cep <- x$CEP 
         # Hmisc::label(banco$cep) <- 'C\u00F3digo de Endere\u00E7amento Postal'
@@ -231,6 +285,6 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
       banco <- csap 
       class(banco) <- 'factor'
     }
-
+    
     return(banco)
 }

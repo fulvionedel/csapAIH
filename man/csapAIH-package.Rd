@@ -20,9 +20,9 @@ A função principal, continua sendo \code{csapAIH()}, que permite trabalhar com
 
 \author{
 %\packageAuthor{csapAIH}
-Fúlvio B. Nedel \email{fulvio.nedel@ufsc.br}
+Fúlvio B. Nedel \email{fulvionedel@gmail.com}
 
-% Maintainer: Fúlvio B. Nedel \email{fulvio.nedel@ufsc.br}
+% Maintainer: Fúlvio B. Nedel \email{fulvionedel@gmail.com}
 %\packageMaintainer{csapAIH}
 }
 %\references{

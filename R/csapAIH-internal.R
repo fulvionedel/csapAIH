@@ -3,8 +3,11 @@
 #' @docType package
 #' @title csapAIH
 #' @description Classifies ICD-10 codes according to the Brazilian List of Hospitalization for Primary Care Sensitive Conditions ('Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária') and affords other functions, particularly to the management of the files from the Hospital Admission Authorization Form 'AIH files -- arquivos da AIH' of the Brazilian Unified Health System ('Sistema Único de Saúde'), i.e. the 'RD??????.DBF/DBC' files from 'BD-SIH/SUS'.
-#' @details O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um objeto no espaço de trabalho ou ler um arquivo com os dados. Se os dados tiverem a estrutura dos "arquivos da AIH" com uma definição mínima de variáveis, a função, com suas opções padrão, além de classificar a internação em CSAP, computa a idade em anos completos e em duas classificações etárias e permite a exclusão das AIHs de "longa permanência" e internações por alguns procedimentos obstétricos definidos. Veja o manual para detalhes.
-#'
+#' @details 
+#' **v0.0.2** Foram acrescentadas três funções ao pacote: \code{descreveCSAP}, \code{desenhaCSAP} e \code{nomesgrupos}, para a realização de tabelas e gráficos com qualidade de impressão para artigos e apresentação de relatórios. Acrescentada dependência do pacote \code{\link{read.dbc}} para a leitura de arquivos comprimidos do DATASUS, em formato DBC.
+#' 
+#' **v0.0.1** O pacote tem apenas uma função, \code{csapAIH()}, que permite trabalhar com um objeto no espaço de trabalho ou ler um arquivo com os dados. Se os dados tiverem a estrutura dos "arquivos da AIH" com uma definição mínima de variáveis, a função, com suas opções padrão, além de classificar a internação em CSAP, computa a idade em anos completos e em duas classificações etárias e permite a exclusão das AIHs de "longa permanência" e internações por alguns procedimentos obstétricos definidos. Veja o manual para detalhes.
+#'  
 #' @keywords package
 #' @keywords CSAP, ACSC, PHCSC
 #' @keywords AIH-SUS

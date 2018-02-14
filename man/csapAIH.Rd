@@ -79,6 +79,7 @@ csapAIH(x, grupos = TRUE,
 A função tem diferentes possibilidades de retorno, segundo a estrutura dos dados lidos e as opções de leitura:
 \itemize{
   \item{ Se for um arquivo ou \code{data frame} com a estrutura dos arquivos da AIH: um \code{data frame} com as variáveis nº da AIH, município de residência, município de internação, sexo, data de nascimento, idade em anos completos, faixa etária detalhada, faixa etária quinquenal, data da internação, data da saída, procedimento realizado, cid, CSAP, grupo csap, CEP e CNES do hospital}
+  \itemize{\item Nesse caso, banco resultante tem um argumento "resumo" com o resumo da importação de dados, segundo as opções de seleção}
   \itemize{\item{Se os argumentos \code{grupo}, \code{cep} ou \code{cnes} forem definidos como \code{FALSE}, o banco é construído sem essas variáveis}}
   \item{Se um fator ou data frame sem a estrutura dos arquivos da AIH:}
    \itemize{
@@ -88,7 +89,7 @@ A função tem diferentes possibilidades de retorno, segundo a estrutura dos dad
 } 
 
 \section{Autor}{
-Fúlvio B. Nedel \email{fulvio.nedel@ufsc.br}
+Fúlvio B. Nedel \email{fulvionedel@gmail.com}
 \itemize{\item Departamento de Saúde Pública, CCS/UFSC
           \url{http://spb.ufsc.br/}
          \item Grups de Recerca d'Amèrica i Àfrica Llatines, GRAAL-UAB
