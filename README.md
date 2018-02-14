@@ -44,12 +44,12 @@ Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homôni
         csap = csapAIH::csapAIH(variavel)
  
  #### Apresentação de resultados 
-       csap = csapAIH::csapAIH("RD??????.DBC")
-       csap =csapAIH("~/Dropbox/scripts/pacotes/RDSC1201.dbc")
-       Importados 32.159 registros.
-       Excluídos 5.123 (15,9%) registros de procedimentos obstétricos.
-       Excluídos 575 (2,1%) registros de AIH de longa permanência.
-       Exportados 26.461 (82.3%) registros.
+       csap = csapAIH("RDSC1201.dbc")
+         Importados 32.159 registros.
+         Excluídos 5.123 (15,9%) registros de procedimentos obstétricos.
+         Excluídos 575 (2,1%) registros de AIH de longa permanência.
+         Exportados 26.461 (82.3%) registros.
+       
        descreveCSAP(csap$grupo)
                                           Grupo Casos %Total %CSAP
        1                      1.Prev. vacinação    65   0,25  1,05
@@ -74,5 +74,10 @@ Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homôni
        20                            Total CSAP  6170  23,32   100
        21                              não-CSAP 20291  76,68    --
        22                  Total de internações 26461    100    --
+ 
+      desenhaCSAP(csap)
+      
+      desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)
+
  
 ***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/csapAIH-manual.pdf
