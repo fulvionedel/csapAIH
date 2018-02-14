@@ -31,7 +31,7 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
   # Título:
   if(!is.null(titulo)){
     if(titulo == "auto"){
-      titulo1 = "Hospitaliza\U00E7\U00E3o por Condi\U00E7\U00E7es Sens\U00EDveis \U00E0 Aten\U00E7\U00E3o Prim\U00E1ria."
+      titulo1 = "Hospitaliza\U00E7\U00E3o por Condi\U00E7\u00F5es Sens\U00EDveis \U00E0 Aten\U00E7\U00E3o Prim\U00E1ria."
       if(is.null(quando)){
         quando = format(sort(banco$data.inter, decreasing = TRUE)[1], "%B de %Y")
       }
@@ -39,7 +39,7 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
         stop("O argumento 'onde' \U00E9 obrigat\U00F3rio quando 'titulo' = 'auto', mas est\U00E1 ausente. ")
       }
       titulo2 = paste0(onde, ", ", quando, ".")
-      titulo = paste(titulo1, titulo2)
+      titulo = paste(titulo1, "\n", titulo2)
     }
   }
   
