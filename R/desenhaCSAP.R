@@ -1,4 +1,4 @@
-#' @title Gráfico das Condi\U00E7\u00F5es Sens\U00EDveis \U00E0 Aten\U00E7\U00E3o Prim\U00E1ria
+#' @title Gr\U00E1fico das Condi\U00E7\u00F5es Sens\U00EDveis \U00E0 Aten\U00E7\U00E3o Prim\U00E1ria
 #' @author Fúlvio B. Nedel
 #' @description Desenha um gr\U00E1fico de barras das CSAP por grupo de causa
 #' @aliases desenhaCSAP
