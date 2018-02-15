@@ -1,4 +1,4 @@
-#' @title Tabular Condições Sensíveis à Atenção Primária
+#' @title Tabular Condicoes Sensiveis a Atencao Primaria
 #' @author Fúlvio B. Nedel
 #' @description Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de causa
 #' @aliases descreveCSAP

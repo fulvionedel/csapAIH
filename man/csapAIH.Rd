@@ -3,7 +3,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 % \packageTitle{csapAIH}
-Classificar Condições Sensíveis à Atenção Primária
+Classificar Condicoes Sensiveis a Atencao Primaria
+%Condições Sensíveis à Atenção Primária
 }
 \description{
 % \section{Descrição}{ 

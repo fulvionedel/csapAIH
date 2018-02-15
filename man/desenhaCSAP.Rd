@@ -2,7 +2,7 @@
 % Please edit documentation in R/desenhaCSAP.R
 \name{desenhaCSAP}
 \alias{desenhaCSAP}
-\title{Gráfico das Condições Sensíveis à Atenção Primária}
+\title{Grafico das Condicoes Sensiveis a Atencao Primaria}
 \usage{
 desenhaCSAP(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1,
   t.size = 12, cte.x = 10, x.size = 10, y.size = 12)

@@ -1,4 +1,4 @@
-#' @title Nomes dos grupos de causa da Lista Brasileira de Condições Sensíveis à Atenção Primária
+#' @title Nomes dos grupos de causa da Lista Brasileira de Condicoes Sensiveis a Atencao Primaria
 #' @aliases nomesgruposCSAP
 #' @aliases descreveCSAP
 #' @aliases desenhaCSAP
