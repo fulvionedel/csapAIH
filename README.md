@@ -79,5 +79,5 @@ Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homôni
       
       desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)
 
- 
+![desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAP2.jpeg) 
 ***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/csapAIH-manual.pdf
