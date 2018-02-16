@@ -7,13 +7,13 @@ Classificar Condicoes Sensiveis a Atencao Primaria
 %Condições Sensíveis à Atenção Primária
 }
 \description{
-% \section{Descrição}{ 
-Classifica códigos da 10ª Revisão da Classificação Internacional de Doenças (CID-10) segundo a Lista Brasileira de Internação por Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos "arquivos da AIH" (RD??????.DBF; BD-SIH/SUS). 
+% \section{Descrição}{
+Classifica códigos da 10ª Revisão da Classificação Internacional de Doenças (CID-10) segundo a Lista Brasileira de Internação por Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos "arquivos da AIH" (RD??????.DBF; BD-SIH/SUS).
 % }
 }
 
 \section{Uso}{
-csapAIH(x, grupos = TRUE, 
+csapAIH(x, grupos = TRUE,
         sihsus = TRUE, x.procobst = TRUE, longa = FALSE,
         cep = TRUE, cnes = TRUE, arquivo = TRUE, sep, ...)
 }
@@ -46,16 +46,16 @@ csapAIH(x, grupos = TRUE,
 }
 
 \section{Detalhes}{
-\itemize{  
-  \item{x pode ser:}{ 
-  \enumerate{ \item{ }{um arquivo de dados armazenado num diretório; } 
+\itemize{
+  \item{x pode ser:}{
+  \enumerate{ \item{ }{um arquivo de dados armazenado num diretório; }
               \item{ }{um banco de dados, ou um vetor da classe \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10. }
               }
 
   Se for um arquivo, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBC, DBF ou CSV, em minúsculas ou maíusculas). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\link{read.table}} para leitura dos dados.
-  
+
   Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(<objeto>)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(<objeto>, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(<objeto>))}.
-  
+
   É retornada uma mensagem informando o número de registros lidos.
   }
 \item{x.procbst } {= TRUE (padrão) exclui as internações pelos seguintes procedimentos obstétricos:
@@ -63,7 +63,7 @@ csapAIH(x, grupos = TRUE,
 \item{0310010012 } ASSISTENCIA AO PARTO S/ DISTOCIA
 \item{0310010020 } ATENDIMENTO AO RECÉM-NASCIDO EM SALA DE PARTO
 \item{0310010039 } PARTO NORMAL
-\item{0310010047 } PARTO NORMAL EM GESTAÇÃO DE ALTO RISCO 
+\item{0310010047 } PARTO NORMAL EM GESTAÇÃO DE ALTO RISCO
 \item{0411010018 } DESCOLAMENTO MANUAL DE PLACENTA
 \item{0411010026 } PARTO CESARIANO EM GESTAÇÃO ALTO RISCO
 \item{0411010034 } PARTO CESARIANO
@@ -86,8 +86,8 @@ A função tem diferentes possibilidades de retorno, segundo a estrutura dos dad
    \itemize{
     \item{Se \code{grupos = TRUE}: }{ um banco de dados com as variáveis \code{csap} (sim ou não), \code{grupo} (subgrupo CSAP) e \code{cid} (código da CID-10)};
         \item{Se \code{factor} e \code{grupos = FALSE}: }{ um fator com as observações classificadas como CSAP ou não-CSAP}.    }
-  } 
-} 
+  }
+}
 
 \section{Autor}{
 Fúlvio B. Nedel \email{fulvionedel@gmail.com}
@@ -128,7 +128,7 @@ teste2 <- csapAIH(as.factor(cids),  grupo=FALSE) ; class(teste2) ; teste2
 teste3.dbf <- csapAIH("RDRS1301.dbf")
 str(teste3.dbf)
 
-teste3d.dbc <- csapAIH("RDRS1301.dbc")
+teste3.dbc <- csapAIH("RDRS1301.dbc")
 str(teste3.dbc)
 }
 
@@ -139,14 +139,14 @@ str(aih100)
 teste4 <- csapAIH(aih100)
 str(teste4)
 
-## Uma base de dados com a estrutura dos 'arquivos da AIH' 
+## Uma base de dados com a estrutura dos 'arquivos da AIH'
 ## mas sem as variáveis CEP ou CNES:
 ##--------------------------------------------------------
 aih <- subset(aih100, select = -c(CEP, CNES))
 teste5 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
 str(teste5)
 
-## Para uma base de dados sem a estrutura dos BD-SIH/SUS, apenas 
+## Para uma base de dados sem a estrutura dos BD-SIH/SUS, apenas
 ## trabalhe a variável com os CIDs, como nos primeiros exemplos
 ##--------------------------------------------------------------
 ## teste6 <- csapAIH(BaseDeDados$VariavelcomCID)
