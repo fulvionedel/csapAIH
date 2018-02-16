@@ -12,7 +12,7 @@ Classifica códigos da CID-10 segundo a Lista Brasileira de Condições Sensíve
 \details{
 Foram acrescentadas três funções ao pacote: \code{descreveCSAP}, \code{desenhaCSAP} e \code{nomesgrupos}, para a realização de tabelas e gráficos com qualidade de impressão para artigos e apresentação de relatórios.
 
-A função principal, continua sendo \code{csapAIH()}, que permite trabalhar com um objeto no espaço de trabalho ou ler um arquivo com os dados. Se os dados tiverem a estrutura dos "arquivos da AIH" com uma definição mínima de variáveis, a função, com suas opções padrão, além de classificar a internação em CSAP, computa a idade em anos completos e em duas classificações etárias e permite a exclusão das AIHs de "longa permanência" e internações por alguns procedimentos obstétricos definidos. Veja o manual para detalhes.
+A função principal continua sendo \code{csapAIH()}, que permite trabalhar com um objeto no espaço de trabalho ou ler um arquivo com os dados. Se os dados tiverem a estrutura dos "arquivos da AIH" com uma definição mínima de variáveis, a função, com suas opções padrão, além de classificar a internação em CSAP, computa a idade em anos completos e em duas classificações etárias e permite a exclusão das AIHs de "longa permanência" e internações por alguns procedimentos obstétricos definidos. Veja o manual para detalhes.
 }
 
 % \packageIndices{csapAIH}
