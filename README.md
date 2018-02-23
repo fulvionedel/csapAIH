@@ -22,7 +22,7 @@ O pacote `csapAIH` pode ser instalado no **R** através do pacote `devtools`, co
 
 ### Conteúdo
 
-Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira.
+Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira.
 
 ### Exemplos de uso
 #### Leitura dos arquivos
@@ -75,9 +75,8 @@ Na sua primeira versão, o pacote `csapAIH` contém apenas uma função, homôni
        21                              não-CSAP 20291  76,68    --
        22                  Total de internações 26461    100    --
  
-      desenhaCSAP(csap)
-      
       desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)
 
- 
-***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/csapAIH-manual.pdf
+![desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAP2.jpeg) 
+
+***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.2.pdf
