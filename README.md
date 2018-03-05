@@ -24,6 +24,10 @@ O pacote `csapAIH` pode ser instalado no **R** através do pacote `devtools`, co
 
 Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira.
 
+### Dependências
+
+A função `desenhaCSAP` depende do pacote `ggplot2` e portanto é necessário ter este pacote instalado.
+
 ### Exemplos de uso
 #### Leitura dos arquivos
 
