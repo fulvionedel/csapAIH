@@ -26,7 +26,7 @@ Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homôn
 
 ### Dependências
 
-A função `desenhaCSAP` depende do pacote `ggplot2` e portanto é necessário ter este pacote instalado.
+A função `desenhaCSAP` depende do pacote `ggplot2` e portanto é necessário ter este pacote instalado para seu funcionamento. A ausência de `ggplot2` não afeta o funcionamento das demais funções do pacote `csapAIH`.
 
 ### Exemplos de uso
 #### Leitura dos arquivos
