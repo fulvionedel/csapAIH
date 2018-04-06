@@ -43,17 +43,16 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
     }
   }
   
-  Grupo <- Casos <- NULL
-
   # O banco de dados para o gráfico
+  Grupo <- Casos <- NULL
 #  x = data.frame(table(banco$grupo)[1:19])
-#  x$Grupo = nomesgruposCSAP()
-  # x$Grupo = factor(nomesgruposCSAP(), levels = nomesgrupos)
-#  x = x[3:2]
-#  names(x)[2] = "Casos"
   x = data.frame("Casos" = table(banco$grupo)[1:19])
   x$Grupo = nomesgruposCSAP()
- x = x[2:1]
+  # x$Grupo = factor(nomesgruposCSAP(), levels = nomesgrupos)
+  x = x[3:2]
+#  names(x)[2] = "Casos"
+  x$Grupo = nomesgruposCSAP()
+# x = x[2:1]
  
 requireNamespace("ggplot2")
 # requireNamespace("ggthemes") # Não precisa o ggtghemes
