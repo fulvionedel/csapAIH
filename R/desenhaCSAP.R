@@ -57,7 +57,11 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
  
 requireNamespace("ggplot2")
 # requireNamespace("ggthemes") # Não precisa o ggtghemes
-grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos), 
+  grade = round(sum(x$Casos)*cte.x)
+  limites = c(0,max(x$Casos) + max(x$Casos)*cte.x)
+  breques = seq(0, max(x$Casos) + max(x$Casos)*cte.x), grade)
+  
+  grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos), 
                         y = Casos, 
                         fill = heat.colors(19) )) + 
   ggplot2::geom_bar(stat = 'identity') +
@@ -67,8 +71,7 @@ grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos),
   ggplot2::theme_bw() +
   ggplot2::theme(plot.title = ggplot2::element_text(hjust = t.hjust, size = t.size)) +
   ggplot2::theme(legend.position="none") +
-  ggplot2::scale_y_continuous(breaks = seq(0, max(x$Casos) + max(x$Casos)/(10*cte.x), 200*cte.x), 
-                     limits = c(0,max(x$Casos) + max(x$Casos)/(10*cte.x))) +
+  ggplot2::scale_y_continuous(breaks = breques, limits = limites) +
   ggplot2::geom_text(ggplot2::aes(label=paste0(round(Casos/sum(Casos)*100,1), '%')), 
             hjust=0, color="black", size=2.5) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1, size = x.size),
