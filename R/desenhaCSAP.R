@@ -59,7 +59,7 @@ requireNamespace("ggplot2")
 # requireNamespace("ggthemes") # Não precisa o ggtghemes
   grade = round(sum(x$Casos)*cte.x)
   limites = c(0,max(x$Casos) + max(x$Casos)*cte.x)
-  breques = seq(0, max(x$Casos) + max(x$Casos)*cte.x), grade)
+  breques = seq(0, max(x$Casos) + max(x$Casos)*cte.x, grade)
   
   grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos), 
                         y = Casos, 
