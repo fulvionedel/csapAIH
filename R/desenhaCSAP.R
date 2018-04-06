@@ -56,7 +56,7 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
  x = x[2:1]
  
 requireNamespace("ggplot2")
-requireNamespace("ggthemes")
+# requireNamespace("ggthemes") # Não precisa o ggtghemes
 grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos), 
                         y = Casos, 
                         fill = heat.colors(19) )) + 
