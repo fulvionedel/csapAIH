@@ -4,7 +4,7 @@
 #' @aliases desenhaCSAP
 #' @aliases descreveCSAP
 #' @aliases csapAIH
-#' 
+#'
 #' @param banco Banco de dados com as informações. Objeto da classe \code{data.frame} gerado pela função \code{\link{csapAIH}}.
 #' @param titulo Título do gráfico; se NULL (default), não é gerado um título; se \code{"auto"}, o argumento \code{onde} passa a ser obrigatório e a função gera um título para o gráfico a partir da informação de \code{onde} e do arquivo de dados ou do informado para o argumento \code{quando}.
 #' @param onde Local, população de origem dos dados do gráfico; obrigatório se \code{titulo = "auto"}.
@@ -12,21 +12,22 @@
 #' @param t.hjust Valor para definição de ajuste horizontal do título. Default é 1.
 #' @param t.size Valor para definição do tamanho de letra do título. Default é 12.
 #' @param cte.x Valor para ajuste do espaçamento da grade do gráfico.
-#' @param x.size Tamanho da letra do eixo x. Default é 10. 
+#' @param x.size Tamanho da letra do eixo x. Default é 10.
 #' @param y.size Tamanho da letra do eixo y. Default é 12.
-#' 
+#'
 #' @return Devolve um objeto das classes "gg", "ggplot", com o gráfico.
 #' @details O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite adição de outros comandos ao objeto devolvido. \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
-#' 
+#'
 #' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link[ggplot2]{ggplot2}}, \code{\link{nomesgruposCSAP}}
 
-#' @examples 
-#' data(aih100)
+#' @examples
+#'
+#' data("aih100")
 #' df = csapAIH(aih100)
 #' desenhaCSAP(df)
-#' 
+#'
 #' @export
-#' 
+#'
 desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, cte.x = 10, x.size = 10, y.size = 12){
   # Título:
   if(!is.null(titulo)){
@@ -42,7 +43,7 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
       titulo = paste(titulo1, "\n", titulo2)
     }
   }
-  
+
   # O banco de dados para o gráfico
   Grupo <- Casos <- NULL
 #  x = data.frame(table(banco$grupo)[1:19])
@@ -54,16 +55,16 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
 #  names(x)[2] = "Casos"
 #  x$Grupo = nomesgruposCSAP()
 # x = x[2:1]
- 
-requireNamespace("ggplot2")
+
+  requireNamespace("ggplot2")
 # requireNamespace("ggthemes") # Não precisa o ggtghemes
   grade = round(sum(x$Casos)*cte.x)
   limites = c(0,max(x$Casos) + max(x$Casos)*cte.x)
   breques = seq(0, max(x$Casos) + max(x$Casos)*cte.x, grade)
-  
-  grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos), 
-                        y = Casos, 
-                        fill = heat.colors(19) )) + 
+
+  grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos),
+                        y = Casos,
+                        fill = heat.colors(19) )) +
   ggplot2::geom_bar(stat = 'identity') +
   ggplot2::coord_flip() +
   ggplot2::xlab("Grupo de causas") +
@@ -72,10 +73,11 @@ requireNamespace("ggplot2")
   ggplot2::theme(plot.title = ggplot2::element_text(hjust = t.hjust, size = t.size)) +
   ggplot2::theme(legend.position="none") +
   ggplot2::scale_y_continuous(breaks = breques, limits = limites) +
-  ggplot2::geom_text(ggplot2::aes(label=paste0(round(Casos/sum(Casos)*100,1), '%')), 
+  ggplot2::geom_text(ggplot2::aes(label=paste0(round(Casos/sum(Casos)*100,1), '%')),
             hjust=0, color="black", size=2.5) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1, size = x.size),
         axis.text.y = ggplot2::element_text(size = y.size))
 
-return(grafico)
+  aih100 <- NULL # pra evitar a nota "no visible binding"
+  return(grafico)
 }
