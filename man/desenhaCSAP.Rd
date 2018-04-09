@@ -5,7 +5,7 @@
 \title{Grafico das Condicoes Sensiveis a Atencao Primaria}
 \usage{
 desenhaCSAP(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1,
-  t.size = 12, cte.x = 10, x.size = 10, y.size = 12)
+  t.size = 12, x.size = 10, y.size = 12, limsup = NULL)
 }
 \arguments{
 \item{banco}{Banco de dados com as informações. Objeto da classe \code{data.frame} gerado pela função \code{\link{csapAIH}}.}
@@ -20,11 +20,11 @@ desenhaCSAP(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1,
 
 \item{t.size}{Valor para definição do tamanho de letra do título. Default é 12.}
 
-\item{cte.x}{Valor para ajuste do espaçamento da grade do gráfico.}
-
 \item{x.size}{Tamanho da letra do eixo x. Default é 10.}
 
 \item{y.size}{Tamanho da letra do eixo y. Default é 12.}
+
+\item{limsup}{Valor para ajuste do espaçamento do eixo de frequências.}
 }
 \value{
 Devolve um objeto das classes "gg", "ggplot", com o gráfico.

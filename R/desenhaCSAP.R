@@ -11,9 +11,9 @@
 #' @param quando Período de referência dos dados; se a fonte de dados for um "arquivo da AIH" (RD????.dbc), pode ser extraído do arquivo.
 #' @param t.hjust Valor para definição de ajuste horizontal do título. Default é 1.
 #' @param t.size Valor para definição do tamanho de letra do título. Default é 12.
-#' @param cte.x Valor para ajuste do espaçamento da grade do gráfico.
 #' @param x.size Tamanho da letra do eixo x. Default é 10.
 #' @param y.size Tamanho da letra do eixo y. Default é 12.
+#' @param limsup Valor para ajuste do espaçamento do eixo de frequências.
 #'
 #' @return Devolve um objeto das classes "gg", "ggplot", com o gráfico.
 #' @details O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite adição de outros comandos ao objeto devolvido. \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
@@ -28,7 +28,7 @@
 #'
 #' @export
 #'
-desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, cte.x = 10, x.size = 10, y.size = 12){
+desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, x.size = 10, y.size = 12, limsup = NULL){
   # Título:
   if(!is.null(titulo)){
     if(titulo == "auto"){
@@ -48,19 +48,14 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
   Grupo <- Casos <- NULL
 #  x = data.frame(table(banco$grupo)[1:19])
 #  x = data.frame("Casos" = table(banco$grupo)[1:19])
-  x = data.frame( "Grupo" = nomesgruposCSAP(), "Casos" = tabulate(banco$grupo)[1:19] )
   # x$Grupo = nomesgruposCSAP()
   # x$Grupo = factor(nomesgruposCSAP(), levels = nomesgrupos)
 #  x = x[3:2]
 #  names(x)[2] = "Casos"
 #  x$Grupo = nomesgruposCSAP()
 # x = x[2:1]
-
-  requireNamespace("ggplot2")
-# requireNamespace("ggthemes") # Não precisa o ggtghemes
-  grade = round(sum(x$Casos)*cte.x)
-  limites = c(0,max(x$Casos) + max(x$Casos)*cte.x)
-  breques = seq(0, max(x$Casos) + max(x$Casos)*cte.x, grade)
+  x = data.frame( "Grupo" = csapAIH::nomesgruposCSAP(),
+                  "Casos" = tabulate(banco$grupo)[1:19] )
 
   grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos),
                         y = Casos,
@@ -72,12 +67,15 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
   ggplot2::theme_bw() +
   ggplot2::theme(plot.title = ggplot2::element_text(hjust = t.hjust, size = t.size)) +
   ggplot2::theme(legend.position="none") +
-  ggplot2::scale_y_continuous(breaks = breques, limits = limites) +
   ggplot2::geom_text(ggplot2::aes(label=paste0(round(Casos/sum(Casos)*100,1), '%')),
             hjust=0, color="black", size=2.5) +
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1, size = x.size),
         axis.text.y = ggplot2::element_text(size = y.size))
 
-  aih100 <- NULL # pra evitar a nota "no visible binding"
+    if( !is.null(limsup) ) {
+    grafico = grafico + ggplot2::ylim(0, limsup)
+  }
+
+  aih100 <- NULL # pra evitar a nota "no visible binding" ao rodar o exemplo
   return(grafico)
 }
