@@ -47,7 +47,7 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
   Grupo <- Casos <- NULL
 #  x = data.frame(table(banco$grupo)[1:19])
 #  x = data.frame("Casos" = table(banco$grupo)[1:19])
-  x = data.frame( "Grupo" = nomesgruposCSAP(), "Casos" = tabulate(csapAIH(banco)$grupo)[1:19] )
+  x = data.frame( "Grupo" = nomesgruposCSAP(), "Casos" = tabulate(banco$grupo)[1:19] )
   # x$Grupo = nomesgruposCSAP()
   # x$Grupo = factor(nomesgruposCSAP(), levels = nomesgrupos)
 #  x = x[3:2]
