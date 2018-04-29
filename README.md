@@ -17,16 +17,23 @@ Entretanto, muitas vezes a pesquisa exige a classificação de cada internação
 
 O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   
-  * com a função `install.packages` sobre os arquivos de instalação no SourceForge:
+  * com a função `install.packages()` sobre os arquivos de instalação no SourceForge:
+    * para Linux e Mac:
+    
+          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.2.tar.gz/download", 
+                            type = "source", repos = NULL) 
   
-  `install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.2.tar.gz/download", type = "source", repos = NULL)` # para Linux e Mac 
+    * para Windows: 
+    
+          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.2.zip/download", 
+                            type = "source", repos = NULL)
   
-  `install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.2.zip/download", type = "source", repos = NULL)` # para Windows
+  ou
   
   * através do pacote `devtools`sobre os arquivos-fonte da função em desenvolvimento, no GitHub:
       
-    install.packages("devtools") # desnecessário se o pacote devtools já estiver instalado
-    devtools::install_github("fulvionedel/csapAIH")
+        install.packages("devtools") # desnecessário se o pacote devtools já estiver instalado
+        devtools::install_github("fulvionedel/csapAIH")
 
 
 
