@@ -5,7 +5,8 @@
 \title{Grafico das Condicoes Sensiveis a Atencao Primaria}
 \usage{
 desenhaCSAP(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1,
-  t.size = 12, x.size = 10, y.size = 12, limsup = NULL)
+  t.size = 12, x.size = 10, y.size = 12, limsup = NULL,
+  tipo = "ggplot")
 }
 \arguments{
 \item{banco}{Banco de dados com as informações. Objeto da classe \code{data.frame} gerado pela função \code{\link{csapAIH}}.}
@@ -25,9 +26,11 @@ desenhaCSAP(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1,
 \item{y.size}{Tamanho da letra do eixo y. Default é 12.}
 
 \item{limsup}{Valor para ajuste do espaçamento do eixo de frequências.}
+
+\item{tipo}{"ggplot" (padrão) cria um gráfico com \code{\link[ggplot2]{ggplot2}}; quando definido como "base", desenha um gráfico com as funções básicas. Permite que a função desenhe um gráfico mesmo quando \code{\link[ggplot2]{ggplot2}} não está instalado.}
 }
 \value{
-Devolve um objeto das classes "gg", "ggplot", com o gráfico.
+Na opção padrão e com \code{\link[ggplot2]{ggplot2}} instalado, devolve um objeto das classes "gg", "ggplot", com o gráfico.
 }
 \description{
 Desenha um gráfico de barras das CSAP por grupo de causa

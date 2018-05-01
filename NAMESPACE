@@ -1,3 +1,5 @@
 exportPattern("^[^\\.]")
 importFrom("grDevices", "heat.colors")
 importFrom("stats", "addmargins", "reorder")
+importFrom("graphics", "barplot", "par")
+importFrom("utils", "installed.packages")
