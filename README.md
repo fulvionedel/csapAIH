@@ -39,11 +39,11 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
 
 ### Conteúdo
 
-Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira.
+Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html).
 
 ### Dependências
 
-A função `desenhaCSAP` depende do pacote `ggplot2` e portanto é necessário ter este pacote instalado para seu funcionamento. A ausência de `ggplot2` não afeta o funcionamento das demais funções do pacote `csapAIH`.
+A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` depende do pacote `ggplot2` para criar esses gráficos. Sua falta fará que a função gere um gráfico com `barplot`. 
 
 ### Exemplos de uso
 #### Leitura dos arquivos
