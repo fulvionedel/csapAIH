@@ -43,7 +43,7 @@ Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homôn
 
 ### Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` depende do pacote `ggplot2` para criar esses gráficos. Sua falta fará que a função gere um gráfico com `barplot`. 
+A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` depende do pacote `ggplot2` e portanto é necessário ter este pacote instalado para seu funcionamento. A ausência de `ggplot2` não afeta o funcionamento das demais funções do pacote `csapAIH`.
 
 ### Exemplos de uso
 #### Leitura dos arquivos
