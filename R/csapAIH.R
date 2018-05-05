@@ -1,6 +1,6 @@
 csapAIH <-
 function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cnes=TRUE,
-         arquivo=TRUE, sep, ...) 
+         arquivo=TRUE, sep, ...)
   {
     #===================
     ## Preparar os dados
@@ -12,16 +12,16 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
         sihsus=FALSE }
     # Leitura do arquivo de dados
     if (arquivo==TRUE) {
-      if (grepl('dbf', x, ignore.case=TRUE)==TRUE) { 
-        x <- foreign::read.dbf(x, as.is=TRUE, ...) 
-      } else 
-        if (grepl('dbc', x, ignore.case=TRUE)==TRUE) { 
-          x <- read.dbc::read.dbc(x, ...) 
+      if (grepl('dbf', x, ignore.case=TRUE)==TRUE) {
+        x <- foreign::read.dbf(x, as.is=TRUE, ...)
+      } else
+        if (grepl('dbc', x, ignore.case=TRUE)==TRUE) {
+          x <- read.dbc::read.dbc(x, ...)
           } else
             if (grepl('csv', x, ignore.case=T)==T) {
-              if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...) 
+              if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...)
               if (sep == ',') x = utils::read.csv(x, colClasses=c('PROC_REA'='character'), ...)
-            } 
+            }
       else
         warning('------------------------------------------------------\n
                   ERRO DE LEITURA em ', deparse(substitute(x)), ' \n
@@ -30,35 +30,35 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
                   -----------------------------------------------------\n ')
 }
     # Total de registros importados
-      
+
       nlidos = nrow(x)
-      message(paste(c("Importados ", 
-                      suppressWarnings(formatC(nlidos <- nrow(x), big.mark = ".")), 
+      message(paste(c("Importados ",
+                      suppressWarnings(formatC(nlidos <- nrow(x), big.mark = ".")),
                       " registros.")))
-      importados = paste(c("Importados", 
+      importados = paste(c("Importados",
                            nlidos,
                            100,
                            "registros."))
 
-    # Garantir o trabalho com operadores mais tarde, no CID    
+    # Garantir o trabalho com operadores mais tarde, no CID
     if (sihsus==FALSE) cid=as.character(cid)
 #--------------------------------------------------------------------------#
 #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS   #
 #--------------------------------------------------------------------------#
     if (sihsus==TRUE) {
-        #   Exclusão dos procedimentos obstétricos 
+        #   Exclusão dos procedimentos obstétricos
         #--------------------------------------------
 #        0310010012 ASSISTENCIA AO PARTO S/ DISTOCIA
 #        0310010020 ATEND AO RECEM-NASCIDO EM SALA DE PARTO
-#        0310010039 PARTO NORMAL                           
-#        0310010047 PARTO NORMAL EM GESTACAO DE ALTO RISCO 
-#        0411010018 DESCOLAMENTO MANUAL DE PLACENTA        
-#        0411010026 PARTO CESARIANO EM GESTACAO ALTO RISCO 
-#        0411010034 PARTO CESARIANO                        
-#        0411010042 PARTO CESARIANO C/ LAQUEADURA TUBARIA  
-#        0411020013 CURETAGEM POS-ABORTAMENTO / PUERPERAL  
+#        0310010039 PARTO NORMAL
+#        0310010047 PARTO NORMAL EM GESTACAO DE ALTO RISCO
+#        0411010018 DESCOLAMENTO MANUAL DE PLACENTA
+#        0411010026 PARTO CESARIANO EM GESTACAO ALTO RISCO
+#        0411010034 PARTO CESARIANO
+#        0411010042 PARTO CESARIANO C/ LAQUEADURA TUBARIA
+#        0411020013 CURETAGEM POS-ABORTAMENTO / PUERPERAL
 #        0411020021 EMBRIOTOMIA
-        procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018', '0411010026', 
+        procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018', '0411010026',
                       '0411010034', '0411010042', '0411020013', '0411020021')
         if (x.procobst==TRUE) {
             tamini <- nrow(x)
@@ -73,7 +73,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
       message( c("Exclu\u00EDdos ", fr, " (", pfr,
                          "\u0025) "), "registros de procedimentos obst\u00E9tricos.")
         }
-        
+
         #   Exclusão das AIHs de longa permanência
         #--------------------------------------------
         if (longa==FALSE) {
@@ -86,20 +86,20 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
                                 "registros de AIH de longa perman\u00EAncia.")
           message("Exclu\u00EDdos ", fr, " (", pfr, "\u0025) registros de AIH de longa perman\u00EAncia.")
         }
-        exportados = paste(c("Exportados", 
-                             nrow(x), 
+        exportados = paste(c("Exportados",
+                             nrow(x),
                              pexportados <- round((1-(nlidos-nrow(x))/nlidos)*100,1),
                              "registros."))
         exportados
-        message(paste(c("Exportados ", 
-                        suppressWarnings(formatC(length(x[,1]), big.mark = ".")), 
+        message(paste(c("Exportados ",
+                        suppressWarnings(formatC(length(x[,1]), big.mark = ".")),
                         " (", pexportados, "\u0025) registros.")))
-        
-        # resumo = rbind(suppressWarnings(importados), 
+
+        # resumo = rbind(suppressWarnings(importados),
         #                suppressWarnings(exists(excluidos.lp)),
         #                suppressWarnings(excluidos.obst),
         #                exportados)
-        resumo = rbind(importados, 
+        resumo = rbind(importados,
                        # excluidos.lp,
                        # suppressWarnings(excluidos.obst),
                        exportados)
@@ -126,41 +126,44 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
         }
         rownames(resumo) = NULL
         resumo = as.data.frame(resumo)
-        
-        
+
+
         #   Criar as variáveis do banco final
         #--------------------------------------------
         cid = as.character(x$DIAG_PRINC)
         nasc <- as.Date(format(x$NASC), format="%Y%m%d")
         data.inter <- as.Date(format(x$DT_INTER), format="%Y%m%d")
-        data.saida <- as.Date(format(x$DT_SAIDA), format="%Y%m%d") 
+        data.saida <- as.Date(format(x$DT_SAIDA), format="%Y%m%d")
         COD_IDADE <- as.character(x$COD_IDADE)
-        idade <- ifelse(COD_IDADE == 4, x$IDADE, 
-                 ifelse(COD_IDADE  < 4, 0,
-                 ifelse(COD_IDADE == 5, x$IDADE+100, NA)))
-        comment(idade) <- "em anos completos"
-        fxetar <- cut(idade, include.lowest=TRUE, right=FALSE, 
-                      breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade)), 
-                      labels=c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos", 
-                               " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos", 
-                               "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
-                               "18anos", "19anos", "20-24", "25-29", "30-34", "35-39", 
-                               "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74",
-                               "75-79", "80 +")        
-                        )
-        fxetar5 <- cut(idade, right=FALSE, include.lowest=TRUE, 
-                       breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade)), 
-                       labels=c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34","35-39",
-                                "40-44","45-49","50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
-                                "80 +")
-                         )
+        # idade <- ifelse(COD_IDADE == 4, x$IDADE,
+        #          ifelse(COD_IDADE  < 4, 0,
+        #          ifelse(COD_IDADE == 5, x$IDADE+100, NA)))
+        # comment(idade) <- "em anos completos"
+        # fxetar <- cut(idade, include.lowest=TRUE, right=FALSE,
+        #               breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade)),
+        #               labels=c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
+        #                        " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos",
+        #                        "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
+        #                        "18anos", "19anos", "20-24", "25-29", "30-34", "35-39",
+        #                        "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74",
+        #                        "75-79", "80 +")
+        #                 )
+        # fxetar5 <- cut(idade, right=FALSE, include.lowest=TRUE,
+        #                breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade)),
+        #                labels=c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34","35-39",
+        #                         "40-44","45-49","50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
+        #                         "80 +")
+        #                  )
+        idade <- csapAIH::idadeSUS(x)["idade"]
+        fxetar <- csapAIH::idadeSUS(x)["fxetar.det"]
+        fxetar5 <- csapAIH::idadeSUS(x)["fxetar5"]
         munres   <- x$MUNIC_RES
         munint   <- x$MUNIC_MOV
         sexo     <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
         n.aih    <- as.character(x$N_AIH)
         proc.rea <- x$PROC_REA
         proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
-                           #, labels=c('sim', 'nao'))  
+                           #, labels=c('sim', 'nao'))
 #         Hmisc::label(munres)   <- 'Munic\u00EDpio de resid\u00EAncia'
 #         Hmisc::label(munint)   <- 'Munic\u00EDpio de interna\u00E7\u00E3o'
 #         Hmisc::label(n.aih)    <- 'N\u00B0 da AIH'
@@ -170,7 +173,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
 #         Hmisc::label(fxetar5)  <- 'Faixa et\u00E1ria quinquenal'
 #         if(x.procobst==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obst\u00E9trico'
     }
-# 
+#
     #=====================================
     ## Criar as variáveis 'CSAP' e 'grupo'
     #=====================================
@@ -194,10 +197,10 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     #GRUPO 04 - Deficiências nutricionais
     g04 <- ifelse(cid >= "E40" & cid < "E47" | cid >= "E50" & cid < "E65", 1, 2)
     #GRUPO 05 - Infec. ouvido, nariz e garganta
-    g05 <- ifelse(substr(cid, 1,3)=="H66" | cid >= "J0" & cid < "J04" | substr(cid, 1,3)=="J06" | 
+    g05 <- ifelse(substr(cid, 1,3)=="H66" | cid >= "J0" & cid < "J04" | substr(cid, 1,3)=="J06" |
                   substr(cid, 1,3)=="J31", 1, 2)
     #GRUPO 06 - Pneumonias bacterianas
-    g06 <- ifelse(cid >= "J13"  & cid < "J15" | cid >= "J153" & cid <= "J154" | 
+    g06 <- ifelse(cid >= "J13"  & cid < "J15" | cid >= "J153" & cid <= "J154" |
                   cid >= "J158" & cid <= "J159" | cid == "J181", 1, 2)
     #GRUPO 07 - Asma
     g07 <- ifelse(cid >= "J45" & cid < "J47", 1, 2)
@@ -216,7 +219,7 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     #GRUPO 14 - Epilepsias
     g14 <- ifelse(cid >= "G40" & cid < "G42", 1, 2)
     #GRUPO 15 - Inf. rim e trato urinário
-    g15 <- ifelse(cid >= "N10" & cid < "N13" | cid == "N390" | substr(cid, 1,3) == "N34" | 
+    g15 <- ifelse(cid >= "N10" & cid < "N13" | cid == "N390" | substr(cid, 1,3) == "N34" |
                   substr(cid, 1,3) == "N30", 1, 2)
     #GRUPO 16 - Inf. pele e tec. cel. subcutâneo
     g16 <- ifelse(substr(cid, 1,3) == "A46" | cid >= "L01" & cid < "L05" | substr(cid, 1,3) == "L08", 1, 2)
@@ -226,35 +229,35 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
     g18 <- ifelse(cid >= "K25" & cid < "K29" | cid >= "K920" & cid <= "K922", 1, 2)
     #GRUPO 19 - D. relacionadas ao pré-natal e parto
     g19 <- ifelse(substr(cid, 1,3)=="O23" | substr(cid, 1,3)=="A50" | substr(cid, 1,4)=="P350", 1, 2)
-    
-    csap <- factor(ifelse(g01==1 | g02==1 | g03==1 | g04==1 | g05==1 | g06==1 | g07==1 | 
-                          g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 | 
+
+    csap <- factor(ifelse(g01==1 | g02==1 | g03==1 | g04==1 | g05==1 | g06==1 | g07==1 |
+                          g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 |
                           g15==1 | g16==1 | g17==1 | g18==1 | g19==1, 1, 2), labels=c('sim', "n\u00E3o"))
 
-    grupo <- ifelse(g01==1, "g01", ifelse(g02==1, "g02", ifelse(g03==1, "g03", ifelse(g04==1, "g04", 
-             ifelse(g05==1, "g05", ifelse(g06==1, "g06", ifelse(g07==1, "g07", ifelse(g08==1, "g08", 
+    grupo <- ifelse(g01==1, "g01", ifelse(g02==1, "g02", ifelse(g03==1, "g03", ifelse(g04==1, "g04",
+             ifelse(g05==1, "g05", ifelse(g06==1, "g06", ifelse(g07==1, "g07", ifelse(g08==1, "g08",
              ifelse(g09==1, "g09", ifelse(g10==1, "g10", ifelse(g11==1, "g11", ifelse(g12==1, "g12",
-             ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16", 
+             ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16",
              ifelse(g17==1, "g17", ifelse(g18==1, "g18", ifelse(g19==1, "g19", "n\u00E3o-CSAP")))))))))))))))))))
-    
+
 ### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
     niveis = c(paste0("g0", 1:9), paste0("g1", 0:9), "n\u00E3o-CSAP")
     grupo = factor(grupo, levels = niveis)
-    
+
 ############################
 ### Montar o objeto final
 ############################
 ## Se for uma base do SIH/SUS:
     if (sihsus==TRUE) {
-      banco <- data.frame(n.aih, munres, munint, sexo, nasc, idade, fxetar, fxetar5, 
-                          csap, grupo, cid, proc.rea, data.inter, data.saida) 
+      banco <- data.frame(n.aih, munres, munint, sexo, nasc, idade, fxetar, fxetar5,
+                          csap, grupo, cid, proc.rea, data.inter, data.saida)
          attr(banco$n.aih, which = "label") <- "No. da AIH"
          attr(banco$munres, which = "label") <- "Municipio de residencia"
          attr(banco$munint, which = "label") <- "Municipio de internacao"
          attr(banco$sexo, which = "label") <- "Sexo"
          attr(banco$nasc, which = "label") <- "Data de nascimento"
          attr(banco$idade, which = "label") <- "Idade"
-         attr(banco$fxetar, which = "label") <- "Faixa etaria detalhada"
+         attr(banco$fxetar.det, which = "label") <- "Faixa etaria detalhada"
          attr(banco$fxetar5, which = "label") <- "Faixa etaria quinquenal"
          attr(banco$csap, which = "label") <- "CSAP"
          attr(banco$grupo, which = "label") <- "Grupo de causa CSAP"
@@ -263,13 +266,13 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
          attr(banco$data.inter, which = "label") <- "Data de internacao"
          attr(banco$data.saida, which = "label") <- "Data de saida"
          attr(banco, which = "resumo") <- resumo
-      if (cep==TRUE) {  
-        banco$cep <- x$CEP 
+      if (cep==TRUE) {
+        banco$cep <- x$CEP
         # Hmisc::label(banco$cep) <- 'C\u00F3digo de Endere\u00E7amento Postal'
          attr(banco$cep, which = "label") <- "Codigo de Enderecamento Postal"
         }
       if (cnes==TRUE) {
-        banco$cnes <- x$CNES 
+        banco$cnes <- x$CNES
         # Hmisc::label(banco$cnes) <- 'N\u00B0 do hospital no CNES'
          attr(banco$cnes, which = "label") <- "No. do hospital no CNES"
       }
@@ -277,14 +280,14 @@ function(x, grupos=TRUE, sihsus=TRUE, x.procobst=TRUE, longa=FALSE, cep=TRUE, cn
         banco$proc.obst <- proc.obst
          attr(banco$proc.obst, which = "label") <- "Procedimento obstetrico"
       }
-      if (grupos==FALSE ) { banco <- subset(banco, select = - grupo) } 
+      if (grupos==FALSE ) { banco <- subset(banco, select = - grupo) }
     }
 ## Se não for uma base do SIH/SUS:
-    if ( sihsus==FALSE & grupos==TRUE ) { banco <- data.frame(csap, grupo, cid) } 
-    if ( sihsus ==FALSE & grupos==FALSE ) { 
-      banco <- csap 
+    if ( sihsus==FALSE & grupos==TRUE ) { banco <- data.frame(csap, grupo, cid) }
+    if ( sihsus ==FALSE & grupos==FALSE ) {
+      banco <- csap
       class(banco) <- 'factor'
     }
-    
+
     return(banco)
 }
