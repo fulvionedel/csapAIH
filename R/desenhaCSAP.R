@@ -66,6 +66,12 @@ desenhaCSAP <- function(banco, titulo = NULL, onde, quando = NULL, t.hjust = 1, 
     # x = x[2:1]
     x = data.frame( "Grupo" = csapAIH::nomesgruposCSAP(),
                     "Casos" = tabulate(banco$grupo)[1:19] )
+# # O PROBLEMA é que desse jeito não dá pra aproveitar aproveitar as 'facet' do ggplot
+# # ISSO DEVE SER MUDADO
+#     df <- csapsc2016[csapsc2016$grupo != 'não-CSAP',]
+#     grafico <- ggplot(df, aes(x=reorder(grupo,grupo,
+#                                         function(x) length(x)))) +
+#       ggplot2::geom_bar(fill = heat.colors(19)) +
 
     grafico = ggplot2::ggplot(x, ggplot2::aes(x=stats::reorder(Grupo, Casos),
                                               y = Casos,

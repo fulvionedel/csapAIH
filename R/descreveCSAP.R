@@ -50,7 +50,7 @@ descreveCSAP <- function(grupos, digits = 2){
   #                  )
   nomesgrupos = nomesgruposCSAP()
   nomes = c(nomesgrupos, names(tabelagrupos[20:22]))
-  tabelagrupos.formatada = formatC(tabelagrupos, digits = 0, big.mark = ".", format = "d")
+  tabelagrupos.formatada = suppressWarnings(formatC(tabelagrupos, digits = 0, big.mark = ".", format = "d"))
   proptotal =
     suppressWarnings(
       formatC(proptotal, digits = digits, format = "f", decimal.mark = ",") )
