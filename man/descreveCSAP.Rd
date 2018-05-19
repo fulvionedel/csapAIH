@@ -4,10 +4,12 @@
 \alias{descreveCSAP}
 \title{Tabular Condicoes Sensiveis a Atencao Primaria}
 \usage{
-descreveCSAP(grupos)
+descreveCSAP(grupos, digits = 2)
 }
 \arguments{
-\item{grupos}{Vetor com os grupos de causa CSAP, de acordo com o resultado da função \code{\link{csapAIH}}}
+\item{grupos}{Vetor com os grupos de causa CSAP, de acordo com o resultado da função \code{\link{csapAIH}}.}
+
+\item{digits}{Número de decimais nas proporções apresentadas.}
 }
 \description{
 Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de causa
