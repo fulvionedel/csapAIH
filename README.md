@@ -100,4 +100,5 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
 
 ![desenhaCSAP(csap, titulo = "auto", onde = "SC", cte.x = 1, y.size = 10)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAP2.jpeg) 
 
-***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.2.pdf
+***Veja o manual do pacote para mais detalhes:*** https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH-manual.pdf
+ 
