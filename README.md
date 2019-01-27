@@ -77,38 +77,43 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
         Exportados 51.883 (85,8%) registros.
        
  **Tabela**
-  descreveCSAP(csap)
+ 
+    descreveCSAP(csap)
                                      Grupo  Casos %Total %CSAP
-  1                      1.Prev. vacinação    117   0,23  1,08
-  2                       2.Gastroenterite    798   1,54  7,36
-  3                               3.Anemia     73   0,14  0,67
-  4                      4.Def. nutricion.    241   0,46  2,22
-  5      5.Infec. ouvido, nariz e garganta    168   0,32  1,55
-  6               6.Pneumonias bacterianas    653   1,26  6,02
-  7                                 7.Asma    234   0,45  2,16
-  8                    8.Pulmonares (DPOC)  1.209   2,33 11,15
-  9                          9.Hipertensão    146   0,28  1,35
-  10                             10.Angina  1.004   1,94  9,26
-  11                    11.Insuf. cardíaca  1.393   2,68 12,84
-  12                  12.Cerebrovasculares  1.373   2,65 12,66
-  13                  13.Diabetes mellitus    739   1,42  6,81
-  14                         14.Epilepsias    330   0,64  3,04
-  15                    15.Infec. urinária  1.358   2,62 12,52
-  16           16.Infec. pele e subcutâneo    459   0,88  4,23
-  17 17.D. infl. órgãos pélvicos femininos    133   0,26  1,23
-  18            18.Úlcera gastrointestinal    195   0,38  1,80
-  19                  19.Pré-natal e parto    222   0,43  2,05
-  20                            Total CSAP 10.845  20,90   100
-  21                              não-CSAP 41.038  79,10    --
-  22                  Total de internações 51.883    100    --
+    1                      1.Prev. vacinação    117   0,23  1,08
+    2                       2.Gastroenterite    798   1,54  7,36
+    3                               3.Anemia     73   0,14  0,67
+    4                      4.Def. nutricion.    241   0,46  2,22
+    5      5.Infec. ouvido, nariz e garganta    168   0,32  1,55
+    6               6.Pneumonias bacterianas    653   1,26  6,02
+    7                                 7.Asma    234   0,45  2,16
+    8                    8.Pulmonares (DPOC)  1.209   2,33 11,15
+    9                          9.Hipertensão    146   0,28  1,35
+    10                             10.Angina  1.004   1,94  9,26
+    11                    11.Insuf. cardíaca  1.393   2,68 12,84
+    12                  12.Cerebrovasculares  1.373   2,65 12,66
+    13                  13.Diabetes mellitus    739   1,42  6,81
+    14                         14.Epilepsias    330   0,64  3,04
+    15                    15.Infec. urinária  1.358   2,62 12,52
+    16           16.Infec. pele e subcutâneo    459   0,88  4,23
+    17 17.D. infl. órgãos pélvicos femininos    133   0,26  1,23
+    18            18.Úlcera gastrointestinal    195   0,38  1,80
+    19                  19.Pré-natal e parto    222   0,43  2,05
+    20                            Total CSAP 10.845  20,90   100
+    21                              não-CSAP 41.038  79,10    --
+    22                  Total de internações 51.883    100    --
 
 
 **Gráfico**
+
 gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS")
 
+  gr
 ![desenhaCSAP(csap, titulo = "auto", onde = "RS")](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018.jpeg) 
   
 *Estratificado por categoria de outra variável presente no banco de dados:*
+  
+  gr + ggplot2::facet_grid(~sexo)
   
 ![gr + ggplot2::facet_grid(~sexo)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018sexo.jpeg)  
   
