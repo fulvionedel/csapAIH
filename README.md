@@ -3,7 +3,7 @@ Classificar Condições Sensíveis à Atenção Primária
 
 ### Apresentação
 
-Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária (CSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH".
+Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária (CSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH".
 
 ### Justificativa
 
@@ -39,11 +39,11 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
 
 ### Conteúdo
 
-Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html).
+Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html). Agora na versão 0.0.3, a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, mas permite o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. 
 
 ### Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` depende do pacote `ggplot2` e portanto é necessário ter este pacote instalado para seu funcionamento. A ausência de `ggplot2` não afeta o funcionamento das demais funções do pacote `csapAIH`.
+A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para seu funcionamento.
 
 ### Exemplos de uso
 #### Leitura dos arquivos
