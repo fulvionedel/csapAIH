@@ -25,21 +25,25 @@ As bases de dados do SIH e do SIM têm um campo \code{IDADE} que não é a idade
 }
 \examples{
 \dontrun{
-df <- read.dbc::read.dbc("rdrs1701.dbc")
+df <- read.dbc::read.dbc("rdrs1801.dbc")
 idades <- idadeSUS(df)
 
 # Em ordem, para pegar apenas um fator com a categoria desejada:
 ## Idade em anos completos
-idade.ano.a <- idadeSUS(df)[1]
-idade.ano.b <- idadeSUS(df)[,1]
-idade.ano.c <- idadeSUS(df)["idade"]
+idade.ano.a <- idadeSUS(df)[1] # "data.frame" com 1 variável
+idade.ano.b <- idadeSUS(df)[,1] # vetor numérico
+idade.ano.c <- idadeSUS(df)["idade"] # "data.frame" com 1 variável
+all.equal(idade.ano.a, idade.ano.b)
+all.equal(idade.ano.a, idade.ano.c)
+all.equal(as.numeric(as.matrix(idade.ano.a)), idade.ano.b)
+attributes (idade.ano.b)
 
 ## Faixa etária detalhada
 idade.detalhada.a <- idadeSUS(df)[2]
 idade.detalhada.b <- idadeSUS(df)[,2]
 idade.detalhada.c <- idadeSUS(df)["fxetar.det"]
 
-## Faixa etária quinqunal
+## Faixa etária quinquenal
 idade.fxet5.a <- idadeSUS(df)[3]
 idade.fxet5.a <- idadeSUS(df)[,3]
 idade.fxet5.a <- idadeSUS(df)["fxetar5"]
@@ -57,7 +61,4 @@ idade.fxet5 <- idadeSUS(aih100)["fxetar5"] ; str(idade.fxet5)
 \references{
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2014. SIH – Sistema de Informação Hospitalar do SUS: Manual Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015. 87p.
 Brasil. Ministério da Saúde. DATASUS. Tab para Windows - TabWin. Ministério da Saúde: Brasília, 2010.
-}
-\author{
-Fúlvio B. Nedel
 }

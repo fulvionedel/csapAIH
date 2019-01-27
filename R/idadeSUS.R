@@ -1,10 +1,6 @@
 #' @title Computa a idade nas bases de dados do SIH/SUS e SIM
-#' @author Fúlvio B. Nedel
-#'
 #' @aliases idadeSUS
-#' @aliases legoAIH
 #' @aliases csapAIH
-#' @aliases fxetar_quinq
 #'
 #' @description Computa a idade, "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 #'
@@ -25,21 +21,25 @@
 #'
 #' @examples
 #' \dontrun{
-#' df <- read.dbc::read.dbc("rdrs1701.dbc")
+#' df <- read.dbc::read.dbc("rdrs1801.dbc")
 #' idades <- idadeSUS(df)
 #'
 #' # Em ordem, para pegar apenas um fator com a categoria desejada:
 #' ## Idade em anos completos
-#' idade.ano.a <- idadeSUS(df)[1]
-#' idade.ano.b <- idadeSUS(df)[,1]
-#' idade.ano.c <- idadeSUS(df)["idade"]
+#' idade.ano.a <- idadeSUS(df)[1] # "data.frame" com 1 variável
+#' idade.ano.b <- idadeSUS(df)[,1] # vetor numérico
+#' idade.ano.c <- idadeSUS(df)["idade"] # "data.frame" com 1 variável
+#' all.equal(idade.ano.a, idade.ano.b)
+#' all.equal(idade.ano.a, idade.ano.c)
+#' all.equal(as.numeric(as.matrix(idade.ano.a)), idade.ano.b)
+#' attributes (idade.ano.b)
 #'
 #' ## Faixa etária detalhada
 #' idade.detalhada.a <- idadeSUS(df)[2]
 #' idade.detalhada.b <- idadeSUS(df)[,2]
 #' idade.detalhada.c <- idadeSUS(df)["fxetar.det"]
 #'
-#' ## Faixa etária quinqunal
+#' ## Faixa etária quinquenal
 #' idade.fxet5.a <- idadeSUS(df)[3]
 #' idade.fxet5.a <- idadeSUS(df)[,3]
 #' idade.fxet5.a <- idadeSUS(df)["fxetar5"]

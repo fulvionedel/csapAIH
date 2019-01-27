@@ -6,12 +6,16 @@
 \usage{
 nomesgruposCSAP()
 }
+\value{
+Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.
+}
 \description{
-Lista os 19 grupos de causa CSAP, em ordem crescente
+Lista os 19 grupos de causa CSAP, em ordem crescente.
+}
+\examples{
+nomesgruposCSAP()
+
 }
 \seealso{
 \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}
-}
-\author{
-Fúlvio B. Nedel
 }

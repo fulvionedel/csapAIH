@@ -9,9 +9,9 @@ Contém todas as variáveis dos arquivos atualmente disponibilizados no DATASUS.
 }
 \usage{data("aih100")}
 \format{
-  A data frame with 100 observations on the following 93 variables.
+  Um banco de dados (classe \code{data.frame}) com 100 observações e as seguintes 93 variables:
   \describe{
-    \code{UF_ZI}, \code{ANO_CMPT}, \code{MES_CMPT}, \code{ESPEC}, \code{CGC_HOSP}, \code{N_AIH}, \code{IDENT}, \code{CEP}, \code{MUNIC_RES}, \code{NASC}, \code{SEXO}, \code{UTI_MES_IN}, \code{UTI_MES_AN}, \code{UTI_MES_AL}, \code{UTI_MES_TO}, \code{MARCA_UTI}, \code{UTI_INT_IN}, \code{UTI_INT_AN}, \code{UTI_INT_AL}, \code{UTI_INT_TO}, \code{DIAR_ACOM}, \code{QT_DIARIAS}, \code{PROC_SOLIC}, \code{PROC_REA}, \code{VAL_SH}, \code{VAL_SP}, \code{VAL_SADT}, \code{VAL_RN}, \code{VAL_ACOMP}, \code{VAL_ORTP}, \code{VAL_SANGUE}, \code{VAL_SADTSR}, 
+    \code{UF_ZI}, \code{ANO_CMPT}, \code{MES_CMPT}, \code{ESPEC}, \code{CGC_HOSP}, \code{N_AIH}, \code{IDENT}, \code{CEP}, \code{MUNIC_RES}, \code{NASC}, \code{SEXO}, \code{UTI_MES_IN}, \code{UTI_MES_AN}, \code{UTI_MES_AL}, \code{UTI_MES_TO}, \code{MARCA_UTI}, \code{UTI_INT_IN}, \code{UTI_INT_AN}, \code{UTI_INT_AL}, \code{UTI_INT_TO}, \code{DIAR_ACOM}, \code{QT_DIARIAS}, \code{PROC_SOLIC}, \code{PROC_REA}, \code{VAL_SH}, \code{VAL_SP}, \code{VAL_SADT}, \code{VAL_RN}, \code{VAL_ACOMP}, \code{VAL_ORTP}, \code{VAL_SANGUE}, \code{VAL_SADTSR},
 \code{VAL_TRANSP},
 \code{VAL_OBSANG},
 \code{VAL_PED1AC},
@@ -23,7 +23,7 @@ Contém todas as variáveis dos arquivos atualmente disponibilizados no DATASUS.
 \code{DIAG_PRINC},
 \code{DIAG_SECUN},
 \code{COBRANCA},
-\code{NATUREZA}, 
+\code{NATUREZA},
 \code{NAT_JUR},
 \code{GESTAO},
 \code{RUBRICA},
@@ -73,7 +73,7 @@ Contém todas as variáveis dos arquivos atualmente disponibilizados no DATASUS.
 \code{VAL_SP_FED},
 \code{VAL_SH_GES},
 \code{VAL_SP_GES}
-} } 
+} }
 %\details{
 %%  ~~ If necessary, more details than the __description__ above ~~
 %}
@@ -82,8 +82,7 @@ Contém todas as variáveis dos arquivos atualmente disponibilizados no DATASUS.
 %%  ~~ reference to a publication or URL from which the data were obtained ~~
 }
 \references{
-%%  ~~ possibly secondary sources and usages ~~
-Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2010. Manual técnico operacional do Sistema de Informação Hospitalar: orientações técnicas. Versão 01.2013. Ministério da Saúde: Brasília, 2013.
 }
 \examples{
 data(aih100)
