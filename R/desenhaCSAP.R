@@ -29,7 +29,7 @@
 #' @param t.size Valor para definição do tamanho de letra do título, válido apenas para gráficos com ggplot. Default é 12.
 #' @param x.size Tamanho da letra do eixo x, válido apenas para gráficos com ggplot. Default é 10.
 #' @param y.size Tamanho da letra do eixo y, válido apenas para gráficos com ggplot. Default é 12.
-#' @param limsup Valor para ajuste do espaçamento do eixo de frequências, válido apenas para gráficos com ggplot.
+#' @param limsup Valor para ajuste do espaçamento do eixo de frequências, válido apenas para gráficos com ggplot. Quando o eixo representa porcentagens, deve ser expresso em proporção.
 #' @param ... Permite o uso de argumentos de \code{\link{plot}} e \code{\link{barplot}}
 #'
 #' @return Na opção padrão e com \code{\link[ggplot2]{ggplot2}} instalado, devolve um objeto das classes "gg" e "ggplot", com o gráfico.

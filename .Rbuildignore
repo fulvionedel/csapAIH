@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 docs/*
 tests/*
+^data-raw/*

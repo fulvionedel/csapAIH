@@ -50,7 +50,7 @@ desenhaCSAP(dados, jaetabela = FALSE, tipo.graf = "ggplot",
 
 \item{y.size}{Tamanho da letra do eixo y, válido apenas para gráficos com ggplot. Default é 12.}
 
-\item{limsup}{Valor para ajuste do espaçamento do eixo de frequências, válido apenas para gráficos com ggplot.}
+\item{limsup}{Valor para ajuste do espaçamento do eixo de frequências, válido apenas para gráficos com ggplot. Quando o eixo representa porcentagens, deve ser expresso em proporção.}
 
 \item{...}{Permite o uso de argumentos de \code{\link{plot}} e \code{\link{barplot}}}
 }
