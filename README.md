@@ -123,7 +123,6 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS")
 
 ![gr + ggplot2::facet_grid(~munres)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018capital.jpeg)  
 
-desenhaCSAPRS2018capital
 
 ***Veja o manual do pacote para mais detalhes:*** 
 https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.3.pdf
