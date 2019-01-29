@@ -121,7 +121,7 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS")
 > gr + ggplot2::facet_wrap(~ munres == "431490", 
                            labeller = as_labeller(c("FALSE" = "Interior", "TRUE" = "Capital")))
 
-![gr + ggplot2::facet_grid(~munres)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018capital.png)  
+![gr + ggplot2::facet_grid(~munres)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018capital.jpeg)  
 
 desenhaCSAPRS2018capital
 
