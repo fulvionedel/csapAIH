@@ -26,9 +26,9 @@ A principal função do pacote, \code{\link{csapAIH}}, classifica os códigos da
    }
 }
 \references{
-Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No. 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 
-Nedel FB. csapAIH: uma função para a classificação das condições sensíveis à atenção primária no programa estatístico R. Epidemiol. Serv. Saúde. 2017; 26(1):199-209. Disponível em: http://scielo.iec.gov.br/scielo.php?script=sci_arttext&pid=S1679-49742017000100199&lng=pt. http://dx.doi.org/10.5123/s1679-49742017000100021.
+Nedel FB. csapAIH: uma função para a classificação das condições sensíveis à atenção primária no programa estatístico R. Epidemiol. Serv. Saúde. 2017; 26(1):199-209. Disponível em: \cr \url{http://scielo.iec.gov.br/scielo.php?script=sci_arttext&pid=S1679-49742017000100199&lng=pt}.
 }
 \keyword{ACSC,}
 \keyword{AIH-SUS}
