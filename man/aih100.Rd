@@ -5,7 +5,7 @@
 Banco com 100 registros de um 'arquivo da AIH' (RD??????.DBF).
 }
 \description{
-Contém variáveis dos arquivos disponibilizados no DATASUS. Os arquivos atuais têm 113 variáveis, mas não passa nos testes por incluir campos com caracteres não-ASCII.
+Contém variáveis dos arquivos disponibilizados no DATASUS. Os arquivos atuais têm 113 variáveis, mas não passam nos testes por incluir campos com caracteres não-ASCII.
 }
 \usage{data("aih100")}
 \format{

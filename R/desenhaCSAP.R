@@ -322,14 +322,19 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
 
     if( !is.null(limsup) ) {
       if(valores == "porcento") {
-        grafico <- grafico +
-          ggplot2::scale_y_continuous(labels = function (x) paste(floor(x*100),"%"),
-                                      limits = c(0, limsup))
+        grafico <-
+          # suppressMessages(print(
+            grafico +
+              ggplot2::scale_y_continuous(labels = function (x) paste(floor(x*100),"%"),
+                                          limits = c(0, limsup))
+            # ))
       } else
-        grafico <- grafico + ggplot2::ylim(0, limsup)
+        grafico <-
+          # suppressMessages(print(
+            grafico +
+              ggplot2::ylim(0, limsup)
+            # ) )
     }
-
-    grafico <- suppressMessages(grafico)
 
     aih100 <- NULL # pra evitar a nota "no visible binding" ao rodar o exemplo
     # return(grafico)
@@ -337,6 +342,7 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
     # if (colorir == "cinza") {
       # grafico <- suppressMessages(grafico + ggplot2::scale_fill_manual(values = cores))
     # }
+
     grafico
   }
 }

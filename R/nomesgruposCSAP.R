@@ -17,7 +17,7 @@ nomesgruposCSAP <- function() {
   nomesgrupos <- c("1.Prev. vacina\U00E7\U00E3o",
                    "2.Gastroenterite",
                    "3.Anemia",
-                   "4.Def. nutricion.",
+                   "4.Defic. nutricionais",
                    "5.Infec. ouvido, nariz e garganta",
                    "6.Pneumonias bacterianas",
                    "7.Asma",

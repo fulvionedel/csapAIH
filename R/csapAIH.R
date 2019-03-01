@@ -277,6 +277,8 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         }
         rownames(resumo) <- NULL
         resumo <- as.data.frame(resumo)
+        resumo$freq <- as.numeric(as.character(resumo$freq))
+        resumo$perc <- as.numeric(as.character(resumo$perc))
         #
         # banco final ----
         # Criar as variáveis do banco final
