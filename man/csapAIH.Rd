@@ -6,7 +6,7 @@
 \usage{
 csapAIH(x, grupos = TRUE, sihsus = TRUE, procobst.rm = TRUE,
   parto.rm = TRUE, longa.rm = TRUE, cep = TRUE, cnes = TRUE,
-  arquivo = TRUE, sep, ...)
+  arquivo = TRUE, sep, cid = NULL, ...)
 }
 \arguments{
 \item{x}{alvo da função: um arquivo, banco de dados ou vetor com códigos da CID-10 (ver \code{detalhes});}
@@ -41,6 +41,8 @@ csapAIH(x, grupos = TRUE, sihsus = TRUE, procobst.rm = TRUE,
 \item{arquivo}{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;}
 
 \item{sep}{usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal;}
+
+\item{cid}{identifica a varivável contendo os códigos da CID-10, em bancos de dados sem a estrutura do SIHSUS; argumento obrigatório nesses casos;}
 
 \item{...}{permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas.}
 }

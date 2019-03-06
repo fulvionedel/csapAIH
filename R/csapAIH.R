@@ -26,6 +26,7 @@
 #' @param cnes argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE};
 #' @param arquivo argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;
 #' @param sep usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal;
+#' @param cid identifica a varivável contendo os códigos da CID-10, em bancos de dados sem a estrutura do SIHSUS; argumento obrigatório nesses casos;
 #' @param ... permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas.
 #'
 #' @details
@@ -138,17 +139,28 @@
 #'
 #' @export
 #'
-csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, ...)
+csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
   {
     # Lego data ===================
     ## Preparar os dados
     ##
-    if (class(x)=='factor') arquivo=FALSE
-    if (class(x)=='data.frame') arquivo=FALSE
-    if (arquivo==FALSE & class(x)!='data.frame') {
-        cid = as.character(x)
-        sihsus=FALSE }
+    if (class(x)=='factor') {
+      cid <- x
+      arquivo <- FALSE
+      sihsus <- FALSE
+    }
+    if (class(x)=='data.frame') arquivo <- FALSE
+    if (sihsus == FALSE) {
+      if (class(x)=='data.frame') {
+        cid <- x[,deparse(substitute(cid))]
+        juntar <- x
+        }
+      # if (class(x)!='data.frame') { cid <- x }
+      # cid = as.character(cid)
+    }
+    #
     # Leitura do arquivo de dados
+    #
     if (arquivo==TRUE) {
       if (grepl('dbf', x, ignore.case=TRUE)==TRUE) {
         x <- foreign::read.dbf(x, as.is=TRUE, ...)
@@ -424,10 +436,13 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         }
       }
       ## Se não for uma base do SIH/SUS:
-      if ( sihsus==FALSE & grupos==TRUE ) { banco <- data.frame(csap, grupo, cid) }
-      if ( sihsus ==FALSE & grupos==FALSE ) {
+      if ( sihsus == FALSE & grupos == TRUE ) { banco <- data.frame(csap, grupo, cid) }
+      if ( sihsus == FALSE & grupos == FALSE ) {
         banco <- csap
         class(banco) <- 'factor'
+      }
+      if (class(x)=='data.frame' & sihsus == FALSE) {
+        banco <- cbind(juntar, banco)
       }
 
       return(banco)
