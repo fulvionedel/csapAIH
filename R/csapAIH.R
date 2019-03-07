@@ -149,9 +149,9 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       arquivo <- FALSE
       sihsus <- FALSE
     }
-    if (class(x)=='data.frame') arquivo <- FALSE
+    if (class(x)=='data.frame' | class(x)=='data.table') arquivo <- FALSE
     if (sihsus == FALSE) {
-      if (class(x)=='data.frame') {
+      if (class(x)=='data.frame' | class(x)=='data.table') {
         cid <- x[,deparse(substitute(cid))]
         juntar <- x
         }
@@ -204,11 +204,19 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         fr.form <- suppressWarnings(format(fr, big.mark = "."))
         pfr.form <- format(pfr, decimal.mark = ",")
         if (tipo == "proc") {
-          excluidos.obst <- c("Exclu\u00EDdos", fr, pfr, "registros de procedimentos obst\u00E9tricos.")
-          message( c("Exclu\u00EDdos ", fr.form, " (", pfr.form, "\u0025) "), "registros de procedimentos obst\u00E9tricos." )
+          excluidos.obst <- c("Exclu\u00EDdos \t",
+                              fr, pfr,
+                              "registros de procedimentos obst\u00E9tricos.")
+          message( c("Exclu\u00EDdos ",
+                     fr.form, " (", pfr.form, "\u0025) "),
+                   "registros de procedimentos obst\u00E9tricos." )
         } else if (tipo == "diag") {
-          excluidos.obst <- c("Exclu\u00EDdos", fr, pfr, "registros de parto.")
-          message(c("Exclu\u00EDdos ", fr.form, " (", pfr.form, "\u0025) "), "registros de parto.")
+          excluidos.obst <- c("Exclu\u00EDdos",
+                              fr, pfr,
+                              "registros de parto.")
+          message(c("Exclu\u00EDdos ",
+                    fr.form, " (", pfr.form, "\u0025) "),
+                  "registros de parto.")
         }
         excluidos.obst
       }
@@ -257,7 +265,7 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
           fr.form <- suppressWarnings(format(fr, big.mark = "."))
           pfr.form <- format(pfr, decimal.mark = ",")
           x <- subset(x, x$IDENT==1)
-          excluidos.lp <- c("Exclu\u00EDdos", fr, pfr,
+          excluidos.lp <- c("Exclu\u00EDdos \t", fr, pfr,
                             "registros de AIH de longa perman\u00EAncia.")
           message("Exclu\u00EDdos ", fr.form, " (", pfr.form, "\u0025) registros de AIH de longa perman\u00EAncia.")
         }
