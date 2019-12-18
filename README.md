@@ -76,7 +76,7 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
         Excluídos 366 (0,6%) registros de AIH de longa permanência.
         Exportados 51.883 (85,8%) registros.
        
- **Tabela**
+ **Tabela "bruta"**
  
     descreveCSAP(csap)
                                      Grupo  Casos %Total %CSAP
@@ -102,6 +102,35 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
     20                            Total CSAP 10.845  20,90   100
     21                              não-CSAP 41.038  79,10    --
     22                  Total de internações 51.883    100    --
+
+**Tabela para apresentação ou impressão (com a função `kable`, do pacote `knitr`)**
+
+    knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
+
+|Grupo                                 |  Casos| %Total| %CSAP|
+|:-------------------------------------|------:|------:|-----:|
+|1.Prev. vacinação                     |    118|   0,23|  1,09|
+|2.Gastroenterite                      |    802|   1,54|  7,38|
+|3.Anemia                              |     73|   0,14|  0,67|
+|4.Defic. nutricionais                 |    241|   0,46|  2,22|
+|5.Infec. ouvido, nariz e garganta     |    168|   0,32|  1,55|
+|6.Pneumonias bacterianas              |    653|   1,26|  6,01|
+|7.Asma                                |    234|   0,45|  2,15|
+|8.Pulmonares (DPOC)                   |  1.213|   2,34| 11,17|
+|9.Hipertensão                         |    147|   0,28|  1,35|
+|10.Angina                             |  1.005|   1,94|  9,25|
+|11.Insuf. cardíaca                    |  1.394|   2,68| 12,83|
+|12.Cerebrovasculares                  |  1.373|   2,64| 12,64|
+|13.Diabetes mellitus                  |    743|   1,43|  6,84|
+|14.Epilepsias                         |    331|   0,64|  3,05|
+|15.Infec. urinária                    |  1.360|   2,62| 12,52|
+|16.Infec. pele e subcutâneo           |    459|   0,88|  4,22|
+|17.D. infl. órgãos pélvicos femininos |    133|   0,26|  1,22|
+|18.Úlcera gastrointestinal            |    195|   0,38|  1,79|
+|19.Pré-natal e parto                  |    222|   0,43|  2,04|
+|Total CSAP                            | 10.864|  20,92|   100|
+|não-CSAP                              | 41.059|  79,08|    --|
+|Total de internações                  | 51.923|    100|    --|
 
 
 **Gráfico**

@@ -2,7 +2,7 @@ Package: csapAIH
 Type: Package
 Title: Classificar Condicoes Sensiveis a Atencao Primaria
 Version: 0.0.3
-Date: 2019-01-27
+Date: 2019-06-14
 Author: Fúlvio B. Nedel
 Maintainer: Fúlvio B. Nedel <fulvionedel@gmail.com>
 Description: Classifica um vetor com códigos da CID-10 segundo a 
