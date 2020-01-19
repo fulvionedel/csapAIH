@@ -141,6 +141,8 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS")
 ![desenhaCSAP(csap, titulo = "auto", onde = "RS")](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018.jpeg) 
   
 *Estratificado por categoria de outra variável presente no banco de dados:*
+
+Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
   
   gr + ggplot2::facet_grid(~sexo)
   
