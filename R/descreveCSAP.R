@@ -1,7 +1,6 @@
 #' @title Tabular Condicoes Sensiveis a Atencao Primaria
 #' @description Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de causa
 #' @aliases descreveCSAP
-#' @aliases csapAIH
 #'
 #' @param grupos Pode ser:
 #' \itemize{

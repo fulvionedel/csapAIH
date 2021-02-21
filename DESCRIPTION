@@ -18,4 +18,4 @@ LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
 Language: pt-br
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

@@ -4,9 +4,20 @@
 \alias{csapAIH}
 \title{Classificar Condições Sensíveis à Atenção Primária}
 \usage{
-csapAIH(x, grupos = TRUE, sihsus = TRUE, procobst.rm = TRUE,
-  parto.rm = TRUE, longa.rm = TRUE, cep = TRUE, cnes = TRUE,
-  arquivo = TRUE, sep, cid = NULL, ...)
+csapAIH(
+  x,
+  grupos = TRUE,
+  sihsus = TRUE,
+  procobst.rm = TRUE,
+  parto.rm = TRUE,
+  longa.rm = TRUE,
+  cep = TRUE,
+  cnes = TRUE,
+  arquivo = TRUE,
+  sep,
+  cid = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{alvo da função: um arquivo, banco de dados ou vetor com códigos da CID-10 (ver \code{detalhes});}

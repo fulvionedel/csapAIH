@@ -1,6 +1,5 @@
 #' @title Computa a idade nas bases de dados do SIH/SUS e SIM
 #' @aliases idadeSUS
-#' @aliases csapAIH
 #'
 #' @description Computa a idade, "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 #'
