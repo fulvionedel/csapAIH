@@ -12,6 +12,7 @@ desenhaCSAP(
   ordenar = TRUE,
   colorir = TRUE,
   porcentagens = TRUE,
+  val.dig = 0,
   titulo = NULL,
   onde,
   quando = NULL,
@@ -19,6 +20,7 @@ desenhaCSAP(
   t.size = 12,
   x.size = 10,
   y.size = 11,
+  val.size = 2.5,
   limsup = NULL,
   ...
 )
@@ -49,11 +51,13 @@ desenhaCSAP(
 
 \item{porcentagens}{Argumento lógico, válido apenas para gráficos com ggplot. Se \code{TRUE} (padrão), as barras terão escritas sobre elas a porcentagem do grupo de causa sobre o total de internações (ou o total de internações no estrato, em gráficos com \code{\link[ggplot2]{facet_grid}} ou \code{\link[ggplot2]{facet_wrap}}).}
 
+\item{val.dig}{Nº de decimais nos valores das barras; padrão é 0.}
+
 \item{titulo}{Título do gráfico; se NULL (default), não é gerado um título; se \code{"auto"}, o argumento \code{onde} passa a ser obrigatório e a função gera um título para o gráfico a partir da informação de \code{onde} e do arquivo de dados ou do informado para o argumento \code{quando}. Se o argumento \code{dados} for um \code{factor} ou \code{character}, o argumento \code{quando} é obrigatório.}
 
 \item{onde}{Local, população de origem dos dados do gráfico; obrigatório se \code{titulo = "auto"}.}
 
-\item{quando}{Período de referência dos dados; se a fonte de dados for um "arquivo da AIH" (RD????.dbc), é automaticamente extraído do arquivo.}
+\item{quando}{Período de referência dos dados; se a fonte de dados for um "arquivo da AIH" (RD??????.dbc), é automaticamente extraído do arquivo.}
 
 \item{t.hjust}{Valor para definição de ajuste horizontal do título, válido apenas para gráficos com ggplot. Default é 1.}
 
@@ -62,6 +66,8 @@ desenhaCSAP(
 \item{x.size}{Tamanho da letra do eixo x, válido apenas para gráficos com ggplot. Default é 10.}
 
 \item{y.size}{Tamanho da letra do eixo y, válido apenas para gráficos com ggplot. Default é 12.}
+
+\item{val.size}{Tamanho da letra dos valores das barras. Padrão é 2.5.}
 
 \item{limsup}{Valor para ajuste do espaçamento do eixo de frequências, válido apenas para gráficos com ggplot. Quando o eixo representa porcentagens, deve ser expresso em proporção.}
 
@@ -81,15 +87,15 @@ library(csapAIH)
 data("aih100") # Carregar o banco de dados de exemplo
 df <- csapAIH(aih100) # Computar as CSAP
 
-#  Gráficos com ggplot
+#  Graficos com ggplot
 # =====================
 
-# Cria o gráfico a partir do banco,
-# uma vez que a variável com os grupos se chama "grupo":
+# Cria o grafico a partir do banco,
+# uma vez que a variavel com os grupos se chama "grupo":
 # ----------------------------------------------------------
-# Com título "automático":
+# Com titulo "automatico":
 desenhaCSAP(df, titulo = "auto", onde = "Rio Grande do Sul")
-# Sem título e sem ordenação por frequência:
+# Sem titulo e sem ordenacacao por frequencia:
 desenhaCSAP(df, ordenar = FALSE)
 #
 # Cores
@@ -102,42 +108,40 @@ desenhaCSAP(df, colorir = "cinza")
 desenhaCSAP(df, colorir = "yellow")
 #
 # Usando o banco todo pode-se tirar proveito de facilidades do ggplot2,
-# como a reprodução do gráfico por estratos de outras variáveis, como no
-# exemplo abaixo com o sexo. Para isso temos de descolorir o gráfico (ele)
-# pode ser novamente colorido mais tarde. Como a ordenação dos grupos de
-# causa continua sendo feita pela frequência da distribuição global, aqui
+# como a reproducao do grafico por estratos de outras variaveis, como no
+# exemplo abaixo com o sexo. Para isso temos de descolorir o grafico, que
+# pode ser novamente colorido mais tarde. Como a ordenacao dos grupos de
+# causa continua sendo feita pela frequencia da distribuicao global, aqui
 # ela faz menos sentido.
 desenhaCSAP(df, ordenar = FALSE) +
   ggplot2::facet_wrap(~sexo)
 
-# Cria o gráfico a partir de uma variável:
+# Cria o grafico a partir de uma variavel:
 # ---------------------------------------
 fator <- df$grupo
 desenhaCSAP(fator)
 carater <- as.character(fator)
 desenhaCSAP(carater, limsup = 4.4)
 
-# Se \code{titulo = 'auto'}, \code{quando} é obrigatório:
-\donttest{
- desenhaCSAP(carater, titulo = "auto", onde = 'RS')
-}
+# Se \code{titulo = 'auto'}, \code{quando} eh obrigatorio:
+\dontrun{ desenhaCSAP(carater, titulo = "auto", onde = 'RS') }
 desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
 desenhaCSAP(carater, titulo = "Título manual")
 
-# Cria o gráfico a partir de uma tabela com a primeira coluna contendo
-# os 19 grupos de causa e a segunda coluna contendo o número de casos:
+# Cria o grafico a partir de uma tabela com a primeira coluna contendo
+# os 19 grupos de causa e a segunda coluna contendo o numero de casos:
 # --------------------------------------------------------------------
 tabela <- descreveCSAP(df)
 desenhaCSAP(tabela, jaetabela = TRUE)
-# Se \code{titulo = 'auto'}, \code{quando} é obrigatório:
-\donttest{
+# Se \code{titulo = 'auto'}, \code{quando} eh obrigatorio:
+\dontrun{
  desenhaCSAP(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
 }
 desenhaCSAP(tabela, jaetabela = TRUE,
             titulo = "auto", onde = "RS", quando = "jan/2012")
 desenhaCSAP(tabela, jaetabela = TRUE, titulo = "Título manual")
 
-#  Gráficos com as funções básicas
+#  Graficos com as funcoes basicas
 # =================================
 desenhaCSAP(df, tipo.graf = "base")
 desenhaCSAP(df$grupo, tipo.graf = "base")

@@ -3,9 +3,10 @@
 #'
 #' @description Computa a idade, "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 #'
-#' @param x Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").
+#' @param dados Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").
+#' @param sis O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão] ou "SIM", em maiúsculas ou minúsculas
 #'
-#' @details As bases de dados do SIH e do SIM têm um campo \code{IDADE} que não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, \code{COD_IDADE}. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin.
+#' @details O campo \code{IDADE} nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (\code{COD_IDADE}) no SIH, ou um "subcampo" (1º dígito do campo \code{IDADE}) no SIM. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin.
 #'
 #' @return Devolve um objeto da classe \code{data frame} com três variáveis:
 #'  \enumerate{
@@ -52,17 +53,35 @@
 #' idade.detalhada <- idadeSUS(aih100)[,2] ; str(idade.detalhada)
 #' idade.fxet5 <- idadeSUS(aih100)["fxetar5"] ; str(idade.fxet5)
 #'
+#' # Mortalidade
+#' # ----------------
+#' \dontrun{
+#' library(microdatasus)
+#' dors19 <- fetch_datasus(2019, 01, 2019, 12, "RS", "SIM-DO")
+#' idade <- idadeSUS(dors19, "sim")
+#' summary(idade)
+#' }
+#'
 #' @export
-idadeSUS <- function(x)
+idadeSUS <- function(dados, sis = "SIH")
 {
-  COD_IDADE <- as.character(x$COD_IDADE)
+  if(sis %in% c("sih", "SIH", "sim", "SIM") == FALSE) {
+    stop("SIS precisa ser 'SIH' ou 'SIM'")
+  }
+  x <- dados
+  if(sis == "SIH" | sis == "sih") COD_IDADE <- as.character(x$COD_IDADE)
+  if (sis == "SIM" | sis == "sim") {
+    COD_IDADE <- substr(x$IDADE, 1, 1)
+    x$IDADE <- as.numeric(substr(x$IDADE, 2, 3))
+  }
+
   idade <- ifelse(COD_IDADE == 4, x$IDADE,
                   ifelse(COD_IDADE  < 4, 0,
                          ifelse(COD_IDADE == 5, x$IDADE+100, NA))
                   )
   comment(idade) <- "em anos completos"
   fxetar.det <- cut(idade, include.lowest=TRUE, right=FALSE,
-                    breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade)),
+                    breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade, na.rm = T)),
                     labels=c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
                              " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos",
                              "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
@@ -71,7 +90,7 @@ idadeSUS <- function(x)
                              "70-74", "75-79", "80 +")
                     )
   fxetar5 <- cut(idade, right=FALSE, include.lowest=TRUE,
-                 breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade)),
+                 breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade, na.rm = T)),
                  labels=c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
                           "30-34","35-39", "40-44","45-49","50-54", "55-59",
                           "60-64", "65-69", "70-74", "75-79", "80 +")
