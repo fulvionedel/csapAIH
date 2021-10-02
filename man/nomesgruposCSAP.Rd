@@ -2,6 +2,9 @@
 % Please edit documentation in R/nomesgruposCSAP.R
 \name{nomesgruposCSAP}
 \alias{nomesgruposCSAP}
+\alias{descreveCSAP}
+\alias{desenhaCSAP}
+\alias{csapAIH}
 \title{Nomes dos grupos de causa da Lista Brasileira de Condicoes Sensiveis a Atencao Primaria}
 \usage{
 nomesgruposCSAP()

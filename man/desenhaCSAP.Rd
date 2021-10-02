@@ -2,13 +2,28 @@
 % Please edit documentation in R/desenhaCSAP.R
 \name{desenhaCSAP}
 \alias{desenhaCSAP}
+\alias{descreveCSAP}
+\alias{csapAIH}
 \title{Grafico das Condicoes Sensiveis a Atencao Primaria}
 \usage{
-desenhaCSAP(dados, jaetabela = FALSE, tipo.graf = "ggplot",
-  valores = "porcento", ordenar = TRUE, colorir = TRUE,
-  porcentagens = TRUE, titulo = NULL, onde, quando = NULL,
-  t.hjust = 1, t.size = 12, x.size = 10, y.size = 11,
-  limsup = NULL, ...)
+desenhaCSAP(
+  dados,
+  jaetabela = FALSE,
+  tipo.graf = "ggplot",
+  valores = "porcento",
+  ordenar = TRUE,
+  colorir = TRUE,
+  porcentagens = TRUE,
+  titulo = NULL,
+  onde,
+  quando = NULL,
+  t.hjust = 1,
+  t.size = 12,
+  x.size = 10,
+  y.size = 11,
+  limsup = NULL,
+  ...
+)
 }
 \arguments{
 \item{dados}{O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}})
@@ -104,7 +119,7 @@ desenhaCSAP(fator)
 carater <- as.character(fator)
 desenhaCSAP(carater, limsup = 4.4)
 
-# Se \\code{titulo = 'auto'}, \\code{quando} é obrigatório:
+# Se \code{titulo = 'auto'}, \code{quando} é obrigatório:
 \donttest{
  desenhaCSAP(carater, titulo = "auto", onde = 'RS')
 }
@@ -116,7 +131,7 @@ desenhaCSAP(carater, titulo = "Título manual")
 # --------------------------------------------------------------------
 tabela <- descreveCSAP(df)
 desenhaCSAP(tabela, jaetabela = TRUE)
-# Se \\code{titulo = 'auto'}, \\code{quando} é obrigatório:
+# Se \code{titulo = 'auto'}, \code{quando} é obrigatório:
 \donttest{
  desenhaCSAP(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
 }

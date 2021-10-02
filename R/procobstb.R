@@ -1,5 +1,5 @@
 #' @title Obstetric procedures from the Brazilian Hospital Information System data bases (BD-SIH/SUS)
-#' @aliases proc.obst
+#' @aliases proc.obstb
 #'
 #' @description Identifies records of hospitalizations for non-morbidity obstetric procedures (v.g. deliveries etc.) from the Brazilian Hospital Information System data bases (BD-SIH/SUS) and, according to user options, (1) create a new variable \code{procobst} with the procedure identification, (2) exclude these records from the data frame, or (3) create a new data frame with only these records.
 #'
@@ -15,7 +15,7 @@
 #'
 #' @export
 #'
-proc.obst <- function(x, procobst.action = "exclude", proc.rea = "PROC_REA", language = "pt")
+proc.obstb <- function(x, procobst.action = "exclude", proc.rea = "PROC_REA", language = "pt")
   {
   if(!is.data.frame(x) & class(x) != "data.table") stop("x must be a data frame")
   if(! procobst.action %in% c("exclude", "extract", "identify")) {

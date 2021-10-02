@@ -41,6 +41,7 @@
 #' str(aih)
 #' attributes(aih)$Resumo
 #'
+#' @importFrom data.table is.data.table data.table setDT `:=`
 #' @export
 #'
 legoAIH <-
@@ -48,8 +49,8 @@ function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep
 {
   # Nuntius errorum
   # ----------------
-  if (class(x)=='data.frame') file=FALSE
-  if (file==FALSE & class(x)!='data.frame') {
+  if (is.data.frame(x) | is.data.table(x)) file=FALSE
+  if (file==FALSE & (!is.data.frame(x) | !is.data.table(x))) {
     stop("x must be a .DBC, .DBF or .CSV file, otherwise a data frame in the workspace")
   }
 
@@ -76,7 +77,7 @@ function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep
       stop('------------------------------------------------------\n
               Reading error in', deparse(substitute(x)), '. x is  \n
               not a file in format .DBC, .DBF or .CSV., neither   \n
-              an object of class data.frame.
+              an object of class data.frame or data.table.
            -----------------------------------------------------\n ')
   }
 #

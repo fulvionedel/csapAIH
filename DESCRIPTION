@@ -13,9 +13,12 @@ License: GPL-3
 Suggests: foreign,
           ggplot2,
           read.dbc,
-          scales
+          scales,
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
 Language: pt-br
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
+Depends: 
+    R (>= 2.10),
+    data.table

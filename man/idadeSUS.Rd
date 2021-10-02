@@ -4,10 +4,12 @@
 \alias{idadeSUS}
 \title{Computa a idade nas bases de dados do SIH/SUS e SIM}
 \usage{
-idadeSUS(x)
+idadeSUS(x, sis = "SIH")
 }
 \arguments{
 \item{x}{Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").}
+
+\item{sis}{O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão] ou "SIM", em maiúsculas ou minúsculas}
 }
 \value{
 Devolve um objeto da classe \code{data frame} com três variáveis:
@@ -21,7 +23,7 @@ Devolve um objeto da classe \code{data frame} com três variáveis:
 Computa a idade, "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 }
 \details{
-As bases de dados do SIH e do SIM têm um campo \code{IDADE} que não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, \code{COD_IDADE}. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin.
+O campo \code{IDADE} nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (\code{COD_IDADE}) no SIH, ou um "subcampo" (1º dígito do campo \code{IDADE}) no SIM. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin.
 }
 \examples{
 \dontrun{
@@ -56,6 +58,15 @@ head(idades)
 idade.ano <- idadeSUS(aih100)[1] ; str(idade.ano)
 idade.detalhada <- idadeSUS(aih100)[,2] ; str(idade.detalhada)
 idade.fxet5 <- idadeSUS(aih100)["fxetar5"] ; str(idade.fxet5)
+
+# Mortalidade
+# ----------------
+\dontrun{
+library(microdatasus)
+dors19 <- fetch_datasus(2019, 01, 2019, 12, "RS", "SIM-DO")
+idade <- idadeSUS(dors19, "sim")
+summary(idade)
+}
 
 }
 \references{
