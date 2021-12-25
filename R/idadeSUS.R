@@ -69,7 +69,7 @@ idadeSUS <- function(x, sis = "SIH")
 {
   # Nuntius errorum
   # ---------------
-  if(sis %in% c("sih", "SIH", "sim", "SIM") == FALSE) {
+  if(all(sis != c("sih", "SIH", "sim", "SIM")))  {
     stop("SIS precisa ser 'SIH' ou 'SIM'")
   }
 
@@ -83,11 +83,14 @@ idadeSUS <- function(x, sis = "SIH")
               IDADE = as.numeric(substr(IDADE, 2, 3)))]
   }
 
-  idade <- x[, ifelse(COD_IDADE == 4, IDADE,
-                     ifelse(COD_IDADE  < 4, 0,
-                         ifelse(COD_IDADE == 5, IDADE+100, NA)))]
+  # idade <- x[, ifelse(COD_IDADE == 4, IDADE,
+  #                    ifelse(COD_IDADE  < 4, 0,
+  #                        ifelse(COD_IDADE == 5, IDADE+100, NA)))]
 
-  comment(idade) <- "em anos completos"
+  idade <- x[, fifelse(COD_IDADE == 4, IDADE,
+                       fifelse(COD_IDADE  < 4, 0,
+                             fifelse(COD_IDADE == 5, IDADE+100, 999)))]
+
   fxetar.det <- cut(idade, include.lowest=TRUE, right=FALSE,
                     breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade, na.rm = T)),
                     labels=c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
@@ -103,5 +106,7 @@ idadeSUS <- function(x, sis = "SIH")
                           "30-34","35-39", "40-44","45-49","50-54", "55-59",
                           "60-64", "65-69", "70-74", "75-79", "80 +")
                  )
-  data.frame(idade, fxetar.det, fxetar5)
+  setDF(list(idade      = idade,
+             fxetar.det = fxetar.det,
+             fxetar5    = fxetar5))
 }

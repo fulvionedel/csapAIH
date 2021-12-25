@@ -49,8 +49,8 @@ function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep
 {
   # Nuntius errorum
   # ----------------
-  if (is.data.frame(x) | is.data.table(x)) file=FALSE
-  if (file==FALSE & (!is.data.frame(x) | !is.data.table(x))) {
+  if (is.data.frame(x)) file=FALSE
+  if (file==FALSE & (!is.data.frame(x) & !is.data.table(x))) {
     stop("x must be a .DBC, .DBF or .CSV file, otherwise a data frame in the workspace")
   }
 
@@ -60,6 +60,7 @@ function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep
   destinatio = deparse(substitute(x))
 
   # Lego limae data
+  if (is.data.frame(x) | is.data.table(x)) file=FALSE
   if (file==TRUE) {
     if (grepl('dbc', x, ignore.case=TRUE)==TRUE) {
       x <- read.dbc::read.dbc(x, ...)

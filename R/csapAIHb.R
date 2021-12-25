@@ -144,14 +144,14 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
     # Lego data ===================
     ## Preparar os dados
     ##
-    if (class(x)=='factor') {
+    if (is.factor(x)) {
       cid <- x
       arquivo <- FALSE
       sihsus <- FALSE
     }
-    if (class(x)=='data.frame') arquivo <- FALSE
+    if (is.data.frame(x)) arquivo <- FALSE
     if (sihsus == FALSE) {
-      if (class(x)=='data.frame') {
+      if (is.data.frame(x)) {
         cid <- x[,deparse(substitute(cid))]
         juntar <- x
         }
@@ -161,7 +161,7 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
     #
     # Leitura do arquivo de dados
     #
-    if (arquivo==TRUE) {
+    if (arquivo == TRUE) {
       if (grepl('dbf', x, ignore.case=TRUE)==TRUE) {
         x <- foreign::read.dbf(x, as.is=TRUE, ...)
       } else
@@ -192,11 +192,11 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
       }
 
     # Garantir o trabalho com operadores mais tarde, no CID
-    if (sihsus==FALSE) cid=as.character(cid)
+    if (sihsus == FALSE) cid = as.character(cid)
       #--------------------------------------------------------------------------#
       #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS   #
       #----------------------------------------------------------------------#
-      # munus enim nuntius ad deletionem per modum obstetrica ===========
+      # Ad excludendum obstetricante tesseras ===========
       #
       freqs <- function(tamini, tamfin, digits = 1, tipo = "proc") {
         fr <- tamini - tamfin
@@ -214,7 +214,7 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
       }
       # ----------------------- fim da função
       #
-      if (sihsus==TRUE) {
+      if (sihsus == TRUE) {
         #   Exclusão dos procedimentos obstétricos
         #
         #   0310010012 ASSISTENCIA AO PARTO S/ DISTOCIA
@@ -324,19 +324,20 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
       ## Criar as variáveis 'CSAP' e 'grupo' ====
       ##
       # Definir missings no cid:
-      cid[is.na(cid)] <- NA
+      # cid[is.na(cid)] <- NA
       cid[cid==""] <- NA
       #
       #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA ----
       #               Portaria MS nº 221, de 17 de abril de 2008
       #            --- --- --- --- --- --- --- --- --- --- --- ---
-      listaBR(cid)
+      csap <- listaBR(cid)['csap']
+      grupo <- listaBR(cid)['grupo']
 
       ############################-
       ### Montar o objeto final ----
       ############################-
       ## Se for uma base do SIH/SUS:
-      if (sihsus==TRUE) {
+      if (sihsus == TRUE) {
         banco <- data.frame(n.aih, munres, munint,
                             sexo, nasc, idade, fxetar, fxetar5,
                             csap, grupo, cid, proc.rea,
@@ -357,7 +358,7 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
         attr(banco$data.inter, which = "label") <- "Data de internacao"
         attr(banco$data.saida, which = "label") <- "Data de saida"
         attr(banco, which = "resumo") <- resumo
-        if (cep==TRUE) {
+        if (cep == TRUE) {
           banco$cep <- x$CEP
           # Hmisc::label(banco$cep) <- 'C\u00F3digo de Endere\u00E7amento Postal'
           attr(banco$cep, which = "label") <- "Codigo de Enderecamento Postal"
@@ -383,7 +384,7 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
         banco <- csap
         class(banco) <- 'factor'
       }
-      if (class(x)=='data.frame' & sihsus == FALSE) {
+      if (is.data.frame(x) & sihsus == FALSE) {
         banco <- cbind(juntar, banco)
       }
 
