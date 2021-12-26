@@ -2,8 +2,6 @@
 % Please edit documentation in R/desenhaCSAP.R
 \name{desenhaCSAP}
 \alias{desenhaCSAP}
-\alias{descreveCSAP}
-\alias{csapAIH}
 \title{Grafico das Condicoes Sensiveis a Atencao Primaria}
 \usage{
 desenhaCSAP(

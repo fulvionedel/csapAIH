@@ -1,8 +1,5 @@
 #' @title Nomes dos grupos de causa da Lista Brasileira de Condicoes Sensiveis a Atencao Primaria
 #' @aliases nomesgruposCSAP
-#' @aliases descreveCSAP
-#' @aliases desenhaCSAP
-#' @aliases csapAIH
 #'
 #' @description Lista os 19 grupos de causa CSAP, em ordem crescente.
 #' @return Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.

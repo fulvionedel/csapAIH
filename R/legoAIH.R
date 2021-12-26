@@ -1,6 +1,5 @@
 #' @title Read the Brazilian Hospital Information System data bases (BD-SIH/SUS)
 #' @aliases legoAIH
-#' @aliases csapAIH
 #'
 #' @description Read files from the Brazilian Hospital Information System data bases (BD-SIH/SUS), in .DBC, .DBF or .CSV format, and allows to exclude, extract or identify records of hospitalization for obstetric procedures, as well to exclude duplicated records for large continuance hospitalization ("large stay AIH"). The function also makes changes in variables to be more usable: computes age in completed years, "detailed age groups" (as DATASUS tables) and five-years age groups, turns sex into a factor, and returns a data frame with less (and more used in epidemiological studies) variables.
 #'
@@ -49,8 +48,8 @@ function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep
 {
   # Nuntius errorum
   # ----------------
-  if (is.data.frame(x) | is.data.table(x)) file=FALSE
-  if (file==FALSE & (!is.data.frame(x) | !is.data.table(x))) {
+  if (is.data.frame(x)) file=FALSE
+  if (file==FALSE & (!is.data.frame(x) & !is.data.table(x))) {
     stop("x must be a .DBC, .DBF or .CSV file, otherwise a data frame in the workspace")
   }
 
@@ -60,6 +59,7 @@ function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep
   destinatio = deparse(substitute(x))
 
   # Lego limae data
+  if (is.data.frame(x) | is.data.table(x)) file=FALSE
   if (file==TRUE) {
     if (grepl('dbc', x, ignore.case=TRUE)==TRUE) {
       x <- read.dbc::read.dbc(x, ...)

@@ -1,12 +1,10 @@
 #' @title Names of Brazilian Primary Health Care Sensitive Conditions groups of cause
 #' @aliases groupnamesCSAP
-#' @aliases tableCSAP
-#' @aliases plotCSAP
-#' @aliases csapAIH
 #'
 #' @description List the 19 groups of cause from the Brazilian list of Primary Health Care Sensitive Conditions (PHCSC, CSAP).
 #'
 #' @param idioma Character vector indicating how to type the names; may be "pt.ca" (default) for names in Portuguese with accents, "pt.sa" for names in Portuguese without accents, "en", for names in English, or "es", for names in Spanish.
+#' @param nomes Allows a personalized list of group names.
 #'
 #' @references
 #' #' Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}

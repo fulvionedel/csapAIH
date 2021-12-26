@@ -1,7 +1,6 @@
 #' Tabulate Primary Health Care Sensitive Conditions (PHCSC)
 #'
 #' @aliases tableCSAP
-#' @aliases csapAIH
 #'
 #' @description Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
 #'

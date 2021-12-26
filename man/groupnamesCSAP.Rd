@@ -2,9 +2,6 @@
 % Please edit documentation in R/groupnamesCSAP.R
 \name{groupnamesCSAP}
 \alias{groupnamesCSAP}
-\alias{tableCSAP}
-\alias{plotCSAP}
-\alias{csapAIH}
 \title{Names of Brazilian Primary Health Care Sensitive Conditions groups of cause}
 \usage{
 groupnamesCSAP(idioma = "pt.ca", nomes = NULL)

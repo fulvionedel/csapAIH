@@ -50,17 +50,32 @@ g18 <- ifelse(cid >= "K25" & cid < "K29" | cid >= "K920" & cid <= "K922", 1, 2)
 g19 <- ifelse(substr(cid, 1,3)=="O23" | substr(cid, 1,3)=="A50" | substr(cid, 1,4)=="P350", 1, 2)
 
 csap <- factor(ifelse(g01==1 | g02==1 | g03==1 | g04==1 | g05==1 | g06==1 | g07==1 |
-                        g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 |
-                        g15==1 | g16==1 | g17==1 | g18==1 | g19==1, 1, 2), labels=c('sim', "n\u00E3o"))
+                      g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 |
+                      g15==1 | g16==1 | g17==1 | g18==1 | g19==1, 1, 2), labels=c('sim', "n\u00E3o"))
 
-grupo <- ifelse(g01==1, "g01", ifelse(g02==1, "g02", ifelse(g03==1, "g03", ifelse(g04==1, "g04",
-                                                                                  ifelse(g05==1, "g05", ifelse(g06==1, "g06", ifelse(g07==1, "g07", ifelse(g08==1, "g08",
-                                                                                                                                                           ifelse(g09==1, "g09", ifelse(g10==1, "g10", ifelse(g11==1, "g11", ifelse(g12==1, "g12",
-                                                                                                                                                                                                                                    ifelse(g13==1, "g13", ifelse(g14==1, "g14", ifelse(g15==1, "g15", ifelse(g16==1, "g16",
-                                                                                                                                                                                                                                                                                                             ifelse(g17==1, "g17", ifelse(g18==1, "g18", ifelse(g19==1, "g19", "n\u00E3o-CSAP")))))))))))))))))))
+grupo <- ifelse(g01==1, "g01",
+                ifelse(g02==1, "g02",
+                 ifelse(g03==1, "g03",
+                  ifelse(g04==1, "g04",
+                   ifelse(g05==1, "g05",
+                    ifelse(g06==1, "g06",
+                     ifelse(g07==1, "g07",
+                      ifelse(g08==1, "g08",
+                       ifelse(g09==1, "g09",
+                        ifelse(g10==1, "g10",
+                         ifelse(g11==1, "g11",
+                          ifelse(g12==1, "g12",
+                           ifelse(g13==1, "g13",
+                            ifelse(g14==1, "g14",
+                             ifelse(g15==1, "g15",
+                              ifelse(g16==1, "g16",
+                               ifelse(g17==1, "g17",
+                                ifelse(g18==1, "g18",
+                                 ifelse(g19==1, "g19",
+                                  "n\u00E3o-CSAP")))))))))))))))))))
 
 ### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
 niveis = c(paste0("g0", 1:9), paste0("g1", 0:9), "n\u00E3o-CSAP")
 grupo = factor(grupo, levels = niveis)
-return(grupo)
+return(list(csap = csap, grupo = grupo))
 }

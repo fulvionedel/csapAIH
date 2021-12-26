@@ -2,8 +2,6 @@
 % Please edit documentation in R/descreveCSAP.R
 \name{descreveCSAP}
 \alias{descreveCSAP}
-\alias{tableCSAP}
-\alias{csapAIH}
 \title{Tabulate Primary Health Care Sensitive Conditions (PHCSC)}
 \usage{
 descreveCSAP(x, idioma = "pt.ca", nomes = NULL)
