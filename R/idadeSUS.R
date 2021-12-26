@@ -66,7 +66,7 @@
 idadeSUS <- function(dados, sis = "SIH")
 {
   if(sis %in% c("sih", "SIH", "sim", "SIM") == FALSE) {
-    stop("SIS precisa ser 'SIH' ou 'SIM'")
+    stop("sis precisa ser 'SIH' ou 'SIM'")
   }
   x <- dados
   if(sis == "SIH" | sis == "sih") COD_IDADE <- as.character(x$COD_IDADE)

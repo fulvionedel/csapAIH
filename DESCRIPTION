@@ -19,3 +19,5 @@ NeedsCompilation: no
 Encoding: UTF-8
 Language: pt-br
 RoxygenNote: 7.1.2
+Depends: 
+    R (>= 2.10)
