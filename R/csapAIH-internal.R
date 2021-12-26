@@ -11,6 +11,7 @@
 #' @details
 #'  \itemize{
 #'    \item \code{v0.0.3.2}
+#'
 #'      Criada a função \code{\link{proc.obst}}, para a identificação dos procedimentos obstétricos pela tabela do SIH/SUS, com três possíveis resultados: (1) exclusão dos registros de procedimento obstétrico (padrão); (2) criação de nova variável com identificação (sim/não) do caso; e (3) exclusão dos demais registros. A exclusão dos procedimentos obstétricos (argumento \code{procobst.rm = TRUE}) na função \code{\link{csapAIH}} agora é feita invocando a função \code{\link{proc.obst}}. O argumento \code{parto.rm} agora funciona em data frames sem a estrutura do SIH/SUS. Algumas melhoras na documentação do pacote.
 #'    \item \code{v0.0.3.1}
 #'      \itemize{
@@ -20,6 +21,7 @@
 #'          }
 #'
 #'    \item \code{v0.0.3}
+#'
 #'    As funções acrescentadas na versão 0.0.2 foram ampliadas: podem ser tabulados vetores sem todos os grupos de causa; grupos com frequência zero são excluídos do gráfico; o gráfico pode ser gerado com funções básicas, por demanda do usuário ou se \code{\link[ggplot2]{ggplot2}} não estiver instalado no sistema; quando gerado a partir de um banco de dados, o gráfico em \code{\link[ggplot2]{ggplot}} pode ser estratificado segundo categorias de outras variáveis do banco. O cálculo da idade não é mais feito na função \code{\link{csapAIH}}, mas por uma nova função, \code{\link{idadeSUS}}, invocada por \code{\link{csapAIH}} e que também pode ser chamada independentemente sobre um "arquivo da AIH".
 #'
 #'    \item \code{v0.0.2}
