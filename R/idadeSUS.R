@@ -63,7 +63,7 @@
 #' summary(idade)
 #' }
 #'
-#' @importFrom data.table ":=" is.data.table setDT
+#' @importFrom data.table ":=" is.data.table setDT setDF fifelse
 #' @export
 idadeSUS <- function(x, sis = "SIH")
 {
@@ -75,7 +75,8 @@ idadeSUS <- function(x, sis = "SIH")
 
   # Parat data
   # ----------
-  library(data.table)
+  COD_IDADE <- IDADE <- NULL
+  # library(data.table)
   if(!is.data.table(x)) setDT(x)
   if(sis == "SIH" | sis == "sih") x[, COD_IDADE := as.character(COD_IDADE) ]
   if(sis == "SIM" | sis == "sim") {

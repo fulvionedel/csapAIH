@@ -1,12 +1,11 @@
 #' Tabulate Primary Health Care Sensitive Conditions (PHCSC)
 #' @aliases descreveCSAP
-#' @aliases tableCSAP
-#' @aliases csapAIH
 #'
 #' @description Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
 #'
 #' @param x a vector containing the Brazilian PHCSC groups of causes.
 #' @param idioma argument to be passed to \code{\link{groupnamesCSAP}}.
+#' @param nomes Allows a personalized list of group names.
 #'
 #' @seealso \code{\link{csapAIH}}, \code{\link{groupnamesCSAP}}, \code{\link{legoAIH}}
 

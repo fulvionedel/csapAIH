@@ -2,7 +2,6 @@
 % Please edit documentation in R/legoAIH.R
 \name{legoAIH}
 \alias{legoAIH}
-\alias{csapAIH}
 \title{Read the Brazilian Hospital Information System data bases (BD-SIH/SUS)}
 \usage{
 legoAIH(

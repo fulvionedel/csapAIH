@@ -210,6 +210,8 @@ legoAIHb <-
   if(is.null(vars)) {
     vars <- c("N_AIH", "IDADE", "COD_IDADE", "SEXO", "NASC", "DIAG_PRINC", "DT_INTER", "DT_SAIDA", "PROC_REA", "IDENT", "MUNIC_RES", "MUNIC_MOV", "CEP", "CNES")
   }
+    ..vars <- DT_INTER <- DT_SAIDA <- NASC <- SEXO <- barplot <- fifelse <- idioma <- nomes <- par <- rainbow <- reorder <- setDF <- setnames <- NULL
+
   if(!is.data.table(x)) data.table::setDT(x)
   x <- x[, ..vars]
   # x <- x[, lapply(.SD, as.character), by = .(N_AIH, IDADE)]

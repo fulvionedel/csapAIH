@@ -1,8 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-<<<<<<< HEAD
 docs/*
 tests/*
 ^data-raw/*
-=======
->>>>>>> 29c50c2708d01f4a9cb0381092092311f11ae1c9

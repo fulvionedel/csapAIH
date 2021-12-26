@@ -1,8 +1,6 @@
 #' @title Grafico das Condicoes Sensiveis a Atencao Primaria
 #' @description Desenha um gráfico de barras das CSAP por grupo de causa
 #' @aliases desenhaCSAP
-#' @aliases descreveCSAP
-#' @aliases csapAIH
 #'
 #' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}})
 #' \itemize{
@@ -180,6 +178,7 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
 
   # Gráfico com funções básicas ------------------------------
   #
+  installed.packages <- NULL
   if(tipo.graf == 'base' | "ggplot2" %in% rownames(installed.packages()) == FALSE) {
     # --- modo anterior ---
     # x = tabulate(dados$grupo)[1:19]
