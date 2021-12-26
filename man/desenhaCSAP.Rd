@@ -95,6 +95,7 @@ df <- csapAIH(aih100) # Computar as CSAP
 # ----------------------------------------------------------
 # Com titulo "automatico":
 desenhaCSAP(df, titulo = "auto", onde = "Rio Grande do Sul")
+
 # Sem titulo e sem ordenacacao por frequencia:
 desenhaCSAP(df, ordenar = FALSE)
 #
@@ -102,8 +103,10 @@ desenhaCSAP(df, ordenar = FALSE)
 #-------
 # Sem cores nas barras
 desenhaCSAP(df, colorir = FALSE)
+
 # Com as barras em tons de cinza
 desenhaCSAP(df, colorir = "cinza")
+
 # Com as barras em outra cor
 desenhaCSAP(df, colorir = "yellow")
 #
@@ -113,8 +116,8 @@ desenhaCSAP(df, colorir = "yellow")
 # pode ser novamente colorido mais tarde. Como a ordenacao dos grupos de
 # causa continua sendo feita pela frequencia da distribuicao global, aqui
 # ela faz menos sentido.
-desenhaCSAP(df, ordenar = FALSE) +
-  ggplot2::facet_wrap(~sexo)
+  desenhaCSAP(df, ordenar = FALSE) +
+    ggplot2::facet_wrap(~sexo)
 
 # Cria o grafico a partir de uma variavel:
 # ---------------------------------------
@@ -123,19 +126,21 @@ desenhaCSAP(fator)
 carater <- as.character(fator)
 desenhaCSAP(carater, limsup = 4.4)
 
-# Se \code{titulo = 'auto'}, \code{quando} eh obrigatorio:
-\dontrun{ desenhaCSAP(carater, titulo = "auto", onde = 'RS') }
-desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
-desenhaCSAP(carater, titulo = "Título manual")
+# Se \code{titulo = "auto"}, o argumento \code{quando} eh obrigatorio:
+\dontrun{
+ desenhaCSAP(carater, titulo = "auto", onde = 'RS') # resulta em erro
+ }
+ desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
+ desenhaCSAP(carater, titulo = "Título manual")
 
 # Cria o grafico a partir de uma tabela com a primeira coluna contendo
 # os 19 grupos de causa e a segunda coluna contendo o numero de casos:
 # --------------------------------------------------------------------
 tabela <- descreveCSAP(df)
 desenhaCSAP(tabela, jaetabela = TRUE)
-# Se \code{titulo = 'auto'}, \code{quando} eh obrigatorio:
 \dontrun{
- desenhaCSAP(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
+# Resulta em erro, faltou o argumento 'quando'
+desenhaCSAP(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
 }
 desenhaCSAP(tabela, jaetabela = TRUE,
             titulo = "auto", onde = "RS", quando = "jan/2012")

@@ -79,7 +79,7 @@ idadeSUS <- function(dados, sis = "SIH")
                   ifelse(COD_IDADE  < 4, 0,
                          ifelse(COD_IDADE == 5, x$IDADE+100, NA))
                   )
-  comment(idade) <- "em anos completos"
+  # comment(idade) <- "em anos completos"
   fxetar.det <- cut(idade, include.lowest=TRUE, right=FALSE,
                     breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade, na.rm = T)),
                     labels=c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",

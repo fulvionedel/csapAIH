@@ -105,9 +105,11 @@
 #' @examples
 #' ## Uma lista de códigos da CID-10:
 #' ##---------------------------------
+#' \dontrun{
 #' cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
 #' teste1 <- csapAIH(as.factor(cids)) ; class(teste1) ; teste1
 #' teste2 <- csapAIH(as.factor(cids),  grupo=FALSE) ; class(teste2) ; teste2
+#' }
 #'
 #' ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 #' ##---------------------------------------------------------

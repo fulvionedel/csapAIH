@@ -8,7 +8,7 @@
 #' @param proc.rea Procedure performed, name to the "procedimento realizado" field (\code{PROC_REA}) on the AIH file).
 #' @param language Language for displayed messages and summary of fulfilled actions; may be "pt" (default) for portuguese or "en" for english.
 #'
-#' @seealso \code{\link{legoAIH}} and \link{csapAIH}
+#' @seealso \link{csapAIH}
 #'
 #' @references
 #' Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2014. SIH – Sistema de Informação Hospitalar do SUS: Manual Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015. 87p.
