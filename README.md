@@ -154,6 +154,6 @@ Observe que ao estratificar o gráfico mantém a ordenação por frequência da 
 
 ![gr + ggplot2::facet_grid(~munres)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018capital.jpeg)
 
-***Veja o manual do pacote para mais detalhes:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.3.pdf
+***Veja o manual do pacote em:*** 
+https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.3.2.pdf
  
