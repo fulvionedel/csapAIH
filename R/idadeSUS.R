@@ -71,6 +71,7 @@ idadeSUS <- function(x, sis = "SIH")
   # ---------------
   if(all(sis != c("sih", "SIH", "sim", "SIM")))  {
     stop("sis precisa ser 'SIH' ou 'SIM'")
+    stop("SIS precisa ser 'SIH' ou 'SIM'")
   }
 
   # Parat data
