@@ -17,7 +17,7 @@
 #'
 proc.obstb <- function(x, procobst.action = "exclude", proc.rea = "PROC_REA", language = "pt")
   {
-  if(!is.data.frame(x) & class(x) != "data.table") stop("x must be a data frame")
+  if(!is.data.frame(x) & !is.data.table(x)) stop("x must be a data frame")
   if(! procobst.action %in% c("exclude", "extract", "identify")) {
     stop("'language' must be 'exclude', 'extract' or 'identify'")
   }

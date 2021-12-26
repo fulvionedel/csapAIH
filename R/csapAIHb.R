@@ -149,15 +149,17 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
       arquivo <- FALSE
       sihsus <- FALSE
     }
-    if (is.data.frame(x)) arquivo <- FALSE
+    if (is.data.frame(x)) {
+      arquivo <- FALSE
+    }
     if (sihsus == FALSE) {
       if (is.data.frame(x)) {
-        cid <- x[,deparse(substitute(cid))]
+        cid <- x[,deparse(substitute(cid))][] |>
+          unlist() |>
+          unname()
         juntar <- x
         }
-      # if (class(x)!='data.frame') { cid <- x }
-      # cid = as.character(cid)
-    }
+      }
     #
     # Leitura do arquivo de dados
     #
@@ -185,19 +187,16 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
         message(paste(c("Importados ",
                         suppressWarnings(formatC(nlidos <- nrow(x), big.mark = ".")),
                         " registros.")))
-        importados <- paste(c("Importados",
-                              nlidos,
-                              100,
-                              "registros."))
+        importados <- c("Importados",
+                        nlidos,
+                        100,
+                        "registros.")
       }
 
-    # Garantir o trabalho com operadores mais tarde, no CID
-    if (sihsus == FALSE) cid = as.character(cid)
-      #--------------------------------------------------------------------------#
-      #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS   #
-      #----------------------------------------------------------------------#
-      # Ad excludendum obstetricante tesseras ===========
-      #
+    #--------------------------------------------------------------------------#
+    #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS   #
+    #--------------------------------------------------------------------------#
+      # Ad excludendum obstetricante tesseras ----------- principium
       freqs <- function(tamini, tamfin, digits = 1, tipo = "proc") {
         fr <- tamini - tamfin
         pfr <- round(fr / tamini * 100, digits)
@@ -212,33 +211,20 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
         }
         excluidos.obst
       }
-      # ----------------------- fim da função
+      # ----------------------- finis
       #
       if (sihsus == TRUE) {
         #   Exclusão dos procedimentos obstétricos
-        #
-        #   0310010012 ASSISTENCIA AO PARTO S/ DISTOCIA
-        #   0310010020 ATEND AO RECEM-NASCIDO EM SALA DE PARTO
-        #   0310010039 PARTO NORMAL
-        #   0310010047 PARTO NORMAL EM GESTACAO DE ALTO RISCO
-        #   0411010018 DESCOLAMENTO MANUAL DE PLACENTA
-        #   0411010026 PARTO CESARIANO EM GESTACAO ALTO RISCO
-        #   0411010034 PARTO CESARIANO
-        #   0411010042 PARTO CESARIANO C/ LAQUEADURA TUBARIA
-        #   0411020013 CURETAGEM POS-ABORTAMENTO / PUERPERAL
-        #   0411020021 EMBRIOTOMIA
-        procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018', '0411010026',
-                      '0411010034', '0411010042', '0411020013', '0411020021')
         tamini <- nrow(x)
         x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
         if (procobst.rm == TRUE) {
+          x <- proc.obst(x) |>
+            suppressMessages()
           if (parto.rm == TRUE) {
-            x <- subset(x, subset = x$PROC_REA %in% procobst==FALSE)
             x <- subset(x, subset = x$DIAG_PRINC < "O80" | x$DIAG_PRINC >= "O85")
-            x <- droplevels(x)
-          } else if (parto.rm == FALSE) {
-            x <- subset(x, subset = x$PROC_REA %in% procobst==FALSE, drop = TRUE)
+            # x <- droplevels(x)
           }
+          x <- droplevels(x)
           excluidos.obst <- freqs(nlidos, nrow(x))
         } else if (procobst.rm == FALSE) {
           if (parto.rm == TRUE) {
@@ -265,10 +251,15 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
         #   (isso tem de melhorar, tem código repetido e mistura
         #   mensagem com valor, não sei se é legal!)
         #
-        exportados <- paste(c("Exportados", nrow(x), pexportados <- round((1-(nlidos-nrow(x))/nlidos)*100,1), "registros."))
+        exportados <- paste(c("Exportados",
+                              nrow(x),
+                              pexportados <- round((1-(nlidos-nrow(x))/nlidos)*100,1),
+                              "registros."))
         message(paste(c("Exportados ", suppressWarnings(formatC(length(x[,1]), big.mark = ".")), " (", formatC(pexportados, decimal.mark = ","), "\u0025) registros.")))
+
         resumo <- rbind(importados, exportados)
         colnames(resumo) = c("acao", "freq", "perc", "objeto")
+
         if (longa.rm == TRUE) {
           if (exists('excluidos.obst')) {
             resumo <- rbind(resumo[1,],
@@ -308,7 +299,7 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
         sexo     <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
         n.aih    <- as.character(x$N_AIH)
         proc.rea <- x$PROC_REA
-        proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
+        # proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
         #, labels=c('sim', 'nao'))
 #     Hmisc::label(munres)   <- 'Munic\u00EDpio de resid\u00EAncia'
 #     Hmisc::label(munint)   <- 'Munic\u00EDpio de interna\u00E7\u00E3o'
@@ -319,24 +310,27 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
 #     Hmisc::label(fxetar5)  <- 'Faixa et\u00E1ria quinquenal'
 #   if(procobst.rm==TRUE) Hmisc::label(proc.obst) <- 'Procedimento obst\u00E9trico'
 #
-      }
-      #
-      ## Criar as variáveis 'CSAP' e 'grupo' ====
-      ##
-      # Definir missings no cid:
-      # cid[is.na(cid)] <- NA
-      cid[cid==""] <- NA
-      #
-      #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA ----
-      #               Portaria MS nº 221, de 17 de abril de 2008
-      #            --- --- --- --- --- --- --- --- --- --- --- ---
-      csap <- listaBR(cid)['csap']
+  }
+
+  #
+  ## Criar as variáveis 'CSAP' e 'grupo'
+  ##
+  # Definir missings no cid:
+  # cid[is.na(cid)] <- NA
+  cid[cid==""] <- NA
+
+################################################################################
+#  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
+#               Portaria MS nº 221, de 17 de abril de 2008                     #
+################################################################################
+       csap <- listaBR(cid)['csap']
       grupo <- listaBR(cid)['grupo']
 
-      ############################-
-      ### Montar o objeto final ----
-      ############################-
-      ## Se for uma base do SIH/SUS:
+############################
+### Montar o objeto final  #
+############################
+
+  ## Se for uma base do SIH/SUS:
       if (sihsus == TRUE) {
         banco <- data.frame(n.aih, munres, munint,
                             sexo, nasc, idade, fxetar, fxetar5,
@@ -378,14 +372,32 @@ csapAIHb <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRU
           attr(banco, which = "excluidos.obst") <- excluidos.obst
         }
       }
-      ## Se não for uma base do SIH/SUS:
-      if ( sihsus == FALSE & grupos == TRUE ) { banco <- data.frame(csap, grupo, cid) }
-      if ( sihsus == FALSE & grupos == FALSE ) {
+
+  ## Se não for uma base do SIH/SUS:
+      if ( sihsus == FALSE & grupos == TRUE ) {
+        banco <- data.frame(csap, grupo, cid)
+      }
+      else if ( sihsus == FALSE & grupos == FALSE ) {
         banco <- csap
         class(banco) <- 'factor'
       }
       if (is.data.frame(x) & sihsus == FALSE) {
         banco <- cbind(juntar, banco)
+      }
+
+      ## Exclusão de partos em bancos sem a estrutura do SIH/SUS
+      if (sihsus == FALSE) {
+        if(parto.rm == TRUE) {
+          banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = T)
+          # x <- droplevels(x)
+        }
+        # exportados <- paste(c("Exportados",
+        #                       nrow(x),
+                              pexportados <- round((1-(nlidos-nrow(banco))/nlidos)*100,1)#,
+                              # "registros."))
+        message(paste(c("Exportados ",
+                        suppressWarnings(formatC(nrow(banco), big.mark = ".")),
+                        " (", formatC(pexportados, decimal.mark = ","), "\u0025) registros.")))
       }
 
       return(banco)
