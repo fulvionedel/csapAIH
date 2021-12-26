@@ -3,7 +3,7 @@
 \docType{data}
 \name{aih500}
 \alias{aih500}
-\title{Data frame with selected records from an 'AIH file'}
+\title{Banco com 500 registros de um "arquivo da AIH", ano 2018}
 \format{
 An object of class \code{data.frame} with 500 rows and 113 columns.
 }
@@ -14,7 +14,7 @@ An object of class \code{data.frame} with 500 rows and 113 columns.
 data(aih500)
 }
 \description{
-A data frame with 500 records and all variables for the hospital admission form (Autorização de Internação Hospitalar - AIH), the "AIH files" (RD??????.DBC or RD??????.DBF) from DATASUS (Brazil, Ministry of Health), year 2018.
+Amostra aleatória de 500 registros e todas as variáveis de um "arquivo da AIH" (RD??????.DBC), RS, janeiro de 2018.
 }
 \examples{
 data("aih500")

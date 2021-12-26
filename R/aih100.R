@@ -26,8 +26,9 @@
 # download.file(url="ftp://ftp.datasus.gov.br/dissemin/publicos/SIHSUS/200801_/Dados/RDRS1801.dbc", destfile = temp)
 # aih <- read.dbc::read.dbc(temp)
 # unlink(temp)
-
 # aih <- read.dbc::read.dbc("data-raw/RDRS1801.dbc")
+#
+# aih <- microdatasus::fetch_datasus(2018, 1, 2018, 1, "RS", information_system = "SIH-RD")
 # aih100 <- aih[sample(rownames(aih), 100), ]
 # rownames(aih100) <- NULL
 # # str(aih100)
