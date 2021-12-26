@@ -15,7 +15,7 @@ idadeSUS(dados, sis = "SIH")
 Devolve um objeto da classe \code{data frame} com três variáveis:
  \enumerate{
   \item \code{idade}: idade em anos completos.
-  \item \code{fxetar.det}: \code{factor} com 33 \code{levels}, a idade em anos completos de 0 a 19 ("<1ano", ..., "19anos"), em faixas quinquenais de "20-24" a "75-79" e "80 +". Essa classificaçção é chamada pelo DATASUS de "idade detalhada"
+  \item \code{fxetar.det}: \code{factor} com 33 \code{levels}, a idade em anos completos de 0 a 19 ("<1ano", ..., "19anos"), em faixas quinquenais de "20-24" a "75-79" e "80 +". Essa classificação é chamada pelo DATASUS de "idade detalhada"
   \item \code{fxetar5}: \code{factor} de 17 \code{levels} com a idade em faixas quinquenais ("0-4", ..., "75-79", "80 +").
  }
 }
