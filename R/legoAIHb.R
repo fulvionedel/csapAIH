@@ -33,12 +33,12 @@
 #' attributes(aih)$Resumo
 #' }
 #'
-#' ## A data frame with the 'AIH files' structure
+#' ## An 'AIH file' in the internet
 #' ##---------------------------------------------
-#' data("aih500")
-#' aih <- legoAIHb(aih500)
-#' str(aih)
-#' attributes(aih)$Resumo
+#'
+#' <<<<<<<<<<< FAZER DOIS EXEMPLOS, COM E SEM O MICRODATASUS >>>>>>>>>>>>
+#'
+#'
 #'
 #' @import data.table
 #' @export
@@ -47,12 +47,6 @@ legoAIHb <-
 # function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep, language="pt", ...)
   function(x, sep, vars = NULL, ...)
   {
-  # Nuntius errorum
-  # ----------------
-  # if (class(x) == 'data.frame' | class(x) == 'data.table') file = FALSE
-  # if (file == FALSE & class(x) != 'data.frame' & class(x) != 'data.table') {
-  #   stop("x must be a .DBC, .DBF or .CSV file, otherwise a data frame in the workspace")
-  # }
 
   #===================
   ## Parat data
@@ -70,8 +64,9 @@ legoAIHb <-
       }
     else
       if (grepl('csv', x, ignore.case=T)==T) {
-        if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...)
-        if (sep == ',') x = utils::read.csv(x, colClasses=c('PROC_REA'='character'), ...)
+        x <- data.table::fread(x)
+        # if (sep == ';') x = utils::read.csv2(x, colClasses=c('PROC_REA'='character'), ...)
+        # if (sep == ',') x = utils::read.csv(x, colClasses=c('PROC_REA'='character'), ...)
         }
     else
       stop('------------------------------------------------------\n
@@ -81,14 +76,14 @@ legoAIHb <-
   # }
 #
   # Total of imported records
-  # readrecs = nrow(x)
+  readrecs = nrow(x)
   # if (language=="pt") {
-  #   # suppressWarnings(message("Importados ",
-  #   #                          format(readrecs, big.mark = "."),
-  #   #                          " registros de ", destinatio, "."))
-  #   suppressWarnings(message("Importados ",
-  #                            format(readrecs, big.mark = "."),
-  #                            " registros de."))
+    # suppressWarnings(message("Importados ",
+    #                          format(readrecs, big.mark = "."),
+    #                          " registros de ", destinatio, "."))
+    suppressWarnings(message("Importados ",
+                             format(readrecs, big.mark = "."),
+                             " registros de."))
   # }
   # if (language == "en") {
   #   message("Read     ", format(readrecs, big.mark = " "), " records.")
@@ -215,17 +210,19 @@ legoAIHb <-
   if(is.null(vars)) {
     vars <- c("N_AIH", "IDADE", "COD_IDADE", "SEXO", "NASC", "DIAG_PRINC", "DT_INTER", "DT_SAIDA", "PROC_REA", "IDENT", "MUNIC_RES", "MUNIC_MOV", "CEP", "CNES")
   }
-  if(class(x) != 'data.table') data.table::setDT(x)
+    ..vars <- DT_INTER <- DT_SAIDA <- NASC <- SEXO <- barplot <- fifelse <- idioma <- nomes <- par <- rainbow <- reorder <- setDF <- setnames <- NULL
+
+  if(!is.data.table(x)) data.table::setDT(x)
   x <- x[, ..vars]
-  x <- x[, lapply(.SD, as.character), by = .(N_AIH, IDADE)]
-  x <- x[, `:=`(nasc       = as.Date(NASC, format="%Y%m%d"),
-                data.inter = as.Date(DT_INTER, format="%Y%m%d"),
-                data.saida = as.Date(DT_SAIDA, format="%Y%m%d"),
-                idade      = csapAIH::idadeSUS(x)[["idade"]],
-                fxetar.det = csapAIH::idadeSUS(x)[["fxetar.det"]],
-                fxetar5    = csapAIH::idadeSUS(.SD)[["fxetar5"]],
-                sexo       = factor(SEXO, levels=c(1,3), labels=c("masc", "fem"))
-                )]
+  # x <- x[, lapply(.SD, as.character), by = .(N_AIH, IDADE)]
+  x <- x[, `:=` (nasc       = as.Date(NASC, format="%Y%m%d"),
+                 data.inter = as.Date(DT_INTER, format="%Y%m%d"),
+                 data.saida = as.Date(DT_SAIDA, format="%Y%m%d"),
+                 idade      = csapAIH::idadeSUS(x)[["idade"]],
+                 fxetar.det = csapAIH::idadeSUS(x)[["fxetar.det"]],
+                 fxetar5    = csapAIH::idadeSUS(x)[["fxetar5"]],
+                 sexo       = factor(SEXO, levels=c(1,3), labels=c("masc", "fem"))
+                 )]
   setnames(x,
            c("N_AIH", "DIAG_PRINC", "PROC_REA", "IDENT", "MUNIC_RES", "MUNIC_MOV", "CEP", "CNES"),
            c("n.aih", "cid", "proc.rea", "longa.perm", "munres", "munint", "cep", "cnes"))

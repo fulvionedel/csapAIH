@@ -2,8 +2,6 @@
 % Please edit documentation in R/plotCSAP.R
 \name{plotCSAP}
 \alias{plotCSAP}
-\alias{tableCSAP}
-\alias{csapAIH}
 \title{Plot Primary Health Care Sensitive Conditions, Brazilian List}
 \usage{
 plotCSAP(

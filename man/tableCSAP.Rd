@@ -2,7 +2,6 @@
 % Please edit documentation in R/tableCSAP.R
 \name{tableCSAP}
 \alias{tableCSAP}
-\alias{csapAIH}
 \title{Tabulate Primary Health Care Sensitive Conditions (PHCSC)}
 \usage{
 tableCSAP(x, idioma = "pt.ca")

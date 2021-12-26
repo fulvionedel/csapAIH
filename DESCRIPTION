@@ -1,13 +1,24 @@
 Package: csapAIH
 Type: Package
 Title: Classificar Condicoes Sensiveis a Atencao Primaria
-Version: 0.0.1
-Date: 2016-02-10
-Author: Fulvio B. Nedel
-Maintainer: Fulvio B. Nedel <fulvio.nedel@ufsc.br>
-Description: Classifica um vetor com codigos da CID-10 segundo a Lista Brasileira de Condicoes Sensiveis a Atencao Primaria e oferece outras funcionalidades, especialmente para o manejo dos 'arquivos da AIH' (BD-SIH/SUS).
+Version: 0.0.3.1
+Date: 2021-12-25
+Author: Fúlvio B. Nedel
+Maintainer: Fúlvio B. Nedel <fulvionedel@gmail.com>
+Description: Classifica um vetor com códigos da CID-10 segundo a 
+          Lista Brasileira de Condições Sensíveis à Atenção Primária 
+          e oferece outras funcionalidades, especialmente para o 
+          manejo dos 'arquivos da AIH' (BD-SIH/SUS).
 License: GPL-3
-Suggests: foreign
+Suggests: foreign,
+          ggplot2,
+          read.dbc,
+          scales
+LazyData: true
+NeedsCompilation: no
 Encoding: UTF-8
 Language: pt-br
-RoxygenNote: 5.0.1
+RoxygenNote: 7.1.2
+Depends: 
+    R (>= 2.10),
+    data.table

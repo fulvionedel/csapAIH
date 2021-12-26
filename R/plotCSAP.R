@@ -1,8 +1,5 @@
 #' @title Plot Primary Health Care Sensitive Conditions, Brazilian List
-#'
 #' @aliases plotCSAP
-#' @aliases tableCSAP
-#' @aliases csapAIH
 #'
 #' @description Plot an horizontal bar graphic (using \code{\link[ggplot2]{ggplot2}}) for Primary Health Care Sensitive Conditions (PHCSC, CSAP), according to the Brazilian List of causes.
 
