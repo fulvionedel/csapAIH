@@ -1,9 +1,9 @@
-#' @title Data frame with selected records from an 'AIH file'
+#' @title Banco com 500 registros de um "arquivo da AIH", ano 2018
 #' @name aih500
 #' @aliases aih500
 #' @docType data
 #'
-#' @description A data frame with 500 records and all variables for the hospital admission form (Autorização de Internação Hospitalar - AIH), the "AIH files" (RD??????.DBC or RD??????.DBF) from DATASUS (Brazil, Ministry of Health), year 2018.
+#' @description Amostra aleatória de 500 registros e todas as variáveis de um "arquivo da AIH" (RD??????.DBC), ano 2018.
 #'
 #' @usage data(aih500)
 #'
