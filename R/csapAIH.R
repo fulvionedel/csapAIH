@@ -105,11 +105,9 @@
 #' @examples
 #' ## Uma lista de códigos da CID-10:
 #' ##---------------------------------
-#' \dontrun{
 #' cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
-#' teste1 <- csapAIH(as.factor(cids)) ; class(teste1) ; teste1
-#' teste2 <- csapAIH(as.factor(cids),  grupo=FALSE) ; class(teste2) ; teste2
-#' }
+#' teste1 <- csapAIH(cids) ; class(teste1) ; teste1
+#' teste2 <- csapAIH(cids,  grupo=FALSE) ; class(teste2) ; teste2
 #'
 #' ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 #' ##---------------------------------------------------------
@@ -134,10 +132,13 @@
 #' teste5 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
 #' str(teste5)
 #'
-#' ## Para uma base de dados sem a estrutura dos BD-SIH/SUS, apenas trabalhe
-#' ## a variável com os CIDs, como nos primeiros exemplos (teste1 e teste2)
-#' ##-----------------------------------------------------------------------
-#' ## teste6 <- csapAIH(BaseDeDados$VariavelcomCID)
+#' ## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
+#' ##--------------------------------------------------------
+#' teste6 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
+#' str(teste6)
+#' teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+#' str(teste7)
+#'
 #'
 #' @export
 #'
@@ -146,19 +147,18 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
     # Lego data ===================
     ## Preparar os dados
     ##
-    if (class(x)=='factor') {
+    if (is.factor(x)) x <- as.character(x)
+    if (is.character(x)) {
       cid <- x
       arquivo <- FALSE
       sihsus <- FALSE
     }
-    if (class(x)=='data.frame' | class(x)=='data.table') arquivo <- FALSE
+    if (is.data.frame(x)) arquivo <- FALSE
     if (sihsus == FALSE) {
-      if (class(x)=='data.frame' | class(x)=='data.table') {
+      if (is.data.frame(x)) {
         cid <- x[,deparse(substitute(cid))]
         juntar <- x
         }
-      # if (class(x)!='data.frame') { cid <- x }
-      # cid = as.character(cid)
     }
     #
     # Leitura do arquivo de dados
@@ -193,12 +193,10 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
                               "registros."))
       }
 
-    # Garantir o trabalho com operadores mais tarde, no CID
-    if (sihsus==FALSE) cid=as.character(cid)
-      #--------------------------------------------------------------------------#
-      #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS   #
-      #----------------------------------------------------------------------#
-      # munus enim nuntius ad deletionem per modum obstetrica ===========
+      #-------------------------------------------------------------------------#
+      #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS  #
+      #-------------------------------------------------------------------------#
+        # Contagem de registros excluídos ---- início da função
       #
       freqs <- function(tamini, tamfin, digits = 1, tipo = "proc") {
         fr <- tamini - tamfin
@@ -225,30 +223,15 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       # ----------------------- fim da função
       #
       if (sihsus==TRUE) {
-        #   Exclusão dos procedimentos obstétricos
-        #
-        #   0310010012 ASSISTENCIA AO PARTO S/ DISTOCIA
-        #   0310010020 ATEND AO RECEM-NASCIDO EM SALA DE PARTO
-        #   0310010039 PARTO NORMAL
-        #   0310010047 PARTO NORMAL EM GESTACAO DE ALTO RISCO
-        #   0411010018 DESCOLAMENTO MANUAL DE PLACENTA
-        #   0411010026 PARTO CESARIANO EM GESTACAO ALTO RISCO
-        #   0411010034 PARTO CESARIANO
-        #   0411010042 PARTO CESARIANO C/ LAQUEADURA TUBARIA
-        #   0411020013 CURETAGEM POS-ABORTAMENTO / PUERPERAL
-        #   0411020021 EMBRIOTOMIA
-        procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018', '0411010026',
-                      '0411010034', '0411010042', '0411020013', '0411020021')
         tamini <- nrow(x)
         x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
         if (procobst.rm == TRUE) {
+          x <- proc.obst(x) |>
+            suppressMessages()
           if (parto.rm == TRUE) {
-            x <- subset(x, subset = x$PROC_REA %in% procobst==FALSE)
             x <- subset(x, subset = x$DIAG_PRINC < "O80" | x$DIAG_PRINC >= "O85")
-            x <- droplevels(x)
-          } else if (parto.rm == FALSE) {
-            x <- subset(x, subset = x$PROC_REA %in% procobst==FALSE, drop = TRUE)
           }
+          x <- droplevels(x)
           excluidos.obst <- freqs(nlidos, nrow(x))
         } else if (procobst.rm == FALSE) {
           if (parto.rm == TRUE) {
@@ -318,7 +301,7 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         sexo     <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
         n.aih    <- as.character(x$N_AIH)
         proc.rea <- x$PROC_REA
-        proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
+        # proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
         #, labels=c('sim', 'nao'))
 #     Hmisc::label(munres)   <- 'Munic\u00EDpio de resid\u00EAncia'
 #     Hmisc::label(munint)   <- 'Munic\u00EDpio de interna\u00E7\u00E3o'
@@ -451,8 +434,21 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         banco <- csap
         class(banco) <- 'factor'
       }
-      if (class(x)=='data.frame' & sihsus == FALSE) {
+      if (is.data.frame(x) & sihsus == FALSE) {
+        # return(banco)
         banco <- cbind(juntar, banco)
+        banco$cid <- NULL
+      }
+
+      ## Exclusão de partos em bancos sem a estrutura do SIH/SUS
+      if (sihsus == FALSE) {
+        if(parto.rm == TRUE) {
+          banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = T)
+        }
+        pexportados <- round((1-(nlidos-nrow(banco))/nlidos)*100,1)
+        message(paste(c("Exportados ",
+                        suppressWarnings(formatC(nrow(banco), big.mark = ".")),
+                        " (", formatC(pexportados, decimal.mark = ","), "\u0025) registros.")))
       }
 
       return(banco)

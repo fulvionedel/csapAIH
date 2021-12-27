@@ -123,11 +123,9 @@ A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos e
 \examples{
 ## Uma lista de códigos da CID-10:
 ##---------------------------------
-\dontrun{
 cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
-teste1 <- csapAIH(as.factor(cids)) ; class(teste1) ; teste1
-teste2 <- csapAIH(as.factor(cids),  grupo=FALSE) ; class(teste2) ; teste2
-}
+teste1 <- csapAIH(cids) ; class(teste1) ; teste1
+teste2 <- csapAIH(cids,  grupo=FALSE) ; class(teste2) ; teste2
 
 ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 ##---------------------------------------------------------
@@ -152,10 +150,13 @@ aih <- subset(aih100, select = -c(CEP, CNES))
 teste5 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
 str(teste5)
 
-## Para uma base de dados sem a estrutura dos BD-SIH/SUS, apenas trabalhe
-## a variável com os CIDs, como nos primeiros exemplos (teste1 e teste2)
-##-----------------------------------------------------------------------
-## teste6 <- csapAIH(BaseDeDados$VariavelcomCID)
+## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
+##--------------------------------------------------------
+teste6 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
+str(teste6)
+teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+str(teste7)
+
 
 }
 \references{
