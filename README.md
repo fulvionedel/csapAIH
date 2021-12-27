@@ -30,9 +30,9 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   
   ou
   
-  * através do pacote `devtools`sobre os arquivos-fonte da função em desenvolvimento, no GitHub:
+  * através do pacote `remotes`sobre os arquivos-fonte da função em desenvolvimento, no GitHub:
       
-        install.packages("devtools") # desnecessário se o pacote devtools já estiver instalado
+        install.packages("remotes") # desnecessário se o pacote já estiver instalado
         devtools::install_github("fulvionedel/csapAIH")
 
 
