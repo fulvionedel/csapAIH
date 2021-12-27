@@ -3,7 +3,7 @@
 #' @aliases aih100
 #' @docType data
 #'
-#' @description Banco de dados (classe \code{data.frame}) com 100 observações de um "arquivo da AIH", 2018.
+#' @description Amostra aleatória de 500 registros e todas as variáveis de um "arquivo da AIH" (RD??????.DBC), ano 2018.
 #'
 #' @usage data(aih100)
 #'
