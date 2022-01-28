@@ -168,13 +168,13 @@ teste9 <- csapAIH(aih100, sihsus = FALSE, cid = DIAG_PRINC)
 ##---------------------------------------------------------
 ## É necessário unir o banco da AIH com as variáveis de interesse
 ## ao banco resultante da função 'csapAIH':
-vars <- c('RACA_COR', 'INSTRU')
+vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
 teste10 <- csapAIH(aih100)
-teste10 <- merge(teste10, aih100[, c('N_AIH', vars)], by.x = "n.aih", by.y = "N_AIH")
+teste10 <- merge(teste10, aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste10)
 ## Ou, usando o encadeamento ("piping") de funções,
 teste11 <- csapAIH(aih100) |>
-merge(aih100[, c('N_AIH', vars)], by.x = "n.aih", by.y = "N_AIH")
+merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste11)
 
 }
