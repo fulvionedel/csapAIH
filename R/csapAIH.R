@@ -114,31 +114,51 @@
 #' \dontrun{
 #'  teste3.dbf <- csapAIH("RDRS1301.dbf")
 #'  str(teste3.dbf)
-#'  teste3.dbc <- csapAIH("RDRS1301.dbc")
-#'  str(teste3.dbc)
+#'  teste4.dbc <- csapAIH("RDRS1301.dbc")
+#'  str(teste4.dbc)
 #' }
 #'
 #' ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
 #' ##-------------------------------------------------------
 #' data("aih100")
 #' str(aih100)
-#' teste4 <- csapAIH(aih100)
-#' str(teste4)
+#' teste5 <- csapAIH(aih100)
+#' str(teste5)
 #'
-#' ## Uma base de dados com a estrutura dos 'arquivos da AIH'
+#' ## Uma base de dados com a estrutura dos "arquivos da AIH"
 #' ## mas sem as variáveis CEP ou CNES:
 #' ##--------------------------------------------------------
 #' aih <- subset(aih100, select = -c(CEP, CNES))
-#' teste5 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
-#' str(teste5)
+#' teste6 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
+#' str(teste6)
 #'
 #' ## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
 #' ##--------------------------------------------------------
-#' teste6 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
-#' str(teste6)
-#' teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+#' teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
 #' str(teste7)
+#' teste8 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+#' str(teste8)
 #'
+#' ## Uma base de dados com a estrutura dos "arquivos da AIH" mantendo
+#' ## todas suas variáveis
+#' ##-----------------------------------------------------------------
+#' ## Trate como se não fosse um arquivo da AIH e apenas acrescente
+#' ## a classificação ao banco:
+#' teste9 <- csapAIH(aih100, sihsus = FALSE, cid = DIAG_PRINC)
+#'
+#' ## Acrescentar variáveis da AIH ao banco com as CSAP
+#' ##---------------------------------------------------------
+#' ## É necessário unir o banco da AIH com as variáveis de interesse
+#' ## ao banco resultante da função 'csapAIH':
+#' vars <- c('RACA_COR', 'INSTRU')
+#' teste10 <- csapAIH(aih100)
+#' teste10 <- merge(teste10, aih100[, c('N_AIH', vars)], by.x = "n.aih", by.y = "N_AIH")
+#' names(teste10)
+#' ## Ou, usando o encadeamento ("piping") de funções,
+#' teste11 <- csapAIH(aih100) |>
+#' merge(aih100[, c('N_AIH', vars)], by.x = "n.aih", by.y = "N_AIH")
+#' names(teste11)
+
 #'
 #' @export
 #'
@@ -147,12 +167,13 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
     # Lego data ===================
     ## Preparar os dados
     ##
-    if (is.factor(x)) x <- as.character(x)
+    if (is.factor(x)) { cid <- as.character(x) }
     if (is.character(x)) {
       cid <- x
+      cid <- as.character(x)
       arquivo <- FALSE
       sihsus <- FALSE
-    }
+      }
     if (is.data.frame(x)) arquivo <- FALSE
     if (sihsus == FALSE) {
       if (is.data.frame(x)) {
@@ -193,6 +214,9 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
                               "registros."))
       }
 
+      # Garantir o trabalho com operadores mais tarde, no CID
+      if (sihsus==FALSE) cid=as.character(cid)
+
       #-------------------------------------------------------------------------#
       #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS  #
       #-------------------------------------------------------------------------#
@@ -226,8 +250,7 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         tamini <- nrow(x)
         x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
         if (procobst.rm == TRUE) {
-          x <- proc.obst(x) |>
-            suppressMessages()
+          x <- suppressMessages( proc.obst(x) )
           if (parto.rm == TRUE) {
             x <- subset(x, subset = x$DIAG_PRINC < "O80" | x$DIAG_PRINC >= "O85")
           }
@@ -324,8 +347,8 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
       #               Portaria MS nº 221, de 17 de abril de 2008                     #
       ################################################################################
-       csap <- listaBR(cid)['csap']
-      grupo <- listaBR(cid)['grupo']
+       csap <- listaBR(cid)[,'csap']
+      grupo <- listaBR(cid)[,'grupo']
 
       ###########################
       ### Montar o objeto final #
@@ -375,8 +398,11 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
 
       ## Se não for uma base do SIH/SUS:
 
-      if ( is.character(x) & grupos == FALSE ) {
-        banco <- as.factor(csap$csap)
+      if ( sihsus == FALSE & grupos == TRUE ) {
+        banco <- data.frame(cid, csap, grupo)
+      }
+      if ( sihsus == FALSE & grupos == FALSE ) {
+        banco <- data.frame(cid, csap)
       }
 
       if (is.data.frame(x) & sihsus == FALSE) {
@@ -391,13 +417,22 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       ## Exclusão de partos em bancos sem a estrutura do SIH/SUS
       if (sihsus == FALSE) {
         if(parto.rm == TRUE) {
+          nlidos <- nrow(banco)
           banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = T)
+          pexcluidos <- round((1-(nrow(banco)/nlidos))*100,1)
+          message(paste0(c("Exclu\u00EDdos ",
+                           suppressWarnings(formatC(nlidos-nrow(banco),
+                                                    big.mark = ".")),
+                           " registros de parto",
+                           " (", formatC(pexcluidos, decimal.mark = ","), "\u0025 do total).")))
         }
-        pexportados <- round((1-(nlidos-nrow(banco))/nlidos)*100,1)
-        message(paste(c("Exportados ",
-                        suppressWarnings(formatC(nrow(banco), big.mark = ".")),
-                        " (", formatC(pexportados, decimal.mark = ","), "\u0025) registros.")))
       }
+
+      rownames(banco) <-  NULL
+
+      if(sihsus == FALSE & grupos == FALSE) {
+        banco <- banco['csap']
+        }
 
       return(banco)
 }

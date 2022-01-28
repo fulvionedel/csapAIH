@@ -132,31 +132,50 @@ teste2 <- csapAIH(cids,  grupo=FALSE) ; class(teste2) ; teste2
 \dontrun{
  teste3.dbf <- csapAIH("RDRS1301.dbf")
  str(teste3.dbf)
- teste3.dbc <- csapAIH("RDRS1301.dbc")
- str(teste3.dbc)
+ teste4.dbc <- csapAIH("RDRS1301.dbc")
+ str(teste4.dbc)
 }
 
 ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
 ##-------------------------------------------------------
 data("aih100")
 str(aih100)
-teste4 <- csapAIH(aih100)
-str(teste4)
+teste5 <- csapAIH(aih100)
+str(teste5)
 
-## Uma base de dados com a estrutura dos 'arquivos da AIH'
+## Uma base de dados com a estrutura dos "arquivos da AIH"
 ## mas sem as variáveis CEP ou CNES:
 ##--------------------------------------------------------
 aih <- subset(aih100, select = -c(CEP, CNES))
-teste5 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
-str(teste5)
+teste6 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
+str(teste6)
 
 ## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
 ##--------------------------------------------------------
-teste6 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
-str(teste6)
-teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
 str(teste7)
+teste8 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+str(teste8)
 
+## Uma base de dados com a estrutura dos "arquivos da AIH" mantendo
+## todas suas variáveis
+##-----------------------------------------------------------------
+## Trate como se não fosse um arquivo da AIH e apenas acrescente
+## a classificação ao banco:
+teste9 <- csapAIH(aih100, sihsus = FALSE, cid = DIAG_PRINC)
+
+## Acrescentar variáveis da AIH ao banco com as CSAP
+##---------------------------------------------------------
+## É necessário unir o banco da AIH com as variáveis de interesse
+## ao banco resultante da função 'csapAIH':
+vars <- c('RACA_COR', 'INSTRU')
+teste10 <- csapAIH(aih100)
+teste10 <- merge(teste10, aih100[, c('N_AIH', vars)], by.x = "n.aih", by.y = "N_AIH")
+names(teste10)
+## Ou, usando o encadeamento ("piping") de funções,
+teste11 <- csapAIH(aih100) |>
+merge(aih100[, c('N_AIH', vars)], by.x = "n.aih", by.y = "N_AIH")
+names(teste11)
 
 }
 \references{
