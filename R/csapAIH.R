@@ -164,13 +164,11 @@
 #'
 csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
   {
-    # Lego data ===================
     ## Preparar os dados
     ##
-    if (is.factor(x)) { cid <- as.character(x) }
+    if (is.factor(x)) { x <- as.character(x) }
     if (is.character(x)) {
       cid <- x
-      cid <- as.character(x)
       arquivo <- FALSE
       sihsus <- FALSE
       }
