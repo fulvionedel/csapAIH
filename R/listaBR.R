@@ -6,9 +6,9 @@ listaBR <- function(cid){
   if(!is.character(cid)) cid <- as.character(cid)
 # GRUPO 01 - Doenças preveníveis por imunização e condições sensíveis
 g01 <- ifelse(cid >= "A33" & cid < "A38" | cid >= "B26" & cid < "B27" | cid >= "B05" & cid < "B07" |
-                cid >= "A95" & cid < "A96" | cid >= "B16" & cid < "B17" | cid == "G000"              |
-                cid >= "A15" & cid < "A20" | cid >= "I00" & cid < "I03" | cid >= "A51" & cid < "A54" |
-                cid >= "B50" & cid < "B55" | cid >= "B77" & cid < "B78", 1, 2)
+              cid >= "A95" & cid < "A96" | cid >= "B16" & cid < "B17" | cid == "G000"              |
+              cid >= "A15" & cid < "A20" | cid >= "I00" & cid < "I03" | cid >= "A51" & cid < "A54" |
+              cid >= "B50" & cid < "B55" | cid >= "B77" & cid < "B78", 1, 2)
 #GRUPO 02 - Gastrenterites
 g02 <- ifelse(substr(cid, 1,2)=="A0" | substr(cid, 1,3)=="E86", 1, 2)
 #GRUPO 03 - Anemia

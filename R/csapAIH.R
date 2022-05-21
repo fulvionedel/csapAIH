@@ -106,29 +106,37 @@
 #' ## Uma lista de códigos da CID-10:
 #' ##---------------------------------
 #' cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
-#' teste1 <- csapAIH(cids) ; class(teste1) ; teste1
-#' teste2 <- csapAIH(cids,  grupo=FALSE) ; class(teste2) ; teste2
+#' #
+#' # Se o vetor for da classe 'character', deve-se transformá-lo em fator ou
+#' # mudar o argumento 'arquivo' para 'FALSE':
+#' # teste1 <- csapAIH(cids) # Erro
+#' teste1 <- csapAIH(factor(cids)) ; class(teste1) ; teste1
+#' teste1 <- csapAIH(cids, arquivo=FALSE) ; class(teste1) ; teste1
+#' teste2 <- csapAIH(cids, arquivo=FALSE,  grupo=FALSE) ; class(teste2) ; teste2
+#' teste2 <- csapAIH(factor(cids), grupo=FALSE) ; class(teste2) ; teste2
+#' #
+
 #'
 #' ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 #' ##---------------------------------------------------------
 #' \dontrun{
-#'  teste3.dbf <- csapAIH("RDRS1301.dbf")
+#'  teste3.dbf <- csapAIH("RDRS1201.dbf")
 #'  str(teste3.dbf)
-#'  teste4.dbc <- csapAIH("RDRS1301.dbc")
+#'  teste4.dbc <- csapAIH("RDRS1801.dbc")
 #'  str(teste4.dbc)
 #' }
 #'
 #' ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
 #' ##-------------------------------------------------------
-#' data("aih100")
-#' str(aih100)
-#' teste5 <- csapAIH(aih100)
+#' data("aih500")
+#' str(aih500)
+#' teste5 <- csapAIH(aih500)
 #' str(teste5)
 #'
 #' ## Uma base de dados com a estrutura dos "arquivos da AIH"
 #' ## mas sem as variáveis CEP ou CNES:
 #' ##--------------------------------------------------------
-#' aih <- subset(aih100, select = -c(CEP, CNES))
+#' aih <- subset(aih500, select = -c(CEP, CNES))
 #' teste6 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
 #' str(teste6)
 #'
@@ -144,15 +152,15 @@
 #' ##-----------------------------------------------------------------
 #' ## Trate como se não fosse um arquivo da AIH e apenas acrescente
 #' ## a classificação ao banco:
-#' teste9 <- csapAIH(aih100, sihsus = FALSE, cid = DIAG_PRINC)
+#' teste9 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
 #'
 #' ## Acrescentar variáveis da AIH ao banco com as CSAP
 #' ##---------------------------------------------------------
 #' ## É necessário unir o banco da AIH com as variáveis de interesse
 #' ## ao banco resultante da função 'csapAIH':
 #' vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
-#' teste10 <- csapAIH(aih100)
-#' teste10 <- merge(teste10, aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+#' teste10 <- csapAIH(aih500)
+#' teste10 <- merge(teste10, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
 #' names(teste10)
 #' ## Ou, usando o encadeamento ("piping") de funções,
 #' teste11 <- csapAIH(aih100) |>
@@ -164,29 +172,44 @@
 #'
 csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
   {
-    ## Preparar os dados
-    ##
-    if (is.factor(x)) { x <- as.character(x) }
-    if (is.character(x)) {
+    # Preparar os dados
+    #
+    if (is.factor(x)) {
+      # x <- as.character(x)
+      cid <- as.character(x)
+      arquivo     <- FALSE
+      sihsus      <- FALSE
+      procobst.rm <- FALSE
+      parto.rm    <- FALSE
+      longa.rm    <- FALSE
+      cep         <- FALSE
+      cnes        <- FALSE
+    }
+    if (is.character(x) & arquivo == FALSE) {
       cid <- x
-      arquivo <- FALSE
-      sihsus <- FALSE
-      }
+      sihsus      <- FALSE
+      procobst.rm <- FALSE
+      parto.rm    <- FALSE
+      longa.rm    <- FALSE
+      cep         <- FALSE
+      cnes        <- FALSE
+    }
     if (is.data.frame(x)) arquivo <- FALSE
     if (sihsus == FALSE) {
       if (is.data.frame(x)) {
         cid <- x[,deparse(substitute(cid))]
+        # cid <- x[,cid]
         juntar <- x
         }
     }
     #
     # Leitura do arquivo de dados
     #
-    if (arquivo==TRUE) {
-      if (grepl('dbf', x, ignore.case=TRUE)==TRUE) {
-        x <- foreign::read.dbf(x, as.is=TRUE, ...)
+    if (arquivo == TRUE) {
+      if (grepl('dbf', x, ignore.case = TRUE) == TRUE) {
+        x <- foreign::read.dbf(x, as.is = TRUE, ...)
       } else
-        if (grepl('dbc', x, ignore.case=TRUE)==TRUE) {
+        if (grepl('dbc', x, ignore.case = TRUE) == TRUE) {
           x <- read.dbc::read.dbc(x, ...)
           } else
             if (grepl('csv', x, ignore.case=T)==T) {
@@ -279,7 +302,9 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
         #   (isso tem de melhorar, tem código repetido e mistura
         #   mensagem com valor, não sei se é legal!)
         #
-        exportados <- paste(c("Exportados", nrow(x), pexportados <- round((1-(nlidos-nrow(x))/nlidos)*100,1), "registros."))
+        exportados <- paste(c("Exportados",
+                              nrow(x),
+                              pexportados <- round((1-(nlidos-nrow(x))/nlidos)*100,1), "registros."))
         message(paste(c("Exportados ", suppressWarnings(formatC(length(x[,1]), big.mark = ".")), " (", formatC(pexportados, decimal.mark = ","), "\u0025) registros.")))
         resumo <- rbind(importados, exportados)
         colnames(resumo) = c("acao", "freq", "perc", "objeto")
@@ -345,7 +370,7 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
       #               Portaria MS nº 221, de 17 de abril de 2008                     #
       ################################################################################
-       csap <- listaBR(cid)[,'csap']
+      csap  <- listaBR(cid)[,'csap']
       grupo <- listaBR(cid)[,'grupo']
 
       ###########################
@@ -428,8 +453,8 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
 
       rownames(banco) <-  NULL
 
-      if(sihsus == FALSE & grupos == FALSE) {
-        banco <- banco['csap']
+      if(!is.data.frame(x) & sihsus == FALSE & grupos == FALSE) {
+        banco <- banco[['csap']]
         }
 
       return(banco)

@@ -124,29 +124,36 @@ A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos e
 ## Uma lista de códigos da CID-10:
 ##---------------------------------
 cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
-teste1 <- csapAIH(cids) ; class(teste1) ; teste1
-teste2 <- csapAIH(cids,  grupo=FALSE) ; class(teste2) ; teste2
+#
+# Se o vetor for da classe 'character', deve-se transformá-lo em fator ou
+# mudar o argumento 'arquivo' para 'FALSE':
+# teste1 <- csapAIH(cids) # Erro
+teste1 <- csapAIH(factor(cids)) ; class(teste1) ; teste1
+teste1 <- csapAIH(cids, arquivo=FALSE) ; class(teste1) ; teste1
+teste2 <- csapAIH(cids, arquivo=FALSE,  grupo=FALSE) ; class(teste2) ; teste2
+teste2 <- csapAIH(factor(cids), grupo=FALSE) ; class(teste2) ; teste2
+#
 
 ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 ##---------------------------------------------------------
 \dontrun{
- teste3.dbf <- csapAIH("RDRS1301.dbf")
+ teste3.dbf <- csapAIH("RDRS1201.dbf")
  str(teste3.dbf)
- teste4.dbc <- csapAIH("RDRS1301.dbc")
+ teste4.dbc <- csapAIH("RDRS1801.dbc")
  str(teste4.dbc)
 }
 
 ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
 ##-------------------------------------------------------
-data("aih100")
-str(aih100)
-teste5 <- csapAIH(aih100)
+data("aih500")
+str(aih500)
+teste5 <- csapAIH(aih500)
 str(teste5)
 
 ## Uma base de dados com a estrutura dos "arquivos da AIH"
 ## mas sem as variáveis CEP ou CNES:
 ##--------------------------------------------------------
-aih <- subset(aih100, select = -c(CEP, CNES))
+aih <- subset(aih500, select = -c(CEP, CNES))
 teste6 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
 str(teste6)
 
@@ -162,15 +169,15 @@ str(teste8)
 ##-----------------------------------------------------------------
 ## Trate como se não fosse um arquivo da AIH e apenas acrescente
 ## a classificação ao banco:
-teste9 <- csapAIH(aih100, sihsus = FALSE, cid = DIAG_PRINC)
+teste9 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
 
 ## Acrescentar variáveis da AIH ao banco com as CSAP
 ##---------------------------------------------------------
 ## É necessário unir o banco da AIH com as variáveis de interesse
 ## ao banco resultante da função 'csapAIH':
 vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
-teste10 <- csapAIH(aih100)
-teste10 <- merge(teste10, aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+teste10 <- csapAIH(aih500)
+teste10 <- merge(teste10, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste10)
 ## Ou, usando o encadeamento ("piping") de funções,
 teste11 <- csapAIH(aih100) |>
