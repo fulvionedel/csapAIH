@@ -17,9 +17,9 @@
 #' data("aih500")
 #' csap <- csapAIH(aih500)
 #' tabCSAP(csap$grupo)
-#' # tabCSAP(csap$grupo, tipo = "pt.sa")
-#' # tabCSAP(csap$grupo, tipo = "en")
-#' # tabCSAP(csap$grupo, tipo = "es")
+#' tabCSAP(csap$grupo, tipo = "pt.sa")
+#' tabCSAP(csap$grupo, tipo = "en")
+#' tabCSAP(csap$grupo, tipo = "es")
 #'
 #' @export
 tabCSAP <- function(x, digits = 2, tipo = "pt.ca", format = FALSE){
@@ -38,7 +38,7 @@ tabCSAP <- function(x, digits = 2, tipo = "pt.ca", format = FALSE){
                      tabelagrupos[20:21] )
 
   substr(names(tabelagrupos)[21], 1,1) <- "N"
-  nomesgrupos                          <- nomesgruposCSAP()
+  nomesgrupos                          <- nomesgruposCSAP(tipo = tipo)
   # nomesgrupos                          <- groupnamesCSAP(tipo = tipo)
   names(tabelagrupos)[22]              <- "Total de interna\U00E7\u00F5es"
 

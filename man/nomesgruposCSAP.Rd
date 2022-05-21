@@ -4,7 +4,10 @@
 \alias{nomesgruposCSAP}
 \title{Nomes dos grupos de causa da Lista Brasileira de Condicoes Sensiveis a Atencao Primaria}
 \usage{
-nomesgruposCSAP()
+nomesgruposCSAP(tipo = "pt.ca")
+}
+\arguments{
+\item{tipo}{Vetor de caracteres indicando o idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 }
 \value{
 Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.
@@ -14,7 +17,15 @@ Lista os 19 grupos de causa CSAP, em ordem crescente.
 }
 \examples{
 nomesgruposCSAP()
+nomesgruposCSAP(tipo = "pt.ca")
+nomesgruposCSAP(tipo = "en")
+nomesgruposCSAP(tipo = "es")
 
+}
+\references{
+Alfradique et al., Internações por Condições Sensíveis à Atenção Primária: a construção da lista brasileira como ferramenta para medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil). Cad Saúde Pública 25(6):1337-49.
+
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 }
 \seealso{
 \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}

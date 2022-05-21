@@ -22,9 +22,9 @@ Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to th
 data("aih500")
 csap <- csapAIH(aih500)
 tabCSAP(csap$grupo)
-# tabCSAP(csap$grupo, tipo = "pt.sa")
-# tabCSAP(csap$grupo, tipo = "en")
-# tabCSAP(csap$grupo, tipo = "es")
+tabCSAP(csap$grupo, tipo = "pt.sa")
+tabCSAP(csap$grupo, tipo = "en")
+tabCSAP(csap$grupo, tipo = "es")
 
 }
 \references{

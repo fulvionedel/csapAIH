@@ -12,7 +12,7 @@ proc.obst(
 )
 }
 \arguments{
-\item{x}{A data frame with the Brazilian records for hospital discharges from Unified Health System, the Hospital Admission Autorization Form -- "Autorização de Internação Hospitalar (AIH)", v.g. "AIH files -- arquivos da AIH", on the Bases de Dados do Sistema de Informacao Hospitalar do SUS -- BD-SIH/SUS.}
+\item{x}{A data frame with the Brazilian records for hospital discharges from Unified Health System, the Hospital Admission Autorization Form -- "Autorização de Internação Hospitalar (AIH)", v.g. "AIH files -- arquivos da AIH", on the "Bases de Dados do Sistema de Informacao Hospitalar do SUS -- BD-SIH/SUS".}
 
 \item{procobst.action}{Character argument indicating the action to be fulfilled on the data frame: (1) \code{"exclude"} (default) returns a data frame without the hospitalizations for obstetric procedures, (2) \code{"extract"} returns a data frame with only the hospitalizations for obstetric procedures, (3) \code{"identify"} returns a data frame with all the original records plus one variable (\code{procobst}) of class \code{factor} indicating whether the hospitalization was for an obstetric procedure or not.}
 
