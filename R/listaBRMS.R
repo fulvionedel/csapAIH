@@ -2,9 +2,12 @@
 #               Portaria MS nº 221, de 17 de abril de 2008
 #            --- --- --- --- --- --- --- --- --- --- --- ---
 #
-listaBR <- function(cid){
+#' @importFrom haven zap_labels is.labelled
+#
+listaBRMS <- function(cid){
   if(!is.character(cid)) cid <- as.character(cid)
-# GRUPO 01 - Doenças preveníveis por imunização e condições sensíveis
+  # if(is.labelled(cid)) cid <- zap_labels(cid)
+  # GRUPO 01 - Doenças preveníveis por imunização e condições sensíveis
 g01 <- ifelse(cid >= "A33" & cid < "A38" | cid >= "B26" & cid < "B27" | cid >= "B05" & cid < "B07" |
               cid >= "A95" & cid < "A96" | cid >= "B16" & cid < "B17" | cid == "G000"              |
               cid >= "A15" & cid < "A20" | cid >= "I00" & cid < "I03" | cid >= "A51" & cid < "A54" |
@@ -15,6 +18,10 @@ g02 <- ifelse(substr(cid, 1,2)=="A0" | substr(cid, 1,3)=="E86", 1, 2)
 g03 <- ifelse(substr(cid, 1,3)=="D50", 1, 2)
 #GRUPO 04 - Deficiências nutricionais
 g04 <- ifelse(cid >= "E40" & cid < "E47" | cid >= "E50" & cid < "E65", 1, 2)
+if(nlevels(factor(g04)) < 2) {
+  g04 <- factor(g04, levels = c(1, 2))
+}
+g04 <- factor(g04, levels = c(1, 2))
 #GRUPO 05 - Infec. ouvido, nariz e garganta
 g05 <- ifelse(substr(cid, 1,3)=="H66" | cid >= "J0" & cid < "J04" | substr(cid, 1,3)=="J06" |
                 substr(cid, 1,3)=="J31", 1, 2)

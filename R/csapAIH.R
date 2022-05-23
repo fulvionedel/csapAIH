@@ -4,6 +4,7 @@
 #' @description Classifica códigos da 10ª Revisão da Classificação Internacional de Doenças (CID-10) segundo a Lista Brasileira de Internação por Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos "arquivos da AIH" (RD??????.DBC; BD-SIH/SUS).
 #'
 #' @param x alvo da função: um arquivo, banco de dados ou vetor com códigos da CID-10 (ver \code{detalhes});
+#' @param lista Lista de causas a ser considerada (v. detalhes); pode ser \code{"MS"} (padrão) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
 #' @param grupos argumento lógico, obrigatório; \code{TRUE} (padrão) indica que as internações serão classificadas também em grupos de causas CSAP;
 #' @param sihsus argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH:
 #'   \itemize{
@@ -41,6 +42,8 @@
 #'
 #' Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(<objeto>)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(<objeto>, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(<objeto>))}.
 #' }
+#'
+#' \item{lista} A Lista Brasileira de ICSAP publicada pelo Ministério da Saúde (Brasil, 2008) se diferencia da lista publicada pelxs construtorxs da lista (Alfradique et al., 2009), em um único aspecto: a Portaria Ministerial uniu os dois primeiros grupos de causa da lista publicada por Alfradique et al. -- doenças evitáveis por vacinação e doenças evitáveis por outros meios (sífilis, tuberculose e febre reumática); não há diferença no total de diagnósticos considerados, ou na distribuição dos diagnósticos entre os demais grupos.
 #'
 #' \item{procbst.rm } {= TRUE (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento. São excluídas as internações pelos seguintes procedimentos obstétricos, independente do diagnóstico:
 #'   \itemize{
@@ -90,7 +93,7 @@
 #' A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pelas função \code{\link{read.dbf}}.
 #'
 #' @references
-#' Alfradique et al., Internações por Condições Sensíveis à Atenção Primária: a construção da lista brasileira como ferramenta para medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil). Cad Saúde Pública 25(6):1337-49.
+#' Alfradique ME et al. Internações por condições sensíveis à atenção primária: a construção da lista brasileira como ferramenta para medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil). Cadernos de Saúde Pública. 2009; 25(6): 1337-1349. https://doi.org/10.1590/S0102-311X2009000600016.
 #'
 #' Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 #'
@@ -122,7 +125,7 @@
 #' \dontrun{
 #'  teste3.dbf <- csapAIH("RDRS1201.dbf")
 #'  str(teste3.dbf)
-#'  teste4.dbc <- csapAIH("RDRS1801.dbc")
+#'  teste4.dbc <- csapAIH("data-raw/RDRS1801.dbc")
 #'  str(teste4.dbc)
 #' }
 #'
@@ -132,45 +135,52 @@
 #' str(aih500)
 #' teste5 <- csapAIH(aih500)
 #' str(teste5)
+#' levels(teste5$grupo)
+#'
+#' # Com a lista de 20 grupos de causa (Alfradique et al.)
+#' teste6 <- csapAIH(aih500, lista = "Alfradique")
+#' str(teste6)
+#' levels(teste6$grupo)
 #'
 #' ## Uma base de dados com a estrutura dos "arquivos da AIH"
 #' ## mas sem as variáveis CEP ou CNES:
 #' ##--------------------------------------------------------
 #' aih <- subset(aih500, select = -c(CEP, CNES))
-#' teste6 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
-#' str(teste6)
+#' teste7 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
+#' str(teste7)
 #'
 #' ## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
 #' ##--------------------------------------------------------
-#' teste7 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
-#' str(teste7)
-#' teste8 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+#' teste8 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
 #' str(teste8)
+#' teste9 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+#' str(teste9)
 #'
 #' ## Uma base de dados com a estrutura dos "arquivos da AIH" mantendo
 #' ## todas suas variáveis
 #' ##-----------------------------------------------------------------
 #' ## Trate como se não fosse um arquivo da AIH e apenas acrescente
 #' ## a classificação ao banco:
-#' teste9 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
+#' teste10 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
 #'
 #' ## Acrescentar variáveis da AIH ao banco com as CSAP
 #' ##---------------------------------------------------------
 #' ## É necessário unir o banco da AIH com as variáveis de interesse
 #' ## ao banco resultante da função 'csapAIH':
 #' vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
-#' teste10 <- csapAIH(aih500)
-#' teste10 <- merge(teste10, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
-#' names(teste10)
-#' ## Ou, usando o encadeamento ("piping") de funções,
-#' teste11 <- csapAIH(aih100) |>
-#' merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+#' teste11 <- csapAIH(aih500)
+#' teste11 <- merge(teste11, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
 #' names(teste11)
-
+#' ## Ou, usando o encadeamento ("piping") de funções,
+#' teste12 <- csapAIH(aih500) |>
+#' merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+#' names(teste12)
+#'
+#' @importFrom dplyr is.tbl
 #'
 #' @export
 #'
-csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
+csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
   {
     # Preparar os dados
     #
@@ -194,7 +204,10 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       cep         <- FALSE
       cnes        <- FALSE
     }
-    if (is.data.frame(x)) arquivo <- FALSE
+    if (is.data.frame(x)) {
+      arquivo <- FALSE
+      if(is.tbl(x)) x <- as.data.frame(x)
+    }
     if (sihsus == FALSE) {
       if (is.data.frame(x)) {
         cid <- x[,deparse(substitute(cid))]
@@ -236,7 +249,10 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       }
 
       # Garantir o trabalho com operadores mais tarde, no CID
-      if (sihsus==FALSE) cid=as.character(cid)
+      if (sihsus==FALSE) {
+        if(!is.character(cid)) cid <- as.character(cid)
+        # if(is.labelled(cid)) cid <- zap_labels(cid)
+      }
 
       #-------------------------------------------------------------------------#
       #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS  #
@@ -368,10 +384,16 @@ csapAIH <- function(x, grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE
       #
       ################################################################################
       #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
-      #               Portaria MS nº 221, de 17 de abril de 2008                     #
       ################################################################################
-      csap  <- listaBR(cid)[,'csap']
-      grupo <- listaBR(cid)[,'grupo']
+      if(lista == "MS") {
+        #  Portaria MS nº 221, de 17 de abril de 2008
+        csap  <- listaBRMS(cid)[,'csap']
+        grupo <- listaBRMS(cid)[,'grupo']
+      } else if (lista == "Alfradique") {
+        # Alfradique et al.
+        csap  <- listaBRAlfradique(cid)[,'csap']
+        grupo <- listaBRAlfradique(cid)[,'grupo']
+      }
 
       ###########################
       ### Montar o objeto final #

@@ -3,71 +3,84 @@
 #'
 #' @description Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
 #'
-#' @param x a vector containing the Brazilian PHCSC groups of causes.
+#' @param x Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".
 #' @param digits number of decimals to be rounded (with \code{\link{round}}).
-#' @param tipo argument to be passed to \code{\link{nomesgruposCSAP}}.
+#' @param tipo idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
 #' @param format Should the table be formatted to print? (default = FALSE).
 #'
+#' @return Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição proporcional sobre o total de internações e sobre o total de ICSAP. Se os grupos forem classificados segundo a Lista Brasileira publicada em Portaria Ministerial, a tabela terá
+#'
 #' @seealso \code{\link{csapAIH}}, \code{\link{nomesgruposCSAP}}
-
+#'
 #' @references
 #' Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 #'
 #' @examples
 #' data("aih500")
-#' csap <- csapAIH(aih500)
-#' tabCSAP(csap$grupo)
-#' tabCSAP(csap$grupo, tipo = "pt.sa")
-#' tabCSAP(csap$grupo, tipo = "en")
-#' tabCSAP(csap$grupo, tipo = "es")
+#' tabCSAP(csapAIH(aih500)$grupo)
+#' tabCSAP(csapAIH(aih500)$grupo, tipo = "pt.sa")
+#' tabCSAP(csapAIH(aih500)$grupo, tipo = "en")
+#' tabCSAP(csapAIH(aih500)$grupo, tipo = "es")
+#' tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo)
+#' tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo,tipo = "pt.sa")
+#' tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo,tipo = "en")
+#' tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo,tipo = "es")
 #'
 #' @export
 tabCSAP <- function(x, digits = 2, tipo = "pt.ca", format = FALSE){
+  ngrupos <- length(table(x))
+  if(ngrupos == 20) lista = "MS"
+  else if(ngrupos == 21) lista = "Alfradique"
   if(is.factor(x)) tabelagrupos <- stats::addmargins(table(x))
   if(is.table(x) | is.matrix(x)) tabelagrupos <- x
 
-  somacsap  <- sum(tabelagrupos[1:19]) # total de internações por CSAP
+  somacsap  <- sum(tabelagrupos[1:ngrupos-1]) # total de internações por CSAP
   psomacsap <- somacsap / sum(table(x))*100 # % de CSAP sobre o total de internações
-  proptotal <- prop.table(tabelagrupos[1:20])*100
-  proptotal <- c( proptotal[1:19],
+  proptotal <- tabelagrupos/tabelagrupos['Sum']*100
+  proptotal <- c( proptotal[1:(ngrupos-1)],
                  totalcsap = psomacsap,
-                 proptotal[20] )
-  propcsap     <- prop.table(tabelagrupos[1:19])*100
-  tabelagrupos <- c( tabelagrupos[1:19],
+                 proptotal[ngrupos] )
+  propcsap     <- prop.table(tabelagrupos[1:ngrupos-1])*100
+  tabelagrupos <- c( tabelagrupos[1:ngrupos-1],
                      "Total CSAP" = somacsap,
-                     tabelagrupos[20:21] )
+                     tabelagrupos[ngrupos + 1:2]
+                     # tabelagrupos[20:21]
+                     )
 
-  substr(names(tabelagrupos)[21], 1,1) <- "N"
-  nomesgrupos                          <- nomesgruposCSAP(tipo = tipo)
+  substr(names(tabelagrupos)[ngrupos+1], 1,1) <- "N"
+  nomesgrupos                          <- nomesgruposCSAP(tipo = tipo, lista = lista)
   # nomesgrupos                          <- groupnamesCSAP(tipo = tipo)
-  names(tabelagrupos)[22]              <- "Total de interna\U00E7\u00F5es"
+  names(tabelagrupos)[ngrupos+2]              <- "Total de interna\U00E7\u00F5es"
 
   if (tipo == "en") {
-    names(tabelagrupos)[20:22] <- c("ACSC",
+    names(tabelagrupos)[ngrupos + 0:2] <- c("ACSC",
                                     "Non ACSC",
                                     "TOTAL hospitalizations")
     # names(tabelagrupos)[20:22] <- c("PHCSC",
     #                                 "Not PHCSC",
     #                                 "Total admissions")
-  } else if (tipo == "es") {
-    names(tabelagrupos)[21:22] <- c("No-CSAP", "Total de ingresos")
-    } else if (tipo == "pt.sa") {
-      names(tabelagrupos)[21:22] <- c("Nao-CSAP", "Total de internacoes")
-      }
+  }
+  if (tipo == "es") {
+    names(tabelagrupos)[ngrupos + 1:2] <- c("No-CSAP", "Total de ingresos")
+    }
+  if (tipo == "pt.sa") {
+      names(tabelagrupos)[ngrupos + 1:2] <- c("Nao-CSAP", "Total de internacoes")
+    }
 
-  nomes = c(nomesgrupos, names(tabelagrupos[20:22]))
+  nomes = c(nomesgrupos, names(tabelagrupos)[ngrupos + 0:2])
 
   if (format == FALSE) {
     tab <- cbind(casos = tabelagrupos,
-                 perctot = round(c(proptotal, sum(proptotal[20:21])), digits),
+                 perctot = round(c(proptotal, sum(proptotal[ngrupos + 0:1])), digits),
                  percsap = round(c(propcsap, sum(propcsap), NA, NA), digits))
     tab <- as.data.frame(tab)
     rownames(tab) <- NULL
     tab$grupo <- nomes
     tab <- tab[,c(4,1:3)]
     return(tab)
-    } else if (format == TRUE) {
-      if (tipo == "en") {
+    }
+  if (format == TRUE) {
+    if (tipo == "en") {
         proptotal = formatC(proptotal, digits = digits, format = "f")
         propcsap  = formatC(propcsap,  digits = digits, format = "f")
         tabelagrupos.formatada = cbind(Group = nomes,

@@ -1,7 +1,7 @@
 Package: csapAIH
 Type: Package
 Title: Classificar Condicoes Sensiveis a Atencao Primaria
-Version: 0.0.3.3
+Version: 0.0.3.4
 Date: 2022-05-21
 Author: Fúlvio Borges Nedel
 Maintainer: Fúlvio B. Nedel <fulvionedel@gmail.com>
@@ -19,4 +19,6 @@ Encoding: UTF-8
 Language: pt-br
 RoxygenNote: 7.1.2
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
+    dplyr,
+    haven

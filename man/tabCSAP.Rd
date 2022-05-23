@@ -7,24 +7,30 @@
 tabCSAP(x, digits = 2, tipo = "pt.ca", format = FALSE)
 }
 \arguments{
-\item{x}{a vector containing the Brazilian PHCSC groups of causes.}
+\item{x}{Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".}
 
 \item{digits}{number of decimals to be rounded (with \code{\link{round}}).}
 
-\item{tipo}{argument to be passed to \code{\link{nomesgruposCSAP}}.}
+\item{tipo}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 
 \item{format}{Should the table be formatted to print? (default = FALSE).}
+}
+\value{
+Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição proporcional sobre o total de internações e sobre o total de ICSAP. Se os grupos forem classificados segundo a Lista Brasileira publicada em Portaria Ministerial, a tabela terá
 }
 \description{
 Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
 }
 \examples{
 data("aih500")
-csap <- csapAIH(aih500)
-tabCSAP(csap$grupo)
-tabCSAP(csap$grupo, tipo = "pt.sa")
-tabCSAP(csap$grupo, tipo = "en")
-tabCSAP(csap$grupo, tipo = "es")
+tabCSAP(csapAIH(aih500)$grupo)
+tabCSAP(csapAIH(aih500)$grupo, tipo = "pt.sa")
+tabCSAP(csapAIH(aih500)$grupo, tipo = "en")
+tabCSAP(csapAIH(aih500)$grupo, tipo = "es")
+tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo)
+tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo,tipo = "pt.sa")
+tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo,tipo = "en")
+tabCSAP(csapAIH(aih500, lista = "Alfradique")$grupo,tipo = "es")
 
 }
 \references{
