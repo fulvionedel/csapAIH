@@ -12,14 +12,22 @@ A principal função do pacote, \code{\link{csapAIH}}, classifica os códigos da
 }
 \details{
 \itemize{
+   \item \code{v0.0.3.4}
+
+   A função \code{listaBR} foi renomeada para \code{listaBRMS} e foi criada a função \code{listaBRAlfradique} para a classificação das ICSAP em 20 grupos de causa, conforme publicado em Alfradique et al. (2009) -- ambas são funções internas invocadas por \code{\link{csapAIH}}. Incluído o argumento \code{lista} na função \code{\link{nomesgruposCSAP}} para adequar-se à lista com 20 grupos.
+
+   \item \code{v0.0.3.3}
+
+   Criado o argumento \code{parto.rm} em \code{\link{csapAIH}}, para excluir (eventuais) -- pelo CID -- partos com código de procedimento (\code{PROCREA}) não-obstétrico, além de facilitar a exclusão de partos em bases de dados sem a estrutura do SUS. As CSAP agora são classificadas por uma função interna separada, \code{listaBR}, invocada por \code{\link{csapAIH}}. Incluído um banco de dados de exemplo com estrutura diferente da AIH, uma amostra das hospitalizações no Equador, publicada pelo \href{https://www.ecuadorencifras.gob.ec/camas-y-egresos-hospitalarios/}{\emph{Instituto Nacional de Estadística y Censos (INEC)}} daquele país. Criada a função \code{\link{ufbr}}, para a classificação dos municípios por UF. Incluído o argumento \code{tipo} na função \code{\link{nomesgruposCSAP}}, permitindo listar os grupos de causa em português com ou sem acentos, em inglês ou em castelhano. Criada a função \code{\link{tabCSAP}}, para substituir \code{descreveCSAP}, que será descontinuada. \code{\link{descreveCSAP}} imprime uma tabela pronta para publicação, mas os valores são transformados em caractere com separação de milhar e decimal no formato latino, o que dificulta muito a edição da tabela em pacotes especializados (como \code{knitr, kableExtra, formattable, ...}), sobretudo para a apresentação em painéis interativos; \code{\link{tabCSAP}}, por sua vez, imprime uma tabela sem formatação, em que os valores são da classe \code{numeric}, com um argumento para apresentação da tabela já formatada.
+
    \item \code{v0.0.3.2}
 
-     Criada a função \code{\link{proc.obst}}, para a identificação dos procedimentos obstétricos pela tabela do SIH/SUS, com três possíveis resultados: (1) exclusão dos registros de procedimento obstétrico (padrão); (2) criação de nova variável com identificação (sim/não) do caso; e (3) exclusão dos demais registros. A exclusão dos procedimentos obstétricos (argumento \code{procobst.rm = TRUE}) na função \code{\link{csapAIH}} agora é feita invocando a função \code{\link{proc.obst}}. O argumento \code{parto.rm} agora funciona em data frames sem a estrutura do SIH/SUS. Algumas melhoras na documentação do pacote.
+   Criada a função \code{\link{proc.obst}}, para a identificação dos procedimentos obstétricos pela tabela do SIH/SUS, com três possíveis resultados: (1) exclusão dos registros de procedimento obstétrico (padrão); (2) criação de nova variável com identificação (sim/não) do caso; e (3) exclusão dos demais registros. A exclusão dos procedimentos obstétricos (argumento \code{procobst.rm = TRUE}) na função \code{\link{csapAIH}} agora é feita invocando a função \code{\link{proc.obst}}. O argumento \code{parto.rm} agora funciona em data frames sem a estrutura do SIH/SUS. Algumas melhoras na documentação do pacote.
    \item \code{v0.0.3.1}
      \itemize{
        \item a função \code{\link{csapAIH}} passa a ter um argumento \code{cid = NULL}, para identificar colunas com o CID em um \code{data.frame};
        \item a função \code{\link{desenhaCSAP}} recebe os argumentos \code{val.dig = 0}, para definir o nº de decimais nas porcentagens apresentadas nas barras do gráfico, e \code{val.size = 2.5}, para definir o tamanho das letras dos valores das barras;
-       \item criado o argumento \code{sis} com as opções \code{"SIH"} (padrão) e \code{"SIH"} em \code{\link{idadeSUS}}; finalmente a função pode ser utilizada para computar a idade nas bases da Declaração de Óbito no Sistema de Informações sobre Mortalidade
+       \item criado o argumento \code{sis} com as opções \code{"SIH"} (padrão) e \code{"SIM"} em \code{\link{idadeSUS}}; finalmente a função pode ser utilizada para computar a idade nas bases da Declaração de Óbito no Sistema de Informações sobre Mortalidade
          }
 
    \item \code{v0.0.3}
@@ -39,6 +47,13 @@ A principal função do pacote, \code{\link{csapAIH}}, classifica os códigos da
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No. 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 
 Nedel FB. csapAIH: uma função para a classificação das condições sensíveis à atenção primária no programa estatístico R. Epidemiol. Serv. Saúde. 2017; 26(1):199-209. Disponível em: \cr \url{http://scielo.iec.gov.br/scielo.php?script=sci_arttext&pid=S1679-49742017000100199&lng=pt}.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/fulvionedel/csapAIH}
+}
+
 }
 \keyword{ACSC,}
 \keyword{AIH-SUS}

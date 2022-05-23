@@ -1,5 +1,5 @@
 #' @title Grafico das Condicoes Sensiveis a Atencao Primaria
-#' @description Desenha um gráfico de barras das CSAP por grupo de causa
+#' @description Desenha um gráfico de barras das CSAP por grupo de causa segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite a lista oficial publicada em Portaria Ministerial, com 19 grupos de causa, ou a lista com 20 grupos, publicada por Alfradique et al.
 #' @aliases desenhaCSAP
 #'
 #' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}})
@@ -8,6 +8,8 @@
 #'   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS.
 #'   nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas os grupos também devem ser rotulados da mesma forma que na função, isto é, "g01", "g02", ..., "g19".
 #'   }
+#' @param lista Lista de causas a ser considerada (v. detalhes); pode ser \code{"MS"} (padrão) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
+#' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
 #' @param jaetabela Argumento lógico, cujo padrão é FALSE. TRUE indica que os dados são uma tabela pronta, que deve apenas ser graficada. A tabela pode ser um objeto de qualquer classe representando uma tabela com pelo menos duas colunas, sendo a primeira com uma identificação (não necessariamente o nome) do grupo CSAP conforme a Lista Brasileira e a segunda com o número de casos observado em cada grupo.
 #' @param tipo.graf "ggplot" (padrão) cria um gráfico com \code{\link[ggplot2]{ggplot2}}; quando definido como "base", ou quando \code{\link[ggplot2]{ggplot2}} não está instalado, desenha um gráfico com as funções básicas.
 #' @param valores Argumento utilizado nos gráficos com \code{\link[ggplot2]{ggplot2}}; "porcento" (padrão) desenha as barras em porcentagem, "contagem" as desenha em frequência absoluta. Veja em 'detalhes'.
@@ -41,7 +43,7 @@
 #' @examples
 #' library(csapAIH)
 #' data("aih100") # Carregar o banco de dados de exemplo
-#' df <- csapAIH(aih100) # Computar as CSAP
+#' df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 #'
 #' #  Graficos com ggplot
 #' # =====================
@@ -114,16 +116,18 @@
 #' @importFrom utils installed.packages
 #' @export
 #'
-desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores = "porcento", ordenar = TRUE, colorir = TRUE, porcentagens = TRUE, val.dig = 0, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, x.size = 10, y.size = 11, val.size = 2.5, limsup = NULL, ...){
+desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, tipo.graf = "ggplot", valores = "porcento", ordenar = TRUE, colorir = TRUE, porcentagens = TRUE, val.dig = 0, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, x.size = 10, y.size = 11, val.size = 2.5, limsup = NULL, ...){
 
+  if(lista == "MS") ngrupos = 19 else
+    if(lista == "Alfradique") ngrupos = 20
   # Uma função -------------------
   #
   # Criar uma função pra arrumar os grupos de causa se
-  # a variável não tiver todos os 19.
+  # a variável não tiver todos os grupos da lista.
   #
     arrumaniveis <- function(x) {
       if (length(levels(x)) < 19) {
-        niveis <- c(paste0("g0", 1:9), paste0("g", 10:19))
+        niveis <- c(paste0("g0", 1:9), paste0("g", 10:ngrupos))
         x <- factor(x, levels = niveis)
         x
       } else
@@ -145,9 +149,9 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
   #  em vez de invocar a descreveCSAP)!
   #
   if(jaetabela == TRUE) {
-    tabela <- dados[1:19, 1:2]
+    tabela <- dados[1:ngrupos, 1:2]
   } else {
-      tabela <- descreveCSAP(dados)[1:19, 1:2]
+      tabela <- descreveCSAP(dados)[1:ngrupos, 1:2]
   }
     tabela[,2] <- as.numeric(gsub("\\.", "", tabela[,2]))
     tabela <- droplevels(tabela[tabela$Casos > 0, ]) # para excluir grupos com frequência zero
@@ -189,7 +193,7 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
   #
   if(tipo.graf == 'base' | "ggplot2" %in% rownames(installed.packages()) == FALSE) {
     # --- modo anterior ---
-    # x = tabulate(dados$grupo)[1:19]
+    # x = tabulate(dados$grupo)[1:ngrupos]
     # names(x) = csapAIH::groupnamesCSAP()
     # names(x) <- Grupo
     #
@@ -209,7 +213,9 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
 
     par(mar = c(5,15,4,2)) # As margens do gráfico
     barplot(tabela$Casos, horiz = T, las = 1, col = cores, main = titulo, names.arg = tabela$Grupo, ...)
-  } else {
+  } #else {
+
+  if(tipo.graf == "ggplot") {
     #
     # - Gráfico com ggplot -----------
     #
@@ -220,10 +226,10 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
     # Comandos exclusivos para desenhar a partir de variáveis isoladas
     # ou tabelas prontas.
     #
-    if (jaetabela == TRUE | is.data.frame(dados) == FALSE) {
+    if (jaetabela == TRUE | !is.data.frame(dados)) {
       # --- modo anterior ---
       # df <- data.frame( "Grupo" = csapAIH::nomesgruposCSAP(),
-      #                   "Casos" = tabulate(dados$grupo)[1:19] )
+      #                   "Casos" = tabulate(dados$grupo)[1:ngrupos] )
       # df <- data.frame(Grupo, Casos)
       #
      if(ordenar == TRUE) {
@@ -246,10 +252,10 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
     # Comandos exclusivos para o gráfico usando todo o banco de dados
         # O banco de dados
         df <- droplevels(dados[dados$grupo != 'n\U00E3o-CSAP',])
-        df$grupo <- arrumaniveis(df$grupo) # tem de aplicar novamente, pelo droplevels acima
-        levels(df$grupo) <- nomesgruposCSAP() # Passa os nomes dos grupos
-        df$grupo <- droplevels(df$grupo) # exclui grupos com frequência zero
-        ngrupos <- length(levels(df$grupo))
+        # df$grupo <- arrumaniveis(df$grupo) # tem de aplicar novamente, pelo droplevels acima
+        levels(df$grupo) <- nomesgruposCSAP(lista = lista, lang = lang)[as.numeric(substr(levels(df$grupo), 2,3))] # Passa os nomes dos grupos
+        # df$grupo <- droplevels(df$grupo) # exclui grupos com frequência zero
+        ngrupos <- nlevels(df$grupo)
         #
         #
         # Desenhar o gráfico

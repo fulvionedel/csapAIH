@@ -6,6 +6,8 @@
 \usage{
 desenhaCSAP(
   dados,
+  lista = "MS",
+  lang = "pt.ca",
   jaetabela = FALSE,
   tipo.graf = "ggplot",
   valores = "porcento",
@@ -32,6 +34,10 @@ desenhaCSAP(
   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS.
   nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas os grupos também devem ser rotulados da mesma forma que na função, isto é, "g01", "g02", ..., "g19".
   }}
+
+\item{lista}{Lista de causas a ser considerada (v. detalhes); pode ser \code{"MS"} (padrão) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.}
+
+\item{lang}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 
 \item{jaetabela}{Argumento lógico, cujo padrão é FALSE. TRUE indica que os dados são uma tabela pronta, que deve apenas ser graficada. A tabela pode ser um objeto de qualquer classe representando uma tabela com pelo menos duas colunas, sendo a primeira com uma identificação (não necessariamente o nome) do grupo CSAP conforme a Lista Brasileira e a segunda com o número de casos observado em cada grupo.}
 
@@ -77,7 +83,7 @@ desenhaCSAP(
 Na opção padrão e com \code{\link[ggplot2]{ggplot2}} instalado, devolve um objeto das classes "gg" e "ggplot", com o gráfico.
 }
 \description{
-Desenha um gráfico de barras das CSAP por grupo de causa
+Desenha um gráfico de barras das CSAP por grupo de causa segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite a lista oficial publicada em Portaria Ministerial, com 19 grupos de causa, ou a lista com 20 grupos, publicada por Alfradique et al.
 }
 \details{
 O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite a adição de outros comandos ao objeto devolvido. O vetor \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
@@ -85,7 +91,7 @@ O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa
 \examples{
 library(csapAIH)
 data("aih100") # Carregar o banco de dados de exemplo
-df <- csapAIH(aih100) # Computar as CSAP
+df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 
 #  Graficos com ggplot
 # =====================

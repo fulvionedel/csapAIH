@@ -4,12 +4,12 @@
 \alias{nomesgruposCSAP}
 \title{Nomes dos grupos de causa da Lista Brasileira de Condicoes Sensiveis a Atencao Primaria}
 \usage{
-nomesgruposCSAP(lista = "MS", tipo = "pt.ca")
+nomesgruposCSAP(lista = "MS", lang = "pt.ca")
 }
 \arguments{
 \item{lista}{Lista de causas a ser considerada (v. referências); pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.}
 
-\item{tipo}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
+\item{lang}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 }
 \value{
 Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.
@@ -19,9 +19,9 @@ Lista os 19 grupos de causa CSAP, em ordem crescente.
 }
 \examples{
 nomesgruposCSAP()
-nomesgruposCSAP(tipo = "pt.ca")
-nomesgruposCSAP(tipo = "en")
-nomesgruposCSAP(tipo = "es")
+nomesgruposCSAP(lang = "pt.ca")
+nomesgruposCSAP(lang = "en")
+nomesgruposCSAP(lang = "es")
 
 }
 \references{

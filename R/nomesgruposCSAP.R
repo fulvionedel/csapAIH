@@ -4,7 +4,7 @@
 #' @description Lista os 19 grupos de causa CSAP, em ordem crescente.
 #'
 #' @param lista Lista de causas a ser considerada (v. referências); pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
-#' @param tipo idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
+#' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
 #'
 #' @return Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.
 #'
@@ -18,23 +18,23 @@
 #'
 #' @examples
 #' nomesgruposCSAP()
-#' nomesgruposCSAP(tipo = "pt.ca")
-#' nomesgruposCSAP(tipo = "en")
-#' nomesgruposCSAP(tipo = "es")
+#' nomesgruposCSAP(lang = "pt.ca")
+#' nomesgruposCSAP(lang = "en")
+#' nomesgruposCSAP(lang = "es")
 #'
 #' @export
 #'
-nomesgruposCSAP <- function(lista = "MS", tipo = "pt.ca") {
+nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
   # Nuntius errorum
   # ----------------
   if( !any(lista == "MS" | lista == "Alfradique") ) {
     stop('lista must be one of "MS" or "Alfradique"')
   }
-  if( !any(tipo == "pt.ca" |
-           tipo != "pt.sa" |
-           tipo != "en" |
-           tipo != "es") ) {
-    stop('tipo must be one of "pt.ca", "pt.sa", "en" or "es"')
+  if( !any(lang == "pt.ca" |
+           lang != "pt.sa" |
+           lang != "en" |
+           lang != "es") ) {
+    stop('lang must be one of "pt.ca", "pt.sa", "en" or "es"')
   }
 
   # Nomes em Português com códigos UTF para os acentos
@@ -56,7 +56,7 @@ nomesgruposCSAP <- function(lista = "MS", tipo = "pt.ca") {
                       "14. Epilepsias",
                       "15. Infec. urin\U00E1ria",
                       "16. Infec. pele e subcut\U00E2neo",
-                      "17. D. infl. \U00F3rg\U00E3os p\U00E9lvicos femininos",
+                      "17. D. infl. \U00F3rg\U00E3os p\U00E9lvicos fem.",
                       "18. \U00DAlcera gastrointestinal",
                       "19. Pr\U00E9-natal e parto"
                       )
@@ -88,7 +88,7 @@ nomesgruposCSAP <- function(lista = "MS", tipo = "pt.ca") {
                       "14. Epilepsias",
                       "15. Infec. urinaria",
                       "16. Infec. pele e subcutaneo",
-                      "17. D. infl. Orgaos pelvicos femininos",
+                      "17. D. infl. Orgaos pelvicos fem.",
                       "18. Ulcera gastrointestinal",
                       "19. Pre-natal e parto"
                       )
@@ -169,7 +169,7 @@ nomesgruposCSAP <- function(lista = "MS", tipo = "pt.ca") {
                    "10. Angina de pecho",
                    "11. Insuf. card\u00EDaca congestiva",
                    "12. Enf. cerebrovasculares",
-                   "13. Diabetes melitus",
+                   "13. Diabetes mellitus",
                    "14. Epilepsias",
                    "15. Infecci\U00F3n urinaria",
                    "16. Infec. piel y subcut\U00E1neo",
@@ -179,7 +179,7 @@ nomesgruposCSAP <- function(lista = "MS", tipo = "pt.ca") {
                    )
 
   nomes.es.Alfradique <- c(" 1. Prev. por vacunaci\U00F3n",
-                           " 2. Outras cond. prevenibles",
+                           " 2. Otras cond. prevenibles",
                               nomes.es.MS[2:19])
   substr(nomes.es.Alfradique[3:20], 1, 2) <-
     c(paste0(" ", as.character(as.numeric(paste0(2:8)) + 1)),
@@ -187,19 +187,19 @@ nomesgruposCSAP <- function(lista = "MS", tipo = "pt.ca") {
   nomes.es.Alfradique
 
 
-  if(tipo == "pt.ca") {
+  if(lang == "pt.ca") {
     if(lista == "MS") return(nomes.pt.ca.MS)
     else if(lista == "Alfradique") return(nomes.pt.ca.Alfradique)
   }
-  if(tipo == "pt.sa") {
+  if(lang == "pt.sa") {
     if(lista == "MS") return(nomes.pt.sa.MS)
     else if(lista == "Alfradique") return(nomes.pt.sa.Alfradique)
   }
-  if(tipo == "es") {
+  if(lang == "es") {
     if(lista == "MS") return(nomes.es.MS)
     else if(lista == "Alfradique") return(nomes.es.Alfradique)
   }
-  if(tipo == "en") {
+  if(lang == "en") {
     if(lista == "MS") return(nomes.en.MS)
     else if(lista == "Alfradique") return(nomes.en.Alfradique)
   }
