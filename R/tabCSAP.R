@@ -105,7 +105,7 @@ tabCSAP <- function(x, digits = 2, lang = "pt.ca", format = FALSE){
             formatC(propcsap, digits = digits, format = "f", decimal.mark = ",")
           )
         tabelagrupos.formatada = cbind(Grupo = nomes,
-                                       Casos = tabelagrupos,
+                                       Casos = tabelagrupos.formatada,
                                        "% Total" = c(proptotal, 100),
                                        "% CSAP" = c(propcsap, 100,
                                                     rep('--',2))

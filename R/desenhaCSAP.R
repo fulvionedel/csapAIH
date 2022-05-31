@@ -57,6 +57,13 @@
 #' # Sem titulo e sem ordenacacao por frequencia:
 #' desenhaCSAP(df, ordenar = FALSE)
 #' #
+#' # Com a lista de Alfradique et al.:
+#' desenhaCSAP(csapAIH(aih100, "Alfradique"),
+#'             lista = "Alfradique",
+#'             titulo = "auto",
+#'             onde = "Rio Grande do Sul")
+#' desenhaCSAP(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
+#'
 #' # Cores
 #' #-------
 #' # Sem cores nas barras

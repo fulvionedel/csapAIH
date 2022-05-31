@@ -14,7 +14,8 @@ Suggests: foreign,
           read.dbc,
           scales
 Imports: dplyr,
-         haven
+         haven,
+         Hmisc
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
