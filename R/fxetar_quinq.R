@@ -24,11 +24,9 @@ fxetar_quinq <- function(aetas = NULL, senectus = 80, puer = FALSE){
   if(puer == TRUE) {
     corte1 <- c(0, 1)
     start = 4
-  }
-  else corte1 <- 0
-  cortes <- c(corte1, seq(5, senectus, 5), max(aetas, na.rm = T))
-  x <- cut(aetas, cortes, include.lowest = T, right = F)
-  levels(x)
+  } else corte1 <- 0
+  cortes <- c(corte1, seq(5, senectus, 5), Inf)
+  x <- cut(aetas, cortes, right = F)
   niveis <- gsub(",", "-", levels(x))
   niveis <- gsub("\\[", "", niveis)
   niveis <- gsub(")", "", niveis)

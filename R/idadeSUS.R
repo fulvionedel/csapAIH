@@ -79,21 +79,38 @@ idadeSUS <- function(dados, sis = "SIH")
                   ifelse(COD_IDADE  < 4, 0,
                          ifelse(COD_IDADE == 5, x$IDADE+100, NA))
                   )
-  # comment(idade) <- "em anos completos"
-  fxetar.det <- cut(idade, include.lowest=TRUE, right=FALSE,
-                    breaks=c(0:19,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade, na.rm = T)),
-                    labels=c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
-                             " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos",
-                             "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
-                             "18anos", "19anos", "20-24", "25-29", "30-34", "35-39",
-                             "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
-                             "70-74", "75-79", "80 +")
-                    )
-  fxetar5 <- cut(idade, right=FALSE, include.lowest=TRUE,
-                 breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80, max(idade, na.rm = T)),
-                 labels=c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-                          "30-34","35-39", "40-44","45-49","50-54", "55-59",
-                          "60-64", "65-69", "70-74", "75-79", "80 +")
-                 )
-  data.frame(idade, fxetar.det, fxetar5)
+  comment(idade) <- "em anos completos"
+
+  rotulo.det <- cbind(
+    faixa = levels(cut(idade, right=FALSE, breaks = c(0:19, seq(20, 85, 5)))),
+    rotulo = c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
+               " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos",
+               "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
+               "18anos", "19anos", "20-24", "25-29", "30-34", "35-39",
+               "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+               "70-74", "75-79", "80 e +")
+    )
+
+  # rotulo5 <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+  #              "30-34","35-39", "40-44","45-49","50-54", "55-59",
+  #              "60-64", "65-69", "70-74", "75-79", "80 +")
+
+  fxetar.det <- droplevels(
+    cut(idade, right=FALSE,
+        breaks = c(0:19, seq(20, 80, 5), Inf),
+        # labels = levels(fxetar.det) %in% rotulo.det)
+        labels = rotulo.det[, 'rotulo'])
+  )
+
+  # fxetar5 <- cut(idade, right=FALSE,
+  #                breaks = c(seq(0, 80, 5), Inf),
+  #                labels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+  #                         "30-34","35-39", "40-44","45-49","50-54", "55-59",
+  #                         "60-64", "65-69", "70-74", "75-79", "80 +")
+  #                )
+  fxetar5 <- fxetar_quinq(idade)
+
+  data.frame(idade,
+             fxetar.det,
+             fxetar5)
 }

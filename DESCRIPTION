@@ -13,7 +13,8 @@ Suggests: foreign,
           ggplot2,
           read.dbc,
           scales
-Imports: dplyr,
+Imports: data.table,
+         dplyr,
          haven,
          Hmisc
 LazyData: true
