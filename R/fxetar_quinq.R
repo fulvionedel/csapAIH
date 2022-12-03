@@ -12,6 +12,11 @@
 #' table(fxetar_quinq(idade))
 #' table(fxetar_quinq(idade, senectus = 90, puer = TRUE))
 #'
+#' # ou com a função `idadeSUS` (e encadeamento/'piping' de comandos):
+#' idadeSUS(aih500)$idade |>
+#'   fxetar_quinq() |>
+#'   table()
+#'
 #' @export
 #
 fxetar_quinq <- function(aetas = NULL, senectus = 80, puer = FALSE){

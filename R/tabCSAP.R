@@ -16,7 +16,7 @@
 #' Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 #'
 #' @examples
-#' data("aih500")
+#' # data("aih500")
 #' tabCSAP(csapAIH(aih500)$grupo)
 #' tabCSAP(csapAIH(aih500)$grupo, lang = "pt.sa")
 #' tabCSAP(csapAIH(aih500)$grupo, lang = "en")

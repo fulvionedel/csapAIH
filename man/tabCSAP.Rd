@@ -22,7 +22,7 @@ Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição p
 Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
 }
 \examples{
-data("aih500")
+# data("aih500")
 tabCSAP(csapAIH(aih500)$grupo)
 tabCSAP(csapAIH(aih500)$grupo, lang = "pt.sa")
 tabCSAP(csapAIH(aih500)$grupo, lang = "en")
