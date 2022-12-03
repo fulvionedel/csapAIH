@@ -1,3 +1,7 @@
+---
+title: README
+--- 
+
 # csapAIH
 Classificar Condições Sensíveis à Atenção Primária
 
@@ -73,9 +77,11 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
   
         csap <- csapAIH::csapAIH(variavel)
  
- #### Apresentação de resultados 
+#### Apresentação de resultados 
 
-    csap <- csapAIH("RDRS1801.dbc")
+**Resumo de importação de dados** 
+
+    csap <- csapAIH("RDRS1801.dbc") # cria o data.frame
    
         Importados 60.488 registros.
         Excluídos 8.239 (13,6%) registros de procedimentos obstétricos.
@@ -155,8 +161,8 @@ Observe que ao estratificar o gráfico mantém a ordenação por frequência da 
 ![gr + ggplot2::facet_grid(~sexo)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018sexo.jpeg)  
 
 
-> gr + ggplot2::facet_wrap(~ munres == "431490", 
-                           labeller = as_labeller(c("FALSE" = "Interior", "TRUE" = "Capital")))
+gr + ggplot2::facet_wrap(~ munres == "431490", 
+                         labeller = as_labeller(c("FALSE" = "Interior", "TRUE" = "Capital")))
 
 ![gr + ggplot2::facet_grid(~munres)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018capital.jpeg)
 
