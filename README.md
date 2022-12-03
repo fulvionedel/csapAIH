@@ -20,12 +20,12 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   * com a função `install.packages()` sobre os arquivos de instalação no SourceForge:
     * para Linux e Mac:
     
-          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH-v.0.0.4.tar.gz/download", 
+          install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4/Versao%200.0.4.tar.gz/download", 
                             type = "source", repos = NULL) 
   
     * para Windows: 
     
-          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH-v.0.0.4.zip/download", 
+          install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4/Versao%200.0.4.zip/download", 
                             type = "source", repos = NULL)
   
   ou
