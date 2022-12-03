@@ -14,7 +14,7 @@ An object of class \code{data.frame} with 100 rows and 113 columns.
 data(aih100)
 }
 \description{
-Amostra aleatória de 500 registros e todas as variáveis de um "arquivo da AIH" (RD??????.DBC), ano 2018.
+Amostra aleatória de 100 registros e todas as variáveis de um "arquivo da AIH" (RD??????.DBC), ano 2018.
 }
 \examples{
 data("aih100")

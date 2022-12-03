@@ -3,7 +3,7 @@ Classificar Condições Sensíveis à Atenção Primária
 
 ### Apresentação
 
-Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária (CSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH".
+Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária (CSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH" e, atualmente, do Sistema de Informações sobre Mortalidade (SIM).
 
 ### Justificativa
 
@@ -20,12 +20,12 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   * com a função `install.packages()` sobre os arquivos de instalação no SourceForge:
     * para Linux e Mac:
     
-          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH-v.0.0.3.tar.gz/download", 
+          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH-v.0.0.4.tar.gz/download", 
                             type = "source", repos = NULL) 
   
     * para Windows: 
     
-          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH-v.0.0.3.zip/download", 
+          install.packages( "https://sourceforge.net/projects/csapaih/files/csapAIH-v.0.0.4.zip/download", 
                             type = "source", repos = NULL)
   
   ou
@@ -33,7 +33,7 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   * através do pacote `remotes`sobre os arquivos-fonte da função em desenvolvimento, no GitHub:
       
         install.packages("remotes") # desnecessário se o pacote já estiver instalado
-        devtools::install_github("fulvionedel/csapAIH")
+        remotes::install_github("fulvionedel/csapAIH")
 
 
 
@@ -43,28 +43,33 @@ Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homôn
 
 Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html). 
 
-Agora na versão 0.0.3, a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função **idadeSUS** é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
+A partir da versão 0.0.3, a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função **idadeSUS** é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
+
+A versão 0.0.4 
+
+A evolução do pacote é melhor detalhada em `?'csapAIH-package'`.
+
 
 ### Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para seu funcionamento.
+A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione.
 
 ### Exemplos de uso
 #### Leitura dos arquivos
 
-  - A partir de um arquivo "RD??????.DBF" salvo no mesmo diretório da sessão de trabalho do **R**:
+ - A partir de um arquivo "RD??????.DBF" salvo no mesmo diretório da sessão de trabalho do **R**:
   
         csap <- csapAIH::csapAIH("RD??????.DBF")
-
-- A partir de um arquivo "RD??????.DBC" salvo no mesmo diretório da sessão de trabalho do **R**:
+ 
+ - A partir de um arquivo "RD??????.DBC" salvo no mesmo diretório da sessão de trabalho do **R**:
   
         csap <- csapAIH::csapAIH("RD??????.DBC")
   
-  - A paritr de um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
+ - A paritr de um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
   
         csap <- csapAIH::csapAIH(bancodedados)
   
-  - A partir de uma variável com códigos da CID-10:
+ - A partir de uma variável com códigos da CID-10:
   
         csap <- csapAIH::csapAIH(variavel)
  
@@ -140,7 +145,7 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS")
   gr
 ![desenhaCSAP(csap, titulo = "auto", onde = "RS")](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018.jpeg) 
   
-*Estratificado por categoria de outra variável presente no banco de dados:*
+*Estratificado por categorias de outra variável presente no banco de dados:*
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
   
@@ -155,5 +160,5 @@ Observe que ao estratificar o gráfico mantém a ordenação por frequência da 
 ![gr + ggplot2::facet_grid(~munres)](https://github.com/fulvionedel/csapAIH/blob/master/docs/desenhaCSAPRS2018capital.jpeg)
 
 ***Veja o manual do pacote em:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.3.2.pdf
+https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf
  
