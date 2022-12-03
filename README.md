@@ -75,7 +75,7 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
  
  #### Apresentação de resultados 
 
-   csap <- csapAIH("RDRS1801.dbc")
+    csap <- csapAIH("RDRS1801.dbc")
    
         Importados 60.488 registros.
         Excluídos 8.239 (13,6%) registros de procedimentos obstétricos.
