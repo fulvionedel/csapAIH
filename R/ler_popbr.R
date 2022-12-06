@@ -34,15 +34,14 @@ ler_popbr <- function (pop, source = "file")
     } else
       if(source == "file") pop <- foreign::read.dbf(pop)
 
-   pop <- upData(pop, lowernames = T, print = F)
+   pop <- Hmisc::upData(pop, lowernames = T, print = F)
    pop$fxetar5 <- cut(as.numeric(pop$fxetaria),
                        breaks = c(0, 5, 10, 15, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33))
     levels(pop$fxetar5) <- c("0-4", "5-9", "10-14", "15-19",
                              "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
                              "50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
                              "80 +")
-
-    levels(pop$fxetaria) <- c("< 1 ano", 1:19, levels(pop$fxetar5)[5:17])
+    pop$fxetaria <- factor(pop$fxetaria, levels = 1:33, labels = c("< 1 ano", 1:19, levels(pop$fxetar5)[5:17]))
     levels(pop$sexo) <- c("masc", "fem")
     if ( length( levels(pop$situacao)>1 ) ) {
       levels(pop$situacao) <- c("urbana", "rural")
