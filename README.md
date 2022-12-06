@@ -55,8 +55,6 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
 
 ``` r
 install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.tar.gz/download", type = "source", repos = NULL) 
-#> Installing package into 'C:/Users/fulvi/AppData/Local/Temp/RtmpiMqJXT/temp_libpath8254a9965b3'
-#> (as 'lib' is unspecified)
 ```
 
 ou
@@ -67,19 +65,6 @@ ou
 ``` r
 # install.packages("remotes") # desnecessário se o pacote já estiver instalado
 remotes::install_github("fulvionedel/csapAIH")
-#> Downloading GitHub repo fulvionedel/csapAIH@HEAD
-#> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\fulvi\AppData\Local\Temp\Rtmp4CYvSE\remotes7ba0e5e6aaa\fulvionedel-csapAIH-8c3b3b9/DESCRIPTION' ...  ✔  checking for file 'C:\Users\fulvi\AppData\Local\Temp\Rtmp4CYvSE\remotes7ba0e5e6aaa\fulvionedel-csapAIH-8c3b3b9/DESCRIPTION' (339ms)
-#>       ─  preparing 'csapAIH':
-#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
-#>       ─  checking for LF line-endings in source and make files and shell scripts
-#>       ─  checking for empty or unneeded directories
-#>       ─  building 'csapAIH_0.0.4.tar.gz'
-#>      
-#> 
-#> Installing package into 'C:/Users/fulvi/AppData/Local/Temp/RtmpiMqJXT/temp_libpath8254a9965b3'
-#> (as 'lib' is unspecified)
 ```
 
 ## Conteúdo (*timeline*)
