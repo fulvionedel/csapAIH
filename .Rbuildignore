@@ -3,3 +3,4 @@
 docs/*
 tests/*
 ^data-raw/*
+^README\.Rmd$
