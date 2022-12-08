@@ -54,11 +54,11 @@ remotes::install_github("fulvionedel/csapAIH")
 
 ## Conteúdo (_timeline_)
 
-Na sua primeira versão, o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. 
+Na sua primeira versão[@Nedel2017], o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. 
 
 Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html). 
 
-A partir da versão 0.0.3, a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
+A partir da versão 0.0.3[@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, como sugerido por @Alfradique2009. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias.
 
