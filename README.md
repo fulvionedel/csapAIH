@@ -55,8 +55,6 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
 
 ``` r
 install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.tar.gz/download", type = "source", repos = NULL) 
-#> Installing package into 'C:/Users/fulvi/AppData/Local/Temp/RtmpiMqJXT/temp_libpath8254a9965b3'
-#> (as 'lib' is unspecified)
 ```
 
 ou
@@ -67,19 +65,6 @@ ou
 ``` r
 # install.packages("remotes") # desnecessário se o pacote já estiver instalado
 remotes::install_github("fulvionedel/csapAIH")
-#> Downloading GitHub repo fulvionedel/csapAIH@HEAD
-#> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\fulvi\AppData\Local\Temp\Rtmp4CYvSE\remotes7ba0e5e6aaa\fulvionedel-csapAIH-8c3b3b9/DESCRIPTION' ...  ✔  checking for file 'C:\Users\fulvi\AppData\Local\Temp\Rtmp4CYvSE\remotes7ba0e5e6aaa\fulvionedel-csapAIH-8c3b3b9/DESCRIPTION' (339ms)
-#>       ─  preparing 'csapAIH':
-#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
-#>       ─  checking for LF line-endings in source and make files and shell scripts
-#>       ─  checking for empty or unneeded directories
-#>       ─  building 'csapAIH_0.0.4.tar.gz'
-#>      
-#> 
-#> Installing package into 'C:/Users/fulvi/AppData/Local/Temp/RtmpiMqJXT/temp_libpath8254a9965b3'
-#> (as 'lib' is unspecified)
 ```
 
 ## Conteúdo (*timeline*)
@@ -110,10 +95,11 @@ As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do
 idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`)
 ou inglês (`en`). Foram criadas as funções `ler_popbr` e
 `popbr2000_2021` (esta sobre o pacote de Saldanha (2022)) para acesso às
-estimativas populacionais publicadas pelo DATASUS.
+estimativas populacionais publicadas pelo DATASUS e funções para
+categorização da idade em faixas etárias.
 
-A ajuda sobre o pacote oferece mais detalhes sobre as funções e sua
-evolução. Veja no
+A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
+Veja no
 [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf)
 ou, no R, com `?'csapAIH-package'`.
 
@@ -121,7 +107,7 @@ ou, no R, com `?'csapAIH-package'`.
 
 A leitura de arquivos .DBC exige a instalação prévia do pacote
 `read.csap`. Sua falta não impede o funcionamento das demais funções do
-pacote (inclusive de leitura, mas em outro formato). A função
+pacote (inclusive de leitura de arquivos em outro formato). A função
 `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado,
 mas sua instalação não é necessária para que ela funcione.
 
@@ -131,91 +117,96 @@ mas sua instalação não é necessária para que ela funcione.
 library(csapAIH)
 ```
 
-### Leitura dos arquivos
+### A partir da leitura de arquivos de dados
 
-- A partir de um arquivo “RD??????.DBF” salvo no mesmo diretório da
-  sessão de trabalho do **R**:
+É possível classificar as CSAP diretamente a partir de arquivos com
+extensão .DBC, .DBF, ou .CSV armazenados no computador, sem necessidade
+da leitura prévia do arquivo. Para outras extensões de arquivo é
+necessária a prévia importação do arquivo para um objeto de classe
+`data.frame`.
 
-       csap <- csapAIH::csapAIH("RD??????.DBF")
+- A partir de um “arquivo da AIH” armazenado no computador (neste
+  exemplo, num sub-diretório do diretório de trabalho da sessão ativa,
+  chamado ‘data-raw’). Esses arquivos são disponibilizados em arquivos
+  comprimidos no formato DBC e podem ser expandidos (pelo programa
+  [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/))
+  para o formato DBF e CSV.
+  <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
+- Notar que no caso de arquivos CSV é mandatório indicar o tipo de
+  separador de campos, argumento `sep`.
 
-- A partir de um arquivo “RD??????.DBC” salvo no mesmo diretório da
-  sessão de trabalho do **R**:
-
-       csap <- csapAIH::csapAIH("RD??????.DBC")
+``` r
+csap <- csapAIH("data-raw/RDRS1801.dbc")
+#> Importados 60.529 registros.
+#> Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
+#> Excluídos 366 (0,6%) registros de AIH de longa permanência.
+#> Exportados 51.923 (85,8%) registros.
+csap <- csapAIH("data-raw/RDRS1801.dbf")
+#> Importados 60.529 registros.
+#> Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
+#> Excluídos 366 (0,6%) registros de AIH de longa permanência.
+#> Exportados 51.923 (85,8%) registros.
+csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
+#> Importados 60.529 registros.
+#> Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
+#> Excluídos 366 (0,6%) registros de AIH de longa permanência.
+#> Exportados 51.923 (85,8%) registros.
+```
 
 - A partir de um banco de dados com a estrutura da AIH já carregado no
   ambiente de trabalho:
 
-       csap <- csapAIH::csapAIH(bancodedados)
+``` r
+read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
+  csapAIH() |>
+  head()
+#> Importados 60.529 registros.
+#> Excluídos 5.044 (8,3%) registros de procedimentos obstétricos.
+#> Excluídos 366 (0,6%) registros de AIH de longa permanência.
+#> Exportados 55.119 (91,1%) registros.
+#>           n.aih munres munint sexo       nasc idade fxetar.det fxetar5 csap
+#> 1 4318100063695 431340 431080 masc 1960-01-14    58      55-59   55-59  não
+#> 2 4318100349508 430450 430450  fem 1992-09-21    25      25-29   25-29  não
+#> 3 4318100349563 430450 430450  fem 1993-05-31    24      20-24   20-24  não
+#> 4 4318100349662 430450 430450  fem 1984-07-06    33      30-34   30-34  não
+#> 5 4318100350840 430450 430450 masc 1937-09-15    80     80 e +  80 e +  sim
+#> 6 4318100350850 430450 430450 masc 1948-12-03    69      65-69   65-69  sim
+#>      grupo  cid  proc.rea data.inter data.saida      cep    cnes
+#> 1 não-CSAP K439 407040064 2018-01-14 2018-01-16 93544360 2232189
+#> 2 não-CSAP O628 411010034 2018-01-01 2018-01-03 96600000 2232928
+#> 3 não-CSAP O641 411010034 2018-01-11 2018-01-13 96600000 2232928
+#> 4 não-CSAP O623 303100044 2018-01-11 2018-01-12 96600000 2232928
+#> 5      g12  I64 303040149 2018-01-19 2018-01-24 96600000 2232928
+#> 6      g03 D500 303020059 2018-01-19 2018-01-23 96600000 2232928
+```
 
 - A partir de uma variável com códigos da CID-10:
 
 ``` r
-variavel <- aih100$DIAG_PRINC
-csap <- csapAIH::csapAIH(variavel)
-head(csap)
-#>    cid csap    grupo
-#> 1 N189  não não-CSAP
-#> 2 O689  não não-CSAP
-#> 3 S423  não não-CSAP
-#> 4 H938  não não-CSAP
-#> 5 P584  não não-CSAP
-#> 6 I200  sim      g10
-descreveCSAP(csap)
-#>                                    Grupo Casos %Total %CSAP
-#> 1   1. Prev. vacinação e cond. evitáveis     0   0,00  0,00
-#> 2                      2. Gastroenterite     1   1,00  5,00
-#> 3                              3. Anemia     0   0,00  0,00
-#> 4                 4. Defic. nutricionais     0   0,00  0,00
-#> 5     5. Infec. ouvido, nariz e garganta     0   0,00  0,00
-#> 6              6. Pneumonias bacterianas     3   3,00 15,00
-#> 7                                7. Asma     0   0,00  0,00
-#> 8                   8. Pulmonares (DPOC)     3   3,00 15,00
-#> 9                         9. Hipertensão     0   0,00  0,00
-#> 10                            10. Angina     2   2,00 10,00
-#> 11                   11. Insuf. cardíaca     1   1,00  5,00
-#> 12                 12. Cerebrovasculares     2   2,00 10,00
-#> 13                 13. Diabetes mellitus     4   4,00 20,00
-#> 14                        14. Epilepsias     0   0,00  0,00
-#> 15                   15. Infec. urinária     1   1,00  5,00
-#> 16          16. Infec. pele e subcutâneo     1   1,00  5,00
-#> 17     17. D. infl. órgãos pélvicos fem.     0   0,00  0,00
-#> 18           18. Úlcera gastrointestinal     0   0,00  0,00
-#> 19                 19. Pré-natal e parto     2   2,00 10,00
-#> 20                            Total CSAP    20  20,00   100
-#> 21                              não-CSAP    80  80,00    --
-#> 22                  Total de internações   100    100    --
-tabCSAP(csap$grupo, lang = "es", format = TRUE)
-#>                                       Grupo Casos % Total % CSAP
-#> 1        1. Prev. vacunación y otros medios     0    0,00   0,00
-#> 2                        2. Gastroenterites     1    1,00   5,00
-#> 3                                 3. Anemia     0    0,00   0,00
-#> 4                     4. Def. nutricionales     0    0,00   0,00
-#> 5          5. Infec. oído, nariz y garganta     0    0,00   0,00
-#> 6                    6. Neumonía bacteriana     3    3,00  15,00
-#> 7                                   7. Asma     0    0,00   0,00
-#> 8     8. Enf. vías respiratorias inferiores     3    3,00  15,00
-#> 9                           9. Hipertensión     0    0,00   0,00
-#> 10                      10. Angina de pecho     2    2,00  10,00
-#> 11           11. Insuf. cardíaca congestiva     1    1,00   5,00
-#> 12               12. Enf. cerebrovasculares     2    2,00  10,00
-#> 13                    13. Diabetes mellitus     4    4,00  20,00
-#> 14                           14. Epilepsias     0    0,00   0,00
-#> 15                   15. Infección urinaria     1    1,00   5,00
-#> 16             16. Infec. piel y subcutáneo     1    1,00   5,00
-#> 17  17. Enf infl órganos pélvicos femeninos     0    0,00   0,00
-#> 18              18. Úlcera gastrointestinal     0    0,00   0,00
-#> 19 19. Enf. del embarazo, parto y puerperio     2    2,00  10,00
-#> 20                               Total CSAP    20   20,00    100
-#> 21                                  No-CSAP    80   80,00     --
-#> 22                        Total de ingresos   100     100     --
+cids <- aih100$DIAG_PRINC[1:10]
+cids
+#>  [1] N189 O689 S423 H938 P584 I200 I442 C189 C409 K818
+#> 3254 Levels: A009 A020 A044 A045 A048 A049 A050 A058 A059 A061 A069 A071 ... Z990
+csapAIH(cids) 
+#>     cid csap    grupo
+#> 1  N189  não não-CSAP
+#> 2  O689  não não-CSAP
+#> 3  S423  não não-CSAP
+#> 4  H938  não não-CSAP
+#> 5  P584  não não-CSAP
+#> 6  I200  sim      g10
+#> 7  I442  não não-CSAP
+#> 8  C189  não não-CSAP
+#> 9  C409  não não-CSAP
+#> 10 K818  não não-CSAP
 ```
 
 ### Apresentação de resultados
 
-**Resumo de importação de dados**
+#### Resumo de importação de dados
 
-O resumo de importação é guardado como atributo do banco de dados:
+Um resumo de importação, apresentado durante a realização do trabalho, é
+guardado como atributo do banco de dados:
 
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
@@ -231,7 +222,23 @@ attributes(csap)$resumo
 #> 4   Exportados 51923  85.8                              registros.
 ```
 
-**Tabela “bruta”**
+Em tabela para apresentação:
+
+``` r
+attributes(csap)$resumo |>
+  knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","), 
+               col.names = c("Ação", "N", "%", "Objeto") ) |>
+  suppressWarnings()
+```
+
+| Ação       |      N |     % | Objeto                                  |
+|:-----------|-------:|------:|:----------------------------------------|
+| Importados | 60.529 | 100,0 | registros.                              |
+| Excluídos  |  8.240 |  13,6 | registros de procedimentos obstétricos. |
+| Excluídos  |    366 |   0,6 | registros de AIH de longa permanência.  |
+| Exportados | 51.923 |  85,8 | registros.                              |
+
+#### Tabela “bruta”
 
 ``` r
 descreveCSAP(csap)
@@ -260,8 +267,9 @@ descreveCSAP(csap)
 #> 22                  Total de internações 51.923    100    --
 ```
 
-**Tabela para apresentação ou impressão (com a função `kable`, do pacote
-`knitr`)**
+#### Tabela para apresentação
+
+(com a função `kable`, do pacote `knitr`)
 
 ``` r
 knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
@@ -292,18 +300,14 @@ knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
 | não-CSAP                              | 41.059 |  79,08 |     – |
 | Total de internações                  | 51.923 |    100 |     – |
 
-**Gráfico**
+#### Gráficos
 
 ``` r
 gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018)
 gr
-#> Warning: The dot-dot notation (`..prop..`) was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `after_stat(prop)` instead.
-#> ℹ The deprecated feature was likely used in the csapAIH package.
-#>   Please report the issue to the authors.
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
 
 *Estratificado por categorias de outra variável presente no banco de
 dados:*
@@ -313,10 +317,12 @@ da variável em seu todo, sem a estratificação, quando o argumento
 `ordenar = TRUE`(padrão).
 
 ``` r
-gr + ggplot2::facet_grid(~ sexo)
+rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
+gr + ggplot2::facet_grid(~ sexo, margins = TRUE,
+                         labeller = rot)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" />
 
 ``` r
 
@@ -325,14 +331,13 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-2.png" width="50%" />
 
 ***Veja o manual do pacote em:***
 <https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf>
 
-<!-- # aqui  -->
-<!-- badges: start -->
-<!-- badges: end -->
+badges: start badges: end
+
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
 ## Referências

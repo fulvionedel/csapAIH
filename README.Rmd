@@ -35,7 +35,7 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   
   * com a função `install.packages()` sobre os arquivos de instalação no [SourceForge](https://sourceforge.net/projects/csapaih/):
 
-```{r}
+```{r eval=FALSE}
 install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.tar.gz/download", type = "source", repos = NULL) 
 ```
     
@@ -43,7 +43,7 @@ ou
   
   * através do pacote `remotes` sobre os arquivos-fonte da função em desenvolvimento, no [GitHub](https://github.com/fulvionedel):
 
-```{r}
+```{r eval=FALSE}
 # install.packages("remotes") # desnecessário se o pacote já estiver instalado
 remotes::install_github("fulvionedel/csapAIH")
 ```
@@ -57,14 +57,14 @@ Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP`
 
 A partir da versão 0.0.3, a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função **idadeSUS** é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
-Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, como sugerido por @Alfradique2009. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS. 
+Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, como sugerido por @Alfradique2009. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias.
 
-A ajuda sobre o pacote oferece mais detalhes sobre as funções e sua evolução. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf) ou, no R, com `?'csapAIH-package'`.
+A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf) ou, no R, com `?'csapAIH-package'`.
 
 
 ## Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura, mas em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione.
+A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione.
 
 ## Exemplos de uso
 
@@ -72,57 +72,75 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
 library(csapAIH)
 ```
 
-### Leitura dos arquivos
+### A partir da leitura de arquivos de dados
 
- - A partir de um arquivo "RD??????.DBF" salvo no mesmo diretório da sessão de trabalho do **R**:
+É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV armazenados no computador, sem necessidade da leitura prévia do arquivo. Para outras extensões de arquivo é necessária a prévia importação do arquivo para um objeto de classe `data.frame`.
+
+ - A partir de um "arquivo da AIH" armazenado no computador (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw'). Esses arquivos são disponibilizados em arquivos comprimidos no formato DBC e podem ser expandidos (pelo programa [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/)) para o formato DBF e CSV.
+ <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
+ - Notar que no caso de arquivos CSV é mandatório indicar o tipo de separador de campos, argumento `sep`.
   
-        csap <- csapAIH::csapAIH("RD??????.DBF")
- 
- - A partir de um arquivo "RD??????.DBC" salvo no mesmo diretório da sessão de trabalho do **R**:
-  
-        csap <- csapAIH::csapAIH("RD??????.DBC")
-  
+```{r}
+csap <- csapAIH("data-raw/RDRS1801.dbc")
+csap <- csapAIH("data-raw/RDRS1801.dbf")
+csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
+```
+
  - A partir de um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
   
-        csap <- csapAIH::csapAIH(bancodedados)
+```{r}
+read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
+  csapAIH() |>
+  head()
+```
+
   
  - A partir de uma variável com códigos da CID-10:
 
 ```{r}
-variavel <- aih100$DIAG_PRINC
-csap <- csapAIH::csapAIH(variavel)
-head(csap)
-descreveCSAP(csap)
-tabCSAP(csap$grupo, lang = "es", format = TRUE)
+cids <- aih100$DIAG_PRINC[1:10]
+cids
+csapAIH(cids) 
 ```
 
 
 ### Apresentação de resultados 
 
-**Resumo de importação de dados**
+#### Resumo de importação de dados
 
-O resumo de importação é guardado como atributo do banco de dados:
+Um resumo de importação, apresentado durante a realização do trabalho, é guardado como atributo do banco de dados:
 
 ```{r}
 csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
 attributes(csap)$resumo
 ```
+
+Em tabela para apresentação:
+
+```{r}
+attributes(csap)$resumo |>
+  knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","), 
+               col.names = c("Ação", "N", "%", "Objeto") ) |>
+  suppressWarnings()
+```
        
-**Tabela "bruta"**
+#### Tabela "bruta"
 
 ```{r}
 descreveCSAP(csap)
 ```
  
-**Tabela para apresentação ou impressão (com a função `kable`, do pacote `knitr`)**
+#### Tabela para apresentação
+
+(com a função `kable`, do pacote `knitr`)
 
 ```{r}
 knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
 ```
 
-**Gráfico**
+#### Gráficos
 
-```{r}
+```{r out.width="50%"}
 gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018)
 gr
 ```
@@ -132,8 +150,10 @@ gr
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
   
-```{r}
-gr + ggplot2::facet_grid(~ sexo)
+```{r out.width="50%"}
+rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
+gr + ggplot2::facet_grid(~ sexo, margins = TRUE,
+                         labeller = rot)
 
 gr + ggplot2::facet_wrap(~ munres == "431490", 
                          labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
@@ -145,11 +165,8 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf
 
 
-<!-- # aqui  -->
-
-
-<!-- badges: start -->
-<!-- badges: end -->
+badges: start
+badges: end
 
 
 
