@@ -385,6 +385,10 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .1
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
 gr
+#> Warning: The dot-dot notation (`..prop..`) was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `after_stat(prop)` instead.
+#> ℹ The deprecated feature was likely used in the csapAIH package.
+#>   Please report the issue to the authors.
 ```
 
 <img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;" />
