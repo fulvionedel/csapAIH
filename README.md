@@ -1,4 +1,19 @@
 
+- <a href="#csapaih" id="toc-csapaih">csapAIH</a>
+  - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
+  - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
+  - <a href="#instalação" id="toc-instalação">Instalação</a>
+  - <a href="#conteúdo-timeline" id="toc-conteúdo-timeline">Conteúdo
+    (<em>timeline</em>)</a>
+  - <a href="#dependências" id="toc-dependências">Dependências</a>
+  - <a href="#exemplos-de-uso" id="toc-exemplos-de-uso">Exemplos de uso</a>
+    - <a href="#a-partir-da-leitura-de-arquivos-de-dados"
+      id="toc-a-partir-da-leitura-de-arquivos-de-dados">A partir da leitura de
+      arquivos de dados</a>
+    - <a href="#apresentação-de-resultados"
+      id="toc-apresentação-de-resultados">Apresentação de resultados</a>
+  - <a href="#referências" id="toc-referências">Referências</a>
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # csapAIH
@@ -85,18 +100,19 @@ do gráfico por categorias de outros fatores do banco de dados, com o uso
 das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite
 ainda o desenho de gráficos com as funções básicas, sem a instalação do
 pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade
-nos arquivos da AIH: a função **idadeSUS** é usada internamente por
+nos arquivos da AIH: a função `idadeSUS` é usada internamente por
 `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a
 necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
-CSAP em 20 grupos de causa, como sugerido por Alfradique et al. (2009).
-As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do
-idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`)
-ou inglês (`en`). Foram criadas as funções `ler_popbr` e
-`popbr2000_2021` (esta sobre o pacote de Saldanha (2022)) para acesso às
-estimativas populacionais publicadas pelo DATASUS e funções para
-categorização da idade em faixas etárias.
+CSAP em 20 grupos de causa, como sugerido por Alfradique et al.
+([2009](#ref-Alfradique2009)). As funções `desenhaCSAP` e `tabCSAP` têm
+um argumento para seleção do idioma dos nomes de grupos, em português
+(`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as
+funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de Saldanha
+([2022](#ref-brpopref))) para acesso às estimativas populacionais
+publicadas pelo DATASUS e funções para categorização da idade em faixas
+etárias.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
@@ -206,7 +222,8 @@ csapAIH(cids)
 #### Resumo de importação de dados
 
 Um resumo de importação, apresentado durante a realização do trabalho, é
-guardado como atributo do banco de dados:
+guardado como atributo do banco de dados e pode ser recuperado com as
+funções `attr()` ou `attributes()`:
 
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
@@ -214,12 +231,13 @@ csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
 #> Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 #> Excluídos 366 (0,6%) registros de AIH de longa permanência.
 #> Exportados 51.923 (85,8%) registros.
-attributes(csap)$resumo
+attr(csap, "resumo")
 #>           acao  freq  perc                                  objeto
 #> 1   Importados 60529 100.0                              registros.
 #> 2 Excluídos \t  8240  13.6 registros de procedimentos obstétricos.
 #> 3 Excluídos \t   366   0.6  registros de AIH de longa permanência.
 #> 4   Exportados 51923  85.8                              registros.
+# attributes(csap)$resumo
 ```
 
 Em tabela para apresentação:
@@ -269,10 +287,9 @@ descreveCSAP(csap)
 
 #### Tabela para apresentação
 
-(com a função `kable`, do pacote `knitr`)
-
 ``` r
-knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
+descreveCSAP(csap) |>
+  knitr::kable(align = c('l', rep('r', 3)))
 ```
 
 | Grupo                                 |  Casos | %Total | %CSAP |
@@ -300,17 +317,80 @@ knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
 | não-CSAP                              | 41.059 |  79,08 |     – |
 | Total de internações                  | 51.923 |    100 |     – |
 
+``` r
+tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
+  knitr::kable(align = c('l', rep('r', 3)))
+```
+
+| Group                                |  Cases | Total % | ACSC % |
+|:-------------------------------------|-------:|--------:|-------:|
+| 1\. Vaccine prev. and amenable cond. |    118 |     0.2 |    1.1 |
+| 2\. Gastroenteritis                  |    802 |     1.5 |    7.4 |
+| 3\. Anemia                           |     73 |     0.1 |    0.7 |
+| 4\. Nutritional deficiency           |    241 |     0.5 |    2.2 |
+| 5\. Ear, nose and throat infec.      |    168 |     0.3 |    1.5 |
+| 6\. Bacterial pneumonia              |    653 |     1.3 |    6.0 |
+| 7\. Asthma                           |    234 |     0.5 |    2.2 |
+| 8\. Pulmonary (COPD)                 |  1,213 |     2.3 |   11.2 |
+| 9\. Hypertension                     |    147 |     0.3 |    1.4 |
+| 10\. Angina                          |  1,005 |     1.9 |    9.3 |
+| 11\. Heart failure                   |  1,394 |     2.7 |   12.8 |
+| 12\. Cerebrovascular                 |  1,373 |     2.6 |   12.6 |
+| 13\. Diabetes mellitus               |    743 |     1.4 |    6.8 |
+| 14\. Convulsions and epilepsy        |    331 |     0.6 |    3.0 |
+| 15\. Urinary infection               |  1,360 |     2.6 |   12.5 |
+| 16\. Skin and subcutaneous infec.    |    459 |     0.9 |    4.2 |
+| 17\. Pelvic inflammatory disease     |    133 |     0.3 |    1.2 |
+| 18\. Gastrointestinal ulcers         |    195 |     0.4 |    1.8 |
+| 19\. Pre-natal and childbirth        |    222 |     0.4 |    2.0 |
+| ACSC                                 | 10,864 |    20.9 |    100 |
+| Non ACSC                             | 41,059 |    79.1 |      – |
+| TOTAL hospitalizations               | 51,923 |     100 |      – |
+
+``` r
+
+tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
+  knitr::kable(align = c('l', rep('r', 3)))
+```
+
+| Grupo                                     |  Casos | % Total | % CSAP |
+|:------------------------------------------|-------:|--------:|-------:|
+| 1\. Prev. vacunación y otros medios       |    118 |     0,2 |    1,1 |
+| 2\. Gastroenterites                       |    802 |     1,5 |    7,4 |
+| 3\. Anemia                                |     73 |     0,1 |    0,7 |
+| 4\. Def. nutricionales                    |    241 |     0,5 |    2,2 |
+| 5\. Infec. oído, nariz y garganta         |    168 |     0,3 |    1,5 |
+| 6\. Neumonía bacteriana                   |    653 |     1,3 |    6,0 |
+| 7\. Asma                                  |    234 |     0,5 |    2,2 |
+| 8\. Enf. vías respiratorias inferiores    |  1.213 |     2,3 |   11,2 |
+| 9\. Hipertensión                          |    147 |     0,3 |    1,4 |
+| 10\. Angina de pecho                      |  1.005 |     1,9 |    9,3 |
+| 11\. Insuf. cardíaca congestiva           |  1.394 |     2,7 |   12,8 |
+| 12\. Enf. cerebrovasculares               |  1.373 |     2,6 |   12,6 |
+| 13\. Diabetes mellitus                    |    743 |     1,4 |    6,8 |
+| 14\. Epilepsias                           |    331 |     0,6 |    3,0 |
+| 15\. Infección urinaria                   |  1.360 |     2,6 |   12,5 |
+| 16\. Infec. piel y subcutáneo             |    459 |     0,9 |    4,2 |
+| 17\. Enf infl órganos pélvicos femeninos  |    133 |     0,3 |    1,2 |
+| 18\. Úlcera gastrointestinal              |    195 |     0,4 |    1,8 |
+| 19\. Enf. del embarazo, parto y puerperio |    222 |     0,4 |    2,0 |
+| Total CSAP                                | 10.864 |    20,9 |    100 |
+| No-CSAP                                   | 41.059 |    79,1 |      – |
+| Total de ingresos                         | 51.923 |     100 |      – |
+
 #### Gráficos
 
 ``` r
-gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018)
+gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
 gr
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;" />
 
-*Estratificado por categorias de outra variável presente no banco de
-dados:*
+**Estratificado por categorias de outra variável presente no banco de
+dados:**
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência
 da variável em seu todo, sem a estratificação, quando o argumento
@@ -318,11 +398,10 @@ da variável em seu todo, sem a estratificação, quando o argumento
 
 ``` r
 rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
-gr + ggplot2::facet_grid(~ sexo, margins = TRUE,
-                         labeller = rot)
+gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -331,13 +410,13 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-2.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-14-2.png" width="50%" style="display: block; margin: auto;" />
 
 ***Veja o manual do pacote em:***
 <https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf>
 
-badges: start badges: end
-
+<!-- badges: start -->
+<!-- badges: end -->
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
 ## Referências
