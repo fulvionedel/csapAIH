@@ -1,4 +1,19 @@
 
+- <a href="#csapaih" id="toc-csapaih">csapAIH</a>
+  - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
+  - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
+  - <a href="#instalação" id="toc-instalação">Instalação</a>
+  - <a href="#conteúdo-timeline" id="toc-conteúdo-timeline">Conteúdo
+    (<em>timeline</em>)</a>
+  - <a href="#dependências" id="toc-dependências">Dependências</a>
+  - <a href="#exemplos-de-uso" id="toc-exemplos-de-uso">Exemplos de uso</a>
+    - <a href="#a-partir-da-leitura-de-arquivos-de-dados"
+      id="toc-a-partir-da-leitura-de-arquivos-de-dados">A partir da leitura de
+      arquivos de dados</a>
+    - <a href="#apresentação-de-resultados"
+      id="toc-apresentação-de-resultados">Apresentação de resultados</a>
+  - <a href="#referências" id="toc-referências">Referências</a>
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # csapAIH
@@ -85,18 +100,19 @@ do gráfico por categorias de outros fatores do banco de dados, com o uso
 das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite
 ainda o desenho de gráficos com as funções básicas, sem a instalação do
 pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade
-nos arquivos da AIH: a função **idadeSUS** é usada internamente por
+nos arquivos da AIH: a função `idadeSUS` é usada internamente por
 `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a
 necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
-CSAP em 20 grupos de causa, como sugerido por Alfradique et al. (2009).
-As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do
-idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`)
-ou inglês (`en`). Foram criadas as funções `ler_popbr` e
-`popbr2000_2021` (esta sobre o pacote de Saldanha (2022)) para acesso às
-estimativas populacionais publicadas pelo DATASUS e funções para
-categorização da idade em faixas etárias.
+CSAP em 20 grupos de causa, como sugerido por Alfradique et al.
+([2009](#ref-Alfradique2009)). As funções `desenhaCSAP` e `tabCSAP` têm
+um argumento para seleção do idioma dos nomes de grupos, em português
+(`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as
+funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de Saldanha
+([2022](#ref-brpopref))) para acesso às estimativas populacionais
+publicadas pelo DATASUS e funções para categorização da idade em faixas
+etárias.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
@@ -206,7 +222,8 @@ csapAIH(cids)
 #### Resumo de importação de dados
 
 Um resumo de importação, apresentado durante a realização do trabalho, é
-guardado como atributo do banco de dados:
+guardado como atributo do banco de dados e pode ser recuperado com as
+funções `attr()` ou `attributes()`:
 
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
@@ -214,12 +231,13 @@ csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
 #> Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 #> Excluídos 366 (0,6%) registros de AIH de longa permanência.
 #> Exportados 51.923 (85,8%) registros.
-attributes(csap)$resumo
+attr(csap, "resumo")
 #>           acao  freq  perc                                  objeto
 #> 1   Importados 60529 100.0                              registros.
 #> 2 Excluídos \t  8240  13.6 registros de procedimentos obstétricos.
 #> 3 Excluídos \t   366   0.6  registros de AIH de longa permanência.
 #> 4   Exportados 51923  85.8                              registros.
+# attributes(csap)$resumo
 ```
 
 Em tabela para apresentação:
@@ -269,10 +287,9 @@ descreveCSAP(csap)
 
 #### Tabela para apresentação
 
-(com a função `kable`, do pacote `knitr`)
-
 ``` r
-knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
+descreveCSAP(csap) |>
+  knitr::kable(align = c('l', rep('r', 3)))
 ```
 
 | Grupo                                 |  Casos | %Total | %CSAP |
@@ -300,17 +317,757 @@ knitr::kable(descreveCSAP(csap), align = c('l', rep('r', 3)))
 | não-CSAP                              | 41.059 |  79,08 |     – |
 | Total de internações                  | 51.923 |    100 |     – |
 
+``` r
+tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
+  formattable::formattable()
+```
+
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:right;">
+Group
+</th>
+<th style="text-align:right;">
+Cases
+</th>
+<th style="text-align:right;">
+Total %
+</th>
+<th style="text-align:right;">
+ACSC %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+
+1.  Vaccine prev. and amenable cond.
+    </td>
+    <td style="text-align:right;">
+    118
+    </td>
+    <td style="text-align:right;">
+    0.2
+    </td>
+    <td style="text-align:right;">
+    1.1
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:right;">
+
+    2.  Gastroenteritis
+        </td>
+        <td style="text-align:right;">
+        802
+        </td>
+        <td style="text-align:right;">
+        1.5
+        </td>
+        <td style="text-align:right;">
+        7.4
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align:right;">
+
+        3.  Anemia
+            </td>
+            <td style="text-align:right;">
+            73
+            </td>
+            <td style="text-align:right;">
+            0.1
+            </td>
+            <td style="text-align:right;">
+            0.7
+            </td>
+            </tr>
+            <tr>
+            <td style="text-align:right;">
+
+            4.  Nutritional deficiency
+                </td>
+                <td style="text-align:right;">
+                241
+                </td>
+                <td style="text-align:right;">
+                0.5
+                </td>
+                <td style="text-align:right;">
+                2.2
+                </td>
+                </tr>
+                <tr>
+                <td style="text-align:right;">
+
+                5.  Ear, nose and throat infec.
+                    </td>
+                    <td style="text-align:right;">
+                    168
+                    </td>
+                    <td style="text-align:right;">
+                    0.3
+                    </td>
+                    <td style="text-align:right;">
+                    1.5
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="text-align:right;">
+
+                    6.  Bacterial pneumonia
+                        </td>
+                        <td style="text-align:right;">
+                        653
+                        </td>
+                        <td style="text-align:right;">
+                        1.3
+                        </td>
+                        <td style="text-align:right;">
+                        6.0
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style="text-align:right;">
+
+                        7.  Asthma
+                            </td>
+                            <td style="text-align:right;">
+                            234
+                            </td>
+                            <td style="text-align:right;">
+                            0.5
+                            </td>
+                            <td style="text-align:right;">
+                            2.2
+                            </td>
+                            </tr>
+                            <tr>
+                            <td style="text-align:right;">
+
+                            8.  Pulmonary (COPD)
+                                </td>
+                                <td style="text-align:right;">
+                                1,213
+                                </td>
+                                <td style="text-align:right;">
+                                2.3
+                                </td>
+                                <td style="text-align:right;">
+                                11.2
+                                </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align:right;">
+
+                                9.  Hypertension
+                                    </td>
+                                    <td style="text-align:right;">
+                                    147
+                                    </td>
+                                    <td style="text-align:right;">
+                                    0.3
+                                    </td>
+                                    <td style="text-align:right;">
+                                    1.4
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td style="text-align:right;">
+
+                                    10. Angina
+                                        </td>
+                                        <td style="text-align:right;">
+                                        1,005
+                                        </td>
+                                        <td style="text-align:right;">
+                                        1.9
+                                        </td>
+                                        <td style="text-align:right;">
+                                        9.3
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td style="text-align:right;">
+
+                                        11. Heart failure
+                                            </td>
+                                            <td style="text-align:right;">
+                                            1,394
+                                            </td>
+                                            <td style="text-align:right;">
+                                            2.7
+                                            </td>
+                                            <td style="text-align:right;">
+                                            12.8
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <td style="text-align:right;">
+
+                                            12. Cerebrovascular
+                                                </td>
+                                                <td style="text-align:right;">
+                                                1,373
+                                                </td>
+                                                <td style="text-align:right;">
+                                                2.6
+                                                </td>
+                                                <td style="text-align:right;">
+                                                12.6
+                                                </td>
+                                                </tr>
+                                                <tr>
+                                                <td style="text-align:right;">
+
+                                                13. Diabetes mellitus
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                    743
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                    1.4
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                    6.8
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td style="text-align:right;">
+
+                                                    14. Convulsions and
+                                                        epilepsy
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                        331
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                        0.6
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                        3.0
+                                                        </td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td style="text-align:right;">
+
+                                                        15. Urinary
+                                                            infection
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                            1,360
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                            2.6
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                            12.5
+                                                            </td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td style="text-align:right;">
+
+                                                            16. Skin and
+                                                                subcutaneous
+                                                                infec.
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                459
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                0.9
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                4.2
+                                                                </td>
+                                                                </tr>
+                                                                <tr>
+                                                                <td style="text-align:right;">
+
+                                                                17. Pelvic
+                                                                    inflammatory
+                                                                    disease
+                                                                    </td>
+                                                                    <td style="text-align:right;">
+                                                                    133
+                                                                    </td>
+                                                                    <td style="text-align:right;">
+                                                                    0.3
+                                                                    </td>
+                                                                    <td style="text-align:right;">
+                                                                    1.2
+                                                                    </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <td style="text-align:right;">
+
+                                                                    18. Gastrointestinal
+                                                                        ulcers
+                                                                        </td>
+                                                                        <td style="text-align:right;">
+                                                                        195
+                                                                        </td>
+                                                                        <td style="text-align:right;">
+                                                                        0.4
+                                                                        </td>
+                                                                        <td style="text-align:right;">
+                                                                        1.8
+                                                                        </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                        <td style="text-align:right;">
+
+                                                                        19. Pre-natal
+                                                                            and
+                                                                            childbirth
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            222
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            0.4
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            2.0
+                                                                            </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td style="text-align:right;">
+                                                                            ACSC
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            10,864
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            20.9
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            100
+                                                                            </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td style="text-align:right;">
+                                                                            Non
+                                                                            ACSC
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            41,059
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            79.1
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            –
+                                                                            </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td style="text-align:right;">
+                                                                            TOTAL
+                                                                            hospitalizations
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            51,923
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            100
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            –
+                                                                            </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                            </table>
+
+``` r
+
+tabCSAP(csap$grupo, lang = "es", format = T) |>
+  formattable::formattable()
+```
+
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:right;">
+Grupo
+</th>
+<th style="text-align:right;">
+Casos
+</th>
+<th style="text-align:right;">
+% Total
+</th>
+<th style="text-align:right;">
+% CSAP
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+
+1.  Prev. vacunación y otros medios
+    </td>
+    <td style="text-align:right;">
+    118
+    </td>
+    <td style="text-align:right;">
+    0,23
+    </td>
+    <td style="text-align:right;">
+    1,09
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:right;">
+
+    2.  Gastroenterites
+        </td>
+        <td style="text-align:right;">
+        802
+        </td>
+        <td style="text-align:right;">
+        1,54
+        </td>
+        <td style="text-align:right;">
+        7,38
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align:right;">
+
+        3.  Anemia
+            </td>
+            <td style="text-align:right;">
+            73
+            </td>
+            <td style="text-align:right;">
+            0,14
+            </td>
+            <td style="text-align:right;">
+            0,67
+            </td>
+            </tr>
+            <tr>
+            <td style="text-align:right;">
+
+            4.  Def. nutricionales
+                </td>
+                <td style="text-align:right;">
+                241
+                </td>
+                <td style="text-align:right;">
+                0,46
+                </td>
+                <td style="text-align:right;">
+                2,22
+                </td>
+                </tr>
+                <tr>
+                <td style="text-align:right;">
+
+                5.  Infec. oído, nariz y garganta
+                    </td>
+                    <td style="text-align:right;">
+                    168
+                    </td>
+                    <td style="text-align:right;">
+                    0,32
+                    </td>
+                    <td style="text-align:right;">
+                    1,55
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="text-align:right;">
+
+                    6.  Neumonía bacteriana
+                        </td>
+                        <td style="text-align:right;">
+                        653
+                        </td>
+                        <td style="text-align:right;">
+                        1,26
+                        </td>
+                        <td style="text-align:right;">
+                        6,01
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style="text-align:right;">
+
+                        7.  Asma
+                            </td>
+                            <td style="text-align:right;">
+                            234
+                            </td>
+                            <td style="text-align:right;">
+                            0,45
+                            </td>
+                            <td style="text-align:right;">
+                            2,15
+                            </td>
+                            </tr>
+                            <tr>
+                            <td style="text-align:right;">
+
+                            8.  Enf. vías respiratorias inferiores
+                                </td>
+                                <td style="text-align:right;">
+                                1.213
+                                </td>
+                                <td style="text-align:right;">
+                                2,34
+                                </td>
+                                <td style="text-align:right;">
+                                11,17
+                                </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align:right;">
+
+                                9.  Hipertensión
+                                    </td>
+                                    <td style="text-align:right;">
+                                    147
+                                    </td>
+                                    <td style="text-align:right;">
+                                    0,28
+                                    </td>
+                                    <td style="text-align:right;">
+                                    1,35
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td style="text-align:right;">
+
+                                    10. Angina de pecho
+                                        </td>
+                                        <td style="text-align:right;">
+                                        1.005
+                                        </td>
+                                        <td style="text-align:right;">
+                                        1,94
+                                        </td>
+                                        <td style="text-align:right;">
+                                        9,25
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td style="text-align:right;">
+
+                                        11. Insuf. cardíaca congestiva
+                                            </td>
+                                            <td style="text-align:right;">
+                                            1.394
+                                            </td>
+                                            <td style="text-align:right;">
+                                            2,68
+                                            </td>
+                                            <td style="text-align:right;">
+                                            12,83
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <td style="text-align:right;">
+
+                                            12. Enf. cerebrovasculares
+                                                </td>
+                                                <td style="text-align:right;">
+                                                1.373
+                                                </td>
+                                                <td style="text-align:right;">
+                                                2,64
+                                                </td>
+                                                <td style="text-align:right;">
+                                                12,64
+                                                </td>
+                                                </tr>
+                                                <tr>
+                                                <td style="text-align:right;">
+
+                                                13. Diabetes mellitus
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                    743
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                    1,43
+                                                    </td>
+                                                    <td style="text-align:right;">
+                                                    6,84
+                                                    </td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td style="text-align:right;">
+
+                                                    14. Epilepsias
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                        331
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                        0,64
+                                                        </td>
+                                                        <td style="text-align:right;">
+                                                        3,05
+                                                        </td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td style="text-align:right;">
+
+                                                        15. Infección
+                                                            urinaria
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                            1.360
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                            2,62
+                                                            </td>
+                                                            <td style="text-align:right;">
+                                                            12,52
+                                                            </td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td style="text-align:right;">
+
+                                                            16. Infec.
+                                                                piel y
+                                                                subcutáneo
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                459
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                0,88
+                                                                </td>
+                                                                <td style="text-align:right;">
+                                                                4,22
+                                                                </td>
+                                                                </tr>
+                                                                <tr>
+                                                                <td style="text-align:right;">
+
+                                                                17. Enf
+                                                                    infl
+                                                                    órganos
+                                                                    pélvicos
+                                                                    femeninos
+                                                                    </td>
+                                                                    <td style="text-align:right;">
+                                                                    133
+                                                                    </td>
+                                                                    <td style="text-align:right;">
+                                                                    0,26
+                                                                    </td>
+                                                                    <td style="text-align:right;">
+                                                                    1,22
+                                                                    </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                    <td style="text-align:right;">
+
+                                                                    18. Úlcera
+                                                                        gastrointestinal
+                                                                        </td>
+                                                                        <td style="text-align:right;">
+                                                                        195
+                                                                        </td>
+                                                                        <td style="text-align:right;">
+                                                                        0,38
+                                                                        </td>
+                                                                        <td style="text-align:right;">
+                                                                        1,79
+                                                                        </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                        <td style="text-align:right;">
+
+                                                                        19. Enf.
+                                                                            del
+                                                                            embarazo,
+                                                                            parto
+                                                                            y
+                                                                            puerperio
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            222
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            0,43
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            2,04
+                                                                            </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td style="text-align:right;">
+                                                                            Total
+                                                                            CSAP
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            10.864
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            20,92
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            100
+                                                                            </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td style="text-align:right;">
+                                                                            No-CSAP
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            41.059
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            79,08
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            –
+                                                                            </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td style="text-align:right;">
+                                                                            Total
+                                                                            de
+                                                                            ingresos
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            51.923
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            100
+                                                                            </td>
+                                                                            <td style="text-align:right;">
+                                                                            –
+                                                                            </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                            </table>
+
 #### Gráficos
 
 ``` r
-gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018)
+gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
 gr
+#> Warning: The dot-dot notation (`..prop..`) was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `after_stat(prop)` instead.
+#> ℹ The deprecated feature was likely used in the csapAIH package.
+#>   Please report the issue to the authors.
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;" />
 
-*Estratificado por categorias de outra variável presente no banco de
-dados:*
+**Estratificado por categorias de outra variável presente no banco de
+dados:**
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência
 da variável em seu todo, sem a estratificação, quando o argumento
@@ -318,11 +1075,10 @@ da variável em seu todo, sem a estratificação, quando o argumento
 
 ``` r
 rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
-gr + ggplot2::facet_grid(~ sexo, margins = TRUE,
-                         labeller = rot)
+gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -331,13 +1087,13 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-2.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-14-2.png" width="50%" style="display: block; margin: auto;" />
 
 ***Veja o manual do pacote em:***
 <https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf>
 
-badges: start badges: end
-
+<!-- badges: start -->
+<!-- badges: end -->
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
 ## Referências
