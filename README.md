@@ -84,8 +84,8 @@ remotes::install_github("fulvionedel/csapAIH")
 
 ## Conteúdo (*timeline*)
 
-Na sua primeira versão, o pacote `csapAIH` continha apenas uma função,
-homônima: `csapAIH`.
+Na sua primeira versão([Nedel 2017](#ref-Nedel2017)), o pacote `csapAIH`
+continha apenas uma função, homônima: `csapAIH`.
 
 Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`,
 `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e
@@ -95,14 +95,14 @@ expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de
 Daniela Petruzalek
 (<https://cran.r-project.org/web/packages/read.dbc/index.html>).
 
-A partir da versão 0.0.3, a função `desenhaCSAP` permite o detalhamento
-do gráfico por categorias de outros fatores do banco de dados, com o uso
-das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite
-ainda o desenho de gráficos com as funções básicas, sem a instalação do
-pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade
-nos arquivos da AIH: a função `idadeSUS` é usada internamente por
-`csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a
-necessidade de classificar as CSAP.
+A partir da versão 0.0.3([Nedel 2019](#ref-Nedel2019)), a função
+`desenhaCSAP` permite o detalhamento do gráfico por categorias de outros
+fatores do banco de dados, com o uso das funções `facet_wrap()` e
+`facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com
+as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda
+criada uma função para o cálculo da idade nos arquivos da AIH: a função
+`idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo
+usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
 CSAP em 20 grupos de causa, como sugerido por Alfradique et al.
@@ -442,6 +442,34 @@ class="nocase">ã</span>o da lista brasileira como ferramenta para medir
 o desempenho do sistema de sa<span class="nocase">ú</span>de (Projeto
 ICSAP - Brasil)</span>.” *Cadernos de Saúde Pública* 25 (6): 1337–49.
 <https://doi.org/10.1590/S0102-311X2009000600016>.
+
+</div>
+
+<div id="ref-Nedel2017" class="csl-entry">
+
+Nedel, Fúlvio Borges. 2017. “<span class="nocase">csapAIH: uma fun<span
+class="nocase">ç</span><span class="nocase">ã</span>o para a
+classifica<span class="nocase">ç</span><span class="nocase">ã</span>o
+das condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+sens<span class="nocase">í</span>veis <span class="nocase">à</span>
+aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+prim<span class="nocase">á</span>ria no programa estat<span
+class="nocase">í</span>stico R</span>.” *Epidemiologia e Serviços de
+Saúde* 26 (01): 199–209.
+<https://doi.org/10.5123/S1679-49742017000100021>.
+
+</div>
+
+<div id="ref-Nedel2019" class="csl-entry">
+
+———. 2019. “<span class="nocase">Pacote csapAIH: a Lista Brasileira de
+Interna<span class="nocase">ç</span><span class="nocase">õ</span>es por
+Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+Sens<span class="nocase">í</span>veis <span class="nocase">à</span>
+Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+Prim<span class="nocase">á</span>ria no programa R</span>.”
+*Epidemiologia e Serviços de Saúde* 28 (2): e2019084.
+<https://doi.org/10.5123/S1679-49742019000200021>.
 
 </div>
 
