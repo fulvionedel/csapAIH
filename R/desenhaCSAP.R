@@ -226,7 +226,7 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
     #
     # - Gráfico com ggplot -----------
     #
-    Grupo <- Casos <- grupo <- ..count.. <- ..prop.. <- ..x.. <- NULL
+    Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- NULL
 
     #
     # ----- Com uma tabela ------------------------------------------------
@@ -278,15 +278,17 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
         }
         #
         if(valores == "porcento") {
+          yrotulo <- "% entre as CSAP"
           protografico <- protografico +
-            ggplot2::stat_count(ggplot2::aes(y = ..prop..)) +
-            # ggplot2::stat_count(ggplot2::aes(y = ..prop.., fill = factor(..x..))) +
+            ggplot2::stat_count(ggplot2::aes(y = ggplot2::after_stat(prop))) +
+            # ggplot2::stat_count(ggplot2::aes(y = ggplot2::after_stat(prop), fill = factor(ggplot2::after_stat(x)))) +
             ggplot2::scale_y_continuous(labels = function (x) paste(floor(x*100),"%"))
             # ggplot2::scale_y_continuous(labels = scales::percent)
         } else if (valores == "contagem") {
+          yrotulo <- "n\u00BA de casos"
           protografico <- protografico +
-            ggplot2::stat_count(ggplot2::aes(y = ..count..))
-          # ggplot2::stat_count(ggplot2::aes(y = ..count.., fill = factor(..x..)))
+            ggplot2::stat_count(ggplot2::aes(y = ggplot2::after_stat(count)))
+          # ggplot2::stat_count(ggplot2::aes(y = ggplot2::after_stat(count), fill = factor(ggplot2::after_stat(x))))
         }
         #
         # protografico <- protografico +
@@ -294,7 +296,7 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
  #
  # Colorir as barras
         # if (colorir == TRUE) { # As cores das barras
-          grafico <- protografico + ggplot2::aes(fill = factor(..x..))
+          grafico <- protografico + ggplot2::aes(fill = factor(ggplot2::after_stat(x)))
         # } #else
         if (colorir == FALSE) {
           grafico <- protografico +
@@ -317,14 +319,14 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
           if (valores == "contagem"){
             grafico <- grafico +
               ggplot2::geom_text(ggplot2::aes(
-                label = scales::label_percent(..prop..), y = ..count..), stat= "count",
+                label = scales::label_percent(ggplot2::after_stat(prop)), y = ggplot2::after_stat(count)), stat= "count",
                 hjust=-.12, color="black", size = val.size)
           } else if (valores == "porcento") {
             a <- c(1, .1, .01)     # Define os decimais dos valores
             val.dig <- 1 + val.dig # no gráfico
             grafico <- grafico +
               ggplot2::geom_text(ggplot2::aes(
-                label = scales::percent(..prop.., accuracy = a[[val.dig]], decimal.mark = ","), y = ..prop..), stat= "count",
+                label = scales::percent(ggplot2::after_stat(prop), accuracy = a[[val.dig]], decimal.mark = ","), y = ggplot2::after_stat(prop)), stat= "count",
                 hjust=-.12, color="black", size =  val.size)
           }
         }
@@ -335,7 +337,7 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
     grafico <- grafico +
       ggplot2::coord_flip() +
       ggplot2::xlab("Grupo de causas") +
-      ggplot2::ylab("Casos") +
+      ggplot2::ylab(yrotulo) +
       ggplot2::ggtitle(titulo) +
       ggplot2::theme_bw() +
       ggplot2::theme(legend.position="none") +

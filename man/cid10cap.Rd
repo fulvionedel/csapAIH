@@ -4,24 +4,21 @@
 \alias{cid10cap}
 \title{Função para classificar códigos da CID-10 em Capítulos}
 \usage{
-cid10cap(cid, data)
+cid10cap(cid, droplevels = FALSE)
 }
 \arguments{
-\item{cid}{nome da variável com os códigos da CID-10}
+\item{cid}{Nome do vetor com os códigos da CID-10}
 
-\item{data}{nome do banco de dados}
+\item{droplevels}{Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos}
 }
 \description{
-Tomando um banco de dados com uma variável com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
+Tomando um vetor com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
 }
 \examples{
+cid10cap(aih500$DIAG_PRINC) |> table()
+cid10cap(aih500$DIAG_PRINC, droplevels = TRUE) |> table()
 \dontrun{
- require(microdatasus)
- DORS19 <- fetch_datasus(2019, 01, 2019, 12, "RS", "SIM-DO")
- DORS19 <- cid10cap("CAUSABAS", DORS19)
- tabuleiro(DORS19$capcid)
- par(mar= c(5, 15, 1, 1))
- barplot(rev(table(DORS19$capcid)), horiz = T, las = 1, cex.names = .7, )
+  cid10cap(Rcoisas::obitosRS2019$CAUSABAS) |> table()
 }
 
 }
