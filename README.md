@@ -69,7 +69,13 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   [SourceForge](https://sourceforge.net/projects/csapaih/):
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.tar.gz/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.1/Versao%200.0.4.1.tar.gz/download", type = "source", repos = NULL) 
+```
+
+e
+
+``` r
+install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.1/Versao%200.0.4.1.zip/download", type = "source", repos = NULL) 
 ```
 
 ou
@@ -385,13 +391,9 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .1
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
 gr
-#> Warning: The dot-dot notation (`..prop..`) was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `after_stat(prop)` instead.
-#> ℹ The deprecated feature was likely used in the csapAIH package.
-#>   Please report the issue to the authors.
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" />
 
 **Estratificado por categorias de outra variável presente no banco de
 dados:**
@@ -405,7 +407,7 @@ rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" 
 gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="50%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -414,10 +416,10 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-2.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-15-2.png" width="50%" style="display: block; margin: auto;" />
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf>
 
 <!-- badges: start -->
 <!-- badges: end -->
