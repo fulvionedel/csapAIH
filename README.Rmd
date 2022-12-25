@@ -39,7 +39,7 @@ O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
   * com a função `install.packages()` sobre os arquivos de instalação no [SourceForge](https://sourceforge.net/projects/csapaih/):
 
 ```{r eval=FALSE}
-install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.tar.gz/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.1.tar.gz/download", type = "source", repos = NULL) 
 ```
     
 ou
@@ -173,7 +173,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 
 
 ***Veja o manual do pacote em:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf
+https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf
 
 
 <!-- badges: start -->
