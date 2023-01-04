@@ -8,7 +8,7 @@ Maintainer: Fúlvio B. Nedel <fulvionedel@gmail.com>
 Description: Classifica um vetor com códigos da CID-10 segundo a Lista Brasileira 
           de Condições Sensíveis à Atenção Primária e oferece outras funções, 
           especialmente para o manejo dos 'arquivos da AIH' (BD-SIH/SUS).
-License: GPL-3
+License: GPL (>= 3)
 Suggests: brpop,
           foreign,
           ggplot2,
