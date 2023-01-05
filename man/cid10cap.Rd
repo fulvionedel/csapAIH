@@ -15,8 +15,13 @@ cid10cap(cid, droplevels = FALSE)
 Tomando um vetor com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
 }
 \examples{
+# Arquivos da AIH
 cid10cap(aih500$DIAG_PRINC) |> table()
 cid10cap(aih500$DIAG_PRINC, droplevels = TRUE) |> table()
-cid10cap(Rcoisas::obitosRS2019$CAUSABAS) |> table()
+
+# Arquivos da DO
+\dontrun{
+  cid10cap(Rcoisas::obitosRS2019$CAUSABAS) |> table()
+}
 
 }
