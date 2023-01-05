@@ -2,7 +2,7 @@
 #'
 #' @description Tomando um vetor com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
 #' @param cid Nome do vetor com os códigos da CID-10
-#' @param droplevels Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos
+#' @param droplevels Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos. O padrão é FALSE, o que retorna uma tabela com zeros nos capítulos sem ocorrência de casos.
 #'
 #' @examples
 #' cid10cap(aih500$DIAG_PRINC) |> table()

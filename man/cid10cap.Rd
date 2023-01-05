@@ -9,7 +9,7 @@ cid10cap(cid, droplevels = FALSE)
 \arguments{
 \item{cid}{Nome do vetor com os códigos da CID-10}
 
-\item{droplevels}{Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos}
+\item{droplevels}{Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos. O padrão é FALSE, o que retorna uma tabela com zeros nos capítulos sem ocorrência de casos.}
 }
 \description{
 Tomando um vetor com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
