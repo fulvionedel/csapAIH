@@ -90,7 +90,7 @@
 #'  }
 #'
 #' @note
-#' A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pelas função \code{\link{read.dbf}}.
+#' A função \code{\link[foreign]{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pela função \code{\link[foreign]{read.dbf}}.
 #'
 #' @references
 #' Alfradique ME et al. Internações por condições sensíveis à atenção primária: a construção da lista brasileira como ferramenta para medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil). Cadernos de Saúde Pública. 2009; 25(6): 1337-1349. https://doi.org/10.1590/S0102-311X2009000600016.

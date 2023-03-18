@@ -18,10 +18,7 @@
 #'
 
 cid10cap <- function(cid, droplevels = FALSE) {
-  cids <- substr(as.character(cid), 1, 3)
-  # cids <- cid |>
-  #   as.character() |>
-  #   substr(1, 3)
+  cids <- substring(as.character(cid), 1, 3)
 
   caps <- c(
     "I.     Algumas doen\u00E7as infecciosas e parasit\U00e1rias",
@@ -71,6 +68,6 @@ cid10cap <- function(cid, droplevels = FALSE) {
 
   capcid <- factor(capcid, levels = 1:21, labels = caps)
 
-  if(droplevels == TRUE) droplevels(capcid)
+  if(droplevels) droplevels(capcid)
   else capcid
 }
