@@ -14,14 +14,27 @@
 #' @seealso \code{\link[brpop]{mun_sex_pop}}
 #'
 #' @examples
+#' library(dplyr)
 #' # Ano 2021, todos os municípios brasileiros:
 #' popbr2000_2021(2021)
 #' # Anos 2019 a 2021, RS:
-#' popbr2000_2021(2019, uf = "RS")
+#' popbr2000_2021(2019, 2021, uf = "RS") %>%
+#'   group_by(ano) %>%
+#'   summarise(pop = sum(pop))
 #' # Anos 2000 a 2003, AC:
-#' popbr2000_2021(anof = 2003, uf = "AC")
-#' # Ano 2015, Cerro Largo, RS:
-#' popbr2000_2021(2015, 2015, munic = "430520")
+#' popbr2000_2021(anof = 2003, uf = "AC") %>%
+#'   group_by(ano) %>%
+#'   summarise(pop = sum(pop))
+#' # Anos 2014 a 2016, Cerro Largo, RS:
+#' popbr2000_2021(2014, 2016, munic = "430520") %>%
+#'   group_by(sexo, fxetar3) %>%
+#'   summarise(pop = sum(pop))
+#' # Ano 2010, Cerro Largo, RS:
+#' popbr2000_2021(2010, munic = "430520") %>%
+#'   Rcoisas::ggplot_pir(idade = 'fxetar5',
+#'                       sexo = 'sexo',
+#'                       populacao = 'pop') +
+#'   ggplot2::xlab("Faixa etária")
 #'
 #'
 #' @import dplyr
@@ -30,6 +43,9 @@
 
  popbr2000_2021 <- function(anoi = NULL, anof = NULL, uf = NULL, munic = NULL) {
    . <- UF_SIGLA <- age_group <- ano <- mun <- fxetar3 <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
+   if( !is.null(anoi) & is.null(anof)) {
+     anof = anoi
+   }
   popbr <- brpop::mun_sex_pop() %>%
     filter(age_group != "Total",
            substr(mun, 3, 6) != "0000") %>%
