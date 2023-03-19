@@ -81,7 +81,9 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote `read.csap`. S
 library(csapAIH)
 ```
 
-### A partir da leitura de arquivos de dados
+### Classificação da causa (código CID-10)
+
+#### Em arquivos de dados
 
 É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV armazenados no computador, sem necessidade da leitura prévia do arquivo. Para outras extensões de arquivo é necessária a prévia importação do arquivo para um objeto de classe `data.frame`.
 
@@ -95,7 +97,7 @@ csap <- csapAIH("data-raw/RDRS1801.dbf")
 csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
 ```
 
- - A partir de um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
+#### Em um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
   
 ```{r}
 read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
@@ -103,8 +105,18 @@ read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
   head()
 ```
 
+#### Em um banco de dados sem o padrão dos arquivos da AIH:
+
+```{r}
+data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Ecuador, ano 2020
+names(eeh20) # Os nomes das variáveis
+csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
+names(csap.eeh20)
+csap.eeh20[c(30,37:38)] |> head()
+```
+
   
- - A partir de uma variável com códigos da CID-10:
+#### A partir de uma variável com códigos da CID-10:
 
 ```{r}
 cids <- aih100$DIAG_PRINC[1:10]
@@ -176,6 +188,56 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                          labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
                                                            "TRUE" = "Capital")))
 ```
+
+### Calcular taxas
+
+```{r message=FALSE}
+library(dplyr) # facilitar o trabalho
+```
+
+#### Taxas de ICSAP em Cerro Largo, RS, 2010:
+
+O pacote [territorio](https://github.com/fulvionedel/territorio) tem algumas informações territoriais:
+```{r}
+# remotes::install_github("fulvionedel/territorio")
+cl <- territorio::territorio("RS") %>% 
+  filter(nomemun == "Cerro Largo") %>% 
+  droplevels() 
+cl |> str()
+```
+
+O código IBGE (os seis primeiros dígitos) de Cerro Largo é `r as.character(cl$CO_MUNICIP)`
+
+##### As internações
+
+Os arquivos da AIH podem ser lidos diretamente no FTP do DATASUS, através do pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), também de Raphael Saldanha.
+
+```{r}
+# remotes::install_github("rfsaldanha/microdatasus")
+aih <- microdatasus::fetch_datasus(2010, 1, 2010, 12, "RS", "SIH-RD") %>% 
+  filter(MUNIC_RES == "430520") %>% 
+  droplevels() %>% 
+  csapAIH()
+```
+
+
+##### A população
+
+Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha nos brinda outro excelente e muito necessário pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/)
+
+
+```{r}
+pop <- csapAIH::popbr2000_2021(anoi = 2010, munic = cl$CO_MUNICIP)
+```
+
+##### A tabela com as taxas
+
+```{r}
+tabCSAP(aih$grupo) %>% 
+  mutate(taxa = casos / sum(pop$pop)*10000) %>% 
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 2)
+```
+
 
 
 ***Veja o manual do pacote em:*** 

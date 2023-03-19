@@ -7,11 +7,12 @@
     (<em>timeline</em>)</a>
   - <a href="#dependências" id="toc-dependências">Dependências</a>
   - <a href="#exemplos-de-uso" id="toc-exemplos-de-uso">Exemplos de uso</a>
-    - <a href="#a-partir-da-leitura-de-arquivos-de-dados"
-      id="toc-a-partir-da-leitura-de-arquivos-de-dados">A partir da leitura de
-      arquivos de dados</a>
+    - <a href="#classificação-da-causa-código-cid-10"
+      id="toc-classificação-da-causa-código-cid-10">Classificação da causa
+      (código CID-10)</a>
     - <a href="#apresentação-de-resultados"
       id="toc-apresentação-de-resultados">Apresentação de resultados</a>
+    - <a href="#calcular-taxas" id="toc-calcular-taxas">Calcular taxas</a>
   - <a href="#referências" id="toc-referências">Referências</a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -139,7 +140,9 @@ mas sua instalação não é necessária para que ela funcione.
 library(csapAIH)
 ```
 
-### A partir da leitura de arquivos de dados
+### Classificação da causa (código CID-10)
+
+#### Em arquivos de dados
 
 É possível classificar as CSAP diretamente a partir de arquivos com
 extensão .DBC, .DBF, ou .CSV armazenados no computador, sem necessidade
@@ -175,8 +178,7 @@ csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
 #> Exportados 51.923 (85,8%) registros.
 ```
 
-- A partir de um banco de dados com a estrutura da AIH já carregado no
-  ambiente de trabalho:
+#### Em um banco de dados com a estrutura da AIH já carregado no ambiente de trabalho:
 
 ``` r
 read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
@@ -202,7 +204,42 @@ read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
 #> 6      g03 D500 303020059 2018-01-19 2018-01-23 96600000 2232928
 ```
 
-- A partir de uma variável com códigos da CID-10:
+#### Em um banco de dados sem o padrão dos arquivos da AIH:
+
+``` r
+data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Ecuador, ano 2020
+names(eeh20) # Os nomes das variáveis
+#>  [1] "prov_ubi"   "cant_ubi"   "parr_ubi"   "area_ubi"   "clase"     
+#>  [6] "tipo"       "entidad"    "sector"     "mes_inv"    "nac_pac"   
+#> [11] "cod_pais"   "nom_pais"   "sexo"       "cod_edad"   "edad"      
+#> [16] "etnia"      "prov_res"   "area_res"   "anio_ingr"  "mes_ingr"  
+#> [21] "dia_ingr"   "fecha_ingr" "anio_egr"   "mes_egr"    "dia_egr"   
+#> [26] "fecha_egr"  "dia_estad"  "con_egrpa"  "esp_egrpa"  "cau_cie10" 
+#> [31] "cant_res"   "parr_res"   "causa3"     "cap221rx"   "cau221rx"  
+#> [36] "cau298rx"
+csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
+#> Importados 1.000 registros.
+#> Excluídos 150 registros de parto (15% do total).
+names(csap.eeh20)
+#>  [1] "prov_ubi"   "cant_ubi"   "parr_ubi"   "area_ubi"   "clase"     
+#>  [6] "tipo"       "entidad"    "sector"     "mes_inv"    "nac_pac"   
+#> [11] "cod_pais"   "nom_pais"   "sexo"       "cod_edad"   "edad"      
+#> [16] "etnia"      "prov_res"   "area_res"   "anio_ingr"  "mes_ingr"  
+#> [21] "dia_ingr"   "fecha_ingr" "anio_egr"   "mes_egr"    "dia_egr"   
+#> [26] "fecha_egr"  "dia_estad"  "con_egrpa"  "esp_egrpa"  "cau_cie10" 
+#> [31] "cant_res"   "parr_res"   "causa3"     "cap221rx"   "cau221rx"  
+#> [36] "cau298rx"   "csap"       "grupo"
+csap.eeh20[c(30,37:38)] |> head()
+#>   cau_cie10 csap    grupo
+#> 1      C169  não não-CSAP
+#> 2      U072  não não-CSAP
+#> 3      A090  sim      g02
+#> 4      K469  não não-CSAP
+#> 5      K802  não não-CSAP
+#> 6      S903  não não-CSAP
+```
+
+#### A partir de uma variável com códigos da CID-10:
 
 ``` r
 cids <- aih100$DIAG_PRINC[1:10]
@@ -393,7 +430,7 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .1
 gr
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="50%" style="display: block; margin: auto;" />
 
 **Estratificado por categorias de outra variável presente no banco de
 dados:**
@@ -407,7 +444,7 @@ rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" 
 gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
 ```
 
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="50%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -416,7 +453,110 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-15-2.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-16-2.png" width="50%" style="display: block; margin: auto;" />
+
+### Calcular taxas
+
+``` r
+library(dplyr) # facilitar o trabalho
+```
+
+#### Taxas de ICSAP em Cerro Largo, RS, 2010:
+
+O pacote [territorio](https://github.com/fulvionedel/territorio) tem
+algumas informações territoriais:
+
+``` r
+# remotes::install_github("fulvionedel/territorio")
+cl <- territorio::territorio("RS") %>% 
+  filter(nomemun == "Cerro Largo") %>% 
+  droplevels() 
+cl |> str()
+#> 'data.frame':    1 obs. of  12 variables:
+#>  $ CO_MUNICIP  : Factor w/ 1 level "430520": 1
+#>  $ nomemun     : Factor w/ 1 level "Cerro Largo": 1
+#>  $ CO_MACSAUD  : Factor w/ 1 level "4303": 1
+#>  $ nomemacsaude: Factor w/ 1 level "Missioneira": 1
+#>  $ CO_MICIBGE  : Factor w/ 1 level "43006": 1
+#>  $ nomemicibge : Factor w/ 1 level "Cerro Largo": 1
+#>  $ CO_REGMETR  : Factor w/ 1 level "43900": 1
+#>  $ nomeregmetr : Factor w/ 1 level "Fora da Região Metropolitana - RS": 1
+#>  $ CO_REGSAUD  : Factor w/ 1 level "43011": 1
+#>  $ nomeregsaude: Factor w/ 1 level "Região 11 - Sete Povos das Missões": 1
+#>  $ NU_LATITUD  : num -28.1
+#>  $ NU_LONGIT   : num -54.7
+```
+
+O código IBGE (os seis primeiros dígitos) de Cerro Largo é 430520
+
+##### As internações
+
+Os arquivos da AIH podem ser lidos diretamente no FTP do DATASUS,
+através do pacote
+[microdatasus](https://github.com/rfsaldanha/microdatasus), também de
+Raphael Saldanha.
+
+``` r
+# remotes::install_github("rfsaldanha/microdatasus")
+aih <- microdatasus::fetch_datasus(2010, 1, 2010, 12, "RS", "SIH-RD") %>% 
+  filter(MUNIC_RES == "430520") %>% 
+  droplevels() %>% 
+  csapAIH()
+#> Your local Internet connection seems to be ok.
+#> DataSUS FTP server seems to be up. Starting download...
+#> Importados 922 registros.
+#> Excluídos 33 (3,6%) registros de procedimentos obstétricos.
+#> Excluídos 5 (0,5%) registros de AIH de longa permanência.
+#> Exportados 884 (95,9%) registros.
+```
+
+##### A população
+
+Desde que o DATASUS interrompeu a publicação dos arquivos com as
+estimativas populacionais por sexo e faixa etária para os municípios
+brasileiros (último arquivo no FTP é da população em 2012), passou a ser
+necessária a tabulação no TABNET e posterior leitura dos dados no
+programa de análise. Ano passado (2022) Raphael Saldanha nos brinda
+outro excelente e muito necessário pacote preenchendo essa lacuna:
+[brpop](https://rfsaldanha.github.io/brpop/)
+
+``` r
+pop <- csapAIH::popbr2000_2021(anoi = 2010, munic = cl$CO_MUNICIP)
+#> Joining with `by = join_by(CO_UF)`
+```
+
+##### A tabela com as taxas
+
+``` r
+tabCSAP(aih$grupo) %>% 
+  mutate(taxa = casos / sum(pop$pop)*10000) %>% 
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 2)
+```
+
+| grupo                                 | casos | perctot | percsap |  taxa |
+|:--------------------------------------|------:|--------:|--------:|------:|
+| 1\. Prev. vacinação e cond. evitáveis |     0 |    0,00 |    0,00 |  0,00 |
+| 2\. Gastroenterite                    |    73 |    8,26 |   23,55 |  4,37 |
+| 3\. Anemia                            |     2 |    0,23 |    0,65 |  0,12 |
+| 4\. Defic. nutricionais               |     0 |    0,00 |    0,00 |  0,00 |
+| 5\. Infec. ouvido, nariz e garganta   |     3 |    0,34 |    0,97 |  0,18 |
+| 6\. Pneumonias bacterianas            |    12 |    1,36 |    3,87 |  0,72 |
+| 7\. Asma                              |     5 |    0,57 |    1,61 |  0,30 |
+| 8\. Pulmonares (DPOC)                 |     6 |    0,68 |    1,94 |  0,36 |
+| 9\. Hipertensão                       |    35 |    3,96 |   11,29 |  2,10 |
+| 10\. Angina                           |    24 |    2,71 |    7,74 |  1,44 |
+| 11\. Insuf. cardíaca                  |    19 |    2,15 |    6,13 |  1,14 |
+| 12\. Cerebrovasculares                |    29 |    3,28 |    9,35 |  1,74 |
+| 13\. Diabetes mellitus                |    14 |    1,58 |    4,52 |  0,84 |
+| 14\. Epilepsias                       |     0 |    0,00 |    0,00 |  0,00 |
+| 15\. Infec. urinária                  |    72 |    8,14 |   23,23 |  4,31 |
+| 16\. Infec. pele e subcutâneo         |     0 |    0,00 |    0,00 |  0,00 |
+| 17\. D. infl. órgãos pélvicos fem.    |     4 |    0,45 |    1,29 |  0,24 |
+| 18\. Úlcera gastrointestinal          |     9 |    1,02 |    2,90 |  0,54 |
+| 19\. Pré-natal e parto                |     3 |    0,34 |    0,97 |  0,18 |
+| Total CSAP                            |   310 |   35,07 |  100,00 | 18,57 |
+| Não-CSAP                              |   574 |   64,93 |      NA | 34,39 |
+| Total de internações                  |   884 |  100,00 |      NA | 52,96 |
 
 ***Veja o manual do pacote em:***
 <https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf>
