@@ -123,7 +123,7 @@ Se a função for dirigida a um objeto no espaço de trabalho da classe \code{fa
 }
 }
 \note{
-A função \code{\link{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pelas função \code{\link{read.dbf}}.
+A função \code{\link[foreign]{read.dbf}}, do pacote \code{foreign}, não lê arquivos em formato DBF em que uma das variáveis tenha todos os valores ausentes ('missings'); essas variáveis devem ser excluídas antes da leitura do arquivo pela função \code{csapAIH} ou mesmo pela função \code{\link[foreign]{read.dbf}}.
 }
 \examples{
 ## Uma lista de códigos da CID-10:

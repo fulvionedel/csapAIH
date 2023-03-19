@@ -41,7 +41,7 @@
 #'
 #' @export
 
- popbr2000_2021 <- function(anoi = NULL, anof = NULL, uf = NULL, munic = NULL) {
+ popbr2000_2021 <- function(anoi = NULL, anof = NULL, uf = NULL, munic = NULL, droplevels = TRUE) {
    . <- UF_SIGLA <- age_group <- ano <- mun <- fxetar3 <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
    if( !is.null(anoi) & is.null(anof)) {
      anof = anoi
@@ -72,10 +72,16 @@
   popbr <- popbr %>%
     right_join(csapAIH::ufbr(), .) %>%
     tidyr::as_tibble() %>%
-    relocate(ano)
+    relocate(ano) %>%
+    suppressMessages()
 
   if(!is.null(uf)) popbr <- filter(popbr, UF_SIGLA == uf)
   if(!is.null(munic)) popbr <- filter(popbr, mun == munic)
 
-  popbr
+  if(droplevels == TRUE) {
+    popbr <- droplevels(popbr)
+  } else if(droplevels == FALSE)
+    popbr
+
 }
+
