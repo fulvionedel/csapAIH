@@ -256,7 +256,7 @@ O código IBGE (os seis primeiros dígitos) de Cerro Largo é `r as.character(cl
 
 Os arquivos da AIH podem ser lidos diretamente no FTP do DATASUS, através do pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), também de Raphael Saldanha.
 
-```{r cache=TRUE}
+```{r}
 # remotes::install_github("rfsaldanha/microdatasus")
 aih <- microdatasus::fetch_datasus(2010, 1, 2010, 12, "RS", "SIH-RD") %>% 
   filter(MUNIC_RES == "430520") %>% 
