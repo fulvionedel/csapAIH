@@ -32,9 +32,9 @@ Atualizado em 20 de março de 2023
       id="toc-tabela-para-apresentação">Tabela para apresentação</a>
     - <a href="#gráficos" id="toc-gráficos">Gráficos</a>
   - <a href="#calcular-taxas" id="toc-calcular-taxas">Calcular taxas</a>
-    - <a href="#taxas-de-icsap-em-cerro-largo-rs-2010"
-      id="toc-taxas-de-icsap-em-cerro-largo-rs-2010">Taxas de ICSAP em Cerro
-      Largo, RS, 2010:</a>
+    - <a href="#taxas-de-icsap-em-cerro-largo-rs-2021"
+      id="toc-taxas-de-icsap-em-cerro-largo-rs-2021">Taxas de ICSAP em Cerro
+      Largo, RS, 2021:</a>
 - <a href="#agradecimentos" id="toc-agradecimentos">Agradecimentos</a>
 - <a href="#referências" id="toc-referências">Referências</a>
 
@@ -195,25 +195,22 @@ Raphael Saldanha ([R. de F. Saldanha, Bastos, and Barcellos
 2019](#ref-Saldanha2019)), podemos ler com facilidade esses arquivos na
 internet, sem necessidade de download.
 
-Assim, se o que queremos é apenas ver em gráfico a distribuição
-proporcional das internações e da mortalidade por CSAP por grupo de
-causas, podemos ler os arquivos na internet e desenhar o gráfico
-diretamente:
+O código abaixo cria um `data.frame` com as informações das AIHs do “ano
+de competência” 2021 no RS e outro com as informações das Declarações de
+Óbito (DO) de residentes do RS ocorridas em 2021.
 
 ``` r
-microdatasus::fetch_datasus(year_start = 2012, 1, 2012, 1, uf = "RS", 
-                            information_system = "SIH-RD") %>% 
-  csapAIH() %>% 
-  desenhaCSAP(titulo = "auto", onde = "RS")
+# remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
+AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
+                                         information_system = "SIH-RD")
+cat("AIHRS2021:", nrow(AIHRS2021), "linhas e", ncol(AIHRS2021), "colunas.")
+AIHRS2021: 709893 linhas e 113 colunas.
 
-# Guardarei o arquivo de mortalidade, para usar mais tarde
-DORS2012 <- microdatasus::fetch_datasus(year_start = 2012, year_end = 2012, uf = "RS", 
+DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-csapAIH(DORS2012, sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  desenhaCSAP(titulo = "Mortalidade por Condições Sensíveis à Atenção Primária. RS, 2012.")
+cat("DORS2021:", nrow(DORS2021), "linhas e", ncol(DORS2021), "colunas.")
+DORS2021: 117158 linhas e 87 colunas.
 ```
-
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="45%" /><img src="man/figures/README-unnamed-chunk-6-2.png" width="45%" />
 
 Se o arquivo de dados está armazenado no computador, basta digitar,
 entre aspas, o nome do arquivo (com a extensão), com o “*path*” se o
@@ -325,20 +322,20 @@ A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para
 computar a idade).
 
 ``` r
-DORS2012 %>% # O banco de dados criado anteriormente 
+DORS2021 %>%
   csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  mutate(idade = idadeSUS(DORS2012, sis = "SIM")$idade) %>% 
+  mutate(idade = idadeSUS(DORS2021, sis = "SIM")$idade) %>% 
   head() %>% 
   gt::gt()
-Importados 79.456 registros.
+Importados 117.158 registros.
 ```
 
-<div id="zkibemutyc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="muicqprvvl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#zkibemutyc .gt_table {
+#muicqprvvl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -363,7 +360,7 @@ Importados 79.456 registros.
   border-left-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_heading {
+#muicqprvvl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -375,12 +372,12 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_caption {
+#muicqprvvl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zkibemutyc .gt_title {
+#muicqprvvl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -392,7 +389,7 @@ Importados 79.456 registros.
   border-bottom-width: 0;
 }
 
-#zkibemutyc .gt_subtitle {
+#muicqprvvl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -404,13 +401,13 @@ Importados 79.456 registros.
   border-top-width: 0;
 }
 
-#zkibemutyc .gt_bottom_border {
+#muicqprvvl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_col_headings {
+#muicqprvvl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -425,7 +422,7 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_col_heading {
+#muicqprvvl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -445,7 +442,7 @@ Importados 79.456 registros.
   overflow-x: hidden;
 }
 
-#zkibemutyc .gt_column_spanner_outer {
+#muicqprvvl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -457,15 +454,15 @@ Importados 79.456 registros.
   padding-right: 4px;
 }
 
-#zkibemutyc .gt_column_spanner_outer:first-child {
+#muicqprvvl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zkibemutyc .gt_column_spanner_outer:last-child {
+#muicqprvvl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zkibemutyc .gt_column_spanner {
+#muicqprvvl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -477,7 +474,7 @@ Importados 79.456 registros.
   width: 100%;
 }
 
-#zkibemutyc .gt_group_heading {
+#muicqprvvl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -503,7 +500,7 @@ Importados 79.456 registros.
   text-align: left;
 }
 
-#zkibemutyc .gt_empty_group_heading {
+#muicqprvvl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -518,15 +515,15 @@ Importados 79.456 registros.
   vertical-align: middle;
 }
 
-#zkibemutyc .gt_from_md > :first-child {
+#muicqprvvl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zkibemutyc .gt_from_md > :last-child {
+#muicqprvvl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zkibemutyc .gt_row {
+#muicqprvvl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -545,7 +542,7 @@ Importados 79.456 registros.
   overflow-x: hidden;
 }
 
-#zkibemutyc .gt_stub {
+#muicqprvvl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -558,7 +555,7 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#zkibemutyc .gt_stub_row_group {
+#muicqprvvl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -572,11 +569,11 @@ Importados 79.456 registros.
   vertical-align: top;
 }
 
-#zkibemutyc .gt_row_group_first td {
+#muicqprvvl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zkibemutyc .gt_summary_row {
+#muicqprvvl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -586,16 +583,16 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#zkibemutyc .gt_first_summary_row {
+#muicqprvvl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_first_summary_row.thick {
+#muicqprvvl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zkibemutyc .gt_last_summary_row {
+#muicqprvvl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -605,7 +602,7 @@ Importados 79.456 registros.
   border-bottom-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_grand_summary_row {
+#muicqprvvl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -615,7 +612,7 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#zkibemutyc .gt_first_grand_summary_row {
+#muicqprvvl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,11 +622,11 @@ Importados 79.456 registros.
   border-top-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_striped {
+#muicqprvvl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zkibemutyc .gt_table_body {
+#muicqprvvl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -638,7 +635,7 @@ Importados 79.456 registros.
   border-bottom-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_footnotes {
+#muicqprvvl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -652,7 +649,7 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_footnote {
+#muicqprvvl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -661,7 +658,7 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#zkibemutyc .gt_sourcenotes {
+#muicqprvvl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -675,7 +672,7 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#zkibemutyc .gt_sourcenote {
+#muicqprvvl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -683,64 +680,64 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#zkibemutyc .gt_left {
+#muicqprvvl .gt_left {
   text-align: left;
 }
 
-#zkibemutyc .gt_center {
+#muicqprvvl .gt_center {
   text-align: center;
 }
 
-#zkibemutyc .gt_right {
+#muicqprvvl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zkibemutyc .gt_font_normal {
+#muicqprvvl .gt_font_normal {
   font-weight: normal;
 }
 
-#zkibemutyc .gt_font_bold {
+#muicqprvvl .gt_font_bold {
   font-weight: bold;
 }
 
-#zkibemutyc .gt_font_italic {
+#muicqprvvl .gt_font_italic {
   font-style: italic;
 }
 
-#zkibemutyc .gt_super {
+#muicqprvvl .gt_super {
   font-size: 65%;
 }
 
-#zkibemutyc .gt_footnote_marks {
+#muicqprvvl .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#zkibemutyc .gt_asterisk {
+#muicqprvvl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zkibemutyc .gt_indent_1 {
+#muicqprvvl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zkibemutyc .gt_indent_2 {
+#muicqprvvl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zkibemutyc .gt_indent_3 {
+#muicqprvvl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zkibemutyc .gt_indent_4 {
+#muicqprvvl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zkibemutyc .gt_indent_5 {
+#muicqprvvl .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -748,25 +745,30 @@ Importados 79.456 registros.
   
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CONTADOR">CONTADOR</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ORIGEM">ORIGEM</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="TIPOBITO">TIPOBITO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTOBITO">DTOBITO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="HORAOBITO">HORAOBITO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="NATURAL">NATURAL</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CODMUNNATU">CODMUNNATU</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTNASC">DTNASC</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="IDADE">IDADE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="SEXO">SEXO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="RACACOR">RACACOR</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESTCIV">ESTCIV</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESC">ESC</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESC2010">ESC2010</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="SERIESCFAL">SERIESCFAL</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="OCUP">OCUP</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CODMUNRES">CODMUNRES</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="LOCOCOR">LOCOCOR</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CODESTAB">CODESTAB</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESTABDESCR">ESTABDESCR</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CODMUNOCOR">CODMUNOCOR</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="IDADEMAE">IDADEMAE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESCMAE">ESCMAE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESCMAE2010">ESCMAE2010</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="SERIESCMAE">SERIESCMAE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="OCUPMAE">OCUPMAE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="QTDFILVIVO">QTDFILVIVO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="QTDFILMORT">QTDFILMORT</th>
@@ -789,200 +791,77 @@ Importados 79.456 registros.
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="LINHAD">LINHAD</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="LINHAII">LINHAII</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CAUSABAS">CAUSABAS</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CB_PRE">CB_PRE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="COMUNSVOIM">COMUNSVOIM</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTATESTADO">DTATESTADO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CIRCOBITO">CIRCOBITO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ACIDTRAB">ACIDTRAB</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="FONTE">FONTE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="NUMEROLOTE">NUMEROLOTE</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="TPPOS">TPPOS</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTINVESTIG">DTINVESTIG</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CAUSABAS_O">CAUSABAS_O</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTCADASTRO">DTCADASTRO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ATESTANTE">ATESTANTE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="STCODIFICA">STCODIFICA</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CODIFICADO">CODIFICADO</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="VERSAOSIST">VERSAOSIST</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="VERSAOSCB">VERSAOSCB</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="FONTEINV">FONTEINV</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTRECEBIM">DTRECEBIM</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ATESTADO">ATESTADO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTRECORIGA">DTRECORIGA</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CAUSAMAT">CAUSAMAT</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESC2010">ESC2010</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESCMAE2010">ESCMAE2010</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DIFDATA">DIFDATA</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESCMAEAGR1">ESCMAEAGR1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ESCFALAGR1">ESCFALAGR1</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="STDOEPIDEM">STDOEPIDEM</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="STDONOVA">STDONOVA</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DIFDATA">DIFDATA</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="NUDIASOBCO">NUDIASOBCO</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="NUDIASOBIN">NUDIASOBIN</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTCADINV">DTCADINV</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="TPOBITOCOR">TPOBITOCOR</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTCONINV">DTCONINV</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="FONTES">FONTES</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="TPRESGINFO">TPRESGINFO</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="TPNIVELINV">TPNIVELINV</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="NUDIASINF">NUDIASINF</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTCADINF">DTCADINF</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="MORTEPARTO">MORTEPARTO</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="DTCONCASO">DTCONCASO</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="NUDIASOBIN">NUDIASOBIN</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="SERIESCFAL">SERIESCFAL</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="SERIESCMAE">SERIESCMAE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="FONTESINF">FONTESINF</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ALTCAUSA">ALTCAUSA</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="CONTADOR">CONTADOR</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="csap">csap</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="grupo">grupo</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="idade">idade</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="CONTADOR" class="gt_row gt_center">1</td>
-<td headers="ORIGEM" class="gt_row gt_center">1</td>
+    <tr><td headers="ORIGEM" class="gt_row gt_center">1</td>
 <td headers="TIPOBITO" class="gt_row gt_center">2</td>
-<td headers="DTOBITO" class="gt_row gt_center">22022012</td>
-<td headers="HORAOBITO" class="gt_row gt_center">1030</td>
-<td headers="NATURAL" class="gt_row gt_center">NA</td>
-<td headers="DTNASC" class="gt_row gt_center">28101922</td>
-<td headers="IDADE" class="gt_row gt_center">489</td>
+<td headers="DTOBITO" class="gt_row gt_center">13032021</td>
+<td headers="HORAOBITO" class="gt_row gt_center">2320</td>
+<td headers="NATURAL" class="gt_row gt_center">843</td>
+<td headers="CODMUNNATU" class="gt_row gt_center">431490</td>
+<td headers="DTNASC" class="gt_row gt_center">02101956</td>
+<td headers="IDADE" class="gt_row gt_center">464</td>
 <td headers="SEXO" class="gt_row gt_center">1</td>
 <td headers="RACACOR" class="gt_row gt_center">1</td>
-<td headers="ESTCIV" class="gt_row gt_center">1</td>
-<td headers="ESC" class="gt_row gt_center">2</td>
-<td headers="OCUP" class="gt_row gt_center">999993</td>
-<td headers="CODMUNRES" class="gt_row gt_center">431235</td>
-<td headers="LOCOCOR" class="gt_row gt_center">5</td>
-<td headers="CODESTAB" class="gt_row gt_center">NA</td>
-<td headers="CODMUNOCOR" class="gt_row gt_center">431235</td>
-<td headers="IDADEMAE" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE" class="gt_row gt_center">NA</td>
-<td headers="OCUPMAE" class="gt_row gt_center">NA</td>
-<td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
-<td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
-<td headers="GRAVIDEZ" class="gt_row gt_center">NA</td>
-<td headers="SEMAGESTAC" class="gt_row gt_center">NA</td>
-<td headers="GESTACAO" class="gt_row gt_center">NA</td>
-<td headers="PARTO" class="gt_row gt_center">NA</td>
-<td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
-<td headers="PESO" class="gt_row gt_center">NA</td>
-<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
-<td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
-<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
-<td headers="ASSISTMED" class="gt_row gt_center">NA</td>
-<td headers="EXAME" class="gt_row gt_center">2</td>
-<td headers="CIRURGIA" class="gt_row gt_center">2</td>
-<td headers="NECROPSIA" class="gt_row gt_center">2</td>
-<td headers="LINHAA" class="gt_row gt_center">*I10X</td>
-<td headers="LINHAB" class="gt_row gt_center">*J449</td>
-<td headers="LINHAC" class="gt_row gt_center">NA</td>
-<td headers="LINHAD" class="gt_row gt_center">NA</td>
-<td headers="LINHAII" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS" class="gt_row gt_center">J449</td>
-<td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
-<td headers="DTATESTADO" class="gt_row gt_center">22022012</td>
-<td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
-<td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
-<td headers="FONTE" class="gt_row gt_center">NA</td>
-<td headers="TPPOS" class="gt_row gt_center">NA</td>
-<td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS_O" class="gt_row gt_center">J449</td>
-<td headers="DTCADASTRO" class="gt_row gt_center">15032012</td>
-<td headers="ATESTANTE" class="gt_row gt_center">1</td>
-<td headers="FONTEINV" class="gt_row gt_center">NA</td>
-<td headers="DTRECEBIM" class="gt_row gt_center">22032012</td>
-<td headers="DTRECORIGA" class="gt_row gt_center">22032012</td>
-<td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
-<td headers="ESC2010" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
-<td headers="DIFDATA" class="gt_row gt_center">029</td>
-<td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
-<td headers="STDONOVA" class="gt_row gt_center">0</td>
-<td headers="DTCADINV" class="gt_row gt_center">NA</td>
-<td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
-<td headers="DTCADINF" class="gt_row gt_center">NA</td>
-<td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
-<td headers="DTCONCASO" class="gt_row gt_center">NA</td>
-<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
+<td headers="ESTCIV" class="gt_row gt_center">2</td>
+<td headers="ESC" class="gt_row gt_center">5</td>
+<td headers="ESC2010" class="gt_row gt_center">5</td>
 <td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
-<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
-<td headers="csap" class="gt_row gt_center">sim</td>
-<td headers="grupo" class="gt_row gt_center">g08</td>
-<td headers="idade" class="gt_row gt_right">89</td></tr>
-    <tr><td headers="CONTADOR" class="gt_row gt_center">2</td>
-<td headers="ORIGEM" class="gt_row gt_center">1</td>
-<td headers="TIPOBITO" class="gt_row gt_center">2</td>
-<td headers="DTOBITO" class="gt_row gt_center">29042012</td>
-<td headers="HORAOBITO" class="gt_row gt_center">1255</td>
-<td headers="NATURAL" class="gt_row gt_center">NA</td>
-<td headers="DTNASC" class="gt_row gt_center">16051966</td>
-<td headers="IDADE" class="gt_row gt_center">445</td>
-<td headers="SEXO" class="gt_row gt_center">2</td>
-<td headers="RACACOR" class="gt_row gt_center">1</td>
-<td headers="ESTCIV" class="gt_row gt_center">4</td>
-<td headers="ESC" class="gt_row gt_center">NA</td>
-<td headers="OCUP" class="gt_row gt_center">512120</td>
-<td headers="CODMUNRES" class="gt_row gt_center">432010</td>
+<td headers="OCUP" class="gt_row gt_center">214125</td>
+<td headers="CODMUNRES" class="gt_row gt_center">432150</td>
 <td headers="LOCOCOR" class="gt_row gt_center">1</td>
-<td headers="CODESTAB" class="gt_row gt_center">2235404</td>
-<td headers="CODMUNOCOR" class="gt_row gt_center">432010</td>
+<td headers="CODESTAB" class="gt_row gt_center">9923837</td>
+<td headers="ESTABDESCR" class="gt_row gt_center">NA</td>
+<td headers="CODMUNOCOR" class="gt_row gt_center">270430</td>
 <td headers="IDADEMAE" class="gt_row gt_center">NA</td>
 <td headers="ESCMAE" class="gt_row gt_center">NA</td>
-<td headers="OCUPMAE" class="gt_row gt_center">NA</td>
-<td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
-<td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
-<td headers="GRAVIDEZ" class="gt_row gt_center">NA</td>
-<td headers="SEMAGESTAC" class="gt_row gt_center">NA</td>
-<td headers="GESTACAO" class="gt_row gt_center">NA</td>
-<td headers="PARTO" class="gt_row gt_center">NA</td>
-<td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
-<td headers="PESO" class="gt_row gt_center">NA</td>
-<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
-<td headers="OBITOGRAV" class="gt_row gt_center">2</td>
-<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
-<td headers="ASSISTMED" class="gt_row gt_center">NA</td>
-<td headers="EXAME" class="gt_row gt_center">1</td>
-<td headers="CIRURGIA" class="gt_row gt_center">2</td>
-<td headers="NECROPSIA" class="gt_row gt_center">2</td>
-<td headers="LINHAA" class="gt_row gt_center">*I219</td>
-<td headers="LINHAB" class="gt_row gt_center">NA</td>
-<td headers="LINHAC" class="gt_row gt_center">NA</td>
-<td headers="LINHAD" class="gt_row gt_center">NA</td>
-<td headers="LINHAII" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS" class="gt_row gt_center">I219</td>
-<td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
-<td headers="DTATESTADO" class="gt_row gt_center">29042012</td>
-<td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
-<td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
-<td headers="FONTE" class="gt_row gt_center">NA</td>
-<td headers="TPPOS" class="gt_row gt_center">NA</td>
-<td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS_O" class="gt_row gt_center">I219</td>
-<td headers="DTCADASTRO" class="gt_row gt_center">25062012</td>
-<td headers="ATESTANTE" class="gt_row gt_center">1</td>
-<td headers="FONTEINV" class="gt_row gt_center">NA</td>
-<td headers="DTRECEBIM" class="gt_row gt_center">11072012</td>
-<td headers="DTRECORIGA" class="gt_row gt_center">11072012</td>
-<td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
-<td headers="ESC2010" class="gt_row gt_center">NA</td>
 <td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
-<td headers="DIFDATA" class="gt_row gt_center">073</td>
-<td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
-<td headers="STDONOVA" class="gt_row gt_center">0</td>
-<td headers="DTCADINV" class="gt_row gt_center">10092012</td>
-<td headers="TPOBITOCOR" class="gt_row gt_center">9</td>
-<td headers="DTCADINF" class="gt_row gt_center">NA</td>
-<td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
-<td headers="DTCONCASO" class="gt_row gt_center">NA</td>
-<td headers="NUDIASOBIN" class="gt_row gt_center">134</td>
-<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
 <td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
-<td headers="csap" class="gt_row gt_center">não</td>
-<td headers="grupo" class="gt_row gt_center">não-CSAP</td>
-<td headers="idade" class="gt_row gt_right">45</td></tr>
-    <tr><td headers="CONTADOR" class="gt_row gt_center">3</td>
-<td headers="ORIGEM" class="gt_row gt_center">1</td>
-<td headers="TIPOBITO" class="gt_row gt_center">2</td>
-<td headers="DTOBITO" class="gt_row gt_center">03102012</td>
-<td headers="HORAOBITO" class="gt_row gt_center">1040</td>
-<td headers="NATURAL" class="gt_row gt_center">NA</td>
-<td headers="DTNASC" class="gt_row gt_center">04091938</td>
-<td headers="IDADE" class="gt_row gt_center">474</td>
-<td headers="SEXO" class="gt_row gt_center">1</td>
-<td headers="RACACOR" class="gt_row gt_center">1</td>
-<td headers="ESTCIV" class="gt_row gt_center">NA</td>
-<td headers="ESC" class="gt_row gt_center">2</td>
-<td headers="OCUP" class="gt_row gt_center">NA</td>
-<td headers="CODMUNRES" class="gt_row gt_center">430200</td>
-<td headers="LOCOCOR" class="gt_row gt_center">3</td>
-<td headers="CODESTAB" class="gt_row gt_center">NA</td>
-<td headers="CODMUNOCOR" class="gt_row gt_center">430200</td>
-<td headers="IDADEMAE" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE" class="gt_row gt_center">NA</td>
 <td headers="OCUPMAE" class="gt_row gt_center">NA</td>
 <td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
 <td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
@@ -996,135 +875,83 @@ Importados 79.456 registros.
 <td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
 <td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
 <td headers="ASSISTMED" class="gt_row gt_center">1</td>
-<td headers="EXAME" class="gt_row gt_center">2</td>
-<td headers="CIRURGIA" class="gt_row gt_center">2</td>
-<td headers="NECROPSIA" class="gt_row gt_center">2</td>
-<td headers="LINHAA" class="gt_row gt_center">*I509</td>
-<td headers="LINHAB" class="gt_row gt_center">*I10X</td>
-<td headers="LINHAC" class="gt_row gt_center">NA</td>
-<td headers="LINHAD" class="gt_row gt_center">NA</td>
-<td headers="LINHAII" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS" class="gt_row gt_center">I110</td>
-<td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
-<td headers="DTATESTADO" class="gt_row gt_center">03102012</td>
-<td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
-<td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
-<td headers="FONTE" class="gt_row gt_center">NA</td>
-<td headers="TPPOS" class="gt_row gt_center">NA</td>
-<td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS_O" class="gt_row gt_center">I110</td>
-<td headers="DTCADASTRO" class="gt_row gt_center">27122012</td>
-<td headers="ATESTANTE" class="gt_row gt_center">1</td>
-<td headers="FONTEINV" class="gt_row gt_center">NA</td>
-<td headers="DTRECEBIM" class="gt_row gt_center">28012013</td>
-<td headers="DTRECORIGA" class="gt_row gt_center">28012013</td>
-<td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
-<td headers="ESC2010" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
-<td headers="DIFDATA" class="gt_row gt_center">117</td>
-<td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
-<td headers="STDONOVA" class="gt_row gt_center">0</td>
-<td headers="DTCADINV" class="gt_row gt_center">NA</td>
-<td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
-<td headers="DTCADINF" class="gt_row gt_center">NA</td>
-<td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
-<td headers="DTCONCASO" class="gt_row gt_center">NA</td>
-<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
-<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
-<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
-<td headers="csap" class="gt_row gt_center">sim</td>
-<td headers="grupo" class="gt_row gt_center">g09</td>
-<td headers="idade" class="gt_row gt_right">74</td></tr>
-    <tr><td headers="CONTADOR" class="gt_row gt_center">4</td>
-<td headers="ORIGEM" class="gt_row gt_center">1</td>
-<td headers="TIPOBITO" class="gt_row gt_center">2</td>
-<td headers="DTOBITO" class="gt_row gt_center">27082012</td>
-<td headers="HORAOBITO" class="gt_row gt_center">0700</td>
-<td headers="NATURAL" class="gt_row gt_center">800</td>
-<td headers="DTNASC" class="gt_row gt_center">19081953</td>
-<td headers="IDADE" class="gt_row gt_center">459</td>
-<td headers="SEXO" class="gt_row gt_center">1</td>
-<td headers="RACACOR" class="gt_row gt_center">4</td>
-<td headers="ESTCIV" class="gt_row gt_center">3</td>
-<td headers="ESC" class="gt_row gt_center">NA</td>
-<td headers="OCUP" class="gt_row gt_center">512105</td>
-<td headers="CODMUNRES" class="gt_row gt_center">430258</td>
-<td headers="LOCOCOR" class="gt_row gt_center">3</td>
-<td headers="CODESTAB" class="gt_row gt_center">NA</td>
-<td headers="CODMUNOCOR" class="gt_row gt_center">430258</td>
-<td headers="IDADEMAE" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE" class="gt_row gt_center">NA</td>
-<td headers="OCUPMAE" class="gt_row gt_center">NA</td>
-<td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
-<td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
-<td headers="GRAVIDEZ" class="gt_row gt_center">NA</td>
-<td headers="SEMAGESTAC" class="gt_row gt_center">NA</td>
-<td headers="GESTACAO" class="gt_row gt_center">NA</td>
-<td headers="PARTO" class="gt_row gt_center">NA</td>
-<td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
-<td headers="PESO" class="gt_row gt_center">NA</td>
-<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
-<td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
-<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
-<td headers="ASSISTMED" class="gt_row gt_center">NA</td>
 <td headers="EXAME" class="gt_row gt_center">NA</td>
 <td headers="CIRURGIA" class="gt_row gt_center">NA</td>
-<td headers="NECROPSIA" class="gt_row gt_center">NA</td>
-<td headers="LINHAA" class="gt_row gt_center">*R688*R571</td>
-<td headers="LINHAB" class="gt_row gt_center">*I219</td>
-<td headers="LINHAC" class="gt_row gt_center">*I10X</td>
-<td headers="LINHAD" class="gt_row gt_center">*F172*F102</td>
-<td headers="LINHAII" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS" class="gt_row gt_center">I219</td>
+<td headers="NECROPSIA" class="gt_row gt_center">2</td>
+<td headers="LINHAA" class="gt_row gt_center">*B342*U071*U049</td>
+<td headers="LINHAB" class="gt_row gt_center">*N178</td>
+<td headers="LINHAC" class="gt_row gt_center">*E878</td>
+<td headers="LINHAD" class="gt_row gt_center">NA</td>
+<td headers="LINHAII" class="gt_row gt_center">*E149</td>
+<td headers="CAUSABAS" class="gt_row gt_center">B342</td>
+<td headers="CB_PRE" class="gt_row gt_center">NA</td>
 <td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
-<td headers="DTATESTADO" class="gt_row gt_center">28082012</td>
+<td headers="DTATESTADO" class="gt_row gt_center">14032021</td>
 <td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
 <td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
 <td headers="FONTE" class="gt_row gt_center">NA</td>
+<td headers="NUMEROLOTE" class="gt_row gt_center">20220025</td>
 <td headers="TPPOS" class="gt_row gt_center">NA</td>
 <td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS_O" class="gt_row gt_center">I219</td>
-<td headers="DTCADASTRO" class="gt_row gt_center">15102012</td>
-<td headers="ATESTANTE" class="gt_row gt_center">5</td>
+<td headers="CAUSABAS_O" class="gt_row gt_center">B342</td>
+<td headers="DTCADASTRO" class="gt_row gt_center">23032021</td>
+<td headers="ATESTANTE" class="gt_row gt_center">1</td>
+<td headers="STCODIFICA" class="gt_row gt_center">S</td>
+<td headers="CODIFICADO" class="gt_row gt_center">S</td>
+<td headers="VERSAOSIST" class="gt_row gt_center">3.2.30</td>
+<td headers="VERSAOSCB" class="gt_row gt_center">3.4</td>
 <td headers="FONTEINV" class="gt_row gt_center">NA</td>
-<td headers="DTRECEBIM" class="gt_row gt_center">12112012</td>
-<td headers="DTRECORIGA" class="gt_row gt_center">12112012</td>
+<td headers="DTRECEBIM" class="gt_row gt_center">26052022</td>
+<td headers="ATESTADO" class="gt_row gt_center">B342 U071 U049/N178/E878*E149</td>
+<td headers="DTRECORIGA" class="gt_row gt_center">08042021</td>
 <td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
-<td headers="ESC2010" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
-<td headers="DIFDATA" class="gt_row gt_center">077</td>
+<td headers="ESCMAEAGR1" class="gt_row gt_center">NA</td>
+<td headers="ESCFALAGR1" class="gt_row gt_center">08</td>
 <td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
-<td headers="STDONOVA" class="gt_row gt_center">0</td>
+<td headers="STDONOVA" class="gt_row gt_center">1</td>
+<td headers="DIFDATA" class="gt_row gt_center">439</td>
+<td headers="NUDIASOBCO" class="gt_row gt_center">NA</td>
+<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
 <td headers="DTCADINV" class="gt_row gt_center">NA</td>
 <td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
+<td headers="DTCONINV" class="gt_row gt_center">NA</td>
+<td headers="FONTES" class="gt_row gt_center">NA</td>
+<td headers="TPRESGINFO" class="gt_row gt_center">NA</td>
+<td headers="TPNIVELINV" class="gt_row gt_center">NA</td>
+<td headers="NUDIASINF" class="gt_row gt_center">NA</td>
 <td headers="DTCADINF" class="gt_row gt_center">NA</td>
 <td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
 <td headers="DTCONCASO" class="gt_row gt_center">NA</td>
-<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
-<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
-<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
+<td headers="FONTESINF" class="gt_row gt_center">NA</td>
+<td headers="ALTCAUSA" class="gt_row gt_center">NA</td>
+<td headers="CONTADOR" class="gt_row gt_center">52</td>
 <td headers="csap" class="gt_row gt_center">não</td>
 <td headers="grupo" class="gt_row gt_center">não-CSAP</td>
-<td headers="idade" class="gt_row gt_right">59</td></tr>
-    <tr><td headers="CONTADOR" class="gt_row gt_center">5</td>
-<td headers="ORIGEM" class="gt_row gt_center">1</td>
+<td headers="idade" class="gt_row gt_right">64</td></tr>
+    <tr><td headers="ORIGEM" class="gt_row gt_center">1</td>
 <td headers="TIPOBITO" class="gt_row gt_center">2</td>
-<td headers="DTOBITO" class="gt_row gt_center">19012012</td>
-<td headers="HORAOBITO" class="gt_row gt_center">1700</td>
-<td headers="NATURAL" class="gt_row gt_center">NA</td>
-<td headers="DTNASC" class="gt_row gt_center">21091923</td>
-<td headers="IDADE" class="gt_row gt_center">488</td>
-<td headers="SEXO" class="gt_row gt_center">1</td>
+<td headers="DTOBITO" class="gt_row gt_center">14032021</td>
+<td headers="HORAOBITO" class="gt_row gt_center">0420</td>
+<td headers="NATURAL" class="gt_row gt_center">843</td>
+<td headers="CODMUNNATU" class="gt_row gt_center">430690</td>
+<td headers="DTNASC" class="gt_row gt_center">13111957</td>
+<td headers="IDADE" class="gt_row gt_center">463</td>
+<td headers="SEXO" class="gt_row gt_center">2</td>
 <td headers="RACACOR" class="gt_row gt_center">1</td>
-<td headers="ESTCIV" class="gt_row gt_center">3</td>
-<td headers="ESC" class="gt_row gt_center">9</td>
-<td headers="OCUP" class="gt_row gt_center">622020</td>
-<td headers="CODMUNRES" class="gt_row gt_center">431344</td>
-<td headers="LOCOCOR" class="gt_row gt_center">3</td>
-<td headers="CODESTAB" class="gt_row gt_center">NA</td>
-<td headers="CODMUNOCOR" class="gt_row gt_center">431344</td>
+<td headers="ESTCIV" class="gt_row gt_center">2</td>
+<td headers="ESC" class="gt_row gt_center">5</td>
+<td headers="ESC2010" class="gt_row gt_center">5</td>
+<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
+<td headers="OCUP" class="gt_row gt_center">999993</td>
+<td headers="CODMUNRES" class="gt_row gt_center">431490</td>
+<td headers="LOCOCOR" class="gt_row gt_center">1</td>
+<td headers="CODESTAB" class="gt_row gt_center">9923837</td>
+<td headers="ESTABDESCR" class="gt_row gt_center">NA</td>
+<td headers="CODMUNOCOR" class="gt_row gt_center">270430</td>
 <td headers="IDADEMAE" class="gt_row gt_center">NA</td>
 <td headers="ESCMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
+<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
 <td headers="OCUPMAE" class="gt_row gt_center">NA</td>
 <td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
 <td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
@@ -1134,68 +961,87 @@ Importados 79.456 registros.
 <td headers="PARTO" class="gt_row gt_center">NA</td>
 <td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
 <td headers="PESO" class="gt_row gt_center">NA</td>
-<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
-<td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
-<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
-<td headers="ASSISTMED" class="gt_row gt_center">NA</td>
-<td headers="EXAME" class="gt_row gt_center">2</td>
-<td headers="CIRURGIA" class="gt_row gt_center">2</td>
+<td headers="TPMORTEOCO" class="gt_row gt_center">8</td>
+<td headers="OBITOGRAV" class="gt_row gt_center">2</td>
+<td headers="OBITOPUERP" class="gt_row gt_center">3</td>
+<td headers="ASSISTMED" class="gt_row gt_center">1</td>
+<td headers="EXAME" class="gt_row gt_center">NA</td>
+<td headers="CIRURGIA" class="gt_row gt_center">NA</td>
 <td headers="NECROPSIA" class="gt_row gt_center">2</td>
-<td headers="LINHAA" class="gt_row gt_center">*C61X</td>
-<td headers="LINHAB" class="gt_row gt_center">NA</td>
-<td headers="LINHAC" class="gt_row gt_center">NA</td>
-<td headers="LINHAD" class="gt_row gt_center">NA</td>
+<td headers="LINHAA" class="gt_row gt_center">*A419</td>
+<td headers="LINHAB" class="gt_row gt_center">*N179</td>
+<td headers="LINHAC" class="gt_row gt_center">*B342*U071*U049</td>
+<td headers="LINHAD" class="gt_row gt_center">*J129</td>
 <td headers="LINHAII" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS" class="gt_row gt_center">C61</td>
+<td headers="CAUSABAS" class="gt_row gt_center">B342</td>
+<td headers="CB_PRE" class="gt_row gt_center">NA</td>
 <td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
-<td headers="DTATESTADO" class="gt_row gt_center">20012012</td>
+<td headers="DTATESTADO" class="gt_row gt_center">14032021</td>
 <td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
 <td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
 <td headers="FONTE" class="gt_row gt_center">NA</td>
+<td headers="NUMEROLOTE" class="gt_row gt_center">20220033</td>
 <td headers="TPPOS" class="gt_row gt_center">NA</td>
 <td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS_O" class="gt_row gt_center">C61</td>
-<td headers="DTCADASTRO" class="gt_row gt_center">14022012</td>
-<td headers="ATESTANTE" class="gt_row gt_center">1</td>
+<td headers="CAUSABAS_O" class="gt_row gt_center">B342</td>
+<td headers="DTCADASTRO" class="gt_row gt_center">23032021</td>
+<td headers="ATESTANTE" class="gt_row gt_center">5</td>
+<td headers="STCODIFICA" class="gt_row gt_center">S</td>
+<td headers="CODIFICADO" class="gt_row gt_center">S</td>
+<td headers="VERSAOSIST" class="gt_row gt_center">3.2.30</td>
+<td headers="VERSAOSCB" class="gt_row gt_center">3.4</td>
 <td headers="FONTEINV" class="gt_row gt_center">NA</td>
-<td headers="DTRECEBIM" class="gt_row gt_center">26032012</td>
-<td headers="DTRECORIGA" class="gt_row gt_center">26032012</td>
+<td headers="DTRECEBIM" class="gt_row gt_center">11072022</td>
+<td headers="ATESTADO" class="gt_row gt_center">A419/N179/B342 U071 U049/J129</td>
+<td headers="DTRECORIGA" class="gt_row gt_center">08042021</td>
 <td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
-<td headers="ESC2010" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
-<td headers="DIFDATA" class="gt_row gt_center">067</td>
+<td headers="ESCMAEAGR1" class="gt_row gt_center">NA</td>
+<td headers="ESCFALAGR1" class="gt_row gt_center">08</td>
 <td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
-<td headers="STDONOVA" class="gt_row gt_center">0</td>
+<td headers="STDONOVA" class="gt_row gt_center">1</td>
+<td headers="DIFDATA" class="gt_row gt_center">484</td>
+<td headers="NUDIASOBCO" class="gt_row gt_center">NA</td>
+<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
 <td headers="DTCADINV" class="gt_row gt_center">NA</td>
 <td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
+<td headers="DTCONINV" class="gt_row gt_center">NA</td>
+<td headers="FONTES" class="gt_row gt_center">NA</td>
+<td headers="TPRESGINFO" class="gt_row gt_center">NA</td>
+<td headers="TPNIVELINV" class="gt_row gt_center">NA</td>
+<td headers="NUDIASINF" class="gt_row gt_center">NA</td>
 <td headers="DTCADINF" class="gt_row gt_center">NA</td>
 <td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
 <td headers="DTCONCASO" class="gt_row gt_center">NA</td>
-<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
-<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
-<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
+<td headers="FONTESINF" class="gt_row gt_center">NA</td>
+<td headers="ALTCAUSA" class="gt_row gt_center">NA</td>
+<td headers="CONTADOR" class="gt_row gt_center">54</td>
 <td headers="csap" class="gt_row gt_center">não</td>
 <td headers="grupo" class="gt_row gt_center">não-CSAP</td>
-<td headers="idade" class="gt_row gt_right">88</td></tr>
-    <tr><td headers="CONTADOR" class="gt_row gt_center">6</td>
-<td headers="ORIGEM" class="gt_row gt_center">1</td>
+<td headers="idade" class="gt_row gt_right">63</td></tr>
+    <tr><td headers="ORIGEM" class="gt_row gt_center">1</td>
 <td headers="TIPOBITO" class="gt_row gt_center">2</td>
-<td headers="DTOBITO" class="gt_row gt_center">01082012</td>
-<td headers="HORAOBITO" class="gt_row gt_center">2030</td>
-<td headers="NATURAL" class="gt_row gt_center">NA</td>
-<td headers="DTNASC" class="gt_row gt_center">20111933</td>
-<td headers="IDADE" class="gt_row gt_center">478</td>
+<td headers="DTOBITO" class="gt_row gt_center">01012021</td>
+<td headers="HORAOBITO" class="gt_row gt_center">0300</td>
+<td headers="NATURAL" class="gt_row gt_center">843</td>
+<td headers="CODMUNNATU" class="gt_row gt_center">431870</td>
+<td headers="DTNASC" class="gt_row gt_center">11011950</td>
+<td headers="IDADE" class="gt_row gt_center">470</td>
 <td headers="SEXO" class="gt_row gt_center">1</td>
-<td headers="RACACOR" class="gt_row gt_center">4</td>
+<td headers="RACACOR" class="gt_row gt_center">2</td>
 <td headers="ESTCIV" class="gt_row gt_center">1</td>
-<td headers="ESC" class="gt_row gt_center">1</td>
-<td headers="OCUP" class="gt_row gt_center">622020</td>
-<td headers="CODMUNRES" class="gt_row gt_center">430200</td>
-<td headers="LOCOCOR" class="gt_row gt_center">5</td>
-<td headers="CODESTAB" class="gt_row gt_center">NA</td>
-<td headers="CODMUNOCOR" class="gt_row gt_center">430200</td>
+<td headers="ESC" class="gt_row gt_center">2</td>
+<td headers="ESC2010" class="gt_row gt_center">1</td>
+<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
+<td headers="OCUP" class="gt_row gt_center">999993</td>
+<td headers="CODMUNRES" class="gt_row gt_center">431870</td>
+<td headers="LOCOCOR" class="gt_row gt_center">1</td>
+<td headers="CODESTAB" class="gt_row gt_center">2227762</td>
+<td headers="ESTABDESCR" class="gt_row gt_center">NA</td>
+<td headers="CODMUNOCOR" class="gt_row gt_center">431405</td>
 <td headers="IDADEMAE" class="gt_row gt_center">NA</td>
 <td headers="ESCMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
+<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
 <td headers="OCUPMAE" class="gt_row gt_center">NA</td>
 <td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
 <td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
@@ -1208,46 +1054,330 @@ Importados 79.456 registros.
 <td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
 <td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
 <td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
-<td headers="ASSISTMED" class="gt_row gt_center">NA</td>
-<td headers="EXAME" class="gt_row gt_center">2</td>
-<td headers="CIRURGIA" class="gt_row gt_center">2</td>
+<td headers="ASSISTMED" class="gt_row gt_center">1</td>
+<td headers="EXAME" class="gt_row gt_center">NA</td>
+<td headers="CIRURGIA" class="gt_row gt_center">NA</td>
 <td headers="NECROPSIA" class="gt_row gt_center">2</td>
-<td headers="LINHAA" class="gt_row gt_center">*R960</td>
+<td headers="LINHAA" class="gt_row gt_center">NA</td>
 <td headers="LINHAB" class="gt_row gt_center">NA</td>
 <td headers="LINHAC" class="gt_row gt_center">NA</td>
 <td headers="LINHAD" class="gt_row gt_center">NA</td>
-<td headers="LINHAII" class="gt_row gt_center">*J449</td>
+<td headers="LINHAII" class="gt_row gt_center">*J449*F102</td>
 <td headers="CAUSABAS" class="gt_row gt_center">J449</td>
+<td headers="CB_PRE" class="gt_row gt_center">NA</td>
 <td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
-<td headers="DTATESTADO" class="gt_row gt_center">01082012</td>
+<td headers="DTATESTADO" class="gt_row gt_center">01012021</td>
 <td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
 <td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
 <td headers="FONTE" class="gt_row gt_center">NA</td>
-<td headers="TPPOS" class="gt_row gt_center">S</td>
+<td headers="NUMEROLOTE" class="gt_row gt_center">20210019</td>
+<td headers="TPPOS" class="gt_row gt_center">N</td>
 <td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
-<td headers="CAUSABAS_O" class="gt_row gt_center">R960</td>
-<td headers="DTCADASTRO" class="gt_row gt_center">06112012</td>
+<td headers="CAUSABAS_O" class="gt_row gt_center">J449</td>
+<td headers="DTCADASTRO" class="gt_row gt_center">04012021</td>
 <td headers="ATESTANTE" class="gt_row gt_center">1</td>
-<td headers="FONTEINV" class="gt_row gt_center">3</td>
-<td headers="DTRECEBIM" class="gt_row gt_center">17042013</td>
-<td headers="DTRECORIGA" class="gt_row gt_center">28112012</td>
+<td headers="STCODIFICA" class="gt_row gt_center">S</td>
+<td headers="CODIFICADO" class="gt_row gt_center">S</td>
+<td headers="VERSAOSIST" class="gt_row gt_center">3.2.30</td>
+<td headers="VERSAOSCB" class="gt_row gt_center">3.3</td>
+<td headers="FONTEINV" class="gt_row gt_center">NA</td>
+<td headers="DTRECEBIM" class="gt_row gt_center">08022021</td>
+<td headers="ATESTADO" class="gt_row gt_center">J449 F102</td>
+<td headers="DTRECORIGA" class="gt_row gt_center">14012021</td>
 <td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
-<td headers="ESC2010" class="gt_row gt_center">NA</td>
-<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
-<td headers="DIFDATA" class="gt_row gt_center">119</td>
+<td headers="ESCMAEAGR1" class="gt_row gt_center">NA</td>
+<td headers="ESCFALAGR1" class="gt_row gt_center">10</td>
 <td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
-<td headers="STDONOVA" class="gt_row gt_center">0</td>
+<td headers="STDONOVA" class="gt_row gt_center">1</td>
+<td headers="DIFDATA" class="gt_row gt_center">038</td>
+<td headers="NUDIASOBCO" class="gt_row gt_center">NA</td>
+<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
 <td headers="DTCADINV" class="gt_row gt_center">NA</td>
 <td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
+<td headers="DTCONINV" class="gt_row gt_center">NA</td>
+<td headers="FONTES" class="gt_row gt_center">NA</td>
+<td headers="TPRESGINFO" class="gt_row gt_center">NA</td>
+<td headers="TPNIVELINV" class="gt_row gt_center">NA</td>
+<td headers="NUDIASINF" class="gt_row gt_center">NA</td>
 <td headers="DTCADINF" class="gt_row gt_center">NA</td>
 <td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
 <td headers="DTCONCASO" class="gt_row gt_center">NA</td>
-<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
-<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
-<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
+<td headers="FONTESINF" class="gt_row gt_center">NA</td>
+<td headers="ALTCAUSA" class="gt_row gt_center">NA</td>
+<td headers="CONTADOR" class="gt_row gt_center">112</td>
 <td headers="csap" class="gt_row gt_center">sim</td>
 <td headers="grupo" class="gt_row gt_center">g08</td>
-<td headers="idade" class="gt_row gt_right">78</td></tr>
+<td headers="idade" class="gt_row gt_right">70</td></tr>
+    <tr><td headers="ORIGEM" class="gt_row gt_center">1</td>
+<td headers="TIPOBITO" class="gt_row gt_center">2</td>
+<td headers="DTOBITO" class="gt_row gt_center">03012021</td>
+<td headers="HORAOBITO" class="gt_row gt_center">0120</td>
+<td headers="NATURAL" class="gt_row gt_center">843</td>
+<td headers="CODMUNNATU" class="gt_row gt_center">432120</td>
+<td headers="DTNASC" class="gt_row gt_center">29031943</td>
+<td headers="IDADE" class="gt_row gt_center">477</td>
+<td headers="SEXO" class="gt_row gt_center">2</td>
+<td headers="RACACOR" class="gt_row gt_center">1</td>
+<td headers="ESTCIV" class="gt_row gt_center">4</td>
+<td headers="ESC" class="gt_row gt_center">2</td>
+<td headers="ESC2010" class="gt_row gt_center">1</td>
+<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
+<td headers="OCUP" class="gt_row gt_center">999993</td>
+<td headers="CODMUNRES" class="gt_row gt_center">431010</td>
+<td headers="LOCOCOR" class="gt_row gt_center">1</td>
+<td headers="CODESTAB" class="gt_row gt_center">2227762</td>
+<td headers="ESTABDESCR" class="gt_row gt_center">NA</td>
+<td headers="CODMUNOCOR" class="gt_row gt_center">431405</td>
+<td headers="IDADEMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
+<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
+<td headers="OCUPMAE" class="gt_row gt_center">NA</td>
+<td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
+<td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
+<td headers="GRAVIDEZ" class="gt_row gt_center">NA</td>
+<td headers="SEMAGESTAC" class="gt_row gt_center">NA</td>
+<td headers="GESTACAO" class="gt_row gt_center">NA</td>
+<td headers="PARTO" class="gt_row gt_center">NA</td>
+<td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
+<td headers="PESO" class="gt_row gt_center">NA</td>
+<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
+<td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
+<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
+<td headers="ASSISTMED" class="gt_row gt_center">1</td>
+<td headers="EXAME" class="gt_row gt_center">NA</td>
+<td headers="CIRURGIA" class="gt_row gt_center">NA</td>
+<td headers="NECROPSIA" class="gt_row gt_center">2</td>
+<td headers="LINHAA" class="gt_row gt_center">NA</td>
+<td headers="LINHAB" class="gt_row gt_center">*B342*U071</td>
+<td headers="LINHAC" class="gt_row gt_center">NA</td>
+<td headers="LINHAD" class="gt_row gt_center">NA</td>
+<td headers="LINHAII" class="gt_row gt_center">NA</td>
+<td headers="CAUSABAS" class="gt_row gt_center">B342</td>
+<td headers="CB_PRE" class="gt_row gt_center">NA</td>
+<td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
+<td headers="DTATESTADO" class="gt_row gt_center">03012021</td>
+<td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
+<td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
+<td headers="FONTE" class="gt_row gt_center">NA</td>
+<td headers="NUMEROLOTE" class="gt_row gt_center">20210019</td>
+<td headers="TPPOS" class="gt_row gt_center">N</td>
+<td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
+<td headers="CAUSABAS_O" class="gt_row gt_center">B342</td>
+<td headers="DTCADASTRO" class="gt_row gt_center">04012021</td>
+<td headers="ATESTANTE" class="gt_row gt_center">5</td>
+<td headers="STCODIFICA" class="gt_row gt_center">S</td>
+<td headers="CODIFICADO" class="gt_row gt_center">S</td>
+<td headers="VERSAOSIST" class="gt_row gt_center">3.2.30</td>
+<td headers="VERSAOSCB" class="gt_row gt_center">3.3</td>
+<td headers="FONTEINV" class="gt_row gt_center">NA</td>
+<td headers="DTRECEBIM" class="gt_row gt_center">08022021</td>
+<td headers="ATESTADO" class="gt_row gt_center">/B342 U071</td>
+<td headers="DTRECORIGA" class="gt_row gt_center">14012021</td>
+<td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
+<td headers="ESCMAEAGR1" class="gt_row gt_center">NA</td>
+<td headers="ESCFALAGR1" class="gt_row gt_center">10</td>
+<td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
+<td headers="STDONOVA" class="gt_row gt_center">1</td>
+<td headers="DIFDATA" class="gt_row gt_center">036</td>
+<td headers="NUDIASOBCO" class="gt_row gt_center">NA</td>
+<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
+<td headers="DTCADINV" class="gt_row gt_center">NA</td>
+<td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
+<td headers="DTCONINV" class="gt_row gt_center">NA</td>
+<td headers="FONTES" class="gt_row gt_center">NA</td>
+<td headers="TPRESGINFO" class="gt_row gt_center">NA</td>
+<td headers="TPNIVELINV" class="gt_row gt_center">NA</td>
+<td headers="NUDIASINF" class="gt_row gt_center">NA</td>
+<td headers="DTCADINF" class="gt_row gt_center">NA</td>
+<td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
+<td headers="DTCONCASO" class="gt_row gt_center">NA</td>
+<td headers="FONTESINF" class="gt_row gt_center">NA</td>
+<td headers="ALTCAUSA" class="gt_row gt_center">NA</td>
+<td headers="CONTADOR" class="gt_row gt_center">113</td>
+<td headers="csap" class="gt_row gt_center">não</td>
+<td headers="grupo" class="gt_row gt_center">não-CSAP</td>
+<td headers="idade" class="gt_row gt_right">77</td></tr>
+    <tr><td headers="ORIGEM" class="gt_row gt_center">1</td>
+<td headers="TIPOBITO" class="gt_row gt_center">2</td>
+<td headers="DTOBITO" class="gt_row gt_center">02012021</td>
+<td headers="HORAOBITO" class="gt_row gt_center">1300</td>
+<td headers="NATURAL" class="gt_row gt_center">843</td>
+<td headers="CODMUNNATU" class="gt_row gt_center">430360</td>
+<td headers="DTNASC" class="gt_row gt_center">07051944</td>
+<td headers="IDADE" class="gt_row gt_center">476</td>
+<td headers="SEXO" class="gt_row gt_center">1</td>
+<td headers="RACACOR" class="gt_row gt_center">1</td>
+<td headers="ESTCIV" class="gt_row gt_center">4</td>
+<td headers="ESC" class="gt_row gt_center">2</td>
+<td headers="ESC2010" class="gt_row gt_center">1</td>
+<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
+<td headers="OCUP" class="gt_row gt_center">999993</td>
+<td headers="CODMUNRES" class="gt_row gt_center">430510</td>
+<td headers="LOCOCOR" class="gt_row gt_center">1</td>
+<td headers="CODESTAB" class="gt_row gt_center">2227762</td>
+<td headers="ESTABDESCR" class="gt_row gt_center">NA</td>
+<td headers="CODMUNOCOR" class="gt_row gt_center">431405</td>
+<td headers="IDADEMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
+<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
+<td headers="OCUPMAE" class="gt_row gt_center">NA</td>
+<td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
+<td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
+<td headers="GRAVIDEZ" class="gt_row gt_center">NA</td>
+<td headers="SEMAGESTAC" class="gt_row gt_center">NA</td>
+<td headers="GESTACAO" class="gt_row gt_center">NA</td>
+<td headers="PARTO" class="gt_row gt_center">NA</td>
+<td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
+<td headers="PESO" class="gt_row gt_center">NA</td>
+<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
+<td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
+<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
+<td headers="ASSISTMED" class="gt_row gt_center">1</td>
+<td headers="EXAME" class="gt_row gt_center">NA</td>
+<td headers="CIRURGIA" class="gt_row gt_center">NA</td>
+<td headers="NECROPSIA" class="gt_row gt_center">2</td>
+<td headers="LINHAA" class="gt_row gt_center">NA</td>
+<td headers="LINHAB" class="gt_row gt_center">*B342*U071</td>
+<td headers="LINHAC" class="gt_row gt_center">NA</td>
+<td headers="LINHAD" class="gt_row gt_center">NA</td>
+<td headers="LINHAII" class="gt_row gt_center">NA</td>
+<td headers="CAUSABAS" class="gt_row gt_center">B342</td>
+<td headers="CB_PRE" class="gt_row gt_center">NA</td>
+<td headers="COMUNSVOIM" class="gt_row gt_center">NA</td>
+<td headers="DTATESTADO" class="gt_row gt_center">02012021</td>
+<td headers="CIRCOBITO" class="gt_row gt_center">NA</td>
+<td headers="ACIDTRAB" class="gt_row gt_center">NA</td>
+<td headers="FONTE" class="gt_row gt_center">NA</td>
+<td headers="NUMEROLOTE" class="gt_row gt_center">20210019</td>
+<td headers="TPPOS" class="gt_row gt_center">N</td>
+<td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
+<td headers="CAUSABAS_O" class="gt_row gt_center">B342</td>
+<td headers="DTCADASTRO" class="gt_row gt_center">04012021</td>
+<td headers="ATESTANTE" class="gt_row gt_center">5</td>
+<td headers="STCODIFICA" class="gt_row gt_center">S</td>
+<td headers="CODIFICADO" class="gt_row gt_center">S</td>
+<td headers="VERSAOSIST" class="gt_row gt_center">3.2.30</td>
+<td headers="VERSAOSCB" class="gt_row gt_center">3.3</td>
+<td headers="FONTEINV" class="gt_row gt_center">NA</td>
+<td headers="DTRECEBIM" class="gt_row gt_center">08022021</td>
+<td headers="ATESTADO" class="gt_row gt_center">/B342 U071</td>
+<td headers="DTRECORIGA" class="gt_row gt_center">14012021</td>
+<td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
+<td headers="ESCMAEAGR1" class="gt_row gt_center">NA</td>
+<td headers="ESCFALAGR1" class="gt_row gt_center">10</td>
+<td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
+<td headers="STDONOVA" class="gt_row gt_center">1</td>
+<td headers="DIFDATA" class="gt_row gt_center">037</td>
+<td headers="NUDIASOBCO" class="gt_row gt_center">NA</td>
+<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
+<td headers="DTCADINV" class="gt_row gt_center">NA</td>
+<td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
+<td headers="DTCONINV" class="gt_row gt_center">NA</td>
+<td headers="FONTES" class="gt_row gt_center">NA</td>
+<td headers="TPRESGINFO" class="gt_row gt_center">NA</td>
+<td headers="TPNIVELINV" class="gt_row gt_center">NA</td>
+<td headers="NUDIASINF" class="gt_row gt_center">NA</td>
+<td headers="DTCADINF" class="gt_row gt_center">NA</td>
+<td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
+<td headers="DTCONCASO" class="gt_row gt_center">NA</td>
+<td headers="FONTESINF" class="gt_row gt_center">NA</td>
+<td headers="ALTCAUSA" class="gt_row gt_center">NA</td>
+<td headers="CONTADOR" class="gt_row gt_center">114</td>
+<td headers="csap" class="gt_row gt_center">não</td>
+<td headers="grupo" class="gt_row gt_center">não-CSAP</td>
+<td headers="idade" class="gt_row gt_right">76</td></tr>
+    <tr><td headers="ORIGEM" class="gt_row gt_center">1</td>
+<td headers="TIPOBITO" class="gt_row gt_center">2</td>
+<td headers="DTOBITO" class="gt_row gt_center">17022021</td>
+<td headers="HORAOBITO" class="gt_row gt_center">1830</td>
+<td headers="NATURAL" class="gt_row gt_center">843</td>
+<td headers="CODMUNNATU" class="gt_row gt_center">430610</td>
+<td headers="DTNASC" class="gt_row gt_center">13051981</td>
+<td headers="IDADE" class="gt_row gt_center">439</td>
+<td headers="SEXO" class="gt_row gt_center">1</td>
+<td headers="RACACOR" class="gt_row gt_center">1</td>
+<td headers="ESTCIV" class="gt_row gt_center">1</td>
+<td headers="ESC" class="gt_row gt_center">9</td>
+<td headers="ESC2010" class="gt_row gt_center">9</td>
+<td headers="SERIESCFAL" class="gt_row gt_center">NA</td>
+<td headers="OCUP" class="gt_row gt_center">NA</td>
+<td headers="CODMUNRES" class="gt_row gt_center">430845</td>
+<td headers="LOCOCOR" class="gt_row gt_center">4</td>
+<td headers="CODESTAB" class="gt_row gt_center">NA</td>
+<td headers="ESTABDESCR" class="gt_row gt_center">NA</td>
+<td headers="CODMUNOCOR" class="gt_row gt_center">431535</td>
+<td headers="IDADEMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE" class="gt_row gt_center">NA</td>
+<td headers="ESCMAE2010" class="gt_row gt_center">NA</td>
+<td headers="SERIESCMAE" class="gt_row gt_center">NA</td>
+<td headers="OCUPMAE" class="gt_row gt_center">NA</td>
+<td headers="QTDFILVIVO" class="gt_row gt_center">NA</td>
+<td headers="QTDFILMORT" class="gt_row gt_center">NA</td>
+<td headers="GRAVIDEZ" class="gt_row gt_center">NA</td>
+<td headers="SEMAGESTAC" class="gt_row gt_center">NA</td>
+<td headers="GESTACAO" class="gt_row gt_center">NA</td>
+<td headers="PARTO" class="gt_row gt_center">NA</td>
+<td headers="OBITOPARTO" class="gt_row gt_center">NA</td>
+<td headers="PESO" class="gt_row gt_center">NA</td>
+<td headers="TPMORTEOCO" class="gt_row gt_center">NA</td>
+<td headers="OBITOGRAV" class="gt_row gt_center">NA</td>
+<td headers="OBITOPUERP" class="gt_row gt_center">NA</td>
+<td headers="ASSISTMED" class="gt_row gt_center">2</td>
+<td headers="EXAME" class="gt_row gt_center">NA</td>
+<td headers="CIRURGIA" class="gt_row gt_center">NA</td>
+<td headers="NECROPSIA" class="gt_row gt_center">1</td>
+<td headers="LINHAA" class="gt_row gt_center">*V439</td>
+<td headers="LINHAB" class="gt_row gt_center">NA</td>
+<td headers="LINHAC" class="gt_row gt_center">NA</td>
+<td headers="LINHAD" class="gt_row gt_center">NA</td>
+<td headers="LINHAII" class="gt_row gt_center">NA</td>
+<td headers="CAUSABAS" class="gt_row gt_center">V439</td>
+<td headers="CB_PRE" class="gt_row gt_center">NA</td>
+<td headers="COMUNSVOIM" class="gt_row gt_center">430610</td>
+<td headers="DTATESTADO" class="gt_row gt_center">18072021</td>
+<td headers="CIRCOBITO" class="gt_row gt_center">1</td>
+<td headers="ACIDTRAB" class="gt_row gt_center">2</td>
+<td headers="FONTE" class="gt_row gt_center">1</td>
+<td headers="NUMEROLOTE" class="gt_row gt_center">20210061</td>
+<td headers="TPPOS" class="gt_row gt_center">NA</td>
+<td headers="DTINVESTIG" class="gt_row gt_center">NA</td>
+<td headers="CAUSABAS_O" class="gt_row gt_center">V439</td>
+<td headers="DTCADASTRO" class="gt_row gt_center">21072021</td>
+<td headers="ATESTANTE" class="gt_row gt_center">3</td>
+<td headers="STCODIFICA" class="gt_row gt_center">S</td>
+<td headers="CODIFICADO" class="gt_row gt_center">S</td>
+<td headers="VERSAOSIST" class="gt_row gt_center">3.2.30</td>
+<td headers="VERSAOSCB" class="gt_row gt_center">3.4</td>
+<td headers="FONTEINV" class="gt_row gt_center">NA</td>
+<td headers="DTRECEBIM" class="gt_row gt_center">28072021</td>
+<td headers="ATESTADO" class="gt_row gt_center">V439</td>
+<td headers="DTRECORIGA" class="gt_row gt_center">28072021</td>
+<td headers="CAUSAMAT" class="gt_row gt_center">NA</td>
+<td headers="ESCMAEAGR1" class="gt_row gt_center">NA</td>
+<td headers="ESCFALAGR1" class="gt_row gt_center">09</td>
+<td headers="STDOEPIDEM" class="gt_row gt_center">0</td>
+<td headers="STDONOVA" class="gt_row gt_center">1</td>
+<td headers="DIFDATA" class="gt_row gt_center">161</td>
+<td headers="NUDIASOBCO" class="gt_row gt_center">NA</td>
+<td headers="NUDIASOBIN" class="gt_row gt_center">NA</td>
+<td headers="DTCADINV" class="gt_row gt_center">NA</td>
+<td headers="TPOBITOCOR" class="gt_row gt_center">NA</td>
+<td headers="DTCONINV" class="gt_row gt_center">NA</td>
+<td headers="FONTES" class="gt_row gt_center">NA</td>
+<td headers="TPRESGINFO" class="gt_row gt_center">NA</td>
+<td headers="TPNIVELINV" class="gt_row gt_center">NA</td>
+<td headers="NUDIASINF" class="gt_row gt_center">NA</td>
+<td headers="DTCADINF" class="gt_row gt_center">NA</td>
+<td headers="MORTEPARTO" class="gt_row gt_center">NA</td>
+<td headers="DTCONCASO" class="gt_row gt_center">NA</td>
+<td headers="FONTESINF" class="gt_row gt_center">NA</td>
+<td headers="ALTCAUSA" class="gt_row gt_center">NA</td>
+<td headers="CONTADOR" class="gt_row gt_center">477</td>
+<td headers="csap" class="gt_row gt_center">não</td>
+<td headers="grupo" class="gt_row gt_center">não-CSAP</td>
+<td headers="idade" class="gt_row gt_right">39</td></tr>
   </tbody>
   
   
@@ -1458,22 +1588,17 @@ da variável em seu todo, sem a estratificação, quando o argumento
 ``` r
 rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
 gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
-```
-
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" />
-
-``` r
 
 gr + ggplot2::facet_wrap(~ munres == "431490", 
                          labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-20-2.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="48%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-20-2.png" width="48%" style="display: block; margin: auto;" />
 
 ## Calcular taxas
 
-### Taxas de ICSAP em Cerro Largo, RS, 2010:
+### Taxas de ICSAP em Cerro Largo, RS, 2021:
 
 O pacote [territorio](https://github.com/fulvionedel/territorio) tem
 algumas informações territoriais:
@@ -1499,27 +1624,22 @@ cl |> str()
  $ NU_LONGIT   : num -54.7
 ```
 
-O código IBGE (os seis primeiros dígitos) de Cerro Largo é 430520
+O código IBGE (os seis primeiros dígitos) de Cerro Largo é 430520.
 
 #### As ICSAP
 
-Os arquivos da AIH podem ser lidos diretamente no FTP do DATASUS,
-através do pacote
-[microdatasus](https://github.com/rfsaldanha/microdatasus), também de
-Raphael Saldanha.
+Selecionamos as informações sobre residentes de Cerro Largo em nosso
+banco de dados da AIH em 2021.
 
 ``` r
-# remotes::install_github("rfsaldanha/microdatasus")
-aih <- microdatasus::fetch_datasus(2010, 1, 2010, 12, "RS", "SIH-RD") %>% 
+aih <- AIHRS2021 %>% 
   filter(MUNIC_RES == "430520") %>% 
   droplevels() %>% 
   csapAIH()
-Your local Internet connection seems to be ok.
-DataSUS FTP server seems to be up. Starting download...
-Importados 922 registros.
-Excluídos 33 (3,6%) registros de procedimentos obstétricos.
-Excluídos 5 (0,5%) registros de AIH de longa permanência.
-Exportados 884 (95,9%) registros.
+Importados 753 registros.
+Excluídos 46 (6,1%) registros de procedimentos obstétricos.
+Excluídos NA (NA%) registros de AIH de longa permanência.
+Exportados 707 (93,9%) registros.
 ```
 
 #### A população
@@ -1530,7 +1650,7 @@ brasileiros (último arquivo no FTP é da população em 2012), passou a ser
 necessária a tabulação no TABNET e posterior leitura dos dados no
 programa de análise. Ano passado (2022) Raphael Saldanha nos brinda
 outro excelente e muito necessário pacote preenchendo essa lacuna:
-[brpop](https://rfsaldanha.github.io/brpop/)
+[brpop](https://rfsaldanha.github.io/brpop/).
 
 ``` r
 pop <- csapAIH::popbr2000_2021(2010, munic = cl$CO_MUNICIP)
@@ -1549,28 +1669,28 @@ tabCSAP(aih$grupo) %>%
 
 | grupo                                 | casos | perctot | percsap |    taxa |
 |:--------------------------------------|------:|--------:|--------:|--------:|
-| 1\. Prev. vacinação e cond. evitáveis |     0 |     0,0 |     0,0 |     0,0 |
-| 2\. Gastroenterite                    |    73 |     8,3 |    23,6 |   538,2 |
-| 3\. Anemia                            |     2 |     0,2 |     0,7 |    14,7 |
+| 1\. Prev. vacinação e cond. evitáveis |     2 |     0,3 |     1,9 |    14,7 |
+| 2\. Gastroenterite                    |     6 |     0,8 |     5,6 |    44,2 |
+| 3\. Anemia                            |     0 |     0,0 |     0,0 |     0,0 |
 | 4\. Defic. nutricionais               |     0 |     0,0 |     0,0 |     0,0 |
-| 5\. Infec. ouvido, nariz e garganta   |     3 |     0,3 |     1,0 |    22,1 |
-| 6\. Pneumonias bacterianas            |    12 |     1,4 |     3,9 |    88,5 |
-| 7\. Asma                              |     5 |     0,6 |     1,6 |    36,9 |
-| 8\. Pulmonares (DPOC)                 |     6 |     0,7 |     1,9 |    44,2 |
-| 9\. Hipertensão                       |    35 |     4,0 |    11,3 |   258,1 |
-| 10\. Angina                           |    24 |     2,7 |     7,7 |   177,0 |
-| 11\. Insuf. cardíaca                  |    19 |     2,1 |     6,1 |   140,1 |
-| 12\. Cerebrovasculares                |    29 |     3,3 |     9,3 |   213,8 |
-| 13\. Diabetes mellitus                |    14 |     1,6 |     4,5 |   103,2 |
-| 14\. Epilepsias                       |     0 |     0,0 |     0,0 |     0,0 |
-| 15\. Infec. urinária                  |    72 |     8,1 |    23,2 |   530,9 |
-| 16\. Infec. pele e subcutâneo         |     0 |     0,0 |     0,0 |     0,0 |
-| 17\. D. infl. órgãos pélvicos fem.    |     4 |     0,4 |     1,3 |    29,5 |
-| 18\. Úlcera gastrointestinal          |     9 |     1,0 |     2,9 |    66,4 |
-| 19\. Pré-natal e parto                |     3 |     0,3 |     1,0 |    22,1 |
-| Total CSAP                            |   310 |    35,1 |   100,0 | 2.285,6 |
-| Não-CSAP                              |   574 |    64,9 |      NA | 4.232,1 |
-| Total de internações                  |   884 |   100,0 |      NA | 6.517,7 |
+| 5\. Infec. ouvido, nariz e garganta   |     2 |     0,3 |     1,9 |    14,7 |
+| 6\. Pneumonias bacterianas            |    20 |     2,8 |    18,5 |   147,5 |
+| 7\. Asma                              |     1 |     0,1 |     0,9 |     7,4 |
+| 8\. Pulmonares (DPOC)                 |    13 |     1,8 |    12,0 |    95,8 |
+| 9\. Hipertensão                       |     1 |     0,1 |     0,9 |     7,4 |
+| 10\. Angina                           |     3 |     0,4 |     2,8 |    22,1 |
+| 11\. Insuf. cardíaca                  |    13 |     1,8 |    12,0 |    95,8 |
+| 12\. Cerebrovasculares                |     7 |     1,0 |     6,5 |    51,6 |
+| 13\. Diabetes mellitus                |    10 |     1,4 |     9,3 |    73,7 |
+| 14\. Epilepsias                       |     2 |     0,3 |     1,9 |    14,7 |
+| 15\. Infec. urinária                  |    24 |     3,4 |    22,2 |   177,0 |
+| 16\. Infec. pele e subcutâneo         |     4 |     0,6 |     3,7 |    29,5 |
+| 17\. D. infl. órgãos pélvicos fem.    |     0 |     0,0 |     0,0 |     0,0 |
+| 18\. Úlcera gastrointestinal          |     0 |     0,0 |     0,0 |     0,0 |
+| 19\. Pré-natal e parto                |     0 |     0,0 |     0,0 |     0,0 |
+| Total CSAP                            |   108 |    15,3 |   100,0 |   796,3 |
+| Não-CSAP                              |   599 |    84,7 |      NA | 4.416,4 |
+| Total de internações                  |   707 |   100,0 |      NA | 5.212,7 |
 
 ICSAP em Cerro Largo, RS, 2012. Taxas por 100.000 hab.
 

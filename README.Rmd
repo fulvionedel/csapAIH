@@ -96,19 +96,17 @@ library(csapAIH)
 
 Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo programa [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/), disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.  
 
-Assim, se o que queremos é apenas ver em gráfico a distribuição proporcional das internações e da mortalidade por CSAP por grupo de causas, podemos ler os arquivos na internet e desenhar o gráfico diretamente:  
+O código abaixo cria um `data.frame` com as informações das AIHs do "ano de competência" 2021 no RS e outro com as informações das Declarações de Óbito (DO) de residentes do RS ocorridas em 2021.
 
-```{r cache=TRUE, fig.show='hold', out.width="45%", message=FALSE}
-microdatasus::fetch_datasus(year_start = 2012, 1, 2012, 1, uf = "RS", 
-                            information_system = "SIH-RD") %>% 
-  csapAIH() %>% 
-  desenhaCSAP(titulo = "auto", onde = "RS")
+```{r fig.show='hold', message=FALSE}
+# remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
+AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
+                                         information_system = "SIH-RD")
+cat("AIHRS2021:", nrow(AIHRS2021), "linhas e", ncol(AIHRS2021), "colunas.")
 
-# Guardarei o arquivo de mortalidade, para usar mais tarde
-DORS2012 <- microdatasus::fetch_datasus(year_start = 2012, year_end = 2012, uf = "RS", 
+DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-csapAIH(DORS2012, sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  desenhaCSAP(titulo = "Mortalidade por Condições Sensíveis à Atenção Primária. RS, 2012.")
+cat("DORS2021:", nrow(DORS2021), "linhas e", ncol(DORS2021), "colunas.")
 ```
 
 Se o arquivo de dados está armazenado no computador, basta digitar, entre aspas, o nome do arquivo (com a extensão), com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw'). 
@@ -156,9 +154,9 @@ csap.eeh20[c(30,37:38)] |>
 A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para computar a idade).
 
 ```{r}
-DORS2012 %>% # O banco de dados criado anteriormente 
+DORS2021 %>%
   csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  mutate(idade = idadeSUS(DORS2012, sis = "SIM")$idade) %>% 
+  mutate(idade = idadeSUS(DORS2021, sis = "SIM")$idade) %>% 
   head() %>% 
   gt::gt()
 ```
@@ -228,7 +226,7 @@ gr
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
   
-```{r out.width="50%", fig.align='center'}
+```{r out.width="48%", fig.align='center', fig.show='hold'}
 rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
 gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
 
@@ -239,7 +237,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 
 ## Calcular taxas
 
-### Taxas de ICSAP em Cerro Largo, RS, 2010:
+### Taxas de ICSAP em Cerro Largo, RS, 2021:
 
 O pacote [territorio](https://github.com/fulvionedel/territorio) tem algumas informações territoriais:
 ```{r}
@@ -250,15 +248,14 @@ cl <- territorio::territorio("RS") %>%
 cl |> str()
 ```
 
-O código IBGE (os seis primeiros dígitos) de Cerro Largo é `r as.character(cl$CO_MUNICIP)`
+O código IBGE (os seis primeiros dígitos) de Cerro Largo é `r as.character(cl$CO_MUNICIP)`.
 
 #### As ICSAP
 
-Os arquivos da AIH podem ser lidos diretamente no FTP do DATASUS, através do pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), também de Raphael Saldanha.
+Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021.
 
 ```{r}
-# remotes::install_github("rfsaldanha/microdatasus")
-aih <- microdatasus::fetch_datasus(2010, 1, 2010, 12, "RS", "SIH-RD") %>% 
+aih <- AIHRS2021 %>% 
   filter(MUNIC_RES == "430520") %>% 
   droplevels() %>% 
   csapAIH()
@@ -267,7 +264,7 @@ aih <- microdatasus::fetch_datasus(2010, 1, 2010, 12, "RS", "SIH-RD") %>%
 
 #### A população
 
-Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha nos brinda outro excelente e muito necessário pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/)
+Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha nos brinda outro excelente e muito necessário pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/).
 
 
 ```{r}
