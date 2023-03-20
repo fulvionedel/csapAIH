@@ -10,6 +10,7 @@
 #' @param anof Ano de fim do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis (v. Examples).
 #' @param uf Vetor com a(s) sigla(s) da(s) Unidade(s) da Federação de interesse.
 #' @param munic Vetor com o código IBGE do(s) municípios(s) de interesse.
+#' @param droplevels Se TRUE (padrão), não inclui as categorias sem observações.
 #'
 #' @seealso \code{\link[brpop]{mun_sex_pop}}
 #'
