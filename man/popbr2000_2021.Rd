@@ -4,7 +4,13 @@
 \alias{popbr2000_2021}
 \title{População Brasil 2000-2021}
 \usage{
-popbr2000_2021(anoi = NULL, anof = NULL, uf = NULL, munic = NULL)
+popbr2000_2021(
+  anoi = NULL,
+  anof = NULL,
+  uf = NULL,
+  munic = NULL,
+  droplevels = TRUE
+)
 }
 \arguments{
 \item{anoi}{Ano de início do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis (v. Examples).}

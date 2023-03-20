@@ -333,12 +333,12 @@ DORS2012 %>% # O banco de dados criado anteriormente
 Importados 79.456 registros.
 ```
 
-<div id="oemgzsenqg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="zkibemutyc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#oemgzsenqg .gt_table {
+#zkibemutyc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -363,7 +363,7 @@ Importados 79.456 registros.
   border-left-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_heading {
+#zkibemutyc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -375,12 +375,12 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_caption {
+#zkibemutyc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oemgzsenqg .gt_title {
+#zkibemutyc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -392,7 +392,7 @@ Importados 79.456 registros.
   border-bottom-width: 0;
 }
 
-#oemgzsenqg .gt_subtitle {
+#zkibemutyc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -404,13 +404,13 @@ Importados 79.456 registros.
   border-top-width: 0;
 }
 
-#oemgzsenqg .gt_bottom_border {
+#zkibemutyc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_col_headings {
+#zkibemutyc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -425,7 +425,7 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_col_heading {
+#zkibemutyc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -445,7 +445,7 @@ Importados 79.456 registros.
   overflow-x: hidden;
 }
 
-#oemgzsenqg .gt_column_spanner_outer {
+#zkibemutyc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -457,15 +457,15 @@ Importados 79.456 registros.
   padding-right: 4px;
 }
 
-#oemgzsenqg .gt_column_spanner_outer:first-child {
+#zkibemutyc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oemgzsenqg .gt_column_spanner_outer:last-child {
+#zkibemutyc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oemgzsenqg .gt_column_spanner {
+#zkibemutyc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -477,7 +477,7 @@ Importados 79.456 registros.
   width: 100%;
 }
 
-#oemgzsenqg .gt_group_heading {
+#zkibemutyc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -503,7 +503,7 @@ Importados 79.456 registros.
   text-align: left;
 }
 
-#oemgzsenqg .gt_empty_group_heading {
+#zkibemutyc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -518,15 +518,15 @@ Importados 79.456 registros.
   vertical-align: middle;
 }
 
-#oemgzsenqg .gt_from_md > :first-child {
+#zkibemutyc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oemgzsenqg .gt_from_md > :last-child {
+#zkibemutyc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oemgzsenqg .gt_row {
+#zkibemutyc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -545,7 +545,7 @@ Importados 79.456 registros.
   overflow-x: hidden;
 }
 
-#oemgzsenqg .gt_stub {
+#zkibemutyc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -558,7 +558,7 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#oemgzsenqg .gt_stub_row_group {
+#zkibemutyc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -572,11 +572,11 @@ Importados 79.456 registros.
   vertical-align: top;
 }
 
-#oemgzsenqg .gt_row_group_first td {
+#zkibemutyc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oemgzsenqg .gt_summary_row {
+#zkibemutyc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -586,16 +586,16 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#oemgzsenqg .gt_first_summary_row {
+#zkibemutyc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_first_summary_row.thick {
+#zkibemutyc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oemgzsenqg .gt_last_summary_row {
+#zkibemutyc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -605,7 +605,7 @@ Importados 79.456 registros.
   border-bottom-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_grand_summary_row {
+#zkibemutyc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -615,7 +615,7 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#oemgzsenqg .gt_first_grand_summary_row {
+#zkibemutyc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,11 +625,11 @@ Importados 79.456 registros.
   border-top-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_striped {
+#zkibemutyc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oemgzsenqg .gt_table_body {
+#zkibemutyc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -638,7 +638,7 @@ Importados 79.456 registros.
   border-bottom-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_footnotes {
+#zkibemutyc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -652,7 +652,7 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_footnote {
+#zkibemutyc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -661,7 +661,7 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#oemgzsenqg .gt_sourcenotes {
+#zkibemutyc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -675,7 +675,7 @@ Importados 79.456 registros.
   border-right-color: #D3D3D3;
 }
 
-#oemgzsenqg .gt_sourcenote {
+#zkibemutyc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -683,64 +683,64 @@ Importados 79.456 registros.
   padding-right: 5px;
 }
 
-#oemgzsenqg .gt_left {
+#zkibemutyc .gt_left {
   text-align: left;
 }
 
-#oemgzsenqg .gt_center {
+#zkibemutyc .gt_center {
   text-align: center;
 }
 
-#oemgzsenqg .gt_right {
+#zkibemutyc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oemgzsenqg .gt_font_normal {
+#zkibemutyc .gt_font_normal {
   font-weight: normal;
 }
 
-#oemgzsenqg .gt_font_bold {
+#zkibemutyc .gt_font_bold {
   font-weight: bold;
 }
 
-#oemgzsenqg .gt_font_italic {
+#zkibemutyc .gt_font_italic {
   font-style: italic;
 }
 
-#oemgzsenqg .gt_super {
+#zkibemutyc .gt_super {
   font-size: 65%;
 }
 
-#oemgzsenqg .gt_footnote_marks {
+#zkibemutyc .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#oemgzsenqg .gt_asterisk {
+#zkibemutyc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oemgzsenqg .gt_indent_1 {
+#zkibemutyc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oemgzsenqg .gt_indent_2 {
+#zkibemutyc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oemgzsenqg .gt_indent_3 {
+#zkibemutyc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oemgzsenqg .gt_indent_4 {
+#zkibemutyc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oemgzsenqg .gt_indent_5 {
+#zkibemutyc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1534,7 +1534,6 @@ outro excelente e muito necessário pacote preenchendo essa lacuna:
 
 ``` r
 pop <- csapAIH::popbr2000_2021(2010, munic = cl$CO_MUNICIP)
-Joining with `by = join_by(CO_UF)`
 ```
 
 #### A tabela com as taxas
@@ -1548,30 +1547,30 @@ tabCSAP(aih$grupo) %>%
                                Rcoisas::formatL(cte, digits = 0), "hab."))
 ```
 
-| grupo                                 | casos | perctot | percsap |  taxa |
-|:--------------------------------------|------:|--------:|--------:|------:|
-| 1\. Prev. vacinação e cond. evitáveis |     0 |     0,0 |     0,0 |   0,0 |
-| 2\. Gastroenterite                    |    73 |     8,3 |    23,6 |  43,7 |
-| 3\. Anemia                            |     2 |     0,2 |     0,7 |   1,2 |
-| 4\. Defic. nutricionais               |     0 |     0,0 |     0,0 |   0,0 |
-| 5\. Infec. ouvido, nariz e garganta   |     3 |     0,3 |     1,0 |   1,8 |
-| 6\. Pneumonias bacterianas            |    12 |     1,4 |     3,9 |   7,2 |
-| 7\. Asma                              |     5 |     0,6 |     1,6 |   3,0 |
-| 8\. Pulmonares (DPOC)                 |     6 |     0,7 |     1,9 |   3,6 |
-| 9\. Hipertensão                       |    35 |     4,0 |    11,3 |  21,0 |
-| 10\. Angina                           |    24 |     2,7 |     7,7 |  14,4 |
-| 11\. Insuf. cardíaca                  |    19 |     2,1 |     6,1 |  11,4 |
-| 12\. Cerebrovasculares                |    29 |     3,3 |     9,3 |  17,4 |
-| 13\. Diabetes mellitus                |    14 |     1,6 |     4,5 |   8,4 |
-| 14\. Epilepsias                       |     0 |     0,0 |     0,0 |   0,0 |
-| 15\. Infec. urinária                  |    72 |     8,1 |    23,2 |  43,1 |
-| 16\. Infec. pele e subcutâneo         |     0 |     0,0 |     0,0 |   0,0 |
-| 17\. D. infl. órgãos pélvicos fem.    |     4 |     0,4 |     1,3 |   2,4 |
-| 18\. Úlcera gastrointestinal          |     9 |     1,0 |     2,9 |   5,4 |
-| 19\. Pré-natal e parto                |     3 |     0,3 |     1,0 |   1,8 |
-| Total CSAP                            |   310 |    35,1 |   100,0 | 185,7 |
-| Não-CSAP                              |   574 |    64,9 |      NA | 343,9 |
-| Total de internações                  |   884 |   100,0 |      NA | 529,6 |
+| grupo                                 | casos | perctot | percsap |    taxa |
+|:--------------------------------------|------:|--------:|--------:|--------:|
+| 1\. Prev. vacinação e cond. evitáveis |     0 |     0,0 |     0,0 |     0,0 |
+| 2\. Gastroenterite                    |    73 |     8,3 |    23,6 |   538,2 |
+| 3\. Anemia                            |     2 |     0,2 |     0,7 |    14,7 |
+| 4\. Defic. nutricionais               |     0 |     0,0 |     0,0 |     0,0 |
+| 5\. Infec. ouvido, nariz e garganta   |     3 |     0,3 |     1,0 |    22,1 |
+| 6\. Pneumonias bacterianas            |    12 |     1,4 |     3,9 |    88,5 |
+| 7\. Asma                              |     5 |     0,6 |     1,6 |    36,9 |
+| 8\. Pulmonares (DPOC)                 |     6 |     0,7 |     1,9 |    44,2 |
+| 9\. Hipertensão                       |    35 |     4,0 |    11,3 |   258,1 |
+| 10\. Angina                           |    24 |     2,7 |     7,7 |   177,0 |
+| 11\. Insuf. cardíaca                  |    19 |     2,1 |     6,1 |   140,1 |
+| 12\. Cerebrovasculares                |    29 |     3,3 |     9,3 |   213,8 |
+| 13\. Diabetes mellitus                |    14 |     1,6 |     4,5 |   103,2 |
+| 14\. Epilepsias                       |     0 |     0,0 |     0,0 |     0,0 |
+| 15\. Infec. urinária                  |    72 |     8,1 |    23,2 |   530,9 |
+| 16\. Infec. pele e subcutâneo         |     0 |     0,0 |     0,0 |     0,0 |
+| 17\. D. infl. órgãos pélvicos fem.    |     4 |     0,4 |     1,3 |    29,5 |
+| 18\. Úlcera gastrointestinal          |     9 |     1,0 |     2,9 |    66,4 |
+| 19\. Pré-natal e parto                |     3 |     0,3 |     1,0 |    22,1 |
+| Total CSAP                            |   310 |    35,1 |   100,0 | 2.285,6 |
+| Não-CSAP                              |   574 |    64,9 |      NA | 4.232,1 |
+| Total de internações                  |   884 |   100,0 |      NA | 6.517,7 |
 
 ICSAP em Cerro Largo, RS, 2012. Taxas por 100.000 hab.
 
