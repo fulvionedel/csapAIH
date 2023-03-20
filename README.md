@@ -333,7 +333,11 @@ DORS2012 %>% # O banco de dados criado anteriormente
 Importados 79.456 registros.
 ```
 
+<<<<<<< HEAD
 <div id="oemgzsenqg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+=======
+<div id="osvnugrzkh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+>>>>>>> aec54e00a7c47f2c107e7ee8a7a3f7d735421a4d
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
