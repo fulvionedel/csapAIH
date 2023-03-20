@@ -160,6 +160,7 @@ DORS2021 %>%
   head() %>% 
   gt::gt()
 ```
+
   
 ### A partir de uma variável com códigos da CID-10:
 
