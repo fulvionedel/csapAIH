@@ -1,9 +1,9 @@
-csapAIH: <font size="4"> Classificar Condições Sensíveis à Atenção
+csapAIH: <font size="2"> Classificar Condições Sensíveis à Atenção
 Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 20 de março de 2023
+Atualizado em 21 de março de 2023
 
 - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
 - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
@@ -57,29 +57,33 @@ Mortalidade (SIM).
 
 # Justificativa
 
-A hospitalização por CSAP é um indicador da qualidade do sistema de
+A hospitalização por CSAP é um indicador da efetividade do sistema de
 saúde em sua primeira instância de atenção, uma vez que a internação por
 tais condições —pneumonia, infecção urinária, sarampo, diabetes etc.— só
 acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja
-por não prevenir a ocorrência da doença (caso das doenças preveníveis
-por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo
-(como na pneumonia ou infeccão urinária) ou por falhar no seu controle
-clínico (como é o caso da diabete).
+por não prevenir a ocorrência da doença (caso das doenças evitáveis por
+vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como
+na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico
+(como é o caso da diabete). ([Nedel *et al.*, 2011](#ref-Nedel2011))
 
 O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo
 processo de validação, uma lista com várias causas de internação
 hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira.
-A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19
+([Alfradique *et al.*, 2009](#ref-Alfradique2009); [Brasil. Ministério
+da Saúde. Secretaria de Atenção à Saúde, 2008](#ref-MS2008lista)) A
+Lista envolve vários códigos da CID-10 e classifica as CSAP em 19
 subgrupos de causa, o que torna complexa e trabalhosa a sua
 decodificação. Há alguns anos o Departamento de Informática do SUS
-(DATASUS) incluiu em seu excelente programa de tabulação de dados TabWin
-a opção de tabulação por essas causas, apresentando sua frequência
-segundo a tabela definida pelo usuário.
+(DATASUS) incluiu em seu excelente programa de tabulação de dados
+[TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/) a
+opção de tabulação por essas causas, apresentando sua frequência segundo
+a tabela definida pelo usuário.
 
 Entretanto, muitas vezes a pesquisa exige a classificação de cada
-internação individual como uma variável na base de dados. E não conheço
-outro programa ou *script* (além do que tive de escrever em minha tese)
-que automatize esse trabalho.
+internação individual como uma variável na base de dados. ([Nedel *et
+al.*, 2008](#ref-Nedel2008)) E não conheço outro programa ou *script*
+(além do que tive de escrever em minha tese ([Nedel,
+2009](#ref-NedelTese))) que automatize esse trabalho.
 
 # Instalação
 
@@ -110,7 +114,7 @@ remotes::install_github("fulvionedel/csapAIH")
 
 # Conteúdo (*timeline*)
 
-Na sua primeira versão ([Nedel 2017](#ref-Nedel2017)), o pacote
+Na sua primeira versão ([Nedel, 2017](#ref-Nedel2017)), o pacote
 `csapAIH` continha apenas uma função, homônima: `csapAIH`.
 
 Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`,
@@ -121,7 +125,7 @@ expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de
 Daniela Petruzalek
 (<https://cran.r-project.org/web/packages/read.dbc/index.html>).
 
-A partir da versão 0.0.3 ([Nedel 2019](#ref-Nedel2019)), a função
+A partir da versão 0.0.3 ([Nedel, 2019](#ref-Nedel2019)), a função
 `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros
 fatores do banco de dados, com o uso das funções `facet_wrap()` e
 `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com
@@ -131,14 +135,15 @@ criada uma função para o cálculo da idade nos arquivos da AIH: a função
 usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
-CSAP em 20 grupos de causa, como sugerido por Alfradique et al.
+CSAP em 20 grupos de causa, como sugerido por Alfradique *et al.*
 ([2009](#ref-Alfradique2009)). As funções `desenhaCSAP` e `tabCSAP` têm
 um argumento para seleção do idioma dos nomes de grupos, em português
 (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as
-funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de R.
-Saldanha ([2022](#ref-brpopref))) para acesso às estimativas
-populacionais publicadas pelo DATASUS e funções para categorização da
-idade em faixas etárias.
+funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote
+[brpop](https://cran.r-project.org/package=brpop) de Saldanha
+([2022](#ref-brpopref))) para acesso às estimativas populacionais
+publicadas pelo DATASUS e funções para categorização da idade em faixas
+etárias.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
@@ -149,7 +154,7 @@ ou, no R, com `?'csapAIH-package'`.
 
 A leitura de arquivos .DBC exige a instalação prévia do pacote
 [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)
-([Petruzalek 2016](#ref-readdbc)). Sua falta não impede o funcionamento
+([Petruzalek, 2016](#ref-readdbc)). Sua falta não impede o funcionamento
 das demais funções do pacote (inclusive de leitura de arquivos em outro
 formato). A função `desenhaCSAP` tem melhor desempenho com o pacote
 `ggplot2` instalado, mas sua instalação não é necessária para que ela
@@ -181,42 +186,43 @@ dos dados para um objeto de classe `data.frame`.
 
 Através de seu site FTP, o DATASUS disponibiliza dados de diferentes
 Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de
-extensão DBC. Os arquivos podem ser baixados baixados na página de
-[transferência de
-arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do
+extensão DBC. Os arquivos podem ser baixados na página de [transferência
+de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do
 DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades
-de manejo) pelo programa
-[TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/),
-disponível na mesma página. Graças ao pacote
+de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote
 [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek,
 também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao
 pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de
-Raphael Saldanha ([R. de F. Saldanha, Bastos, and Barcellos
-2019](#ref-Saldanha2019)), podemos ler com facilidade esses arquivos na
-internet, sem necessidade de download.
+Raphael Saldanha ([Saldanha *et al.*, 2019](#ref-Saldanha2019)), podemos
+ler com facilidade esses arquivos na internet, sem necessidade de
+download.
 
-O código abaixo cria um `data.frame` com as informações das AIHs do “ano
-de competência” 2021 no RS e outro com as informações das Declarações de
-Óbito (DO) de residentes do RS ocorridas em 2021.
+O código abaixo cria um banco com as informações das AIHs do “ano de
+competência” 2021 ocorridas no RS e outro com as informações das
+Declarações de Óbito (DO) de residentes no RS ocorridas em 2021:
 
 ``` r
 # remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
 AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
                                          information_system = "SIH-RD")
-cat("AIHRS2021:", nrow(AIHRS2021), "linhas e", ncol(AIHRS2021), "colunas.")
-AIHRS2021: 709893 linhas e 113 colunas.
+nrow(AIHRS2021) |> Rcoisas::formatL() # linhas
+[1] "709.893,0"
+ncol(AIHRS2021) # colunas
+[1] 113
 
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-cat("DORS2021:", nrow(DORS2021), "linhas e", ncol(DORS2021), "colunas.")
-DORS2021: 117158 linhas e 87 colunas.
+nrow(DORS2021) |> Rcoisas::formatL()
+[1] "117.158,0"
+ncol(DORS2021)
+[1] 87
 ```
 
-Se o arquivo de dados está armazenado no computador, basta digitar,
-entre aspas, o nome do arquivo (com a extensão), com o “*path*” se o
-arquivo estiver em diretório diferente daquele da sessão de trabalho
-ativa (neste exemplo, num sub-diretório do diretório de trabalho da
-sessão ativa, chamado ‘data-raw’).
+Se o arquivo de dados estiver armazenado no computador, basta digitar,
+entre aspas, o nome do arquivo — com o “*path*” se o arquivo estiver em
+diretório diferente daquele da sessão de trabalho ativa (neste exemplo,
+num sub-diretório do diretório de trabalho da sessão ativa, chamado
+‘data-raw’).
 
 <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
 
@@ -282,9 +288,10 @@ $ cnes       <int> 2232189, 2232928, 2232928, 2232928, 2232928, 2232928, 22329�
 #### Sem o padrão dos arquivos da AIH
 
 Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual
-variável contém os códigos diagnósticos.
+variável contém os códigos diagnósticos. As variáveis `csap` e `grupo`
+(se `csapAIH(..., grupos = TRUE, ...)`)
 
-A *Encuesta de Egresos Hospitalarios* do Equador:
+##### A *Encuesta de Egresos Hospitalarios* do Equador.
 
 ``` r
 data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2020
@@ -297,7 +304,11 @@ names(eeh20) # Os nomes das variáveis
 [26] "fecha_egr"  "dia_estad"  "con_egrpa"  "esp_egrpa"  "cau_cie10" 
 [31] "cant_res"   "parr_res"   "causa3"     "cap221rx"   "cau221rx"  
 [36] "cau298rx"  
+```
 
+A variável `cau_cie10` tem o código do diagnóstico de internação.
+
+``` r
 csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
 Importados 1.000 registros.
 Excluídos 150 registros de parto (15% do total).
@@ -318,8 +329,9 @@ csap.eeh20[c(30,37:38)] |>
 3      A090  sim      g02
 ```
 
-A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para
-computar a idade).
+##### A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para computar a idade).
+
+A variável `CAUSABAS` tem o código da causa básica do óbito.
 
 ``` r
 DORS2021 %>%
@@ -330,12 +342,12 @@ DORS2021 %>%
 Importados 117.158 registros.
 ```
 
-<div id="cgtaqhhdzk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="cnezyahfao" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cgtaqhhdzk .gt_table {
+#cnezyahfao .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -360,7 +372,7 @@ Importados 117.158 registros.
   border-left-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_heading {
+#cnezyahfao .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -372,12 +384,12 @@ Importados 117.158 registros.
   border-right-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_caption {
+#cnezyahfao .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cgtaqhhdzk .gt_title {
+#cnezyahfao .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -389,7 +401,7 @@ Importados 117.158 registros.
   border-bottom-width: 0;
 }
 
-#cgtaqhhdzk .gt_subtitle {
+#cnezyahfao .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -401,13 +413,13 @@ Importados 117.158 registros.
   border-top-width: 0;
 }
 
-#cgtaqhhdzk .gt_bottom_border {
+#cnezyahfao .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_col_headings {
+#cnezyahfao .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -422,7 +434,7 @@ Importados 117.158 registros.
   border-right-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_col_heading {
+#cnezyahfao .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -442,7 +454,7 @@ Importados 117.158 registros.
   overflow-x: hidden;
 }
 
-#cgtaqhhdzk .gt_column_spanner_outer {
+#cnezyahfao .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -454,15 +466,15 @@ Importados 117.158 registros.
   padding-right: 4px;
 }
 
-#cgtaqhhdzk .gt_column_spanner_outer:first-child {
+#cnezyahfao .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cgtaqhhdzk .gt_column_spanner_outer:last-child {
+#cnezyahfao .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cgtaqhhdzk .gt_column_spanner {
+#cnezyahfao .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -474,7 +486,7 @@ Importados 117.158 registros.
   width: 100%;
 }
 
-#cgtaqhhdzk .gt_group_heading {
+#cnezyahfao .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -500,7 +512,7 @@ Importados 117.158 registros.
   text-align: left;
 }
 
-#cgtaqhhdzk .gt_empty_group_heading {
+#cnezyahfao .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -515,15 +527,15 @@ Importados 117.158 registros.
   vertical-align: middle;
 }
 
-#cgtaqhhdzk .gt_from_md > :first-child {
+#cnezyahfao .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cgtaqhhdzk .gt_from_md > :last-child {
+#cnezyahfao .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cgtaqhhdzk .gt_row {
+#cnezyahfao .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -542,7 +554,7 @@ Importados 117.158 registros.
   overflow-x: hidden;
 }
 
-#cgtaqhhdzk .gt_stub {
+#cnezyahfao .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -555,7 +567,7 @@ Importados 117.158 registros.
   padding-right: 5px;
 }
 
-#cgtaqhhdzk .gt_stub_row_group {
+#cnezyahfao .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -569,11 +581,11 @@ Importados 117.158 registros.
   vertical-align: top;
 }
 
-#cgtaqhhdzk .gt_row_group_first td {
+#cnezyahfao .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cgtaqhhdzk .gt_summary_row {
+#cnezyahfao .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -583,16 +595,16 @@ Importados 117.158 registros.
   padding-right: 5px;
 }
 
-#cgtaqhhdzk .gt_first_summary_row {
+#cnezyahfao .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_first_summary_row.thick {
+#cnezyahfao .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cgtaqhhdzk .gt_last_summary_row {
+#cnezyahfao .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -602,7 +614,7 @@ Importados 117.158 registros.
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_grand_summary_row {
+#cnezyahfao .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -612,7 +624,7 @@ Importados 117.158 registros.
   padding-right: 5px;
 }
 
-#cgtaqhhdzk .gt_first_grand_summary_row {
+#cnezyahfao .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -622,11 +634,11 @@ Importados 117.158 registros.
   border-top-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_striped {
+#cnezyahfao .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cgtaqhhdzk .gt_table_body {
+#cnezyahfao .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -635,7 +647,7 @@ Importados 117.158 registros.
   border-bottom-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_footnotes {
+#cnezyahfao .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -649,7 +661,7 @@ Importados 117.158 registros.
   border-right-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_footnote {
+#cnezyahfao .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -658,7 +670,7 @@ Importados 117.158 registros.
   padding-right: 5px;
 }
 
-#cgtaqhhdzk .gt_sourcenotes {
+#cnezyahfao .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -672,7 +684,7 @@ Importados 117.158 registros.
   border-right-color: #D3D3D3;
 }
 
-#cgtaqhhdzk .gt_sourcenote {
+#cnezyahfao .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -680,64 +692,64 @@ Importados 117.158 registros.
   padding-right: 5px;
 }
 
-#cgtaqhhdzk .gt_left {
+#cnezyahfao .gt_left {
   text-align: left;
 }
 
-#cgtaqhhdzk .gt_center {
+#cnezyahfao .gt_center {
   text-align: center;
 }
 
-#cgtaqhhdzk .gt_right {
+#cnezyahfao .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cgtaqhhdzk .gt_font_normal {
+#cnezyahfao .gt_font_normal {
   font-weight: normal;
 }
 
-#cgtaqhhdzk .gt_font_bold {
+#cnezyahfao .gt_font_bold {
   font-weight: bold;
 }
 
-#cgtaqhhdzk .gt_font_italic {
+#cnezyahfao .gt_font_italic {
   font-style: italic;
 }
 
-#cgtaqhhdzk .gt_super {
+#cnezyahfao .gt_super {
   font-size: 65%;
 }
 
-#cgtaqhhdzk .gt_footnote_marks {
+#cnezyahfao .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#cgtaqhhdzk .gt_asterisk {
+#cnezyahfao .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cgtaqhhdzk .gt_indent_1 {
+#cnezyahfao .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cgtaqhhdzk .gt_indent_2 {
+#cnezyahfao .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cgtaqhhdzk .gt_indent_3 {
+#cnezyahfao .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cgtaqhhdzk .gt_indent_4 {
+#cnezyahfao .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cgtaqhhdzk .gt_indent_5 {
+#cnezyahfao .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1576,7 +1588,7 @@ Adding another scale for y, which will replace the existing scale.
 gr
 ```
 
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" />
 
 **Estratificado por categorias de outra variável presente no banco de
 dados:**
@@ -1594,7 +1606,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="48%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-20-2.png" width="48%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-21-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-21-2.png" width="45%" style="display: block; margin: auto;" />
 
 ## Calcular taxas
 
@@ -1648,12 +1660,73 @@ Desde que o DATASUS interrompeu a publicação dos arquivos com as
 estimativas populacionais por sexo e faixa etária para os municípios
 brasileiros (último arquivo no FTP é da população em 2012), passou a ser
 necessária a tabulação no TABNET e posterior leitura dos dados no
-programa de análise. Ano passado (2022) Raphael Saldanha nos brinda
-outro excelente e muito necessário pacote preenchendo essa lacuna:
-[brpop](https://rfsaldanha.github.io/brpop/).
+programa de análise. Ano passado (2022) Raphael Saldanha dispôs-se ao
+trabalho de fazer as muitas [tabulações
+necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def)
+e nos brindou outro excelente e muito esperado pacote preenchendo essa
+lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as
+estimativas da população por sexo e faixa etária para os municípios
+brasileiros, de 2000 a 2021 ([Nota
+técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF).
+
+Entretanto, as tabelas no pacote *brpop* têm o total (a soma da
+população nas diferentes faixas etárias), e os rótulos das faixas
+etárias são longos e estão em inglês, por isso resolvi criar outra
+função (`popbr2000_2021`) que retornasse a população com os rótulos em
+português e apenas com a população estimada em cada faixa etária (sem o
+total). Assim, a população estimada para Cerro Largo em 2021 foi
+capturada com o seguinte comando,
 
 ``` r
-pop <- csapAIH::popbr2000_2021(2010, munic = cl$CO_MUNICIP)
+pop <- csapAIH::popbr2000_2021(2021, munic = cl$CO_MUNICIP)
+```
+
+Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da
+categoria “Total” na faixa etáriae os resultados seriam os mesmos, porém
+com outra estrutura do objeto e outros rótulos de categorias:
+
+``` r
+pop %>% 
+  group_by(fxetar5, sexo) %>% 
+  summarise(sum(pop))
+`summarise()` has grouped output by 'fxetar5'. You can override using the
+`.groups` argument.
+# A tibble: 34 × 3
+# Groups:   fxetar5 [17]
+   fxetar5 sexo  `sum(pop)`
+   <fct>   <fct>      <int>
+ 1 0-4     masc         390
+ 2 0-4     fem          372
+ 3 5-9     masc         417
+ 4 5-9     fem          344
+ 5 10-14   masc         434
+ 6 10-14   fem          370
+ 7 15-19   masc         493
+ 8 15-19   fem          431
+ 9 20-24   masc         552
+10 20-24   fem          503
+# … with 24 more rows
+brpop::mun_sex_pop() %>% 
+  filter(mun == cl$CO_MUNICIP, year == 2021, age_group != "Total") %>% 
+  group_by(age_group, sex) %>% 
+  summarise(sum(pop))
+`summarise()` has grouped output by 'age_group'. You can override using the
+`.groups` argument.
+# A tibble: 34 × 3
+# Groups:   age_group [17]
+   age_group           sex    `sum(pop)`
+   <chr>               <chr>       <int>
+ 1 From 0 to 4 years   Female        372
+ 2 From 0 to 4 years   Male          390
+ 3 From 10 to 14 years Female        344
+ 4 From 10 to 14 years Male          417
+ 5 From 15 to 19 years Female        370
+ 6 From 15 to 19 years Male          434
+ 7 From 20 to 24 years Female        431
+ 8 From 20 to 24 years Male          493
+ 9 From 25 to 29 years Female        503
+10 From 25 to 29 years Male          552
+# … with 24 more rows
 ```
 
 #### A tabela com as taxas
@@ -1662,37 +1735,37 @@ pop <- csapAIH::popbr2000_2021(2010, munic = cl$CO_MUNICIP)
 cte <- 1e5
 tabCSAP(aih$grupo) %>% 
   mutate(taxa = casos / sum(pop$pop)*cte) %>% 
-  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1,
-               caption = paste("ICSAP em Cerro Largo, RS, 2012. Taxas por", 
-                               Rcoisas::formatL(cte, digits = 0), "hab."))
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, 
+               caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por", 
+                               Rcoisas::formatL(cte, digits = 0), "hab.")) 
 ```
 
 | grupo                                 | casos | perctot | percsap |    taxa |
 |:--------------------------------------|------:|--------:|--------:|--------:|
-| 1\. Prev. vacinação e cond. evitáveis |     2 |     0,3 |     1,9 |    14,7 |
-| 2\. Gastroenterite                    |     6 |     0,8 |     5,6 |    44,2 |
+| 1\. Prev. vacinação e cond. evitáveis |     2 |     0,3 |     1,9 |    14,0 |
+| 2\. Gastroenterite                    |     6 |     0,8 |     5,6 |    42,1 |
 | 3\. Anemia                            |     0 |     0,0 |     0,0 |     0,0 |
 | 4\. Defic. nutricionais               |     0 |     0,0 |     0,0 |     0,0 |
-| 5\. Infec. ouvido, nariz e garganta   |     2 |     0,3 |     1,9 |    14,7 |
-| 6\. Pneumonias bacterianas            |    20 |     2,8 |    18,5 |   147,5 |
-| 7\. Asma                              |     1 |     0,1 |     0,9 |     7,4 |
-| 8\. Pulmonares (DPOC)                 |    13 |     1,8 |    12,0 |    95,8 |
-| 9\. Hipertensão                       |     1 |     0,1 |     0,9 |     7,4 |
-| 10\. Angina                           |     3 |     0,4 |     2,8 |    22,1 |
-| 11\. Insuf. cardíaca                  |    13 |     1,8 |    12,0 |    95,8 |
-| 12\. Cerebrovasculares                |     7 |     1,0 |     6,5 |    51,6 |
-| 13\. Diabetes mellitus                |    10 |     1,4 |     9,3 |    73,7 |
-| 14\. Epilepsias                       |     2 |     0,3 |     1,9 |    14,7 |
-| 15\. Infec. urinária                  |    24 |     3,4 |    22,2 |   177,0 |
-| 16\. Infec. pele e subcutâneo         |     4 |     0,6 |     3,7 |    29,5 |
+| 5\. Infec. ouvido, nariz e garganta   |     2 |     0,3 |     1,9 |    14,0 |
+| 6\. Pneumonias bacterianas            |    20 |     2,8 |    18,5 |   140,4 |
+| 7\. Asma                              |     1 |     0,1 |     0,9 |     7,0 |
+| 8\. Pulmonares (DPOC)                 |    13 |     1,8 |    12,0 |    91,3 |
+| 9\. Hipertensão                       |     1 |     0,1 |     0,9 |     7,0 |
+| 10\. Angina                           |     3 |     0,4 |     2,8 |    21,1 |
+| 11\. Insuf. cardíaca                  |    13 |     1,8 |    12,0 |    91,3 |
+| 12\. Cerebrovasculares                |     7 |     1,0 |     6,5 |    49,1 |
+| 13\. Diabetes mellitus                |    10 |     1,4 |     9,3 |    70,2 |
+| 14\. Epilepsias                       |     2 |     0,3 |     1,9 |    14,0 |
+| 15\. Infec. urinária                  |    24 |     3,4 |    22,2 |   168,5 |
+| 16\. Infec. pele e subcutâneo         |     4 |     0,6 |     3,7 |    28,1 |
 | 17\. D. infl. órgãos pélvicos fem.    |     0 |     0,0 |     0,0 |     0,0 |
 | 18\. Úlcera gastrointestinal          |     0 |     0,0 |     0,0 |     0,0 |
 | 19\. Pré-natal e parto                |     0 |     0,0 |     0,0 |     0,0 |
-| Total CSAP                            |   108 |    15,3 |   100,0 |   796,3 |
-| Não-CSAP                              |   599 |    84,7 |      NA | 4.416,4 |
-| Total de internações                  |   707 |   100,0 |      NA | 5.212,7 |
+| Total CSAP                            |   108 |    15,3 |   100,0 |   758,3 |
+| Não-CSAP                              |   599 |    84,7 |      NA | 4.205,6 |
+| Total de internações                  |   707 |   100,0 |      NA | 4.963,8 |
 
-ICSAP em Cerro Largo, RS, 2012. Taxas por 100.000 hab.
+ICSAP em Cerro Largo, RS, 2021. Taxas por 100.000 hab.
 
 ------------------------------------------------------------------------
 
@@ -1717,10 +1790,9 @@ ICSAP em Cerro Largo, RS, 2012. Taxas por 100.000 hab.
 
 <div id="ref-Alfradique2009" class="csl-entry">
 
-Alfradique, Maria Elmira, Palmira de Fátima Bonolo, Inês Dourado, Maria
-Fernanda Lima-Costa, James Macinko, Claunara Schilling Mendonça, Veneza
-Berenice Oliveira, Luís Fernando Rolim Sampaio, Carmen de Simoni, and
-Maria Aparecida Turci. 2009. “<span class="nocase">Interna<span
+Alfradique M.E., Bonolo P. de F., Dourado I., Lima-Costa M.F., Macinko
+J., Mendonça C.S., Oliveira V.B., Sampaio L.F.R., Simoni C. de & Turci
+M.A. (2009). <span class="nocase">Interna<span
 class="nocase">ç</span><span class="nocase">õ</span>es por condi<span
 class="nocase">ç</span><span class="nocase">õ</span>es sens<span
 class="nocase">í</span>veis <span class="nocase">à</span> aten<span
@@ -1728,60 +1800,109 @@ class="nocase">ç</span><span class="nocase">ã</span>o prim<span
 class="nocase">á</span>ria: a constru<span class="nocase">ç</span><span
 class="nocase">ã</span>o da lista brasileira como ferramenta para medir
 o desempenho do sistema de sa<span class="nocase">ú</span>de (Projeto
-ICSAP - Brasil)</span>.” *Cadernos de Saúde Pública* 25 (6): 1337–49.
+ICSAP - Brasil)</span>. Cadernos de Saúde Pública 25 (6): 1337–1349.
 <https://doi.org/10.1590/S0102-311X2009000600016>.
+
+</div>
+
+<div id="ref-MS2008lista" class="csl-entry">
+
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde (2008). <span
+class="nocase">Portaria Nº 221, de 17 de abril de 2008.</span>
+Ministério da Saúde, p. 70.
+<http://dtr2001.saude.gov.br/sas/PORTARIAS/Port2008/PT-221.htm>.
+
+</div>
+
+<div id="ref-NedelTese" class="csl-entry">
+
+Nedel F.B. (2009). <span class="nocase">Interna<span
+class="nocase">ç</span><span class="nocase">õ</span>es hospitalares
+evit<span class="nocase">á</span>veis pela aten<span
+class="nocase">ç</span><span class="nocase">ã</span>o prim<span
+class="nocase">á</span>ria: estudo do impacto do Programa Sa<span
+class="nocase">ú</span>de da Fam<span class="nocase">ı́</span>lia sobre
+as interna<span class="nocase">ç</span><span class="nocase">õ</span>es
+por Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+Sens<span class="nocase">ı́</span>veis <span class="nocase">à</span>
+Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+Prim<span class="nocase">á</span>ria no Rio Grande do Sul,
+Brasil.</span> Universidade Federal de Pelotas - UFPel, Pelotas, RS.
 
 </div>
 
 <div id="ref-Nedel2017" class="csl-entry">
 
-Nedel, Fúlvio Borges. 2017. “<span class="nocase">csapAIH: uma fun<span
+Nedel F.B. (2017). <span class="nocase">csapAIH: uma fun<span
 class="nocase">ç</span><span class="nocase">ã</span>o para a
 classifica<span class="nocase">ç</span><span class="nocase">ã</span>o
 das condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria no programa estat<span
-class="nocase">í</span>stico R</span>.” *Epidemiologia e Serviços de
-Saúde* 26 (01): 199–209.
-<https://doi.org/10.5123/S1679-49742017000100021>.
+class="nocase">í</span>stico R</span>. Epidemiologia e Serviços de Saúde
+26 (1): 199–209. <https://doi.org/10.5123/S1679-49742017000100021>.
 
 </div>
 
 <div id="ref-Nedel2019" class="csl-entry">
 
-———. 2019. “<span class="nocase">Pacote csapAIH: a Lista Brasileira de
-Interna<span class="nocase">ç</span><span class="nocase">õ</span>es por
-Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
-Sens<span class="nocase">í</span>veis <span class="nocase">à</span>
-Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
-Prim<span class="nocase">á</span>ria no programa R</span>.”
-*Epidemiologia e Serviços de Saúde* 28 (2): e2019084.
+Nedel F.B. (2019). <span class="nocase">Pacote csapAIH: a Lista
+Brasileira de Interna<span class="nocase">ç</span><span
+class="nocase">õ</span>es por Condi<span class="nocase">ç</span><span
+class="nocase">õ</span>es Sens<span class="nocase">í</span>veis <span
+class="nocase">à</span> Aten<span class="nocase">ç</span><span
+class="nocase">ã</span>o Prim<span class="nocase">á</span>ria no
+programa R</span>. Epidemiologia e Serviços de Saúde 28 (2): e2019084.
 <https://doi.org/10.5123/S1679-49742019000200021>.
+
+</div>
+
+<div id="ref-Nedel2011" class="csl-entry">
+
+Nedel F.B., Facchini L.A., Bastos J.L. & Martín M. (2011). <span
+class="nocase">Conceptual and methodological aspects in the study of
+hospitalizations for ambulatory care sensitive conditions</span>.
+Ciência & Saúde Coletiva 16 (Suppl 1): 1145–1154.
+[http://www.scielo.br/scielo.php?pid=S1413-81232011000700046{\\&}script=sci{\\\_}arttext](http://www.scielo.br/scielo.php?pid=S1413-81232011000700046{\&}script=sci{\_}arttext).
+
+</div>
+
+<div id="ref-Nedel2008" class="csl-entry">
+
+Nedel F.B., Facchini L.A., Martín-Mateo M., Vieira L.A.S. & Thumé E.
+(2008). <span class="nocase">Programa Sa<span class="nocase">ú</span>de
+da Fam<span class="nocase">í</span>lia e condi<span
+class="nocase">ç</span><span class="nocase">õ</span>es sens<span
+class="nocase">í</span>veis <span class="nocase">à</span> aten<span
+class="nocase">ç</span><span class="nocase">ã</span>o prim<span
+class="nocase">á</span>ria, Bag<span class="nocase">é</span>
+(RS)</span>. Rev Saude Publica 42 (6): 1041–52.
+<http://www.scielosp.org/pdf/rsp/v42n6/6420.pdf>.
 
 </div>
 
 <div id="ref-readdbc" class="csl-entry">
 
-Petruzalek, Daniela. 2016. *Read.dbc: Read Data Stored in DBC
-(Compressed DBF) Files*. <https://CRAN.R-project.org/package=read.dbc>.
+Petruzalek D. (2016). Read.dbc: Read data stored in DBC (compressed DBF)
+files. <https://CRAN.R-project.org/package=read.dbc>.
 
 </div>
 
 <div id="ref-brpopref" class="csl-entry">
 
-Saldanha, Raphael. 2022. “Brpop: Brazilian Population Estimatives.”
+Saldanha R. (2022). Brpop: Brazilian population estimatives.
 <https://CRAN.R-project.org/package=brpop>.
 
 </div>
 
 <div id="ref-Saldanha2019" class="csl-entry">
 
-Saldanha, Raphael de Freitas, Ronaldo Rocha Bastos, and Christovam
-Barcellos. 2019. “<span class="nocase">Microdatasus: pacote para
-download e pr<span class="nocase">é</span>-processamento de microdados
-do Departamento de Inform<span class="nocase">á</span>tica do SUS
-(DATASUS)</span>.” *Cadernos de Saúde Pública* 35 (9): e00032419.
+Saldanha R. de F., Bastos R.R. & Barcellos C. (2019). <span
+class="nocase">Microdatasus: pacote para download e pr<span
+class="nocase">é</span>-processamento de microdados do Departamento de
+Inform<span class="nocase">á</span>tica do SUS (DATASUS)</span>.
+Cadernos de Saúde Pública 35 (9): e00032419.
 <https://doi.org/10.1590/0102-311x00032419>.
 
 </div>

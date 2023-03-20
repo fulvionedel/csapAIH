@@ -30,12 +30,6 @@
 #' popbr2000_2021(2014, 2016, munic = "430520") %>%
 #'   group_by(sexo, fxetar3) %>%
 #'   summarise(pop = sum(pop))
-#' # Ano 2010, Cerro Largo, RS:
-#' popbr2000_2021(2010, munic = "430520") %>%
-#'   Rcoisas::ggplot_pir(idade = 'fxetar5',
-#'                       sexo = 'sexo',
-#'                       populacao = 'pop') +
-#'   ggplot2::xlab("Faixa etária")
 #'
 #'
 #' @import dplyr
@@ -80,7 +74,7 @@
   if(!is.null(munic)) popbr <- filter(popbr, mun == munic)
 
   if(droplevels == TRUE) {
-    popbr <- droplevels(popbr)
+    popbr <- base::droplevels(popbr)
   } else if(droplevels == FALSE)
     popbr
 

@@ -1,5 +1,5 @@
 ---
-title: 'csapAIH: <font size="4"> Classificar Condições Sensíveis à Atenção Primária</font>'
+title: 'csapAIH: <font size="2"> Classificar Condições Sensíveis à Atenção Primária</font>'
 author: |
   | Fúlvio Borges Nedel
 date: |
@@ -10,6 +10,8 @@ output:
     toc_depth: 3
 link-citations: yes
 bibliography: docs/pacote.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/research-institute-for-nature-and-forest.csl
+zotero: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -29,11 +31,11 @@ Pacote em **R** para a classificação de códigos da CID-10 (Classificação In
 
 # Justificativa
 
-A hospitalização por CSAP é um indicador da qualidade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições ---pneumonia, infecção urinária, sarampo, diabetes etc.---  só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças preveníveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete).
+A hospitalização por CSAP é um indicador da efetividade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições ---pneumonia, infecção urinária, sarampo, diabetes etc.---  só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças evitáveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete). [@Nedel2011]
 
-O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados TabWin a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.
+O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. [@MS2008lista;@Alfradique2009] A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/) a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.
 
-Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. E não conheço outro programa ou *script* (além do que tive de escrever em minha tese) que automatize esse trabalho.
+Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. [@Nedel2008] E não conheço outro programa ou *script* (além do que tive de escrever em minha tese [@NedelTese]) que automatize esse trabalho.
 
 # Instalação
 
@@ -69,7 +71,7 @@ Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP`
 
 A partir da versão 0.0.3 [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
-Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, como sugerido por @Alfradique2009. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias.
+Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, como sugerido por @Alfradique2009. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf) ou, no R, com `?'csapAIH-package'`.
 
@@ -94,23 +96,24 @@ library(csapAIH)
 
 #### Arquivos do DATASUS
 
-Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo programa [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/), disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.  
+Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.  
 
-O código abaixo cria um `data.frame` com as informações das AIHs do "ano de competência" 2021 no RS e outro com as informações das Declarações de Óbito (DO) de residentes do RS ocorridas em 2021.
+O código abaixo cria um banco com as informações das AIHs do "ano de competência" 2021 ocorridas no RS e outro com as informações das Declarações de Óbito (DO) de residentes no RS ocorridas em 2021:
 
 ```{r fig.show='hold', message=FALSE}
 # remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
 AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
                                          information_system = "SIH-RD")
-cat("AIHRS2021:", nrow(AIHRS2021), "linhas e", ncol(AIHRS2021), "colunas.")
+nrow(AIHRS2021) |> Rcoisas::formatL() # linhas
+ncol(AIHRS2021) # colunas
 
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-cat("DORS2021:", nrow(DORS2021), "linhas e", ncol(DORS2021), "colunas.")
+nrow(DORS2021) |> Rcoisas::formatL()
+ncol(DORS2021)
 ```
 
-Se o arquivo de dados está armazenado no computador, basta digitar, entre aspas, o nome do arquivo (com a extensão), com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw'). 
- 
+Se o arquivo de dados estiver armazenado no computador, basta digitar, entre aspas, o nome do arquivo --- com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw'). 
  
  <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
  
@@ -138,20 +141,27 @@ read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
 
 #### Sem o padrão dos arquivos da AIH
 
-Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos.
+Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`)
 
-A _Encuesta de Egresos Hospitalarios_ do Equador:
+##### A _Encuesta de Egresos Hospitalarios_ do Equador.
+
 ```{r}
 data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2020
 names(eeh20) # Os nomes das variáveis
+```
 
+A variável `cau_cie10` tem o código do diagnóstico de internação.
+
+```{r}
 csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
 names(csap.eeh20)
 csap.eeh20[c(30,37:38)] |> 
   head(3) 
 ```
 
-A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para computar a idade).
+##### A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para computar a idade).
+
+A variável `CAUSABAS` tem o código da causa básica do óbito.
 
 ```{r}
 DORS2021 %>%
@@ -227,7 +237,7 @@ gr
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
   
-```{r out.width="48%", fig.align='center', fig.show='hold'}
+```{r out.width="45%", fig.align='center', fig.show='hold'}
 rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
 gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
 
@@ -265,11 +275,24 @@ aih <- AIHRS2021 %>%
 
 #### A população
 
-Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha nos brinda outro excelente e muito necessário pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/).
+Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF). 
 
+Entretanto, as tabelas no pacote *brpop* têm o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estão em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total). Assim, a população estimada para Cerro Largo em 2021 foi capturada com o seguinte comando,
 
 ```{r}
-pop <- csapAIH::popbr2000_2021(2010, munic = cl$CO_MUNICIP)
+pop <- csapAIH::popbr2000_2021(2021, munic = cl$CO_MUNICIP)
+```
+
+Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da categoria "Total" na faixa etáriae os resultados seriam os mesmos, porém com outra estrutura do objeto e outros rótulos de categorias:
+
+```{r}
+pop %>% 
+  group_by(fxetar5, sexo) %>% 
+  summarise(sum(pop))
+brpop::mun_sex_pop() %>% 
+  filter(mun == cl$CO_MUNICIP, year == 2021, age_group != "Total") %>% 
+  group_by(age_group, sex) %>% 
+  summarise(sum(pop))
 ```
 
 #### A tabela com as taxas
@@ -278,9 +301,9 @@ pop <- csapAIH::popbr2000_2021(2010, munic = cl$CO_MUNICIP)
 cte <- 1e5
 tabCSAP(aih$grupo) %>% 
   mutate(taxa = casos / sum(pop$pop)*cte) %>% 
-  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1,
-               caption = paste("ICSAP em Cerro Largo, RS, 2012. Taxas por", 
-                               Rcoisas::formatL(cte, digits = 0), "hab."))
+  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, 
+               caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por", 
+                               Rcoisas::formatL(cte, digits = 0), "hab.")) 
 ```
 
 

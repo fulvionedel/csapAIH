@@ -20,6 +20,8 @@ popbr2000_2021(
 \item{uf}{Vetor com a(s) sigla(s) da(s) Unidade(s) da Federação de interesse.}
 
 \item{munic}{Vetor com o código IBGE do(s) municípios(s) de interesse.}
+
+\item{droplevels}{Se TRUE (padrão), não inclui as categorias sem observações.}
 }
 \description{
 Estimativas populacionais para os municípios brasileiros por sexo e faixa etária quinquenal, por ano de 2000 a 2021. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote [`brpop`](https://github.com/rfsaldanha/brpop), permitindo seu uso como um banco de dados, além de outras mudanças (v. Details).
@@ -43,12 +45,6 @@ popbr2000_2021(anof = 2003, uf = "AC") \%>\%
 popbr2000_2021(2014, 2016, munic = "430520") \%>\%
   group_by(sexo, fxetar3) \%>\%
   summarise(pop = sum(pop))
-# Ano 2010, Cerro Largo, RS:
-popbr2000_2021(2010, munic = "430520") \%>\%
-  Rcoisas::ggplot_pir(idade = 'fxetar5',
-                      sexo = 'sexo',
-                      populacao = 'pop') +
-  ggplot2::xlab("Faixa etária")
 
 
 }
