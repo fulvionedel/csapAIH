@@ -78,7 +78,7 @@ A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja 
 
 # Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) e [`haven`](https://cran.r-project.org/package=haven) também são importados. O código da função `popbr2000_2021` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0.
+A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) e [`haven`](https://cran.r-project.org/package=haven) também são importados. O código da função `popbr2000_2021` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5).
 
 
 # Exemplos de uso
@@ -246,9 +246,11 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-## Calcular taxas
+### Calcular taxas
 
-### Taxas de ICSAP em Cerro Largo, RS, 2021:
+**Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:**
+
+---
 
 O pacote [territorio](https://github.com/fulvionedel/territorio) tem algumas informações territoriais:
 ```{r}
@@ -321,8 +323,13 @@ https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf
 
 # Agradecimentos
 
-- A Daniela Petruzalek, pelo pacote [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html);
-- A Rafael Saldanha, pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
+Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como @laiovictor e @igortadeu, e (muito!!) a quem sugere sugestões, como @denis-or. 
+
+E, sempre, meus profundos agradecimentos a  
+
+  - Daniela Petruzalek, pelo pacote [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html); e
+  - A Rafael Saldanha, pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
+
 
 # Referências
 
