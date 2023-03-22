@@ -287,7 +287,8 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
         tamini <- nrow(x)
         x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
         if (procobst.rm == TRUE) {
-          x <- suppressMessages( proc.obst(x) )
+          x <- proc.obst(x)
+          # x <- suppressMessages( proc.obst(x) )
           if (parto.rm == TRUE) {
             x <- subset(x, subset = x$DIAG_PRINC < "O80" | x$DIAG_PRINC >= "O85")
           }
