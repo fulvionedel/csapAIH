@@ -48,13 +48,7 @@
            CO_UF = substr(mun, 1, 2),
            sexo = factor(sex, levels = c("Male", "Female"),
                          labels = c("masc", "fem")),
-           fxetar5 = factor(age_group, labels = csapAIH::fxetar_quinq()),
-           fxetar3 = as.character(fxetar5),
-           fxetar3 = case_when(fxetar3 < "15-19" ~ "0-14",
-                               fxetar3 == "5-9"  ~ "0-14",
-                               fxetar3 >= "15-19" & fxetar3 <= "55-59" ~ "15-59",
-                               fxetar3 > "55-59" ~ "60e+") |>
-             as.factor()) %>%
+           fxetar5 = factor(age_group, labels = csapAIH::fxetar_quinq())) %>%
     rename(ano = year) %>%
     select(-c(age_group, sex)) %>%
     relocate(fxetar5, .after = fxetar3) %>%

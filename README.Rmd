@@ -10,8 +10,10 @@ output:
     toc_depth: 3
 link-citations: yes
 bibliography: docs/pacote.bib
-csl: https://raw.githubusercontent.com/citation-style-language/styles/master/research-institute-for-nature-and-forest.csl
-zotero: true
+csl: docs/vancouver-superscript.csl
+# https://github.com/citation-style-language/styles
+# csl: https://raw.githubusercontent.com/citation-style-language/styles/master/research-institute-for-nature-and-forest.csl
+# zotero: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -78,7 +80,8 @@ A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja 
 
 # Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) e [`haven`](https://cran.r-project.org/package=haven) também são importados. O código da função `popbr2000_2021` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5).
+A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) e [`haven`](https://cran.r-project.org/package=haven) também são importados. 
+<!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
 
 
 # Exemplos de uso
@@ -150,7 +153,7 @@ data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2
 names(eeh20) # Os nomes das variáveis
 ```
 
-A variável `cau_cie10` tem o código do diagnóstico de internação.
+A variável `cau_cie10` (posição `r which(names(eeh20) == 'cau_cie10')`) tem o código do diagnóstico de internação. A função csapAIH acrescenta à base duas (se `grupo == TRUE`) variáveis, `csap` e `grupo`, dispostas nas últimas colunas (posição `r paste(which(names(eeh20) == 'csap'), "e", which(names(eeh20) == 'grupo'), "respectivamente.")`)
 
 ```{r}
 csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
@@ -164,11 +167,15 @@ csap.eeh20[c(30,37:38)] |>
 A variável `CAUSABAS` tem o código da causa básica do óbito.
 
 ```{r}
-DORS2021 %>%
+DORS2021 <- DORS2021 %>%
   csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  mutate(idade = idadeSUS(DORS2021, sis = "SIM")$idade) %>% 
-  head() %>% 
-  gt::gt()
+  mutate(idade = idadeSUS(DORS2021, sis = "SIM")$idade,
+         fxetar3 = fxetar3g(idade),
+         sexo = factor(SEXO, levels = c(1,2), labels = c("masc", "fem"))) %>% 
+  droplevels() 
+
+desenhaCSAP(DORS2021) + 
+  ggplot2::facet_grid(sexo ~ fxetar3)
 ```
 
   
@@ -268,7 +275,7 @@ O código IBGE (os seis primeiros dígitos) de Cerro Largo é `r as.character(cl
 Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021.
 
 ```{r}
-aih <- AIHRS2021 %>% 
+claih <- AIHRS2021 %>% 
   filter(MUNIC_RES == "430520") %>% 
   droplevels() %>% 
   csapAIH()
@@ -277,18 +284,18 @@ aih <- AIHRS2021 %>%
 
 #### A população
 
-Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF). 
+Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)). 
 
 Entretanto, as tabelas no pacote *brpop* têm o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estão em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total). Assim, a população estimada para Cerro Largo em 2021 foi capturada com o seguinte comando,
 
 ```{r}
-pop <- csapAIH::popbr2000_2021(2021, munic = cl$CO_MUNICIP)
+clpop <- csapAIH::popbr2000_2021(2021, munic = cl$CO_MUNICIP)
 ```
 
-Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da categoria "Total" na faixa etáriae os resultados seriam os mesmos, porém com outra estrutura do objeto e outros rótulos de categorias:
+Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da categoria "Total" na faixa etária e os resultados seriam os mesmos, porém com outra estrutura do objeto e outros rótulos de categorias:
 
 ```{r}
-pop %>% 
+clpop %>% 
   group_by(fxetar5, sexo) %>% 
   summarise(sum(pop))
 brpop::mun_sex_pop() %>% 
@@ -301,8 +308,8 @@ brpop::mun_sex_pop() %>%
 
 ```{r}
 cte <- 1e5
-tabCSAP(aih$grupo) %>% 
-  mutate(taxa = casos / sum(pop$pop)*cte) %>% 
+tabCSAP(claih$grupo) %>% 
+  mutate(taxa = casos / sum(clpop$pop)*cte) %>% 
   knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, 
                caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por", 
                                Rcoisas::formatL(cte, digits = 0), "hab.")) 
@@ -323,7 +330,7 @@ https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf
 
 # Agradecimentos
 
-Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como @laiovictor e @igortadeu, e (muito!!) a quem sugere sugestões, como @denis-or. 
+Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como \@laiovictor e \@igortadeu, e (muito!!) a quem apresenta soluções, como \@denis-or. 
 
 E, sempre, meus profundos agradecimentos a  
 
