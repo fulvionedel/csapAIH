@@ -107,12 +107,12 @@ O código abaixo cria um banco com as informações das AIHs do "ano de competê
 # remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
 AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
                                          information_system = "SIH-RD")
-nrow(AIHRS2021) |> Rcoisas::formatL() # linhas
+nrow(AIHRS2021) |> Rcoisas::formatL(digits = 0) # linhas
 ncol(AIHRS2021) # colunas
 
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-nrow(DORS2021) |> Rcoisas::formatL()
+nrow(DORS2021) |> Rcoisas::formatL(digits = 0)
 ncol(DORS2021)
 ```
 
@@ -144,7 +144,7 @@ read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
 
 #### Sem o padrão dos arquivos da AIH
 
-Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`)
+Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`) são acrescentadas ao final do banco de dados alvo da função.
 
 ##### A _Encuesta de Egresos Hospitalarios_ do Equador.
 
@@ -162,20 +162,20 @@ csap.eeh20[c(30,37:38)] |>
   head(3) 
 ```
 
-##### A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para computar a idade).
+##### A Declaração de Óbito (DO) do SIM 
 
 A variável `CAUSABAS` tem o código da causa básica do óbito.
 
+De modo semelhante à AIH, as bases de dados da DO também têm a idade codificada e não a verdadeira idade da pessoa. Por exemplo, a variável `IDADE` em `DORS2021` é um `factor` com `r nlevels(DORS2021$IDADE)` níveis, em que o primeiro é `r levels(DORS2021$IDADE)[1] |> sQuote()`  e o último é `r levels(DORS2021$IDADE)[nlevels(DORS2021$IDADE)] |> sQuote()`. Neste caso podemos usar a função `idadeSUS` para computar a idade, mas como o resultado de `idadeSUS` é "um objeto da classe data frame com três variáveis" (v. `?idadeSUS`), necessitamos a função `unnest` (de `tidyr`) para desagrupar as variáveis antes de inseri-las em `DORS2021`. Além disso, foi excluída (com `unnest(...)[-2]`) a "faixa etária detalhada", que é a segunda variável no output de `idadeSUS`.
+
+
 ```{r}
 DORS2021 <- DORS2021 %>%
-  csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  mutate(idade = idadeSUS(DORS2021, sis = "SIM")$idade,
+  csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>%
+  mutate(tidyr::unnest(idadeSUS(DORS2021, sis = "SIM"), cols = c())[-2],
          fxetar3 = fxetar3g(idade),
-         sexo = factor(SEXO, levels = c(1,2), labels = c("masc", "fem"))) %>% 
-  droplevels() 
-
-desenhaCSAP(DORS2021) + 
-  ggplot2::facet_grid(sexo ~ fxetar3)
+         SEXO = factor(SEXO, levels = c(1,2), labels = c("masc", "fem")))
+DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
 ```
 
   
@@ -229,28 +229,6 @@ tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
 
 tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
   knitr::kable(align = c('l', rep('r', 3)))
-```
-
-
-### Gráficos
-
-```{r out.width="50%", fig.align='center'}
-gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
-gr
-```
-
-
-**Estratificado por categorias de outra variável presente no banco de dados:**
-
-Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
-  
-```{r out.width="45%", fig.align='center', fig.show='hold'}
-rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
-gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
-
-gr + ggplot2::facet_wrap(~ munres == "431490", 
-                         labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
-                                                           "TRUE" = "Capital")))
 ```
 
 ### Calcular taxas
@@ -316,6 +294,33 @@ tabCSAP(claih$grupo) %>%
 ```
 
 
+### Gráficos
+
+```{r out.width="50%", fig.align='center', message=FALSE}
+gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
+gr
+```
+
+#### Estratificado por categorias de outra variável presente no banco de dados:
+
+Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
+  
+```{r out.width="45%", fig.align='center', fig.show='hold'}
+rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
+gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
+
+gr + ggplot2::facet_wrap(~ munres == "431490", 
+                         labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
+                                                           "TRUE" = "Capital")))
+```
+
+```{r out.width="80%", fig.cap="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021."}
+ DORS2021 %>% 
+  filter(!is.na(SEXO)) %>% 
+  desenhaCSAP(x.size = 7, y.size = 8) + 
+    ggplot2::facet_grid(SEXO ~ fxetar3)
+```
+
 ---
 ***Veja o manual do pacote em:*** 
 https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf
@@ -335,7 +340,7 @@ Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problem
 E, sempre, meus profundos agradecimentos a  
 
   - Daniela Petruzalek, pelo pacote [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html); e
-  - A Rafael Saldanha, pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
+  - A Raphael Saldanha, pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
 
 
 # Referências

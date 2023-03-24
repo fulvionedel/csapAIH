@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 22 de março de 2023
+Atualizado em 24 de março de 2023
 
 - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
 - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
@@ -30,8 +30,8 @@ Atualizado em 22 de março de 2023
     - <a href="#tabela-bruta" id="toc-tabela-bruta">Tabela “bruta”</a>
     - <a href="#tabela-para-apresentação"
       id="toc-tabela-para-apresentação">Tabela para apresentação</a>
-    - <a href="#gráficos" id="toc-gráficos">Gráficos</a>
     - <a href="#calcular-taxas" id="toc-calcular-taxas">Calcular taxas</a>
+    - <a href="#gráficos" id="toc-gráficos">Gráficos</a>
 - <a href="#agradecimentos" id="toc-agradecimentos">Agradecimentos</a>
 - <a href="#referências" id="toc-referências">Referências</a>
 
@@ -199,15 +199,15 @@ Declarações de Óbito (DO) de residentes no RS ocorridas em 2021:
 # remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
 AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
                                          information_system = "SIH-RD")
-nrow(AIHRS2021) |> Rcoisas::formatL() # linhas
-[1] "709.893,0"
+nrow(AIHRS2021) |> Rcoisas::formatL(digits = 0) # linhas
+[1] "709.893"
 ncol(AIHRS2021) # colunas
 [1] 113
 
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-nrow(DORS2021) |> Rcoisas::formatL()
-[1] "117.158,0"
+nrow(DORS2021) |> Rcoisas::formatL(digits = 0)
+[1] "117.158"
 ncol(DORS2021)
 [1] 87
 ```
@@ -223,6 +223,9 @@ num sub-diretório do diretório de trabalho da sessão ativa, chamado
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") 
 Importados 60.529 registros.
+Importados 60.529 registros.
+Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
+Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -231,6 +234,9 @@ Exportados 51.923 (85,8%) registros.
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbf") 
 Importados 60.529 registros.
+Importados 60.529 registros.
+Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
+Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -242,6 +248,9 @@ Exportados 51.923 (85,8%) registros.
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
 Importados 60.529 registros.
+Importados 60.529 registros.
+Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
+Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -256,6 +265,9 @@ read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
   csapAIH() |>
   glimpse()
 Importados 60.529 registros.
+Importados 60.529 registros.
+Excluídos   0 (0%) registros de procedimentos obstétricos.
+Exportados 60.529 (100%) registros.
 Excluídos 5.044 (8,3%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 55.119 (91,1%) registros.
@@ -283,7 +295,8 @@ $ cnes       <int> 2232189, 2232928, 2232928, 2232928, 2232928, 2232928, 22329�
 
 Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual
 variável contém os códigos diagnósticos. As variáveis `csap` e `grupo`
-(se `csapAIH(..., grupos = TRUE, ...)`)
+(se `csapAIH(..., grupos = TRUE, ...)`) são acrescentadas ao final do
+banco de dados alvo da função.
 
 ##### A *Encuesta de Egresos Hospitalarios* do Equador.
 
@@ -326,24 +339,34 @@ csap.eeh20[c(30,37:38)] |>
 3      A090  sim      g02
 ```
 
-##### A Declaração de Óbito do SIM (aqui podemos usar a função `idadeSUS` para computar a idade).
+##### A Declaração de Óbito (DO) do SIM
 
 A variável `CAUSABAS` tem o código da causa básica do óbito.
 
+De modo semelhante à AIH, as bases de dados da DO também têm a idade
+codificada e não a verdadeira idade da pessoa. Por exemplo, a variável
+`IDADE` em `DORS2021` é um `factor` com 215 níveis, em que o primeiro é
+‘001’ e o último é ‘999’. Neste caso podemos usar a função `idadeSUS`
+para computar a idade, mas como o resultado de `idadeSUS` é “um objeto
+da classe data frame com três variáveis” (v. `?idadeSUS`), necessitamos
+a função `unnest` (de `tidyr`) para desagrupar as variáveis antes de
+inseri-las em `DORS2021`. Além disso, foi excluída (com
+`unnest(...)[-2]`) a “faixa etária detalhada”, que é a segunda variável
+no output de `idadeSUS`.
+
 ``` r
 DORS2021 <- DORS2021 %>%
-  csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>% 
-  mutate(idade = idadeSUS(DORS2021, sis = "SIM")$idade,
+  csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>%
+  mutate(tidyr::unnest(idadeSUS(DORS2021, sis = "SIM"), cols = c())[-2],
          fxetar3 = fxetar3g(idade),
-         sexo = factor(SEXO, levels = c(1,2), labels = c("masc", "fem"))) %>% 
-  droplevels() 
+         SEXO = factor(SEXO, levels = c(1,2), labels = c("masc", "fem")))
 Importados 117.158 registros.
-
-desenhaCSAP(DORS2021) + 
-  ggplot2::facet_grid(sexo ~ fxetar3)
+DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
+  CONTADOR csap    grupo idade fxetar5 fxetar3
+1       52  não não-CSAP    64   60-64    60e+
+2       54  não não-CSAP    63   60-64    60e+
+3      112  sim      g08    70   70-74    60e+
 ```
-
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 ### A partir de uma variável com códigos da CID-10:
 
@@ -377,6 +400,9 @@ funções `attr()` ou `attributes()`:
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
 Importados 60.529 registros.
+Importados 60.529 registros.
+Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
+Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -528,35 +554,6 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
 | No-CSAP                                   | 41.059 |    79,1 |      – |
 | Total de ingresos                         | 51.923 |     100 |      – |
 
-### Gráficos
-
-``` r
-gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
-Scale for y is already present.
-Adding another scale for y, which will replace the existing scale.
-gr
-```
-
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" />
-
-**Estratificado por categorias de outra variável presente no banco de
-dados:**
-
-Observe que ao estratificar o gráfico mantém a ordenação por frequência
-da variável em seu todo, sem a estratificação, quando o argumento
-`ordenar = TRUE`(padrão).
-
-``` r
-rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
-gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
-
-gr + ggplot2::facet_wrap(~ munres == "431490", 
-                         labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
-                                                           "TRUE" = "Capital")))
-```
-
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-21-2.png" width="45%" style="display: block; margin: auto;" />
-
 ### Calcular taxas
 
 **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro
@@ -601,6 +598,9 @@ claih <- AIHRS2021 %>%
   droplevels() %>% 
   csapAIH()
 Importados 753 registros.
+Importados 753 registros.
+Excluídos   46 (6.1%) registros de procedimentos obstétricos.
+Exportados 707 (93.9%) registros.
 Excluídos 46 (6,1%) registros de procedimentos obstétricos.
 Excluídos NA (NA%) registros de AIH de longa permanência.
 Exportados 707 (93,9%) registros.
@@ -719,6 +719,49 @@ tabCSAP(claih$grupo) %>%
 
 ICSAP em Cerro Largo, RS, 2021. Taxas por 100.000 hab.
 
+### Gráficos
+
+``` r
+gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
+gr
+```
+
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="50%" style="display: block; margin: auto;" />
+
+#### Estratificado por categorias de outra variável presente no banco de dados:
+
+Observe que ao estratificar o gráfico mantém a ordenação por frequência
+da variável em seu todo, sem a estratificação, quando o argumento
+`ordenar = TRUE`(padrão).
+
+``` r
+rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
+gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
+
+gr + ggplot2::facet_wrap(~ munres == "431490", 
+                         labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
+                                                           "TRUE" = "Capital")))
+```
+
+<img src="man/figures/README-unnamed-chunk-26-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-26-2.png" width="45%" style="display: block; margin: auto;" />
+
+``` r
+ DORS2021 %>% 
+  filter(!is.na(SEXO)) %>% 
+  desenhaCSAP(x.size = 7, y.size = 8) + 
+    ggplot2::facet_grid(SEXO ~ fxetar3)
+```
+
+<div class="figure">
+
+<img src="man/figures/README-unnamed-chunk-27-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
+<p class="caption">
+Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
+2021.
+</p>
+
+</div>
+
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
@@ -739,7 +782,7 @@ E, sempre, meus profundos agradecimentos a
 - Daniela Petruzalek, pelo pacote
   [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html);
   e
-- A Rafael Saldanha, pelos pacotes
+- A Raphael Saldanha, pelos pacotes
   [microdatasus](https://github.com/rfsaldanha/microdatasus) e
   [brpop](https://github.com/rfsaldanha/brpop).
 
