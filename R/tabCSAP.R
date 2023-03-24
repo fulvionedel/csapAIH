@@ -1,7 +1,7 @@
-#' @title Tabulate Primary Health Care Sensitive Conditions (PHCSC)
+#' @title Tabular Condições Sensíveis à Atenção Primária (CSAP)
 #' @aliases tabCSAP
 #'
-#' @description Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
+#' @description Tabula Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária
 #'
 #' @param x Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".
 #' @param digits número de decimais para o arredondamento (com \code{\link{round}}).

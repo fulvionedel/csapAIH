@@ -2,7 +2,7 @@
 % Please edit documentation in R/tabCSAP.R
 \name{tabCSAP}
 \alias{tabCSAP}
-\title{Tabulate Primary Health Care Sensitive Conditions (PHCSC)}
+\title{Tabular Condições Sensíveis à Atenção Primária (CSAP)}
 \usage{
 tabCSAP(x, digits = 2, lang = "pt.ca", format = FALSE)
 }
@@ -19,7 +19,7 @@ tabCSAP(x, digits = 2, lang = "pt.ca", format = FALSE)
 Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição proporcional sobre o total de internações e sobre o total de ICSAP. Se os grupos forem classificados segundo a Lista Brasileira publicada em Portaria Ministerial, a tabela terá
 }
 \description{
-Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.
+Tabula Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária
 }
 \examples{
 # data("aih500")
