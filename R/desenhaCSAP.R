@@ -35,6 +35,7 @@
 #' @param ... Permite o uso de argumentos de \code{\link{plot}} e \code{\link{barplot}}
 #'
 #' @return Na opção padrão e com \code{\link[ggplot2]{ggplot2}} instalado, devolve um objeto das classes "gg" e "ggplot", com o gráfico.
+#'
 #' @details
 #' O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite a adição de outros comandos ao objeto devolvido. O vetor \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 #'

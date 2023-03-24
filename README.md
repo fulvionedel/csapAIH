@@ -562,9 +562,9 @@ Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a
 apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram
 classificadas em 20 grupos – usando, por exemplo o argumento
 `lista = "Alfradique"` em `csapAIH()` –, essa tabela deve ser
-apresentada com `tabCSAP` e não com `descreveCSAP`, como se vê abaixo.
-Note ainda que, a diferença de `descreveCSAP`, `tabCSAP` exige o nome da
-variável com o grupo de causas.
+apresentada com `tabCSAP` e não com `descreveCSAP`. Note ainda que, à
+diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o
+grupo de causas.
 
 ``` r
 listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique")
@@ -572,30 +572,8 @@ Importados 709.893 registros.
 Excluídos 88.345 (12,4%) registros de procedimentos obstétricos.
 Excluídos 4.121 (0,6%) registros de AIH de longa permanência.
 Exportados 617.427 (87%) registros.
-descreveCSAP(listaOPS)
-                                   Grupo   Casos %Total %CSAP
-1   1. Prev. vacinação e cond. evitáveis     127   0,13  0,13
-2                      2. Gastroenterite   1.316   1,31  1,34
-3                              3. Anemia   4.205   4,20  4,29
-4                 4. Defic. nutricionais     695   0,69  0,71
-5     5. Infec. ouvido, nariz e garganta   1.765   1,76  1,80
-6              6. Pneumonias bacterianas     954   0,95  0,97
-7                                7. Asma   5.425   5,41  5,54
-8                   8. Pulmonares (DPOC)   3.443   3,44  3,51
-9                         9. Hipertensão  11.389  11,36 11,63
-10                            10. Angina   1.247   1,24  1,27
-11                   11. Insuf. cardíaca   8.421   8,40  8,60
-12                 12. Cerebrovasculares  14.119  14,09 14,41
-13                 13. Diabetes mellitus  16.426  16,39 16,77
-14                        14. Epilepsias   6.784   6,77  6,92
-15                   15. Infec. urinária   3.293   3,29  3,36
-16          16. Infec. pele e subcutâneo  11.092  11,07 11,32
-17     17. D. infl. órgãos pélvicos fem.   3.852   3,84  3,93
-18           18. Úlcera gastrointestinal   1.154   1,15  1,18
-19                 19. Pré-natal e parto   2.261   2,26  2,31
-20                            Total CSAP  97.968  15,87   100
-21                                   g20   2.260   2,25    --
-22                  Total de internações 517.199    100    --
+# descreveCSAP(listaOPS) # Retorna o erro: "O vetor não pode ter mais de 19 grupos.
+#   Se essa for a lista 'Alfradique' use 'tabCSAP'.""
 tabCSAP(listaOPS$grupo)
                                  grupo  casos perctot percsap
 1               1. Prev. por vacinação    127    0.02    0.13

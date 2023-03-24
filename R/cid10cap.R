@@ -1,8 +1,11 @@
 #' @title Função para classificar códigos da CID-10 em Capítulos
+#' @aliases cid10cap
 #'
 #' @description Tomando um vetor com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
 #' @param cid Nome do vetor com os códigos da CID-10
 #' @param droplevels Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos. O padrão é FALSE, o que retorna uma tabela com zeros nos capítulos sem ocorrência de casos.
+#'
+#' @returns Um \code{factor} com o capítulo da CID-10 correspondente a cada código diagnóstico.
 #'
 #' @examples
 #' # Arquivos da AIH

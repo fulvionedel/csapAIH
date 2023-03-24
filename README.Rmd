@@ -237,14 +237,14 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
   knitr::kable(align = c('l', rep('r', 3)))
 ```
 
-Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`, como se vê abaixo. Note ainda que, a diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas.
+Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`. Note ainda que, à diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas.
 
 ```{r}
 listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique")
-descreveCSAP(listaOPS)
+# descreveCSAP(listaOPS) # Retorna o erro: "O vetor não pode ter mais de 19 grupos.
+#   Se essa for a lista 'Alfradique' use 'tabCSAP'.""
 tabCSAP(listaOPS$grupo)
 ```
-
 
 
 ### Calcular taxas
