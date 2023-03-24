@@ -28,7 +28,7 @@
 #'   summarise(pop = sum(pop))
 #' # Anos 2014 a 2016, Cerro Largo, RS:
 #' popbr2000_2021(2014, 2016, munic = "430520") %>%
-#'   group_by(sexo, fxetar3) %>%
+#'   group_by(sexo, fxetar5) %>%
 #'   summarise(pop = sum(pop))
 #'
 #'
@@ -37,7 +37,7 @@
 #' @export
 
  popbr2000_2021 <- function(anoi = NULL, anof = NULL, uf = NULL, munic = NULL, droplevels = TRUE) {
-   . <- UF_SIGLA <- age_group <- ano <- mun <- fxetar3 <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
+   . <- UF_SIGLA <- age_group <- ano <- mun <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
    if( !is.null(anoi) & is.null(anof)) {
      anof = anoi
    }
@@ -51,9 +51,8 @@
            fxetar5 = factor(age_group, labels = csapAIH::fxetar_quinq())) %>%
     rename(ano = year) %>%
     select(-c(age_group, sex)) %>%
-    relocate(fxetar5, .after = fxetar3) %>%
     relocate(pop, .after = last_col()) %>%
-    arrange(ano, mun, sexo, fxetar3, fxetar5)
+    arrange(ano, mun, sexo, fxetar5)
 
   if(!is.null(anoi)) popbr <- filter(popbr, ano >= anoi)
   if(!is.null(anof)) popbr <- filter(popbr, ano <= anof)
