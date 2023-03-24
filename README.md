@@ -131,13 +131,15 @@ criada uma função para o cálculo da idade nos arquivos da AIH: a função
 usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
-CSAP em 20 grupos de causa, como sugerido
-por<sup>[3](#ref-Alfradique2009)</sup>. As funções `desenhaCSAP` e
-`tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos,
-em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram
+CSAP em 20 grupos de causa, conforme proposto no processo de construção
+da Lista Brasileira<sup>[3](#ref-Alfradique2009)</sup>.{#lista} Essa é a
+lista sugerida pela Organização Panamericana da
+Saúde<sup>[8](#ref-OPS2014)</sup>. As funções `desenhaCSAP` e `tabCSAP`
+têm um argumento para seleção do idioma dos nomes de grupos, em
+português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram
 criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote
 [brpop](https://cran.r-project.org/package=brpop)
-de<sup>[8](#ref-brpopref)</sup>) para acesso às estimativas
+de<sup>[9](#ref-brpopref)</sup>) para acesso às estimativas
 populacionais publicadas pelo DATASUS e funções para categorização da
 idade em faixas etárias.
 
@@ -149,7 +151,7 @@ ou, no R, com `?'csapAIH-package'`.
 # Dependências
 
 A leitura de arquivos .DBC exige a instalação prévia do pacote
-[`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)<sup>[9](#ref-readdbc)</sup>.
+[`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)<sup>[10](#ref-readdbc)</sup>.
 Sua falta não impede o funcionamento das demais funções do pacote
 (inclusive de leitura de arquivos em outro formato). A função
 `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado,
@@ -188,7 +190,7 @@ de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote
 [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek,
 também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao
 pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de
-Raphael Saldanha<sup>[10](#ref-Saldanha2019)</sup>, podemos ler com
+Raphael Saldanha<sup>[11](#ref-Saldanha2019)</sup>, podemos ler com
 facilidade esses arquivos na internet, sem necessidade de download.
 
 O código abaixo cria um banco com as informações das AIHs do “ano de
@@ -223,9 +225,6 @@ num sub-diretório do diretório de trabalho da sessão ativa, chamado
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") 
 Importados 60.529 registros.
-Importados 60.529 registros.
-Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
-Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -234,9 +233,6 @@ Exportados 51.923 (85,8%) registros.
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbf") 
 Importados 60.529 registros.
-Importados 60.529 registros.
-Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
-Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -248,9 +244,6 @@ Exportados 51.923 (85,8%) registros.
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
 Importados 60.529 registros.
-Importados 60.529 registros.
-Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
-Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -265,9 +258,6 @@ read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
   csapAIH() |>
   glimpse()
 Importados 60.529 registros.
-Importados 60.529 registros.
-Excluídos   0 (0%) registros de procedimentos obstétricos.
-Exportados 60.529 (100%) registros.
 Excluídos 5.044 (8,3%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 55.119 (91,1%) registros.
@@ -400,9 +390,6 @@ funções `attr()` ou `attributes()`:
 ``` r
 csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
 Importados 60.529 registros.
-Importados 60.529 registros.
-Excluídos   8.230 (13.6%) registros de procedimentos obstétricos.
-Exportados 52.299 (86.4%) registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
@@ -433,6 +420,10 @@ attributes(csap)$resumo |>
 | Exportados | 51.923 |  85,8 | registros.                              |
 
 ### Tabela “bruta”
+
+A função `descreveCSAP` gera, a partir de um comando muito simples, uma
+tabela pronta para apresentação, com as frequências brutas e absolutas
+das CSAP por grupo de causa.
 
 ``` r
 descreveCSAP(csap)
@@ -492,6 +483,19 @@ descreveCSAP(csap) |>
 | Total CSAP                            | 10.864 |  20,92 |   100 |
 | não-CSAP                              | 41.059 |  79,08 |     – |
 | Total de internações                  | 51.923 |    100 |     – |
+
+Entretanto, ao transformar os valores para o formato latino, sua classe
+se transforma em `character` e assim é impossível realizar cálculos com
+esse output. Além disso, não serve para publicações em inglês. Por isso
+a função `descreveCSAP` permanecerá no pacote mas seu desenvolvimento
+seguirá em outra função, agora de nome `tabCSAP`. Nessa nova função, a
+apresentação de uma tabela formatada se faz a partir do argumento
+`format = TRUE`. Por padrão esse argumento é `FALSE`, o que permite
+operações matemáticas com os valores da tabela (um `data.frame`, na
+verdade), como veremos em seguida.
+
+A função `tabCSAP` permite também a apresentação da tabela em inglês ou
+espanhol, através do argumento `lang`:
 
 ``` r
 tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
@@ -554,38 +558,77 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
 | No-CSAP                                   | 41.059 |    79,1 |      – |
 | Total de ingresos                         | 51.923 |     100 |      – |
 
+Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a
+apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram
+classificadas em 20 grupos – usando, por exemplo o argumento
+`lista = "Alfradique"` em `csapAIH()` –, essa tabela deve ser
+apresentada com `tabCSAP` e não com `descreveCSAP`, como se vê abaixo.
+Note ainda que, a diferença de `descreveCSAP`, `tabCSAP` exige o nome da
+variável com o grupo de causas.
+
+``` r
+listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique")
+Importados 709.893 registros.
+Excluídos 88.345 (12,4%) registros de procedimentos obstétricos.
+Excluídos 4.121 (0,6%) registros de AIH de longa permanência.
+Exportados 617.427 (87%) registros.
+descreveCSAP(listaOPS)
+                                   Grupo   Casos %Total %CSAP
+1   1. Prev. vacinação e cond. evitáveis     127   0,13  0,13
+2                      2. Gastroenterite   1.316   1,31  1,34
+3                              3. Anemia   4.205   4,20  4,29
+4                 4. Defic. nutricionais     695   0,69  0,71
+5     5. Infec. ouvido, nariz e garganta   1.765   1,76  1,80
+6              6. Pneumonias bacterianas     954   0,95  0,97
+7                                7. Asma   5.425   5,41  5,54
+8                   8. Pulmonares (DPOC)   3.443   3,44  3,51
+9                         9. Hipertensão  11.389  11,36 11,63
+10                            10. Angina   1.247   1,24  1,27
+11                   11. Insuf. cardíaca   8.421   8,40  8,60
+12                 12. Cerebrovasculares  14.119  14,09 14,41
+13                 13. Diabetes mellitus  16.426  16,39 16,77
+14                        14. Epilepsias   6.784   6,77  6,92
+15                   15. Infec. urinária   3.293   3,29  3,36
+16          16. Infec. pele e subcutâneo  11.092  11,07 11,32
+17     17. D. infl. órgãos pélvicos fem.   3.852   3,84  3,93
+18           18. Úlcera gastrointestinal   1.154   1,15  1,18
+19                 19. Pré-natal e parto   2.261   2,26  2,31
+20                            Total CSAP  97.968  15,87   100
+21                                   g20   2.260   2,25    --
+22                  Total de internações 517.199    100    --
+tabCSAP(listaOPS$grupo)
+                                 grupo  casos perctot percsap
+1               1. Prev. por vacinação    127    0.02    0.13
+2            2. Outras cond. evitáveis   1316    0.21    1.31
+3                    3. Gastroenterite   4205    0.68    4.20
+4                            4. Anemia    695    0.11    0.69
+5               5. Defic. nutricionais   1765    0.29    1.76
+6   6. Infec. ouvido, nariz e garganta    954    0.15    0.95
+7            7. Pneumonias bacterianas   5425    0.88    5.41
+8                              8. Asma   3443    0.56    3.44
+9                 9. Pulmonares (DPOC)  11389    1.84   11.36
+10                     10. Hipertensão   1247    0.20    1.24
+11                          11. Angina   8421    1.36    8.40
+12                 12. Insuf. cardíaca  14119    2.29   14.09
+13               13. Cerebrovasculares  16426    2.66   16.39
+14               14. Diabetes mellitus   6784    1.10    6.77
+15                      15. Epilepsias   3293    0.53    3.29
+16                 16. Infec. urinária  11092    1.80   11.07
+17        17. Infec. pele e subcutâneo   3852    0.62    3.84
+18   18. D. infl. órgãos pélvicos fem.   1154    0.19    1.15
+19         19. Úlcera gastrointestinal   2261    0.37    2.26
+20               20. Pré-natal e parto   2260    0.37    2.25
+21                          Total CSAP 100228   16.23  100.00
+22                            Não-CSAP 517199   83.77      NA
+23                Total de internações 617427  100.00      NA
+```
+
 ### Calcular taxas
 
 **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro
 Largo, RS, 2021:**
 
-------------------------------------------------------------------------
-
-O pacote [territorio](https://github.com/fulvionedel/territorio) tem
-algumas informações territoriais:
-
-``` r
-# remotes::install_github("fulvionedel/territorio")
-cl <- territorio::territorio("RS") %>% 
-  filter(nomemun == "Cerro Largo") %>% 
-  droplevels() 
-cl |> str()
-'data.frame':   1 obs. of  12 variables:
- $ CO_MUNICIP  : Factor w/ 1 level "430520": 1
- $ nomemun     : Factor w/ 1 level "Cerro Largo": 1
- $ CO_MACSAUD  : Factor w/ 1 level "4303": 1
- $ nomemacsaude: Factor w/ 1 level "Missioneira": 1
- $ CO_MICIBGE  : Factor w/ 1 level "43006": 1
- $ nomemicibge : Factor w/ 1 level "Cerro Largo": 1
- $ CO_REGMETR  : Factor w/ 1 level "43900": 1
- $ nomeregmetr : Factor w/ 1 level "Fora da Região Metropolitana - RS": 1
- $ CO_REGSAUD  : Factor w/ 1 level "43011": 1
- $ nomeregsaude: Factor w/ 1 level "Região 11 - Sete Povos das Missões": 1
- $ NU_LATITUD  : num -28.1
- $ NU_LONGIT   : num -54.7
-```
-
-O código IBGE (os seis primeiros dígitos) de Cerro Largo é 430520.
+O código IBGE (os seis primeiros dígitos) de Cerro Largo é “430520”.
 
 #### As ICSAP
 
@@ -598,9 +641,6 @@ claih <- AIHRS2021 %>%
   droplevels() %>% 
   csapAIH()
 Importados 753 registros.
-Importados 753 registros.
-Excluídos   46 (6.1%) registros de procedimentos obstétricos.
-Exportados 707 (93.9%) registros.
 Excluídos 46 (6,1%) registros de procedimentos obstétricos.
 Excluídos NA (NA%) registros de AIH de longa permanência.
 Exportados 707 (93,9%) registros.
@@ -630,7 +670,7 @@ total). Assim, a população estimada para Cerro Largo em 2021 foi
 capturada com o seguinte comando,
 
 ``` r
-clpop <- csapAIH::popbr2000_2021(2021, munic = cl$CO_MUNICIP)
+clpop <- csapAIH::popbr2000_2021(2021, munic = "430520")
 ```
 
 Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da
@@ -659,7 +699,7 @@ clpop %>%
 10 20-24   fem          503
 # … with 24 more rows
 brpop::mun_sex_pop() %>% 
-  filter(mun == cl$CO_MUNICIP, year == 2021, age_group != "Total") %>% 
+  filter(mun == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
   summarise(sum(pop))
 `summarise()` has grouped output by 'age_group'. You can override using the
@@ -897,9 +937,20 @@ Sep;28(2):e2019084. Available from:
 
 </div>
 
-<div id="ref-brpopref" class="csl-entry">
+<div id="ref-OPS2014" class="csl-entry">
 
 <span class="csl-left-margin">8. </span><span
+class="csl-right-inline">Organización Panamericana de la Salud (OPS).
+<span class="nocase">Compendio de indicadores del impacto y resultados
+intermedios. Plan estrat<span class="nocase">é</span>gico de la OPS
+2014-2019: "En pro de la salud: Desarrollo sostenible y equidad"</span>.
+OPS, editor. Washington; 2014. </span>
+
+</div>
+
+<div id="ref-brpopref" class="csl-entry">
+
+<span class="csl-left-margin">9. </span><span
 class="csl-right-inline">Saldanha R. Brpop: Brazilian population
 estimatives \[Internet\]. 2022. Available from:
 <https://CRAN.R-project.org/package=brpop></span>
@@ -908,7 +959,7 @@ estimatives \[Internet\]. 2022. Available from:
 
 <div id="ref-readdbc" class="csl-entry">
 
-<span class="csl-left-margin">9. </span><span
+<span class="csl-left-margin">10. </span><span
 class="csl-right-inline">Petruzalek D. Read.dbc: Read data stored in DBC
 (compressed DBF) files \[Internet\]. 2016. Available from:
 <https://CRAN.R-project.org/package=read.dbc></span>
@@ -917,7 +968,7 @@ class="csl-right-inline">Petruzalek D. Read.dbc: Read data stored in DBC
 
 <div id="ref-Saldanha2019" class="csl-entry">
 
-<span class="csl-left-margin">10. </span><span
+<span class="csl-left-margin">11. </span><span
 class="csl-right-inline">Saldanha R de F, Bastos RR, Barcellos C. <span
 class="nocase">Microdatasus: pacote para download e pr<span
 class="nocase">é</span>-processamento de microdados do Departamento de

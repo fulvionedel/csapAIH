@@ -73,7 +73,7 @@ Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP`
 
 A partir da versão 0.0.3 [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
-Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, como sugerido por @Alfradique2009. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias.
+Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009].{#lista} Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf) ou, no R, com `?'csapAIH-package'`.
 
@@ -212,6 +212,8 @@ attributes(csap)$resumo |>
        
 ### Tabela "bruta"
 
+A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela pronta para apresentação, com as frequências brutas e absolutas das CSAP por grupo de causa.
+
 ```{r}
 descreveCSAP(csap)
 ```
@@ -223,6 +225,10 @@ descreveCSAP(csap) |>
   knitr::kable(align = c('l', rep('r', 3)))
 ```
 
+Entretanto, ao transformar os valores para o formato latino, sua classe se transforma em `character` e assim é impossível realizar cálculos com esse output. Além disso, não serve para publicações em inglês. Por isso a função `descreveCSAP` permanecerá no pacote mas seu desenvolvimento seguirá em outra função, agora de nome `tabCSAP`. Nessa nova função, a apresentação de uma tabela formatada se faz a partir do argumento `format = TRUE`. Por padrão esse argumento é `FALSE`, o que permite operações matemáticas com os valores da tabela (um `data.frame`, na verdade), como veremos em seguida.
+
+A função `tabCSAP` permite também a apresentação da tabela em inglês ou espanhol, através do argumento `lang`:
+
 ```{r}
 tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
   knitr::kable(align = c('l', rep('r', 3)))
@@ -231,22 +237,21 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
   knitr::kable(align = c('l', rep('r', 3)))
 ```
 
+Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`, como se vê abaixo. Note ainda que, a diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas.
+
+```{r}
+listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique")
+descreveCSAP(listaOPS)
+tabCSAP(listaOPS$grupo)
+```
+
+
+
 ### Calcular taxas
 
 **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:**
 
----
-
-O pacote [territorio](https://github.com/fulvionedel/territorio) tem algumas informações territoriais:
-```{r}
-# remotes::install_github("fulvionedel/territorio")
-cl <- territorio::territorio("RS") %>% 
-  filter(nomemun == "Cerro Largo") %>% 
-  droplevels() 
-cl |> str()
-```
-
-O código IBGE (os seis primeiros dígitos) de Cerro Largo é `r as.character(cl$CO_MUNICIP)`.
+O código IBGE (os seis primeiros dígitos) de Cerro Largo é "430520".
 
 #### As ICSAP
 
@@ -267,7 +272,7 @@ Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas p
 Entretanto, as tabelas no pacote *brpop* têm o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estão em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total). Assim, a população estimada para Cerro Largo em 2021 foi capturada com o seguinte comando,
 
 ```{r}
-clpop <- csapAIH::popbr2000_2021(2021, munic = cl$CO_MUNICIP)
+clpop <- csapAIH::popbr2000_2021(2021, munic = "430520")
 ```
 
 Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da categoria "Total" na faixa etária e os resultados seriam os mesmos, porém com outra estrutura do objeto e outros rótulos de categorias:
@@ -277,7 +282,7 @@ clpop %>%
   group_by(fxetar5, sexo) %>% 
   summarise(sum(pop))
 brpop::mun_sex_pop() %>% 
-  filter(mun == cl$CO_MUNICIP, year == 2021, age_group != "Total") %>% 
+  filter(mun == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
   summarise(sum(pop))
 ```
