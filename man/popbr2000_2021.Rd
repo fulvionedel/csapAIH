@@ -43,7 +43,7 @@ popbr2000_2021(anof = 2003, uf = "AC") \%>\%
   summarise(pop = sum(pop))
 # Anos 2014 a 2016, Cerro Largo, RS:
 popbr2000_2021(2014, 2016, munic = "430520") \%>\%
-  group_by(sexo, fxetar3) \%>\%
+  group_by(sexo, fxetar5) \%>\%
   summarise(pop = sum(pop))
 
 
