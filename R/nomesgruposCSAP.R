@@ -179,7 +179,7 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
                    )
 
   nomes.es.Alfradique <- c(" 1. Prev. por vacunaci\U00F3n",
-                           " 2. Afec. prev. incluidas FR, sífilis, TB",
+                           " 2. Afec. prev. incluidas FR, s\u00EDfilis, TB",
                               nomes.es.MS[2:19])
   substr(nomes.es.Alfradique[3:20], 1, 2) <-
     c(paste0(" ", as.character(as.numeric(paste0(2:8)) + 1)),
