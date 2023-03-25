@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 24 de março de 2023
+Atualizado em 25 de março de 2023
 
 - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
 - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
@@ -36,6 +36,15 @@ Atualizado em 24 de março de 2023
 - <a href="#referências" id="toc-referências">Referências</a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+------------------------------------------------------------------------
+
+No [SourceForge](https://sourceforge.net/projects/csapaih/): [![Download
+csapAIH](https://img.shields.io/sourceforge/dt/csapaih.svg)](https://sourceforge.net/projects/csapaih/files/latest/download)
+[![Download
+csapAIH](https://img.shields.io/sourceforge/dm/csapaih.svg)](https://sourceforge.net/projects/csapaih/files/latest/download)
+
+------------------------------------------------------------------------
 
 # Apresentação
 
@@ -83,19 +92,23 @@ tese<sup>[5](#ref-NedelTese)</sup>) que automatize esse trabalho.
 
 # Instalação
 
-O pacote `csapAIH` pode ser instalado no **R** de duas maneiras:
+O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
+
+- baixando o arquivo em de instalação no
+  [SourceForge](https://sourceforge.net/projects/csapaih/) e depois
+  instalando no R, com a IDE de preferência ou com o comando
+  `install.packages("csapAIH_<versão>.tar.gz")` ou
+  `install.packages("csapAIH_<versão>.zip")`;
 
 - com a função `install.packages()` sobre os arquivos de instalação no
   [SourceForge](https://sourceforge.net/projects/csapaih/):
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.1/Versao%200.0.4.1.tar.gz/download", type = "source", repos = NULL) 
-```
+#  arquivos .tar.gz
+install.packages("https://sourceforge.net/projects/csapaih/files/<versão>.tar.gz/download", type = "source", repos = NULL) 
 
-e
-
-``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.1/Versao%200.0.4.1.zip/download", type = "source", repos = NULL) 
+# arquivos .zip
+install.packages("https://sourceforge.net/projects/csapaih/files/<versão>.zip/download", type = "source", repos = NULL) 
 ```
 
 ou
@@ -536,7 +549,7 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
 | Grupo                                     |  Casos | % Total | % CSAP |
 |:------------------------------------------|-------:|--------:|-------:|
 | 1\. Prev. vacunación y otros medios       |    118 |     0,2 |    1,1 |
-| 2\. Gastroenterites                       |    802 |     1,5 |    7,4 |
+| 2\. Gastroenteritis                       |    802 |     1,5 |    7,4 |
 | 3\. Anemia                                |     73 |     0,1 |    0,7 |
 | 4\. Def. nutricionales                    |    241 |     0,5 |    2,2 |
 | 5\. Infec. oído, nariz y garganta         |    168 |     0,3 |    1,5 |
@@ -744,7 +757,7 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .1
 gr
 ```
 
-<img src="man/figures/README-unnamed-chunk-25-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-24-1.png" width="50%" style="display: block; margin: auto;" />
 
 #### Estratificado por categorias de outra variável presente no banco de dados:
 
@@ -761,7 +774,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-26-2.png" width="45%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-25-2.png" width="45%" style="display: block; margin: auto;" />
 
 ``` r
  DORS2021 %>% 
@@ -772,7 +785,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
+<img src="man/figures/README-unnamed-chunk-26-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
 <p class="caption">
 Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 2021.
@@ -785,8 +798,6 @@ Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 ***Veja o manual do pacote em:***
 <https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf>
 
-<!-- badges: start -->
-<!-- badges: end -->
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
 # Agradecimentos
@@ -811,12 +822,12 @@ E, sempre, meus profundos agradecimentos a
 <div id="ref-Nedel2011" class="csl-entry">
 
 <span class="csl-left-margin">1. </span><span
-class="csl-right-inline">Nedel FB, Facchini LA, Bastos JL, Martín M.
-<span class="nocase">Conceptual and methodological aspects in the study
-of hospitalizations for ambulatory care sensitive conditions</span>.
-Ciência & Saúde Coletiva \[Internet\]. 2011;16(Suppl 1):1145–54.
-Available from:
-[http://www.scielo.br/scielo.php?pid=S1413-81232011000700046{\\&}script=sci{\\\_}arttext](http://www.scielo.br/scielo.php?pid=S1413-81232011000700046{\&}script=sci{\_}arttext)</span>
+class="csl-right-inline">Nedel FB, Facchini LA, Bastos JL, Martín-Mateo
+M. <span class="nocase">Conceptual and methodological aspects in the
+study of hospitalizations for ambulatory care sensitive
+conditions</span>. Ciência & Saúde Coletiva \[Internet\]. 2011;16(SUPPL.
+1):1145–54. Available from:
+<http://www.scielo.br/j/csc/a/4BYnRnKGjwdhYstBkKk7X7M/?lang=en></span>
 
 </div>
 
@@ -861,7 +872,8 @@ sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria, Bag<span class="nocase">é</span>
 (RS)</span>. Rev Saude Publica \[Internet\]. 2008;42(6):1041–52.
-Available from: <http://www.scielosp.org/pdf/rsp/v42n6/6420.pdf></span>
+Available from:
+<https://www.scielo.br/j/rsp/a/NHNcRYsk8kwv4KYZqRD6S8c/?lang=pt></span>
 
 </div>
 
@@ -879,8 +891,9 @@ por Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 Sens<span class="nocase">ı́</span>veis <span class="nocase">à</span>
 Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 Prim<span class="nocase">á</span>ria no Rio Grande do Sul,
-Brasil.</span> \[PhD thesis\]. \[Pelotas, RS\]: Universidade Federal de
-Pelotas - UFPel; 2009. p. 279. </span>
+Brasil.</span> \[Internet\] \[PhD thesis\]. \[Pelotas, RS\]:
+Universidade Federal de Pelotas - UFPel; 2009. p. 279. Available from:
+<http://repositorio.ufpel.edu.br:8080/bitstream/prefix/3654/1/tese%20nedel.pdf></span>
 
 </div>
 
@@ -896,7 +909,7 @@ aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria no programa estat<span
 class="nocase">í</span>stico R</span>. Epidemiologia e Serviços de Saúde
 \[Internet\]. 2017;26(01):199–209. Available from:
-[http://revista.iec.gov.br/template{\\\_}doi{\\\_}ess.php?doi=10.5123/S1679-49742017000100199{\\&}scielo=S2237-96222017000100199](http://revista.iec.gov.br/template{\_}doi{\_}ess.php?doi=10.5123/S1679-49742017000100199{\&}scielo=S2237-96222017000100199)</span>
+<https://www.scielo.br/j/ress/a/cLvdvwyTpy8cQh5LnhJfd3G/?lang=pt></span>
 
 </div>
 
@@ -911,7 +924,7 @@ class="nocase">à</span> Aten<span class="nocase">ç</span><span
 class="nocase">ã</span>o Prim<span class="nocase">á</span>ria no
 programa R</span>. Epidemiologia e Serviços de Saúde \[Internet\]. 2019
 Sep;28(2):e2019084. Available from:
-[http://www.scielo.br/scielo.php?script=sci{\\\_}arttext{\\&}pid=S2237-96222019000201100{\\&}lng=pt{\\&}nrm=iso{\\&}tlng=pt](http://www.scielo.br/scielo.php?script=sci{\_}arttext{\&}pid=S2237-96222019000201100{\&}lng=pt{\&}nrm=iso{\&}tlng=pt)</span>
+<https://www.scielo.br/j/ress/a/7XsGCYRVdD6PZxPzmNCFqvp/abstract/?lang=pt></span>
 
 </div>
 
@@ -921,8 +934,9 @@ Sep;28(2):e2019084. Available from:
 class="csl-right-inline">Organización Panamericana de la Salud (OPS).
 <span class="nocase">Compendio de indicadores del impacto y resultados
 intermedios. Plan estrat<span class="nocase">é</span>gico de la OPS
-2014-2019: "En pro de la salud: Desarrollo sostenible y equidad"</span>.
-OPS, editor. Washington; 2014. </span>
+2014-2019: "En pro de la salud: Desarrollo sostenible y equidad"</span>
+\[Internet\]. OPS, editor. Washington; 2014. Available from:
+<https://www.paho.org/hq/dmdocuments/2016/ops-pe-14-19-compendium-indicadores-nov-2014.pdf></span>
 
 </div>
 
@@ -953,7 +967,7 @@ class="nocase">é</span>-processamento de microdados do Departamento de
 Inform<span class="nocase">á</span>tica do SUS (DATASUS)</span>.
 Cadernos de Saúde Pública \[Internet\]. 2019;35(9):e00032419. Available
 from:
-[http://www.scielo.br/scielo.php?script=sci{\\\_}arttext{\\&}pid=S0102-311X2019001104001{\\&}tlng=pt](http://www.scielo.br/scielo.php?script=sci{\_}arttext{\&}pid=S0102-311X2019001104001{\&}tlng=pt)</span>
+<https://www.scielo.br/j/csp/a/gdJXqcrW5PPDHX8rwPDYL7F/?lang=pt></span>
 
 </div>
 
