@@ -158,7 +158,7 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
   # Nomes em castelhano
   # --------------------
   nomes.es.MS <- c(" 1. Prev. vacunaci\U00F3n y otros medios",
-                   " 2. Gastroenterites",
+                   " 2. Gastroenteritis",
                    " 3. Anemia",
                    " 4. Def. nutricionales",
                    " 5. Infec. o\u00EDdo, nariz y garganta",
@@ -179,7 +179,7 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
                    )
 
   nomes.es.Alfradique <- c(" 1. Prev. por vacunaci\U00F3n",
-                           " 2. Otras cond. prevenibles",
+                           " 2. Afec. prev. incluidas FR, sífilis, TB",
                               nomes.es.MS[2:19])
   substr(nomes.es.Alfradique[3:20], 1, 2) <-
     c(paste0(" ", as.character(as.numeric(paste0(2:8)) + 1)),
