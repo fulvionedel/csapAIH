@@ -2,7 +2,7 @@
 #' @description Desenha um gráfico de barras das CSAP por grupo de causa segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite a lista oficial publicada em Portaria Ministerial, com 19 grupos de causa, ou a lista com 20 grupos, publicada por Alfradique et al.
 #' @aliases desenhaCSAP
 #'
-#' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}})
+#' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}}, \code{\link{tabCSAP}})
 #' \itemize{
 #'   \item Um \code{data.frame} gerado pela função \code{\link{csapAIH}}, ou qualquer \code{data.frame} com uma variável chamada \code{grupo} com os grupos de causa da Lista Brasileira de CSAP, rotulados na mesma forma que os resultantes da função \code{\link{csapAIH}}, isto é, "g01", "g02", ..., "g19".
 #'   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS.
@@ -39,11 +39,11 @@
 #' @details
 #' O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite a adição de outros comandos ao objeto devolvido. O vetor \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 #'
-#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link[ggplot2]{ggplot}}, \code{\link{nomesgruposCSAP}}
+#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{tabCSAP}}, \code{\link[ggplot2]{ggplot}}, \code{\link{nomesgruposCSAP}}
 
 #' @examples
 #' library(csapAIH)
-#' data("aih100") # Carregar o banco de dados de exemplo
+#' # Usa o banco de dados de exemplo no pacote: 'aih100'
 #' df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 #'
 #' #  Graficos com ggplot
@@ -154,12 +154,12 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
   #
   # A tabela
   # (cada vez mais acho que tenho de voltar ao table/tabulate,
-  #  em vez de invocar a descreveCSAP)!
+  #  em vez de invocar a descreveCSAP -- ou tabCSAP, agora :D:D:D)!
   #
   if(jaetabela == TRUE) {
     tabela <- dados[1:ngrupos, 1:2]
   } else {
-      tabela <- descreveCSAP(dados)[1:ngrupos, 1:2]
+      tabela <- tabCSAP(dados$grupo)[1:ngrupos, 1:2]
   }
     tabela[,2] <- as.numeric(gsub("\\.", "", tabela[,2]))
     tabela <- droplevels(tabela[tabela$Casos > 0, ]) # para excluir grupos com frequência zero
