@@ -163,7 +163,6 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
   }
     tabela[,2] <- as.numeric(gsub("\\.", "", tabela[,2]))
     tabela <- droplevels(tabela[tabela$Casos > 0, ]) # para excluir grupos com frequência zero
-  ngrupos <- length(tabela$Grupo)
 
   # - Título do gráfico ---------------------
   #
