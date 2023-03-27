@@ -1,12 +1,11 @@
 #' @title Grafico das Condicoes Sensiveis a Atencao Primaria
 #' @description Desenha um gráfico de barras das CSAP por grupo de causa segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite a lista oficial publicada em Portaria Ministerial, com 19 grupos de causa, ou a lista com 20 grupos, publicada por Alfradique et al.
-#' @aliases desenhaCSAP
+#' @aliases desenhaCSAPdev
 #'
 #' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}}, \code{\link{tabCSAP}})
 #' \itemize{
 #'   \item Um \code{data.frame} gerado pela função \code{\link{csapAIH}}, ou qualquer \code{data.frame} com uma variável chamada \code{grupo} com os grupos de causa da Lista Brasileira de CSAP, rotulados na mesma forma que os resultantes da função \code{\link{csapAIH}}, isto é, "g01", "g02", ..., "g19".
-#'   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS.
-#'   nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas os grupos também devem ser rotulados da mesma forma que na função, isto é, "g01", "g02", ..., "g19".
+#'   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS, ou de 1 a 20 para a lista "Alfradique", nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas os grupos também devem ser rotulados da mesma forma que na função, isto é, "g01", "g02", ..., "g19".
 #'   }
 #' @param lista Lista de causas a ser considerada (v. detalhes); pode ser \code{"MS"} (padrão) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
 #' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
@@ -43,8 +42,19 @@
 
 #' @examples
 #' library(csapAIH)
-#' # Usa o banco de dados de exemplo no pacote: 'aih100'
+#' # Usa o banco de dados de exemplo no pacote: 'aih500'
+#' df   <- csapAIH(aih500) # Computar as CSAP, lista MS
+#'
+#'
+#'
+#'
+#'
 #' df   <- csapAIH(aih100) # Computar as CSAP, lista MS
+#'
+#'
+#'
+#'
+#'
 #'
 #' #  Graficos com ggplot
 #' # =====================
@@ -53,28 +63,28 @@
 #' # uma vez que a variavel com os grupos se chama "grupo":
 #' # ----------------------------------------------------------
 #' # Com titulo "automatico":
-#' desenhaCSAP(df, titulo = "auto", onde = "Rio Grande do Sul")
+#' desenhaCSAPdev(df, titulo = "auto", onde = "Rio Grande do Sul")
 #'
 #' # Sem titulo e sem ordenacacao por frequencia:
-#' desenhaCSAP(df, ordenar = FALSE)
+#' desenhaCSAPdev(df, ordenar = FALSE)
 #' #
 #' # Com a lista de Alfradique et al.:
-#' desenhaCSAP(csapAIH(aih100, "Alfradique"),
+#' desenhaCSAPdev(csapAIH(aih100, "Alfradique"),
 #'             lista = "Alfradique",
 #'             titulo = "auto",
 #'             onde = "Rio Grande do Sul")
-#' desenhaCSAP(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
+#' desenhaCSAPdev(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
 #'
 #' # Cores
 #' #-------
 #' # Sem cores nas barras
-#' desenhaCSAP(df, colorir = FALSE)
+#' desenhaCSAPdev(df, colorir = FALSE)
 #'
 #' # Com as barras em tons de cinza
-#' desenhaCSAP(df, colorir = "cinza")
+#' desenhaCSAPdev(df, colorir = "cinza")
 #'
 #' # Com as barras em outra cor
-#' desenhaCSAP(df, colorir = "yellow")
+#' desenhaCSAPdev(df, colorir = "yellow")
 #' #
 #' # Usando o banco todo pode-se tirar proveito de facilidades do ggplot2,
 #' # como a reproducao do grafico por estratos de outras variaveis, como no
@@ -82,90 +92,75 @@
 #' # pode ser novamente colorido mais tarde. Como a ordenacao dos grupos de
 #' # causa continua sendo feita pela frequencia da distribuicao global, aqui
 #' # ela faz menos sentido.
-#'   desenhaCSAP(df, ordenar = FALSE) +
+#'   desenhaCSAPdev(df, ordenar = FALSE) +
 #'     ggplot2::facet_wrap(~sexo)
 #'
 #' # Cria o grafico a partir de uma variavel:
 #' # ---------------------------------------
 #' fator <- df$grupo
-#' desenhaCSAP(fator)
+#' desenhaCSAPdev(fator)
 #' carater <- as.character(fator)
-#' desenhaCSAP(carater, limsup = 4.4)
+#' desenhaCSAPdev(carater, limsup = 4.4)
 #'
 #' # Se \code{titulo = "auto"}, o argumento \code{quando} eh obrigatorio:
 #' \dontrun{
-#'  desenhaCSAP(carater, titulo = "auto", onde = 'RS') # resulta em erro
+#'  desenhaCSAPdev(carater, titulo = "auto", onde = 'RS') # resulta em erro
 #'  }
-#'  desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
-#'  desenhaCSAP(carater, titulo = "Título manual")
+#'  desenhaCSAPdev(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
+#'  desenhaCSAPdev(carater, titulo = "Título manual")
 #'
 #' # Cria o grafico a partir de uma tabela com a primeira coluna contendo
 #' # os 19 grupos de causa e a segunda coluna contendo o numero de casos:
 #' # --------------------------------------------------------------------
 #' tabela <- descreveCSAP(df)
-#' desenhaCSAP(tabela, jaetabela = TRUE)
+#' desenhaCSAPdev(tabela, jaetabela = TRUE)
 #' \dontrun{
 #' # Resulta em erro, faltou o argumento 'quando'
-#' desenhaCSAP(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
+#' desenhaCSAPdev(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
 #' }
-#' desenhaCSAP(tabela, jaetabela = TRUE,
+#' desenhaCSAPdev(tabela, jaetabela = TRUE,
 #'             titulo = "auto", onde = "RS", quando = "jan/2012")
-#' desenhaCSAP(tabela, jaetabela = TRUE, titulo = "Título manual")
+#' desenhaCSAPdev(tabela, jaetabela = TRUE, titulo = "Título manual")
 #'
 #' #  Graficos com as funcoes basicas
 #' # =================================
-#' desenhaCSAP(df, tipo.graf = "base")
-#' desenhaCSAP(df$grupo, tipo.graf = "base")
-#' desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base")
+#' desenhaCSAPdev(df, tipo.graf = "base", titulo = "dados = um banco")
+#' desenhaCSAPdev(df$grupo, tipo.graf = "base", titulo = "dados = um fator")
+#' desenhaCSAPdev(tabela, jaetabela = TRUE, tipo.graf = "base", titulo = "dados = uma tabela")
 #'
 #' @importFrom grDevices rainbow
 #' @importFrom graphics barplot par
 #' @importFrom stats reorder
 #' @importFrom utils installed.packages
+#'
 #' @export
 #'
-desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, tipo.graf = "ggplot", valores = "porcento", ordenar = TRUE, colorir = TRUE, porcentagens = TRUE, val.dig = 0, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, x.size = 10, y.size = 11, val.size = 2.5, limsup = NULL, ...){
+desenhaCSAPdev <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, tipo.graf = "ggplot", valores = "porcento", ordenar = TRUE, colorir = TRUE, porcentagens = TRUE, val.dig = 0, titulo = NULL, onde, quando = NULL, t.hjust = 1, t.size = 12, x.size = 10, y.size = 11, val.size = 2.5, limsup = NULL, ...){
+
+# Configurações
+# ----------------
+
+  cod <- NULL
 
   if(lista == "MS") ngrupos = 19 else
     if(lista == "Alfradique") ngrupos = 20
-  # Uma função -------------------
-  #
-  # Criar uma função pra arrumar os grupos de causa se
-  # a variável não tiver todos os grupos da lista.
-  #
-    arrumaniveis <- function(x) {
-      if (length(levels(x)) < 19) {
-        niveis <- c(paste0("g0", 1:9), paste0("g", 10:ngrupos))
-        x <- factor(x, levels = niveis)
-        x
-      } else
-        x
-    }
-  # --------------- termina função
 
-  # Arrumar esses casos
-  if (is.character(dados)) {
-    dados <- arrumaniveis(dados)
-    } else if (is.data.frame(dados)) {
-      if (is.character(dados$grupo)) {
-        dados$grupo <- arrumaniveis(dados$grupo)
-      }
-    }
+  nomes <- bind_cols(cod = c(paste0("g0", 1:9), paste0("g", 10:ngrupos)),
+                     nome = nomesgruposCSAP(lista = lista, ...))
+
+  # Cores das barras --------------------------
   #
-  # A tabela
-  # (cada vez mais acho que tenho de voltar ao table/tabulate,
-  #  em vez de invocar a descreveCSAP -- ou tabCSAP, agora :D:D:D)!
-  #
-  if(jaetabela == TRUE) {
-    tabela <- dados[1:ngrupos, 1:2]
+  if (colorir == TRUE) {
+    cores = 1:ngrupos
+  } else if (colorir == FALSE) {
+    cores <- NULL
+  } else if (colorir == "cinza") { # criar uma paleta de cores para impressão em tons de cinza:
+    cores <- paste0("gray", c(rep(80, 4), rep(65, 5), rep(50, 5), rep(25, 5)))
+    # cores <- cores[1:ngrupos]
+    # cores <- paste0("gray", seq(1, ngrupos, 5))
   } else {
-    if( !is.factor(dados) ) {
-      # tabela <- descreveCSAP(dados)[1:ngrupos, 1:2]
-      tabela <- tabCSAP(dados$grupo, )[1:ngrupos, 1:2]
-    }
+    cores <- colorir
   }
-    tabela[,2] <- as.numeric(gsub("\\.", "", tabela[,2]))
-    tabela <- droplevels(tabela[tabela$Casos > 0, ]) # para excluir grupos com frequência zero
 
   # - Título do gráfico ---------------------
   #
@@ -186,82 +181,113 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
     }
   }
 
-  # Cores das barras --------------------------
-  #
-  if (colorir == TRUE) {
-    cores = 1:ngrupos
-  } else if (colorir == FALSE) {
-    cores <- NULL
-  } else if (colorir == "cinza") { # criar uma paleta de cores para impressão em tons de cinza:
-    cores <- paste0("gray", c(rep(80, 4), rep(65, 5), rep(50, 5), rep(25, 5)))
-    cores <- cores[1:ngrupos]
-  } else {
-    cores <- colorir
+
+# Dados
+#
+# Para fator
+# ----------
+  if(is.factor(dados) | is.character(dados)) {
+    if(is.character(dados)) {
+      dados <- as.factor(dados)
+    }
   }
+  tab.fator <- function(dados, ...) {
+    grupos <- droplevels(dados[dados != 'n\U00E3o-CSAP'])
+    grupos <- table(grupos)
+    if(ordenar == TRUE) {
+      tabela <- data.frame(sort(grupos, decreasing = FALSE))
+    # df <- left_join(df, nomes, by = join_by(grupo == cod))
+    } else if(ordenar == FALSE) {
+      tabela <- data.frame(grupos)
+    }
+    names(tabela) <- c("Grupo", "Casos")
+    tabela
+  }
+
+# Para tabela
+# -----------
+  if(is.table(dados) | isTRUE(jaetabela)) {
+    tab.tabela <- function(...) {
+      if("tabCSAP" %in% class(dados)) {
+        tabela <- dados[1:ngrupos, ]
+        names(tabela)[2] <- "Casos"
+        tabela <- tabela[tabela$Casos > 0, ]
+      } else if(!("tabCSAP" %in% class(dados))) {
+        tabela <- data.frame(dados)
+        names(tabela) <- c("Grupo", "Casos")
+        tabela <- tabela[tabela$grupo != 'n\U00E3o-CSAP',]
+        tabela <- tabela[tabela$n > 0, ]
+        tabela <- left_join(tabela, nomes, by = join_by(grupo == cod))
+      }
+      tabela
+    }
+    # tabela <- tab.tabela()
+  }
+
+# Gráficos
+#
+  ggfactab <- function(tabela, ...) {
+    # tabela <- tab.fator(dados)
+    grafico <- ggplot2::ggplot(tabela, ggplot2::aes(x = Grupo, y = sort(Casos))) +
+    ggplot2::geom_col()
+    # if(ordenar == TRUE) {
+    #   grafico <- ggplot2::ggplot(tabela, ggplot2::aes(x = Grupo, y = sort(Casos)))
+    # } else if(isFALSE(ordenar)) {
+    #   grafico <- ggplot2::ggplot(tabela, ggplot2::aes(x = Grupo, y = Casos))
+    # }
+    # grafico <- grafico +
+      # ggplot2::geom_col(...)
+    grafico
+    # if(tipo.graf == 'base' | "ggplot2" %in% rownames(installed.packages()) == FALSE) {
+    # barplot(tabela$Casos)
+    # } else if(tipo.graf == "ggplot") {
+    # }
+  }
+
+    # grafico <- ggtabela(tabela)
+
+    # ggtabela <- function(tabela, ordenar = ordenar, ...) {
+    #   casos <- NULL
+    #   if(ordenar == TRUE) {
+    #     # grupo <- sort(table(csapAIH(aih100)$grupo ), decreasing = TRUE)
+    #     ggplot2::ggplot(tabela, ggplot2::aes(x = Grupo, y = Casos, ...), ...) +
+    #       ggplot2::geom_col(...)
+      # }
+
+    # }
+
 
   # Gráfico com funções básicas ------------------------------
   #
   if(tipo.graf == 'base' | "ggplot2" %in% rownames(installed.packages()) == FALSE) {
-    # --- modo anterior ---
-    # x = tabulate(dados$grupo)[1:ngrupos]
-    # names(x) = csapAIH::groupnamesCSAP()
-    # names(x) <- Grupo
-    #
-    if(ordenar == TRUE) {
-      tabela <- tabela[order(tabela$Casos),]
-    }
-    if (colorir == TRUE) { # As cores das barras
-      cores = 1:ngrupos
-    } else if (colorir == FALSE) {
-      cores <- NULL
-    } else if (colorir == "cinza") {
-      # criar uma paleta de cores para impressão em tons de cinza:
-      cores <- paste0("gray", c(rep(80, 4), rep(65, 5), rep(50, 5), rep(25, 5)))
-    } else {
-      cores <- colorir
-    }
-
     par(mar = c(5,15,4,2)) # As margens do gráfico
+    if(is.factor(dados) | is.character(dados)) {
+      tabela <- tab.fator(dados)
+    }
+    if(is.table(dados) | isTRUE(jaetabela)) {
+      tabela <- tab.tabela(dados)
+    }
+    if(is.data.frame(dados) & isFALSE(jaetabela)) {
+      tabela <- tab.fator(dados$grupo)
+      }
     barplot(tabela$Casos, horiz = T, las = 1, col = cores, main = titulo, names.arg = tabela$Grupo, ...)
-  } #else {
-
-  if(tipo.graf == "ggplot") {
-    #
+  } else if(tipo.graf == "ggplot") {
     # - Gráfico com ggplot -----------
-    #
     Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- NULL
-
     #
     # ----- Com uma tabela ------------------------------------------------
     # Comandos exclusivos para desenhar a partir de variáveis isoladas
     # ou tabelas prontas.
     #
-    if (jaetabela == TRUE | !is.data.frame(dados)) {
-      # --- modo anterior ---
-      # df <- data.frame( "Grupo" = csapAIH::nomesgruposCSAP(),
-      #                   "Casos" = tabulate(dados$grupo)[1:ngrupos] )
-      # df <- data.frame(Grupo, Casos)
-      #
-     if(ordenar == TRUE) {
-        grafico <- ggplot2::ggplot(tabela,
-                                   ggplot2::aes(x = stats::reorder(Grupo, Casos),
-                                                y = Casos,
-                                                fill = rainbow(nrow(tabela))
-                                                )
-                                   )
-        } else {
-          grafico <- ggplot2::ggplot(tabela,
-                                     ggplot2::aes(x = Grupo,
-                                                  y = Casos,
-                                                  fill = rainbow(nrow(tabela)) ))
-          }
-      grafico <- grafico +
-        ggplot2::geom_bar(stat = 'identity') +
-        ggplot2::geom_text(ggplot2::aes(label=paste0(round(Casos/sum(Casos)*100,1), '%')),
-                           hjust=-.12, color="black", size=2.5)
-      } else {
-    # ----- Com o banco --------------------------------------------
-    # Comandos exclusivos para o gráfico usando todo o banco de dados
+    if (is.factor(dados) | is.character(dados)) {
+      grafico <- ggfactab(tab.fator(dados))
+      grafico
+      # return(grafico)
+    } else if (jaetabela == TRUE | !is.data.frame(dados) & !is.factor(dados)) {
+      grafico <- ggfactab(tab.tabela(dados))
+      } else if(jaetabela == FALSE & is.factor(dados) == FALSE) {
+      # ----- Com o banco --------------------------------------------
+      # Comandos exclusivos para o gráfico usando todo o banco de dados
         # O banco de dados
         df <- droplevels(dados[dados$grupo != 'n\U00E3o-CSAP',])
         # df$grupo <- arrumaniveis(df$grupo) # tem de aplicar novamente, pelo droplevels acima
@@ -298,19 +324,28 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
         #
         # protografico <- protografico +
           # ggplot2::theme(legend.position="none")
+
+          grafico <- protografico
+    }
  #
  # Colorir as barras
-        # if (colorir == TRUE) { # As cores das barras
-          grafico <- protografico + ggplot2::aes(fill = factor(ggplot2::after_stat(x)))
-        # } #else
-        if (colorir == FALSE) {
-          grafico <- protografico +
+        if (colorir == TRUE) { # As cores das barras
+          grafico <- grafico + ggplot2::aes(fill = factor(ggplot2::after_stat(x)))
+        } else if (colorir == FALSE) {
+          grafico <- grafico +
             ggplot2::aes(fill = "white", col = "black") +
             ggplot2::scale_fill_identity(aesthetics = c("fill", "colour"))
-        } else if (colorir == "cinza") {
-          grafico <- grafico +
-            ggplot2::scale_fill_manual(values = cores, aesthetics = "fill")
-        } else if (colorir != "cinza" & colorir != TRUE &  colorir != FALSE) {
+        } else if (colorir == "cinza") { # MELHORAR ISSO PASSAR A FUNÇÃO DE geom_col PRA geom_bar
+          if(is.data.frame(dados) & jaetabela == FALSE) {
+            grafico <- grafico +
+              ggplot2::geom_bar(fill = cores[1:10])
+          } else if(is.factor(dados) | jaetabela == TRUE) {
+            grafico <- grafico +
+            ggplot2::geom_col(fill = cores[1:10])
+          }
+            # ggplot2::scale_fill_manual(values = cores[1:ngrupos])
+        }
+    else if (colorir != "cinza" & colorir != TRUE &  colorir != FALSE) {
             grafico <- protografico +
               ggplot2::aes(fill = cores, col = "black") +
               ggplot2::scale_fill_identity(aesthetics = c("fill", "colour"))
@@ -335,7 +370,6 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
                 hjust=-.12, color="black", size =  val.size)
           }
         }
-      }
     #
     # Acabamentos -----------------------------------------------
     #
