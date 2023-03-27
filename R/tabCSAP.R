@@ -77,6 +77,7 @@ tabCSAP <- function(x, digits = 2, lang = "pt.ca", format = FALSE){
     rownames(tab) <- NULL
     tab$grupo <- nomes
     tab <- tab[,c(4,1:3)]
+    class(tab) <- append(class(tab), "tabCSAP")
     return(tab)
     }
   if (format == TRUE) {

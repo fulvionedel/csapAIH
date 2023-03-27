@@ -89,6 +89,7 @@ descreveCSAP <- function(grupos, digits = 2){
                                               rep('--',2)) )
   rownames(tabelagrupos.formatada) <- NULL
   tabelagrupos.formatada <- as.data.frame(tabelagrupos.formatada)
+  class(tabelagrupos.formatada) <- append(class(tabelagrupos.formatada), "tabCSAP")
 
   return(tabelagrupos.formatada)
 }
