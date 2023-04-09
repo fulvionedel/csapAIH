@@ -42,7 +42,6 @@
 
 #' @examples
 #' library(csapAIH)
-#' data("aih100") # Carregar o banco de dados de exemplo
 #' df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 #'
 #' #  Graficos com ggplot
