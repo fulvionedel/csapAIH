@@ -1,7 +1,7 @@
 Package: csapAIH
 Type: Package
 Title: Classificar Condicoes Sensiveis a Atencao Primaria
-Version: 0.0.0.dev
+Version: 0.0.0.0
 Date: 2021-12-25
 Author: Fúlvio B. Nedel
 Maintainer: Fúlvio B. Nedel <fulvionedel@gmail.com>
