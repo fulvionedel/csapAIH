@@ -90,7 +90,6 @@ O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa
 }
 \examples{
 library(csapAIH)
-data("aih100") # Carregar o banco de dados de exemplo
 df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 
 #  Graficos com ggplot
@@ -161,9 +160,9 @@ desenhaCSAP(tabela, jaetabela = TRUE, titulo = "Título manual")
 
 #  Graficos com as funcoes basicas
 # =================================
-desenhaCSAP(df, tipo.graf = "base")
-desenhaCSAP(df$grupo, tipo.graf = "base")
-desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base")
+desenhaCSAP(df, tipo.graf = "base", titulo = "dados = banco")
+desenhaCSAP(df$grupo, tipo.graf = "base", titulo = "dados = fator")
+desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base", titulo = "dados = tabela")
 
 }
 \seealso{
