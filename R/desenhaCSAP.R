@@ -113,9 +113,9 @@
 #'
 #' #  Graficos com as funcoes basicas
 #' # =================================
-#' desenhaCSAP(df, tipo.graf = "base")
-#' desenhaCSAP(df$grupo, tipo.graf = "base")
-#' desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base")
+#' desenhaCSAP(df, tipo.graf = "base", titulo = "dados = banco")
+#' desenhaCSAP(df$grupo, tipo.graf = "base", titulo = "dados = fator)
+#' desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base", titulo = "daos = tabela")
 #'
 #' @importFrom grDevices rainbow
 #' @importFrom graphics barplot par
