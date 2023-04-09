@@ -21,6 +21,7 @@
 #' tableCSAP(csap$grupo, idioma = "es")
 #'
 #' @export
+#'
 descreveCSAP <- function(x, idioma = "pt.ca", nomes = NULL){
   if(is.factor(x)) tabelagrupos = stats::addmargins(table(x))
   if(is.table(x) | is.matrix(x)) tabelagrupos = x

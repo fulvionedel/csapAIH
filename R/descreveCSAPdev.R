@@ -1,6 +1,6 @@
 #' @title Tabular Condicoes Sensiveis a Atencao Primaria
 #' @description Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de causa
-#' @aliases descreveCSAP
+#' @aliases descreveCSAPdev
 #'
 #' @param grupos Pode ser:
 #' \itemize{
@@ -19,11 +19,11 @@
 #' @examples
 #' data(aih100)
 #' df = csapAIH(aih100)
-#' descreveCSAP(df$grupo)
+#' descreveCSAPdev(df$grupo)
 #'
 #' @export
 #'
-descreveCSAP <- function(grupos, digits = 2){
+descreveCSAPdev <- function(grupos, digits = 2){
   #
   # Nuntius errorum
   # ----------------

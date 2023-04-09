@@ -10,6 +10,8 @@ descreveCSAP(x, idioma = "pt.ca", nomes = NULL)
 \item{x}{a vector containing the Brazilian PHCSC groups of causes.}
 
 \item{idioma}{argument to be passed to \code{\link{groupnamesCSAP}}.}
+
+\item{nomes}{Allows a personalized list of group names.}
 }
 \description{
 Tabulates Primary Health Care Sensitive Conditions (PHCSC, CSAP) according to the Brazilian list of causes.

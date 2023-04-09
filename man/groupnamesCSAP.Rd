@@ -8,6 +8,8 @@ groupnamesCSAP(idioma = "pt.ca", nomes = NULL)
 }
 \arguments{
 \item{idioma}{Character vector indicating how to type the names; may be "pt.ca" (default) for names in Portuguese with accents, "pt.sa" for names in Portuguese without accents, "en", for names in English, or "es", for names in Spanish.}
+
+\item{nomes}{Allows a personalized list of group names.}
 }
 \description{
 List the 19 groups of cause from the Brazilian list of Primary Health Care Sensitive Conditions (PHCSC, CSAP).

@@ -9,6 +9,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 }
 \source{
 \url{https://www.ecuadorencifras.gob.ec/}
+O Equador tem mudado os links e nomes ou estrutura da árvore de arquivos. Além disso as últimas buscas têm direcionado a uma página para download dos arquivos em que não se pode copiar o link da fonte, obrigando ao download e salvamento do arquivo em alguma pasta. ... :(
+Nas bases disponíveis através da página https://anda.inec.gob.ec/anda/index.php/catalog/SOCDEMO parece que ainda podemos copiar o link do arquivo-fonte desejado. O deste exemplo, a _Encuesta de Egresos Hospitalarios_ do ano 2020, é, neste momento, esse: https://anda.inec.gob.ec/anda/index.php/catalog/883/get_microdata.
 }
 \usage{
 data(eeh20)

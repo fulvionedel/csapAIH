@@ -154,7 +154,7 @@ desenhaCSAPdev2 <- function(dados, tipo = 1, lista = "MS", lang = "pt.ca", nomes
 
   if(nomes == FALSE) nomes <- NULL else
     if(nomes == TRUE) {
-      nomes <- bind_cols(cod = c(paste0("g0", 1:9), paste0("g", 10:ngrupos)),
+      nomes <- dplyr::bind_cols(cod = c(paste0("g0", 1:9), paste0("g", 10:ngrupos)),
                          nome = nomesgruposCSAP(lista = lista, ...))
     } # else nomes <- nomes
 
@@ -290,7 +290,7 @@ desenhaCSAPdev2 <- function(dados, tipo = 1, lista = "MS", lang = "pt.ca", nomes
     barplot(tabela$Casos, horiz = T, las = 1, col = cores, main = titulo, names.arg = tabela$Grupo, ...)
   } else if(tipo.graf == "ggplot") {
     # - Gráfico com ggplot -----------
-    Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- NULL
+    Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- count <- NULL
     #
     # ----- Com uma tabela ------------------------------------------------
     # Comandos exclusivos para desenhar a partir de variáveis isoladas

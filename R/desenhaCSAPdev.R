@@ -105,23 +105,22 @@
 #' # Se \code{titulo = "auto"}, o argumento \code{quando} eh obrigatorio:
 #' \dontrun{
 #'  desenhaCSAPdev(carater, titulo = "auto", onde = 'RS') # resulta em erro
-#'  }
-#'  desenhaCSAPdev(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
-#'  desenhaCSAPdev(carater, titulo = "Título manual")
+#' }
+#' desenhaCSAPdev(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
+#' desenhaCSAPdev(carater, titulo = "Título manual")
 #'
 #' # Cria o grafico a partir de uma tabela com a primeira coluna contendo
 #' # os 19 grupos de causa e a segunda coluna contendo o numero de casos:
 #' # --------------------------------------------------------------------
 #' tabela <- descreveCSAP(df)
-#' # desenhaCSAPdev(tabela, jaetabela = TRUE)
+#' desenhaCSAPdev(tabela, jaetabela = TRUE)
 #' \dontrun{
 #' # Resulta em erro, faltou o argumento 'quando'
 #' desenhaCSAPdev(tabela, jaetabela = TRUE, titulo = "auto", onde = 'RS')
-#' # }
+#' }
 #' desenhaCSAPdev(tabela, jaetabela = TRUE,
 #'             titulo = "auto", onde = "RS", quando = "jan/2012")
 #' desenhaCSAPdev(tabela, jaetabela = TRUE, titulo = "Título manual")
-#' }
 #' #  Graficos com as funcoes basicas
 #' # =================================
 #' desenhaCSAPdev(df, tipo.graf = "base", titulo = "dados = um banco")
@@ -145,7 +144,7 @@ desenhaCSAPdev <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALS
   if(lista == "MS") ngrupos = 19 else
     if(lista == "Alfradique") ngrupos = 20
 
-  nomes <- bind_cols(cod = c(paste0("g0", 1:9), paste0("g", 10:ngrupos)),
+  nomes <- dplyr::bind_cols(cod = c(paste0("g0", 1:9), paste0("g", 10:ngrupos)),
                      nome = nomesgruposCSAP(lista = lista, ...))
 
   # Cores das barras --------------------------
@@ -196,7 +195,7 @@ desenhaCSAPdev <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALS
     grupos <- table(grupos)
     if(ordenar == TRUE) {
       tabela <- data.frame(sort(grupos, decreasing = FALSE))
-    # df <- left_join(df, nomes, by = join_by(grupo == cod))
+    # df <- dplyr::left_join(df, nomes, by = dplyr::join_by(grupo == cod))
     } else if(ordenar == FALSE) {
       tabela <- data.frame(grupos)
     }
@@ -218,7 +217,7 @@ desenhaCSAPdev <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALS
         names(tabela) <- c("Grupo", "Casos")
         tabela <- tabela[tabela$grupo != 'n\U00E3o-CSAP',]
         tabela <- tabela[tabela$n > 0, ]
-        tabela <- left_join(tabela, nomes, by = join_by(grupo == cod))
+        tabela <- dplyr::left_join(tabela, nomes, by = dplyr::join_by(grupo == cod))
       }
       tabela
     }
@@ -280,7 +279,7 @@ desenhaCSAPdev <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALS
     #
     # - Gráfico com ggplot -----------
     #
-    Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- NULL
+    Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- count <- idioma <- NULL
     #
     # ----- Com uma tabela ------------------------------------------------
     # Comandos exclusivos para desenhar a partir de variáveis isoladas

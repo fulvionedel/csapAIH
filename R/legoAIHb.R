@@ -4,6 +4,7 @@
 #' @description Read files from the Brazilian Hospital Information System data bases (BD-SIH/SUS), in .DBC, .DBF or .CSV format, and allows to exclude, extract or identify records of hospitalization for obstetric procedures, as well to exclude duplicated records for large continuance hospitalization ("large stay AIH"). The function also makes changes in variables to be more usable: computes age in completed years, "detailed age groups" (as DATASUS tables) and five-years age groups, turns sex into a factor, and returns a data frame with less (and more used in epidemiological studies) variables.
 #'
 #' @param x A data file with the Brazilian records for hospital discharges from the Unified Health System ('AIH files -- arquivos da AIH'), in .DBC, .DBF or .CSV format, or yet an object of class data.frame on the active session, with the same structure of AIH files.
+#' @param vars Variables to be selected (default = all).
 #' @param file TRUE (default) indicates that \code{x} is a file
 #' @param procobst.rm TRUE (default) removes records for obstetric procedures hospitalization. See 'Details'.
 #' @param longa.rm TRUE (default) removes records for large continuance hospitalizations. See 'Details'.
@@ -35,19 +36,17 @@
 #'
 #' ## An 'AIH file' in the internet
 #' ##---------------------------------------------
-#'
-#' <<<<<<<<<<< FAZER DOIS EXEMPLOS, COM E SEM O MICRODATASUS >>>>>>>>>>>>
+#' ###### FAZER DOIS EXEMPLOS, COM E SEM O MICRODATASUS #########
 #'
 #'
 #'
 #' @import data.table
 #' @export
 #'
-legoAIHb <-
-# function(x, file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep, language="pt", ...)
-  function(x, sep, vars = NULL, ...)
+legoAIHb <- function(x, vars = NULL, # nova forma
+                     file=TRUE, procobst.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, sep, language="pt", #antiga
+                     ...)
   {
-
   #===================
   ## Parat data
   #===================

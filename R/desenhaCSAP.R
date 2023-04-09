@@ -205,7 +205,7 @@ desenhaCSAP <- function(dados, jaetabela = FALSE, tipo.graf = "ggplot", valores 
     #
     # - Gráfico com ggplot -----------
     #
-    Grupo <- Casos <- grupo <- ..count.. <- ..prop.. <- ..x.. <- NULL
+    Grupo <- Casos <- grupo <- ..count.. <- ..prop.. <- ..x.. <- idioma <- nomes <- NULL
 
     #
     # ----- Com uma tabela ------------------------------------------------
