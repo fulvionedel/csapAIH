@@ -28,7 +28,7 @@ desenhaCSAP(
 )
 }
 \arguments{
-\item{dados}{O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}}, \code{\link{tabCSAP}})
+\item{dados}{O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}})
 \itemize{
   \item Um \code{data.frame} gerado pela função \code{\link{csapAIH}}, ou qualquer \code{data.frame} com uma variável chamada \code{grupo} com os grupos de causa da Lista Brasileira de CSAP, rotulados na mesma forma que os resultantes da função \code{\link{csapAIH}}, isto é, "g01", "g02", ..., "g19".
   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS.
@@ -90,7 +90,7 @@ O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa
 }
 \examples{
 library(csapAIH)
-# Usa o banco de dados de exemplo no pacote: 'aih100'
+data("aih100") # Carregar o banco de dados de exemplo
 df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 
 #  Graficos com ggplot
@@ -111,7 +111,6 @@ desenhaCSAP(csapAIH(aih100, "Alfradique"),
             titulo = "auto",
             onde = "Rio Grande do Sul")
 desenhaCSAP(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
-
 
 # Cores
 #-------
@@ -135,17 +134,17 @@ desenhaCSAP(df, colorir = "yellow")
 
 # Cria o grafico a partir de uma variavel:
 # ---------------------------------------
-# fator <- df$grupo
-# desenhaCSAP(fator)
-# carater <- as.character(fator)
-# desenhaCSAP(carater, limsup = 4.4)
+fator <- df$grupo
+desenhaCSAP(fator)
+carater <- as.character(fator)
+desenhaCSAP(carater, limsup = 4.4)
 
 # Se \code{titulo = "auto"}, o argumento \code{quando} eh obrigatorio:
 \dontrun{
  desenhaCSAP(carater, titulo = "auto", onde = 'RS') # resulta em erro
  }
-# desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
-# desenhaCSAP(carater, titulo = "Título manual")
+ desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
+ desenhaCSAP(carater, titulo = "Título manual")
 
 # Cria o grafico a partir de uma tabela com a primeira coluna contendo
 # os 19 grupos de causa e a segunda coluna contendo o numero de casos:
@@ -162,11 +161,11 @@ desenhaCSAP(tabela, jaetabela = TRUE, titulo = "Título manual")
 
 #  Graficos com as funcoes basicas
 # =================================
-# desenhaCSAP(df, tipo.graf = "base")
-# desenhaCSAP(df$grupo, tipo.graf = "base")
-# desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base")
+desenhaCSAP(df, tipo.graf = "base")
+desenhaCSAP(df$grupo, tipo.graf = "base")
+desenhaCSAP(tabela, jaetabela = TRUE, tipo.graf = "base")
 
 }
 \seealso{
-\code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{tabCSAP}}, \code{\link[ggplot2]{ggplot}}, \code{\link{nomesgruposCSAP}}
+\code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link[ggplot2]{ggplot}}, \code{\link{nomesgruposCSAP}}
 }

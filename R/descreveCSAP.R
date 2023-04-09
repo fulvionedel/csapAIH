@@ -24,36 +24,22 @@
 #' @export
 #'
 descreveCSAP <- function(grupos, digits = 2){
-  #
-  # Nuntius errorum
-  # ----------------
-  pramenos <- "O vetor precisa ter os 19 grupos, mesmo que com freq = 0"
-  pramais <- "O vetor precisa ter os 19 grupos da Lista Brasileira.\nSe essa for a lista 'Alfradique', use 'tabCSAP'."
-
   if(is.character(grupos)) {
     if(length(table(grupos)) < 19) {
-      stop(pramenos)
-    } else if("g20" %in% grupos) {
-      stop(pramais)
+      stop("O vetor precisa ter os 19 grupos, mesmo que com freq = 0")
     }
   }
   if( is.factor(grupos) ) {
-    if(nlevels(grupos) < 19) {
-      stop(pramenos)
-    } else if("g20" %in% grupos) {
-      stop(pramais)
+    if(length(levels(grupos)) < 19) {
+      stop("O fator precisa ter como n\U00EDveis os 19 grupos, mesmo que com freq = 0")
     }
   }
-  # ----------------------------
-  #
   if(is.data.frame(grupos)) {
     if(nrow(grupos) < 23) {
       tabelagrupos = grupos
       return(tabelagrupos)
-    } else {
+    } else
       grupos = grupos$grupo
-      if("g20" %in% grupos) {stop(pramais)}
-    }
   }
   if(is.factor(grupos)) tabelagrupos <- stats::addmargins(table(grupos))
   if(is.character(grupos)) tabelagrupos <- stats::addmargins(table(grupos))
@@ -89,7 +75,6 @@ descreveCSAP <- function(grupos, digits = 2){
                                               rep('--',2)) )
   rownames(tabelagrupos.formatada) <- NULL
   tabelagrupos.formatada <- as.data.frame(tabelagrupos.formatada)
-  class(tabelagrupos.formatada) <- append(class(tabelagrupos.formatada), "tabCSAP")
 
   return(tabelagrupos.formatada)
 }

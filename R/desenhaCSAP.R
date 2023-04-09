@@ -35,15 +35,14 @@
 #' @param ... Permite o uso de argumentos de \code{\link{plot}} e \code{\link{barplot}}
 #'
 #' @return Na opção padrão e com \code{\link[ggplot2]{ggplot2}} instalado, devolve um objeto das classes "gg" e "ggplot", com o gráfico.
-#'
 #' @details
 #' O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite a adição de outros comandos ao objeto devolvido. O vetor \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 #'
-#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{tabCSAP}}, \code{\link[ggplot2]{ggplot}}, \code{\link{nomesgruposCSAP}}
+#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link[ggplot2]{ggplot}}, \code{\link{nomesgruposCSAP}}
 
 #' @examples
 #' library(csapAIH)
-#' # Usa o banco de dados de exemplo no pacote: 'aih100'
+#' data("aih100") # Carregar o banco de dados de exemplo
 #' df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 #'
 #' #  Graficos com ggplot
@@ -154,18 +153,16 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
   #
   # A tabela
   # (cada vez mais acho que tenho de voltar ao table/tabulate,
-  #  em vez de invocar a descreveCSAP -- ou tabCSAP, agora :D:D:D)!
+  #  em vez de invocar a descreveCSAP)!
   #
   if(jaetabela == TRUE) {
     tabela <- dados[1:ngrupos, 1:2]
   } else {
-    if( !is.factor(dados) ) {
-      # tabela <- descreveCSAP(dados)[1:ngrupos, 1:2]
-      tabela <- tabCSAP(dados$grupo, )[1:ngrupos, 1:2]
-    }
+      tabela <- descreveCSAP(dados)[1:ngrupos, 1:2]
   }
     tabela[,2] <- as.numeric(gsub("\\.", "", tabela[,2]))
     tabela <- droplevels(tabela[tabela$Casos > 0, ]) # para excluir grupos com frequência zero
+  ngrupos <- length(tabela$Grupo)
 
   # - Título do gráfico ---------------------
   #

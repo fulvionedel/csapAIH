@@ -1,7 +1,7 @@
 #' @title Tabular Condições Sensíveis à Atenção Primária (CSAP)
 #' @aliases tabCSAP
 #'
-#' @description Tabula Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária
+#' @description Tabular Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária
 #'
 #' @param x Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".
 #' @param digits número de decimais para o arredondamento (com \code{\link{round}}).
@@ -77,7 +77,6 @@ tabCSAP <- function(x, digits = 2, lang = "pt.ca", format = FALSE){
     rownames(tab) <- NULL
     tab$grupo <- nomes
     tab <- tab[,c(4,1:3)]
-    class(tab) <- append(class(tab), "tabCSAP")
     return(tab)
     }
   if (format == TRUE) {
