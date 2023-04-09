@@ -2,7 +2,7 @@
 #' @description Desenha um gráfico de barras das CSAP por grupo de causa segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite a lista oficial publicada em Portaria Ministerial, com 19 grupos de causa, ou a lista com 20 grupos, publicada por Alfradique et al.
 #' @aliases desenhaCSAP
 #'
-#' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}}, \code{\link{tabCSAP}})
+#' @param dados O objeto com as informações a serem desenhadas. Pode ser: (ver \code{\link{descreveCSAP}})
 #' \itemize{
 #'   \item Um \code{data.frame} gerado pela função \code{\link{csapAIH}}, ou qualquer \code{data.frame} com uma variável chamada \code{grupo} com os grupos de causa da Lista Brasileira de CSAP, rotulados na mesma forma que os resultantes da função \code{\link{csapAIH}}, isto é, "g01", "g02", ..., "g19".
 #'   \item Um objeto da classe \code{factor}) ou \code{character} com os grupos de causa CSAP, em ordem crescente de 1 a 19, conforme os grupos da Portaria do MS.
@@ -246,14 +246,12 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
         grafico <- ggplot2::ggplot(tabela,
                                    ggplot2::aes(x = stats::reorder(Grupo, Casos),
                                                 y = Casos,
-                                                fill = rainbow(nrow(tabela))
-                                                )
-                                   )
+                                                fill = rainbow(ngrupos) ))
         } else {
           grafico <- ggplot2::ggplot(tabela,
                                      ggplot2::aes(x = Grupo,
                                                   y = Casos,
-                                                  fill = rainbow(nrow(tabela)) ))
+                                                  fill = rainbow(ngrupos) ))
           }
       grafico <- grafico +
         ggplot2::geom_bar(stat = 'identity') +
