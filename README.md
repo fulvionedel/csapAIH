@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 25 de março de 2023
+Atualizado em 09 de abril de 2023
 
 - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
 - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
@@ -180,6 +180,7 @@ importados.
 
 ``` r
 library(dplyr) # facilitar o trabalho
+Warning: package 'dplyr' was built under R version 4.2.3
 library(csapAIH)
 ```
 
@@ -688,7 +689,7 @@ clpop %>%
  8 15-19   fem          431
  9 20-24   masc         552
 10 20-24   fem          503
-# … with 24 more rows
+# ℹ 24 more rows
 brpop::mun_sex_pop() %>% 
   filter(mun == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
@@ -709,7 +710,7 @@ brpop::mun_sex_pop() %>%
  8 From 20 to 24 years Male          493
  9 From 25 to 29 years Female        503
 10 From 25 to 29 years Male          552
-# … with 24 more rows
+# ℹ 24 more rows
 ```
 
 #### A tabela com as taxas
@@ -796,7 +797,7 @@ Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.1.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.2.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
