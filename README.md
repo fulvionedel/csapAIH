@@ -145,8 +145,8 @@ usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
 CSAP em 20 grupos de causa, conforme proposto no processo de construção
-da Lista Brasileira<sup>[3](#ref-Alfradique2009)</sup>.{#lista} Essa é a
-lista sugerida pela Organização Panamericana da
+da Lista Brasileira<sup>[3](#ref-Alfradique2009)</sup>. Essa é a lista
+sugerida pela Organização Panamericana da
 Saúde<sup>[8](#ref-OPS2014)</sup>. As funções `desenhaCSAP` e `tabCSAP`
 têm um argumento para seleção do idioma dos nomes de grupos, em
 português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram
