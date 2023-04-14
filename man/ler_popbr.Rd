@@ -20,10 +20,10 @@ Lê os arquivos de população do DATASUS e cria uma variável com a faixa etár
 popBR2012 <- ler_popbr("POPBR12.DBF")
 head(popBR2012)
 xtabs(populacao ~ fxetar5, data = popBR2012)
+}
 
 # Um arquivo no diretório FTP do DATASUS
 popBR2012 <- ler_popbr("popBR12", source = "url")
 xtabs(populacao ~ fxetar5, data = popBR2012)
-}
 
 }
