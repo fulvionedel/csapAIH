@@ -2,28 +2,31 @@
 % Please edit documentation in R/ler_popbr.R
 \name{ler_popbr}
 \alias{ler_popbr}
-\title{Ler arquivos POPBR????.CSV/DBF}
+\title{Ler arquivos POPBR????.DBF}
 \usage{
-ler_popbr(pop, source = "file")
+ler_popbr(arquivo = NULL, ano = NULL)
 }
 \arguments{
-\item{pop}{População. Nome do arquivo a ser lido.}
+\item{arquivo}{Nome do arquivo DBF armazenado no computador. Padrão é \code{NULL}, v. details.}
 
-\item{source}{Fonte de dados. Use `file` (padrão) para um arquivo no computador ou `url` para baixar o arquivo do FTP do DATASUS.}
+\item{ano}{Ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Padrão é \code{NULL}, v. details.}
 }
 \description{
 Lê os arquivos de população do DATASUS e cria uma variável com a faixa etária quinquenal
 }
+\details{
+Apenas um dos dois parâmetros deve ser preenchido. Se a
+}
 \examples{
 \dontrun{
 # Um arquivo no mesmo diretório de trabalho da sessão ativa:
-popBR2012 <- ler_popbr("POPBR12.DBF")
-head(popBR2012)
-xtabs(populacao ~ fxetar5, data = popBR2012)
+popBR2010 <- ler_popbr("data-raw/POPBR10.DBF")
+head(popBR2010)
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
 }
 
 # Um arquivo no diretório FTP do DATASUS
-popBR2012 <- ler_popbr("popBR12", source = "url")
-xtabs(populacao ~ fxetar5, data = popBR2012)
+popBR2010 <- ler_popbr(ano = 2010)
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
 
 }
