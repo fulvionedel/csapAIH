@@ -32,8 +32,7 @@ ler_popbr <- function (pop, source = "file")
       populacao <- foreign::read.dbf(paste0(pop, ".DBF"))
       unlink(temp)
       unlink(paste0(pop, ".DBF"))
-    } else
-      if(source == "file") populacao <- foreign::read.dbf(pop)
+    } else if(source == "file") populacao <- foreign::read.dbf(pop)
 
    populacao <- Hmisc::upData(populacao, lowernames = T, print = F)
    populacao$fxetar5 <- cut(as.numeric(populacao$fxetaria),
@@ -42,7 +41,8 @@ ler_popbr <- function (pop, source = "file")
                                   "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
                                   "50-54", "55-59", "60-64", "65-69", "70-74", "75-79",
                                   "80 +")
-   levels(populacao$fxetaria) <- c("< 1 ano", 1:19, levels(populacao$fxetar5)[5:17])
+   # pop$fxetaria <- factor(pop$fxetaria, levels = 1:33, labels = c("< 1 ano", 1:19, levels(pop$fxetar5)[5:17]))
+   levels(populacao$fxetaria) <- c("< 1 ano", 1:19, levels(populacao$fxetaria)[20:33]) #levels(populacao$fxetar5)[5:17])
    levels(populacao$sexo) <- c("masc", "fem")
    if ( length( levels(populacao$situacao)>1 ) ) {
       levels(populacao$situacao) <- c("urbana", "rural")
