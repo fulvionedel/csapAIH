@@ -37,10 +37,20 @@
 #' @export
 
  popbr2000_2021 <- function(anoi = NULL, anof = NULL, uf = NULL, munic = NULL, droplevels = TRUE) {
+
    . <- UF_SIGLA <- age_group <- ano <- mun <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
+
    if( !is.null(anoi) & is.null(anof)) {
      anof = anoi
    }
+
+   niveis <- c(  "From 0 to 4 years",   "From 5 to 9 years", "From 10 to 14 years",
+               "From 15 to 19 years", "From 20 to 24 years", "From 25 to 29 years",
+               "From 30 to 34 years", "From 35 to 39 years", "From 40 to 44 years",
+               "From 45 to 49 years", "From 50 to 54 years", "From 55 to 59 years",
+               "From 60 to 64 years", "From 65 to 69 years", "From 70 to 74 years",
+               "From 75 to 79 years", "From 80 years or more")
+
   popbr <- brpop::mun_sex_pop() %>%
     filter(age_group != "Total",
            substr(mun, 3, 6) != "0000") %>%
@@ -48,7 +58,7 @@
            CO_UF = substr(mun, 1, 2),
            sexo = factor(sex, levels = c("Male", "Female"),
                          labels = c("masc", "fem")),
-           fxetar5 = factor(age_group, labels = csapAIH::fxetar_quinq())) %>%
+           fxetar5 = factor(age_group, levels = niveis, labels = csapAIH::fxetar_quinq())) %>%
     rename(ano = year) %>%
     select(-c(age_group, sex)) %>%
     relocate(pop, .after = last_col()) %>%
@@ -68,8 +78,7 @@
 
   if(droplevels == TRUE) {
     popbr <- base::droplevels(popbr)
-  } else if(droplevels == FALSE)
-    popbr
+  } #else if(droplevels == FALSE)
 
+  popbr
 }
-
