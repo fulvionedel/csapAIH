@@ -289,11 +289,13 @@ Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da categoria 
 ```{r}
 clpop %>% 
   group_by(fxetar5, sexo) %>% 
-  summarise(sum(pop))
+  summarise(pop = sum(pop)) %>% 
+  tidyr::pivot_wider(names_from = sexo, values_from = pop)
 brpop::mun_sex_pop() %>% 
   filter(mun == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
-  summarise(sum(pop))
+  summarise(pop = sum(pop)) %>% 
+  tidyr::pivot_wider(names_from = sex, values_from = pop)
 ```
 
 #### A tabela com as taxas
@@ -337,8 +339,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 
 ---
 ***Veja o manual do pacote em:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.2.pdf
-
+https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.3.pdf
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 

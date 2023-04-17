@@ -14,7 +14,7 @@ fxetar_quinq(aetas = NULL, senectus = 80, puer = FALSE)
 \item{puer}{Se `TRUE`, a primeira faixa etária será quebrada em `< 1 ano` e `1-4`}
 }
 \description{
-Categoriza um vetor de valores contínuos ou inteiros em tantas faixas quinquenais. A primeira faixa pode ser quebrada em `< 1 ano` e `1-4`, com o argumento `puer = TRUE`. Serão tantas faixas quantas definidas pelos argumentos `puer` e `senectus`. Por padrão (`senectus = 80`) são 17 faixas quinquenais: 0-4, ..., 80 e +.
+Categoriza um vetor de valores contínuos ou inteiros em faixas quinquenais. A primeira faixa pode ser quebrada em `< 1 ano` e `1-4`, com o argumento `puer = TRUE`. O número de faixas etárias é definido pelos argumentos `puer` e `senectus`. Por padrão (`puer = FALSE` e `senectus = 80`) são 17 faixas quinquenais: 0-4, ..., 80 e +.
 }
 \examples{
 data("aih500")
