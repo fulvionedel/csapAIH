@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 09 de abril de 2023
+Atualizado em 16 de abril de 2023
 
 - <a href="#apresentação" id="toc-apresentação">Apresentação</a>
 - <a href="#justificativa" id="toc-justificativa">Justificativa</a>
@@ -672,45 +672,59 @@ porém com outra estrutura do objeto e outros rótulos de categorias:
 ``` r
 clpop %>% 
   group_by(fxetar5, sexo) %>% 
-  summarise(sum(pop))
+  summarise(pop = sum(pop)) %>% 
+  tidyr::pivot_wider(names_from = sexo, values_from = pop)
 `summarise()` has grouped output by 'fxetar5'. You can override using the
 `.groups` argument.
-# A tibble: 34 × 3
+# A tibble: 17 × 3
 # Groups:   fxetar5 [17]
-   fxetar5 sexo  `sum(pop)`
-   <fct>   <fct>      <int>
- 1 0-4     masc         390
- 2 0-4     fem          372
- 3 5-9     masc         417
- 4 5-9     fem          344
- 5 10-14   masc         434
- 6 10-14   fem          370
- 7 15-19   masc         493
- 8 15-19   fem          431
- 9 20-24   masc         552
-10 20-24   fem          503
-# ℹ 24 more rows
+   fxetar5  masc   fem
+   <fct>   <int> <int>
+ 1 0-4       390   372
+ 2 5-9       408   393
+ 3 10-14     417   344
+ 4 15-19     434   370
+ 5 20-24     493   431
+ 6 25-29     552   503
+ 7 30-34     603   517
+ 8 35-39     572   500
+ 9 40-44     512   450
+10 45-49     461   430
+11 50-54     463   499
+12 55-59     529   486
+13 60-64     453   440
+14 65-69     348   383
+15 70-74     243   308
+16 75-79     167   219
+17 80 e +    192   361
 brpop::mun_sex_pop() %>% 
   filter(mun == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
-  summarise(sum(pop))
+  summarise(pop = sum(pop)) %>% 
+  tidyr::pivot_wider(names_from = sex, values_from = pop)
 `summarise()` has grouped output by 'age_group'. You can override using the
 `.groups` argument.
-# A tibble: 34 × 3
+# A tibble: 17 × 3
 # Groups:   age_group [17]
-   age_group           sex    `sum(pop)`
-   <chr>               <chr>       <int>
- 1 From 0 to 4 years   Female        372
- 2 From 0 to 4 years   Male          390
- 3 From 10 to 14 years Female        344
- 4 From 10 to 14 years Male          417
- 5 From 15 to 19 years Female        370
- 6 From 15 to 19 years Male          434
- 7 From 20 to 24 years Female        431
- 8 From 20 to 24 years Male          493
- 9 From 25 to 29 years Female        503
-10 From 25 to 29 years Male          552
-# ℹ 24 more rows
+   age_group             Female  Male
+   <chr>                  <int> <int>
+ 1 From 0 to 4 years        372   390
+ 2 From 10 to 14 years      344   417
+ 3 From 15 to 19 years      370   434
+ 4 From 20 to 24 years      431   493
+ 5 From 25 to 29 years      503   552
+ 6 From 30 to 34 years      517   603
+ 7 From 35 to 39 years      500   572
+ 8 From 40 to 44 years      450   512
+ 9 From 45 to 49 years      430   461
+10 From 5 to 9 years        393   408
+11 From 50 to 54 years      499   463
+12 From 55 to 59 years      486   529
+13 From 60 to 64 years      440   453
+14 From 65 to 69 years      383   348
+15 From 70 to 74 years      308   243
+16 From 75 to 79 years      219   167
+17 From 80 years or more    361   192
 ```
 
 #### A tabela com as taxas
@@ -797,7 +811,7 @@ Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.2.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.3.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
