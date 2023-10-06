@@ -24,7 +24,7 @@ popbr2000_2021(
 \item{droplevels}{Se TRUE (padrão), não inclui as categorias sem observações.}
 }
 \description{
-Estimativas populacionais para os municípios brasileiros por sexo e faixa etária quinquenal, por ano de 2000 a 2021. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote [`brpop`](https://github.com/rfsaldanha/brpop), permitindo seu uso como um banco de dados, além de outras mudanças (v. Details).
+Estimativas populacionais para os municípios brasileiros por sexo e faixa etária quinquenal, por ano de 2000 a 2021. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote [`brpop`](https://github.com/rfsaldanha/brpop), permitindo seu uso como um banco de dados, além de outras mudanças (v. Details). Exige a instalação prévia dos pacotes `brpop` e \code{\link{dplyr}}.
 }
 \details{
 Colocar o link pro TABNET, detalhar as mudanças feitas.
