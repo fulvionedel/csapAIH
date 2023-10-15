@@ -9,22 +9,23 @@
 #' @param sihsus argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH:
 #'   \itemize{
 #'     \item{DIAG_PRINC }{diagnóstico principal da internação;}
-#'     \item NASC {data de nascimento; }
 #'     \item DT_INTER {	data da internação; }
 #'     \item DT_SAIDA {	data da alta hospitalar; }
 #'     \item COD_IDADE {	código indicando a faixa etária a que se refere o valor registrado no campo idade; }
 #'     \item IDADE	{idade (tempo de vida acumulado) do paciente, na unidade indicada no campo COD_IDADE;}
 #'     \item MUNIC_RES	{município de residência do paciente; }
-#'     \item MUNIC_MOV {município de internação do paciente; }
 #'     \item SEXO { sexo do paciente; }
-#'     \item N_AIH	{ número da AIH; }
 #'     \item {PROC_REA} { procedimento realizado, segundo a tabela do SIH/SUS.}
 #'     }
 #' @param procobst.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (\code{ver detalhes});
 #' @param parto.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes});
 #' @param longa.rm argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE};
-#' @param cep argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o Código de Endereçamento Postal do indivíduo; argumento válido apenas se \code{sihsus=TRUE};
-#' @param cnes argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE};
+#' @param cep argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o Código de Endereçamento Postal do indivíduo; argumento válido apenas se \code{sihsus=TRUE};
+#' @param cnes argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE};
+#' @param n_aih argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o nº da AIH; argumento válido apenas se \code{sihsus=TRUE};
+#' @param mun_int argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o código IBGE do município de internação (variável \code{MUNIC_mov}); argumento válido apenas se \code{sihsus=TRUE};
+#' @param data_nasc argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco a data de nascimento do paciente; argumento válido apenas se \code{sihsus=TRUE};
+#' @param fxetar argumento lógico, obrigatório; \code{TRUE} (padrão) computa a faixa etária do paciente, em 17 faixas (0-4, ..., 80 e +);
 #' @param arquivo argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;
 #' @param sep usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal;
 #' @param cid identifica a varivável contendo os códigos da CID-10, em bancos de dados sem a estrutura do SIHSUS; argumento obrigatório nesses casos;
@@ -168,19 +169,19 @@
 #' ## É necessário unir o banco da AIH com as variáveis de interesse
 #' ## ao banco resultante da função 'csapAIH':
 #' vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
-#' teste11 <- csapAIH(aih500)
+#' teste11 <- csapAIH(aih500, n_aih = TRUE)
 #' teste11 <- merge(teste11, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
 #' names(teste11)
 #' ## Ou, usando o encadeamento ("piping") de funções,
-#' teste12 <- csapAIH(aih500) |>
-#' merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+#' teste12 <- csapAIH(aih500, n_aih = TRUE) |>
+#'   merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
 #' names(teste12)
 #'
 #' @importFrom dplyr is.tbl
 #'
 #' @export
 #'
-csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, cep=TRUE, cnes=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
+csapAIH <- function(x, lista = "MS", grupos = TRUE, sihsus = TRUE, procobst.rm = TRUE, parto.rm = TRUE, longa.rm = TRUE, cep = FALSE, cnes = FALSE, n_aih = FALSE, mun_int = FALSE, data_nasc = FALSE, fxetar = TRUE, arquivo=TRUE, sep, cid = NULL, ...)
   {
     # Preparar os dados
     #
@@ -192,8 +193,6 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       procobst.rm <- FALSE
       parto.rm    <- FALSE
       longa.rm    <- FALSE
-      cep         <- FALSE
-      cnes        <- FALSE
     }
     if (is.character(x) & arquivo == FALSE) {
       cid <- x
@@ -201,8 +200,6 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       procobst.rm <- FALSE
       parto.rm    <- FALSE
       longa.rm    <- FALSE
-      cep         <- FALSE
-      cnes        <- FALSE
     }
     if (is.data.frame(x)) {
       arquivo <- FALSE
@@ -248,16 +245,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
                               "registros."))
       }
 
-      # Garantir o trabalho com operadores mais tarde, no CID
-      if (sihsus==FALSE) {
-        if(!is.character(cid)) cid <- as.character(cid)
-        # if(is.labelled(cid)) cid <- zap_labels(cid)
-      }
-
-      #-------------------------------------------------------------------------#
-      #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS  #
-      #-------------------------------------------------------------------------#
-        # Contagem de registros excluídos ---- início da função
+      # Contagem de registros excluídos ---- início da função
       #
       freqs <- function(tamini, tamfin, digits = 1, tipo = "proc") {
         fr <- tamini - tamfin
@@ -283,6 +271,17 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       }
       # ----------------------- fim da função
       #
+
+      #-------------------------------------------------------------------------#
+      #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS  #
+      #-------------------------------------------------------------------------#
+
+      # Garantir o trabalho com operadores mais tarde, no CID
+      if (sihsus==FALSE) {
+        if(!is.character(cid)) cid <- as.character(cid)
+        # if(is.labelled(cid)) cid <- zap_labels(cid)
+      }
+
       if (sihsus==TRUE) {
         tamini <- nrow(x)
         x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
@@ -352,17 +351,25 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
         # Criar as variáveis do banco final
         #
         cid <- as.character(x$DIAG_PRINC)
-        nasc <- as.Date(format(x$NASC), format="%Y%m%d")
+        if(data_nasc == TRUE) {
+          nasc <- as.Date(format(x[,'NASC']), format="%Y%m%d")
+        }
         data.inter <- as.Date(format(x$DT_INTER), format="%Y%m%d")
         data.saida <- as.Date(format(x$DT_SAIDA), format="%Y%m%d")
         COD_IDADE <- as.character(x$COD_IDADE)
         idade <- csapAIH::idadeSUS(x)["idade"]
-        fxetar <- csapAIH::idadeSUS(x)["fxetar.det"]
-        fxetar5 <- csapAIH::idadeSUS(x)["fxetar5"]
-        munres   <- x$MUNIC_RES
-        munint   <- x$MUNIC_MOV
-        sexo     <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
-        n.aih    <- as.character(x$N_AIH)
+        # fxetar <- csapAIH::idadeSUS(x)["fxetar.det"] # Sai
+        if(fxetar == TRUE) {
+          fxetar5 <- csapAIH::idadeSUS(x)["fxetar5"]
+        }
+        munres <- x$MUNIC_RES
+        if(mun_int == TRUE) {
+          munint   <- x$MUNIC_MOV
+        }
+        sexo <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
+        if(isTRUE(n_aih)) {
+          n.aih <- as.character(x$N_AIH)
+        }
         proc.rea <- x$PROC_REA
         # proc.obst <- ifelse(proc.rea %in% procobst, 1, 2)
         #, labels=c('sim', 'nao'))
@@ -383,57 +390,70 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       cid[is.na(cid)] <- NA
       cid[cid==""] <- NA
       #
-      ################################################################################
-      #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
-      ################################################################################
-      if(lista == "MS") {
-        #  Portaria MS nº 221, de 17 de abril de 2008
-        csap  <- listaBRMS(cid)[,'csap']
-        grupo <- listaBRMS(cid)[,'grupo']
-      } else if (lista == "Alfradique") {
-        # Alfradique et al.
-        csap  <- listaBRAlfradique(cid)[,'csap']
-        grupo <- listaBRAlfradique(cid)[,'grupo']
+################################################################################
+#  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
+################################################################################
+      if(lista == "MS") { #  Portaria MS nº 221, de 17 de abril de 2008
+        csap  <- listaBRMS(cid)
+      } else if (lista == "Alfradique") { # Alfradique et al.
+        csap  <- listaBRAlfradique(cid)
       }
+      grupo <- csap[,'grupo']
+      csap  <- csap[,'csap']
 
-      ###########################
-      ### Montar o objeto final #
-      ###########################
-      ## Se for uma base do SIH/SUS:
+###########################
+### Montar o objeto final #
+###########################
+  ## Se for uma base do SIH/SUS:
       if (sihsus==TRUE) {
-        banco <- data.frame(n.aih, munres, munint,
-                            sexo, nasc, idade, fxetar, fxetar5,
-                            csap, grupo, cid, proc.rea,
-                            data.inter, data.saida)
-        attr(banco$n.aih, which = "label") <- "No. da AIH"
-        attr(banco$munres, which = "label") <- "Municipio de residencia"
-        attr(banco$munint, which = "label") <- "Municipio de internacao"
-        attr(banco$sexo, which = "label") <- "Sexo"
-        attr(banco$nasc, which = "label") <- "Data de nascimento"
-        attr(banco$idade, which = "label") <- "Idade"
-        attr(banco$fxetar.det, which = "label") <- "Faixa etaria detalhada"
-        attr(banco$fxetar5, which = "label") <- "Faixa etaria quinquenal"
-        attr(banco$csap, which = "label") <- "CSAP"
-        attr(banco$grupo, which = "label") <- "Grupo de causa CSAP"
-        attr(banco$cid, which = "label") <- "CID-10"
+        banco <- cbind(munres)
+        if(isTRUE(n_aih)) {
+          banco <- data.frame(n.aih, banco)
+          attr(banco['n.aih'], which = "label") <- "N\u00B0 da AIH"
+          rm(n.aih)
+        }
+        if(isTRUE(mun_int)) {
+          banco$munint <- munint
+          attr(banco['munint'], which = "label") <- "Munic\u00EDpio de interna\u00E7\u00E3o"
+          rm(munint)
+        }
+        if(isTRUE(data_nasc)) {
+          banco$nasc <- nasc
+          attr(banco['nasc'], which = "label") <- "Data de nascimento"
+          rm(nasc)
+        }
+        banco <- data.frame(banco, sexo, idade)
+        if(isTRUE(fxetar)) {
+          banco['fxetar5'] <- fxetar5['fxetar5']
+          attr(banco['fxetar5'], which = "label") <- "Faixa etaria quinquenal"
+        }
+        banco <- data.frame(banco, csap, grupo, cid, proc.rea, data.inter, data.saida)
+
+        attr(banco['munres'], which = "label") <- "Munic\u00EDpio de resid\u00EAncia"
+        attr(banco['sexo'], which = "label") <- "Sexo"
+        attr(banco['idade'], which = "label") <- "Idade"
+        # attr(banco$fxetar.det, which = "label") <- "Faixa etaria detalhada"
+        attr(banco['csap'], which = "label") <- "CSAP"
+        attr(banco['grupo'], which = "label") <- "Grupo de causa CSAP"
+        attr(banco['cid'], which = "label") <- "CID-10"
         banco$cid <- as.character(banco$cid)
-        attr(banco$proc.rea, which = "label") <- "Procedimento realizado"
-        attr(banco$data.inter, which = "label") <- "Data de internacao"
-        attr(banco$data.saida, which = "label") <- "Data de saida"
+        attr(banco['proc.rea'], which = "label") <- "Procedimento realizado"
+        attr(banco['data.inter'], which = "label") <- "Data de interna\u00E7\u00E3o"
+        attr(banco['data.saida'], which = "label") <- "Data de sa\u00EDda"
         attr(banco, which = "resumo") <- resumo
         if (cep==TRUE) {
-          banco$cep <- x$CEP
+          banco['cep'] <- x['CEP']
           # Hmisc::label(banco$cep) <- 'C\u00F3digo de Endere\u00E7amento Postal'
-          attr(banco$cep, which = "label") <- "Codigo de Enderecamento Postal"
+          attr(banco['cep'], which = "label") <- "Codigo de Endere\u00E7amento Postal"
         }
         if (cnes==TRUE) {
-          banco$cnes <- x$CNES
+          banco['cnes'] <- x['CNES']
           # Hmisc::label(banco$cnes) <- 'N\u00B0 do hospital no CNES'
-          attr(banco$cnes, which = "label") <- "No. do hospital no CNES"
+          attr(banco['cnes'], which = "label") <- "N\u00B0 do hospital no CNES"
         }
         if (procobst.rm==FALSE )  {
           banco$proc.obst <- proc.obst
-          attr(banco$proc.obst, which = "label") <- "Procedimento obstetrico"
+          attr(banco$proc.obst, which = "label") <- "Procedimento obst\u00E9trico"
         }
         if (grupos==FALSE ) {
           banco <- subset(banco, select = - grupo)
