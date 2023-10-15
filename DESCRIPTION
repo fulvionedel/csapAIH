@@ -1,8 +1,8 @@
 Package: csapAIH
 Type: Package
 Title: Classificar Condições Sensíveis à Atenção Primária
-Version: 0.0.4.3
-Date: 2022-04-16
+Version: 0.0.4.4
+Date: 2023-10-15
 Author: Fúlvio Borges Nedel
 Maintainer: Fúlvio B. Nedel <fulvionedel@gmail.com>
 Description: Classifica um vetor com códigos da CID-10 segundo a Lista Brasileira 
@@ -12,10 +12,12 @@ License: GPL (>= 3)
 Suggests: brpop,
           foreign,
           ggplot2,
+          microdatasus,
           read.dbc,
           scales,
           tidyr
-Imports: dplyr,
+Imports: data.table,
+         dplyr,
          haven,
          Hmisc
 LazyData: true
