@@ -167,8 +167,8 @@ grupo[g19==1] <- "g19"
 #                                   "n\u00E3o-CSAP")))))))))))))))))))
 
 ### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
-# niveis <- c(paste0("g0", 1:9), paste0("g1", 0:9), "n\u00E3o-CSAP")
-grupo <- as.factor(grupo)#, levels = niveis)
+niveis <- c(paste0("g0", 1:9), paste0("g1", 0:9), "n\u00E3o-CSAP")
+grupo <- factor(grupo, levels = niveis)
 
 return(data.frame(csap, grupo))
 }
