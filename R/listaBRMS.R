@@ -5,7 +5,6 @@
 #' @importFrom haven zap_labels is.labelled
 #
 listaBRMS <- function(cid){
-  cid_2 <- substr(cid, 1, 2)
   cid_3 <- substr(cid, 1, 3)
 
   if(!is.character(cid)) cid <- as.character(cid)
@@ -20,12 +19,12 @@ listaBRMS <- function(cid){
 #               cid_3 >= "A95" & cid_3 < "A96" | cid_3 >= "B16" & cid_3 < "B17" | cid == "G000"              |
 #               cid_3 >= "A15" & cid_3 < "A20" | cid_3 >= "I00" & cid_3 < "I03" | cid_3 >= "A51" & cid_3 < "A54" |
 #               cid_3 >= "B50" & cid_3 < "B55" | cid_3 >= "B77" & cid_3 < "B78", 1, 2)
-#GRUPO 02 - Gastrenterites
+# GRUPO 02 - Gastrenterites
 # g02 <- ifelse(substr(cid, 1,2)=="A0" | substr(cid, 1,3)=="E86", 1, 2)
-# chatGPT
 # g02 <- ifelse(cid_2 == "A0" | cid_3 == "E86", 1, 2)
 g02 <- rep(2, length(cid))
-g02[cid_2 == "A0" | cid_3 == "E86"] <- 1
+g02[grep("A0", cid)] <- 1
+g02[grep("E86", cid_3)] <- 1
 
 #GRUPO 03 - Anemia
 # g03 <- ifelse(cid_3=="D50", 1, 2)

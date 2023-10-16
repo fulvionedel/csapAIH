@@ -31,7 +31,6 @@ descreveCSAP <- function(grupos, digits = 2){
     }
   }
   if( is.factor(grupos) ) {
-  if( is.factor(grupos) ) {
     if(length(levels(grupos)) < 19) {
       stop("O fator precisa ter como n\U00EDveis os 19 grupos, mesmo que com freq = 0")
     }

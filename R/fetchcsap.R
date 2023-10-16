@@ -4,11 +4,12 @@
 #' @description
 #' Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC) do site FTP do DATASUS e classifica as internações segundo a Lista Brasileira de Condições Sensíveis à atenção Primária.
 #'
-#' @param uf Unidade da Federação
+#' @param uf        Unidade da Federação
 #' @param mesinicio Mês de competência da AIH para início da seleção dos dados
 #' @param anoinicio Ano de competência da AIH para início da seleção dos dados
 #' @param mesfim    Mês de competência da AIH para fim da seleção dos dados
 #' @param anofim    Ano de competência da AIH para fim da seleção dos dados
+#' @param ...       Permite o uso de parâmetros de \code{\link{csapAIH}}
 #'
 #' @returns Um objeto da classe data.table/data.frame com as seguintes variáveis:
 #' \describe{
@@ -34,11 +35,11 @@
 #' @importFrom data.table setDT `:=`
 #'
 #' @export
-fetchcsap <- function(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = NULL) {
+fetchcsap <- function(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = NULL, ...) {
 ':=' <- setDT <- DT_INTER <- idade <- NULL
 
   # Seleção de variáveis da AIH
-  vars <- c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "IDADE", "COD_IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA", "IDENT")
+  vars <- c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "IDADE", "COD_IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA", "IDENT", "CEP", "CNES")
 
   if(is.null(anofim)) { anofim <- anoinicio }
 
@@ -59,12 +60,7 @@ fetchcsap <- function(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = 
   # aih <- data.frame(aih)
 
   # Classificar as CSAP
-  csap <- setDT(csapAIH::csapAIH(aih, cep = FALSE, cnes = FALSE))
-  csap <- csap[, c("nasc", "n.aih", "proc.rea") := NULL]
-  csap$fxetar3 = cut(csap$idade,
-                     breaks = c(0, 15, 60, max(idade, na.rm = T)),
-                     labels = c("0-14", "15-59", "60 e +"),
-                     include.lowest = TRUE, right = FALSE)
+  csap <- setDT(csapAIH::csapAIH(aih, ...))
 
   # O banco final (produto da função)
   csap

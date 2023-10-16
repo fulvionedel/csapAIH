@@ -4,7 +4,7 @@
 \alias{fetchcsap}
 \title{Baixa os arquivos da AIH e classifica em CSAP}
 \usage{
-fetchcsap(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = NULL)
+fetchcsap(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = NULL, ...)
 }
 \arguments{
 \item{uf}{Unidade da Federação}
@@ -16,6 +16,8 @@ fetchcsap(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = NULL)
 \item{mesfim}{Mês de competência da AIH para fim da seleção dos dados}
 
 \item{anofim}{Ano de competência da AIH para fim da seleção dos dados}
+
+\item{...}{Permite o uso de parâmetros de \code{\link{csapAIH}}}
 }
 \value{
 Um objeto da classe data.table/data.frame com as seguintes variáveis:
