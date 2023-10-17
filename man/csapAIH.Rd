@@ -12,12 +12,8 @@ csapAIH(
   procobst.rm = TRUE,
   parto.rm = TRUE,
   longa.rm = TRUE,
-  cep = FALSE,
-  cnes = FALSE,
-  n_aih = FALSE,
-  mun_int = FALSE,
-  data_nasc = FALSE,
-  fxetar = TRUE,
+  cep = TRUE,
+  cnes = TRUE,
   arquivo = TRUE,
   sep,
   cid = NULL,
@@ -34,12 +30,15 @@ csapAIH(
 \item{sihsus}{argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH:
 \itemize{
   \item{DIAG_PRINC }{diagnóstico principal da internação;}
+  \item NASC {data de nascimento; }
   \item DT_INTER {    data da internação; }
   \item DT_SAIDA {    data da alta hospitalar; }
   \item COD_IDADE {    código indicando a faixa etária a que se refere o valor registrado no campo idade; }
   \item IDADE    {idade (tempo de vida acumulado) do paciente, na unidade indicada no campo COD_IDADE;}
   \item MUNIC_RES    {município de residência do paciente; }
+  \item MUNIC_MOV {município de internação do paciente; }
   \item SEXO { sexo do paciente; }
+  \item N_AIH    { número da AIH; }
   \item {PROC_REA} { procedimento realizado, segundo a tabela do SIH/SUS.}
   }}
 
@@ -49,17 +48,9 @@ csapAIH(
 
 \item{longa.rm}{argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE};}
 
-\item{cep}{argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o Código de Endereçamento Postal do indivíduo; argumento válido apenas se \code{sihsus=TRUE};}
+\item{cep}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o Código de Endereçamento Postal do indivíduo; argumento válido apenas se \code{sihsus=TRUE};}
 
-\item{cnes}{argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE};}
-
-\item{n_aih}{argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o nº da AIH; argumento válido apenas se \code{sihsus=TRUE};}
-
-\item{mun_int}{argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco o código IBGE do município de internação (variável \code{MUNIC_mov}); argumento válido apenas se \code{sihsus=TRUE};}
-
-\item{data_nasc}{argumento lógico, obrigatório se \code{sihsus=TRUE}; o padrão é \code{FALSE}, \code{TRUE} inclui no banco a data de nascimento do paciente; argumento válido apenas se \code{sihsus=TRUE};}
-
-\item{fxetar}{argumento lógico, obrigatório; \code{TRUE} (padrão) computa a faixa etária do paciente, em 17 faixas (0-4, ..., 80 e +);}
+\item{cnes}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) inclui no banco o nº do hospital no Cadastro Nacional de Estabelecimentos de Saúde; argumento válido apenas se \code{sihsus=TRUE};}
 
 \item{arquivo}{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;}
 
@@ -196,12 +187,12 @@ teste10 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
 ## É necessário unir o banco da AIH com as variáveis de interesse
 ## ao banco resultante da função 'csapAIH':
 vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
-teste11 <- csapAIH(aih500, n_aih = TRUE)
+teste11 <- csapAIH(aih500)
 teste11 <- merge(teste11, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste11)
 ## Ou, usando o encadeamento ("piping") de funções,
-teste12 <- csapAIH(aih500, n_aih = TRUE) |>
-  merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+teste12 <- csapAIH(aih500) |>
+merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste12)
 
 }

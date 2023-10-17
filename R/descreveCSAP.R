@@ -18,8 +18,7 @@
 #'
 #' @examples
 #' data(aih100)
-#' df <- csapAIH(aih100)
-#' descreveCSAP
+#' df = csapAIH(aih100)
 #' descreveCSAP(df$grupo)
 #'
 #' @export

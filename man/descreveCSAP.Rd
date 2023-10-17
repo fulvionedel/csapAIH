@@ -26,8 +26,7 @@ Os valores são armazenados em formato latino (vírgula como separador decimal e
 }
 \examples{
 data(aih100)
-df <- csapAIH(aih100)
-descreveCSAP
+df = csapAIH(aih100)
 descreveCSAP(df$grupo)
 
 }
