@@ -4,23 +4,30 @@
 \alias{fetchcsap}
 \title{Baixa os arquivos da AIH e classifica em CSAP}
 \usage{
-fetchcsap(uf, mesinicio = 1, anoinicio = NULL, mesfim = 6, anofim = NULL, ...)
+fetchcsap(
+  uf = "all",
+  anoinicio,
+  mesinicio = 1,
+  mesfim = mesinicio,
+  anofim = anoinicio,
+  ...
+)
 }
 \arguments{
-\item{uf}{Unidade da Federação}
+\item{uf}{Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".}
 
-\item{mesinicio}{Mês de competência da AIH para início da seleção dos dados}
+\item{anoinicio}{Ano de competência da AIH para início da seleção dos dados, em formato numérico; sem padrão}
 
-\item{anoinicio}{Ano de competência da AIH para início da seleção dos dados}
+\item{mesinicio}{Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1}
 
-\item{mesfim}{Mês de competência da AIH para fim da seleção dos dados}
+\item{mesfim}{Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é igual ao mês de início}
 
-\item{anofim}{Ano de competência da AIH para fim da seleção dos dados}
+\item{anofim}{Ano de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é igual ao ano de início}
 
 \item{...}{Permite o uso de parâmetros de \code{\link{csapAIH}}}
 }
 \value{
-Um objeto da classe data.table/data.frame com as seguintes variáveis:
+Um objeto das classes data.table e data.frame com as seguintes variáveis:
 \describe{
   \item{\code{munres}}{Município de residência do paciente}
   \item{\code{munint}}{Município de internação do paciente}
@@ -38,10 +45,21 @@ Um objeto da classe data.table/data.frame com as seguintes variáveis:
 \description{
 Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC) do site FTP do DATASUS e classifica as internações segundo a Lista Brasileira de Condições Sensíveis à atenção Primária.
 }
+\details{
+\code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha.
+Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}
+Faz apenas o download das variáveis exigidas pela função \code{\link{csapAIH}}, i.e.: `DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES`
+}
 \examples{
-fetchcsap("RS", anoinicio = 2022, mesfim = 1) |>
-  str()
-# fetchcsap("RS", anoinicio = 2022, mesfim = 1, anofim = 2022) |>
-#   str()
+# Internações de todo o Brasil, "mês de competência" janeiro de 2023
+\dontrun{
+  fetchcsap(anoinicio = 2023)
+}
+# Internações no RS, jan 2023
+fetchcsap("RS", 2023)
+## RS, 2023
+\dontrun{
+fetchcsap("RS", 2023, mesfim = 12)
+}
 
 }
