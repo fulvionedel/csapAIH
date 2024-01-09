@@ -190,7 +190,6 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       arquivo     <- FALSE
       sihsus      <- FALSE
       procobst.rm <- FALSE
-      parto.rm    <- FALSE
       longa.rm    <- FALSE
       cep         <- FALSE
       cnes        <- FALSE
@@ -199,7 +198,6 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       cid <- x
       sihsus      <- FALSE
       procobst.rm <- FALSE
-      parto.rm    <- FALSE
       longa.rm    <- FALSE
       cep         <- FALSE
       cnes        <- FALSE
@@ -464,7 +462,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       if (sihsus == FALSE) {
         if(parto.rm == TRUE) {
           nlidos <- nrow(banco)
-          banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = T)
+          banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = TRUE)
           pexcluidos <- round((1-(nrow(banco)/nlidos))*100,1)
           message(paste0(c("Exclu\u00EDdos ",
                            suppressWarnings(formatC(nlidos-nrow(banco),
