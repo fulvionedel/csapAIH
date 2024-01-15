@@ -42,6 +42,7 @@ fxetar_quinq <- function(aetas = NULL, senectus = 80, puer = FALSE){
   if(puer == TRUE) {
     niveis[1] <- "< 1"
     niveis[2] <- "1-4"
+    niveis[3] <- "5-9"
   }
   levels(x) <- niveis
   if(faixas == TRUE) return(niveis)
