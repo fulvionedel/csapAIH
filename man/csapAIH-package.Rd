@@ -3,7 +3,6 @@
 \docType{package}
 \name{csapAIH-package}
 \alias{csapAIH-package}
-\alias{_PACKAGE}
 \title{Pacote csapAIH}
 \description{
 Classifica um vetor com códigos da CID-10 segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos 'arquivos da AIH' (BD-SIH/SUS).
