@@ -20,8 +20,8 @@
 #' popbr2000_2021(2021)
 #' # Anos 2019 a 2021, RS:
 #' popbr2000_2021(2019, 2021, uf = "RS") %>%
-#'   group_by(ano) %>%
-#'   summarise(pop = sum(pop))
+#'   dplyr::group_by(ano) %>%
+#'   dplyr::summarise(pop = sum(pop))
 #' # Anos 2000 a 2003, AC:
 #' popbr2000_2021(anof = 2003, uf = "AC") %>%
 #'   group_by(ano) %>%
@@ -30,9 +30,6 @@
 #' popbr2000_2021(2014, 2016, munic = "430520") %>%
 #'   group_by(sexo, fxetar5) %>%
 #'   summarise(pop = sum(pop))
-#'
-#'
-#' @import dplyr
 #'
 #' @export
 
@@ -51,33 +48,34 @@
                "From 60 to 64 years", "From 65 to 69 years", "From 70 to 74 years",
                "From 75 to 79 years", "From 80 years or more")
 
-  popbr <- brpop::mun_sex_pop() %>%
-    filter(age_group != "Total",
-           substr(mun, 3, 6) != "0000") %>%
-    mutate(mun = as.character(mun),
-           CO_UF = substr(mun, 1, 2),
-           sexo = factor(sex, levels = c("Male", "Female"),
-                         labels = c("masc", "fem")),
-           fxetar5 = factor(age_group, levels = niveis, labels = csapAIH::fxetar_quinq())) %>%
-    rename(ano = year) %>%
-    select(-c(age_group, sex)) %>%
-    relocate(pop, .after = last_col()) %>%
-    arrange(ano, mun, sexo, fxetar5)
+   popbr <- brpop::mun_sex_pop() |>
+     data.table::setDT(key = c("year", "mun"))
 
-  if(!is.null(anoi)) popbr <- filter(popbr, ano >= anoi)
-  if(!is.null(anof)) popbr <- filter(popbr, ano <= anof)
+   if(!is.null(anoi)) popbr <- popbr[year >= anoi]
+   if(!is.null(anof)) popbr <- popbr[year <= anof]
 
-  popbr <- popbr %>%
-    right_join(csapAIH::ufbr(), .) %>%
-    tidyr::as_tibble() %>%
-    relocate(ano) %>%
-    suppressMessages()
+   popbr <- popbr[age_group != "Total" & substr(mun, 3, 6) != "0000",
+                  .(ano = year,
+                    mun = as.character(mun),
+                    CO_UF = substr(mun, 1, 2),
+                    sexo = factor(sex, levels = c("Male", "Female"),
+                                  labels = c("masc", "fem")),
+                    fxetar5 = factor(age_group,
+                                     levels = niveis,
+                                     labels = csapAIH::fxetar_quinq()),
+                    pop = pop)]
 
-  if(!is.null(uf)) popbr <- filter(popbr, UF_SIGLA == uf)
-  if(!is.null(munic)) popbr <- filter(popbr, mun == munic)
+
+   popbr <- data.table::merge.data.table(setDT(csapAIH::ufbr()), popbr)
+
+   if(!is.null(uf)) {
+     data.table::setkeyv(popbr, "UF_SIGLA")
+     popbr <- popbr[UF_SIGLA == uf]
+   }
+   if(!is.null(munic)) popbr <- popbr[mun == munic]
 
   if(droplevels == TRUE) {
-    popbr <- base::droplevels(popbr)
+    popbr <- droplevels(popbr)
   } #else if(droplevels == FALSE)
 
   popbr

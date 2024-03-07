@@ -35,8 +35,8 @@ library(dplyr)
 popbr2000_2021(2021)
 # Anos 2019 a 2021, RS:
 popbr2000_2021(2019, 2021, uf = "RS") \%>\%
-  group_by(ano) \%>\%
-  summarise(pop = sum(pop))
+  dplyr::group_by(ano) \%>\%
+  dplyr::summarise(pop = sum(pop))
 # Anos 2000 a 2003, AC:
 popbr2000_2021(anof = 2003, uf = "AC") \%>\%
   group_by(ano) \%>\%
@@ -45,7 +45,6 @@ popbr2000_2021(anof = 2003, uf = "AC") \%>\%
 popbr2000_2021(2014, 2016, munic = "430520") \%>\%
   group_by(sexo, fxetar5) \%>\%
   summarise(pop = sum(pop))
-
 
 }
 \seealso{
