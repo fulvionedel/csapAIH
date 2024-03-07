@@ -16,4 +16,9 @@ data(POPBR10)
 \description{
 Banco de dados com a contagem populacional por sexo e faixa etária dos municípios brasileiros, Censo 2010.
 }
+\examples{
+# data("POPBR10")
+# str(POPBR10)
+
+}
 \keyword{datasets}
