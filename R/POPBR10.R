@@ -9,6 +9,10 @@
 #'
 #' @source \url{ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/POPBR10.zip}
 #'
+#' @examples
+#' # data("POPBR10")
+#' # str(POPBR10)
+#'
 #' @keywords datasets
 "POPBR10"
 

@@ -225,7 +225,7 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
     #
     # - Gráfico com ggplot -----------
     #
-    Grupo <- Casos <- grupo <- yrotulo <- prop <- x <- NULL
+    Grupo <- Casos <- grupo <- yrotulo <- prop <- count <- x <- NULL
 
     #
     # ----- Com uma tabela ------------------------------------------------
