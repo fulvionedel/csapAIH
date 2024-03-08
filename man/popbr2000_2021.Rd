@@ -13,21 +13,25 @@ popbr2000_2021(
 )
 }
 \arguments{
-\item{anoi}{Ano de início do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis (v. Examples).}
+\item{anoi}{Ano de início do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis, i.e., de 2000 a 2021 (v. Examples).}
 
-\item{anof}{Ano de fim do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis (v. Examples).}
+\item{anof}{Ano de fim do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis, i.e., de 2000 a 2021 (v. Examples).}
 
 \item{uf}{Vetor com a(s) sigla(s) da(s) Unidade(s) da Federação de interesse.}
 
 \item{munic}{Vetor com o código IBGE do(s) municípios(s) de interesse.}
 
-\item{droplevels}{Se TRUE (padrão), não inclui as categorias sem observações.}
+\item{droplevels}{Vetor lógico. Se TRUE (padrão), exclui as categorias ("\code{levels}") sem observações em vetores da classe \code{factor}, comportamento normalmente desejável em seleções por município, UF ou região.}
+}
+\value{
+Um banco de dados de classes \code{data.table} e \code{data.frame} com oito variáveis: \code{CO_UF, UF_SIGLA, REGIAO, ano, mun, sexo, fxetar5, pop}. A variável sexo é um \code{factor} com dois \code{levels}: "masc" e "fem". A variável \code{fxetar5} representa a idade agrupada em 17 categorias -- 16 faixas quinquenais (0-4, ... 75-79) e a última aberta a partir dos 80 anos (80 e +).
 }
 \description{
-Estimativas populacionais para os municípios brasileiros por sexo e faixa etária quinquenal, por ano de 2000 a 2021. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote [`brpop`](https://github.com/rfsaldanha/brpop), permitindo seu uso como um banco de dados, além de outras mudanças (v. Details). Exige a instalação prévia dos pacotes `brpop` e \code{\link{dplyr}}.
+Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote [`brpop`](https://github.com/rfsaldanha/brpop), permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo(v. Value). Exige a instalação prévia dos pacotes `brpop` e \code{\link{dplyr}}.
 }
 \details{
-Colocar o link pro TABNET, detalhar as mudanças feitas.
+Essas informações podem ser tabuladas em http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def
+A nota técnica do estudo: http://tabnet.datasus.gov.br/cgi/IBGE/SEI_MS-0034745983-Nota_Tecnica_final.pdf
 }
 \examples{
 library(dplyr)
