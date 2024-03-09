@@ -2,7 +2,7 @@
 #' @aliases fetchcsap
 #'
 #' @description
-#' Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC) do site FTP do DATASUS e classifica as internações segundo a Lista Brasileira de Condições Sensíveis à atenção Primária.
+#' Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do Sistema de Informações Hospitalares do SUS - BD-SIH/SUS) do site FTP do DATASUS e classifica as internações segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária.
 #'
 #' @param uf        Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".
 #' @param mesinicio Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1
@@ -13,23 +13,25 @@
 #'
 #' @returns Um objeto das classes data.table e data.frame com as seguintes variáveis:
 #' \describe{
-#'   \item{\code{munres}}{Município de residência do paciente}
-#'   \item{\code{munint}}{Município de internação do paciente}
-#'   \item{\code{sexo}}{Sexo do paciente}
-#'   \item{\code{idade}}{Idade do paciente em anos completos}
-#'   \item{\code{fxetar.det}}{Faixa etária detalhada}
-#'   \item{\code{fxetar5}}{Faixa etária quinquenal (0-4, ..., 76-79, 80 e +)}
-#'   \item{\code{csap}}{Internação por CSAP (sim/não)}
-#'   \item{\code{grupo}}{Grupo de causa da Lista Brasileira de ICSAP, ou "não-CSAP"}
-#'   \item{\code{cid}}{Diagnóstico principal da internação, segundo a Classificação Internacional de Doenças, 10ª Revisão}
-#'   \item{\code{data.inter}}{Data da internação}
-#'   \item{\code{data.saida}}{Data da alta}
+#'  \itemize{
+#'   \item \code{munres} Município de residência do paciente
+#'   \item \code{munint} Município de internação do paciente
+#'   \item \code{sexo} Sexo do paciente
+#'   \item \code{idade} Idade do paciente em anos completos
+#'   \item \code{fxetar.det} Faixa etária detalhada
+#'   \item \code{fxetar5} Faixa etária quinquenal (0-4, ..., 76-79, 80 e +)
+#'   \item \code{csap} Internação por CSAP (sim/não)
+#'   \item \code{grupo} Grupo de causa da Lista Brasileira de ICSAP, ou "não-CSAP"
+#'   \item \code{cid} Diagnóstico principal da internação, segundo a Classificação Internacional de Doenças, 10ª Revisão
+#'   \item \code{data.inter} Data da internação
+#'   \item \code{data.saida} Data da alta
+#'   }
 #' }
 #'
 #' @details
 #' \code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha.
 #' Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}
-#' Faz apenas o download das variáveis exigidas pela função \code{\link{csapAIH}}, i.e.: `DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES`
+#' Faz apenas o download das variáveis exigidas pela função \code{\link{csapAIH}}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}
 #'
 #'
 #' @examples
@@ -72,7 +74,9 @@ fetchcsap <- function(uf = "all", anoinicio, mesinicio = 1, mesfim = mesinicio, 
   # aih <- data.frame(aih)
 
   # Classificar as CSAP
-  csap <- setDT(csapAIH::csapAIH(aih, ...))
+  # csap <- setDT(
+  csap <- csapAIH::csapAIH(aih, ...)
+  # )
 
   # O banco final (produto da função)
   csap

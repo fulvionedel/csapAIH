@@ -1,9 +1,9 @@
 #' @title Tabular Condições Sensíveis à Atenção Primária (CSAP)
 #' @aliases tabCSAP
 #'
-#' @description Tabular Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária
+#' @description Tabular Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite o uso da lista da portaria ministerial, com 19 grupos de causa, e da lista publicada por Alfradique et al., com 20 grupos de causa.
 #'
-#' @param x Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".
+#' @param x Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 ou 20 grupos de causa da lista utilizada, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19" ou "g20".
 #' @param digits número de decimais para o arredondamento (com \code{\link{round}}).
 #' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
 #' @param format Should the table be formatted to print? (default = FALSE).

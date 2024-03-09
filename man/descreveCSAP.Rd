@@ -22,7 +22,7 @@ Um objeto da classe \code{data.frame} com a tabulação dos códigos da CID-10 s
 Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de causa
 }
 \note{
-Os valores são armazenados em formato latino (vírgula como separador decimal e ponto como separador de milhar) e são, portanto, da classe \code{character}. Isso é indesejado, porque impede a realização de operações matemáticas ou mesmo a aplicação direta da função \code{\link{as.numeric}}, para retornar à classe \code{numeric}. Para resolver esse problema foi criada uma nova função \code{\link{tabCSAP}} que tem por output uma versão da tabela com os valores numéricos, com um argumento para a apresentação em formato latino. Portanto, para evitar a quebra de código já escrito, \code{\link{descreveCSAP}} será mantida como está, mas não será mais desenvolvida com esse nome, sua continuidade se dará por meio de \code{\link{tabCSAP}}.
+Os valores são armazenados em formato latino (vírgula como separador decimal e ponto como separador de milhar) e são, portanto, da classe \code{character}. Isso é indesejado, porque impede a realização de operações matemáticas ou mesmo a aplicação direta da função \code{\link{as.numeric}}, para retornar à classe \code{numeric}. Para resolver esse problema foi criada uma nova função \code{\link{tabCSAP}} que tem por output uma versão da tabela com os valores numéricos, com um argumento para a apresentação em formato latino. Portanto, para evitar a quebra de código já escrito, \code{\link{descreveCSAP}} será mantida como está, mas não será mais desenvolvida com esse nome, sua continuidade se dará por meio de \code{\link{tabCSAP}}. Tabulações com a lista de 20 grupos de causa deve ser feita com esta última função.
 }
 \examples{
 data(aih100)

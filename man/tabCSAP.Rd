@@ -7,7 +7,7 @@
 tabCSAP(x, digits = 2, lang = "pt.ca", format = FALSE)
 }
 \arguments{
-\item{x}{Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".}
+\item{x}{Um vetor da classe \code{factor} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 ou 20 grupos de causa da lista utilizada, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19" ou "g20".}
 
 \item{digits}{número de decimais para o arredondamento (com \code{\link{round}}).}
 
@@ -19,7 +19,7 @@ tabCSAP(x, digits = 2, lang = "pt.ca", format = FALSE)
 Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição proporcional sobre o total de internações e sobre o total de ICSAP. Se os grupos forem classificados segundo a Lista Brasileira publicada em Portaria Ministerial, a tabela terá
 }
 \description{
-Tabular Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária
+Tabular Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite o uso da lista da portaria ministerial, com 19 grupos de causa, e da lista publicada por Alfradique et al., com 20 grupos de causa.
 }
 \examples{
 # data("aih500")
