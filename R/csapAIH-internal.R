@@ -2,9 +2,8 @@
 #' @name csapAIH-package
 #' @aliases csapAIH-package
 #' @docType package
-#' @title csapAIH
 #' @description
-#' Classifica um vetor com códigos da CID-10 segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos 'arquivos da AIH' (arquivos RD??????.DBC das Bases de Dados do Sistema de Informações Hospitalares do SUS -- BD-SIH/SUS).
+#' Classifica um vetor com códigos da CID-10 segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária e oferece outras funcionalidades, especialmente para o manejo dos `arquivos da AIH' (arquivos RD??????.DBC das Bases de Dados do Sistema de Informações Hospitalares do SUS -- BD-SIH/SUS).
 #'
 #' A principal função do pacote, \code{\link{csapAIH}}, classifica os códigos da CID-10 segundo a Lista Brasileira de CSAP. \code{\link{descreveCSAP}} constrói uma tabela com frequências absolutas e relativas dos casos por grupos de causa. \code{\link{desenhaCSAP}} constrói um gráfico de barras por grupos de causa. \code{\link{idadeSUS}} calcula a idade do paciente na internação, nos "arquivos da AIH", ou idade do óbito, nos arquivos do Sistema de Informações sobre Mortalidade (SIM).
 #'

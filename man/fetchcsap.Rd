@@ -27,8 +27,7 @@ fetchcsap(
 \item{...}{Permite o uso de parâmetros de \code{\link{csapAIH}}}
 }
 \value{
-Um objeto das classes data.table e data.frame com as seguintes variáveis:
-\describe{
+Um objeto de classes \code{data.table} e \code{data.frame} com as seguintes variáveis:
  \itemize{
   \item \code{munres} Município de residência do paciente
   \item \code{munint} Município de internação do paciente
@@ -41,16 +40,13 @@ Um objeto das classes data.table e data.frame com as seguintes variáveis:
   \item \code{cid} Diagnóstico principal da internação, segundo a Classificação Internacional de Doenças, 10ª Revisão
   \item \code{data.inter} Data da internação
   \item \code{data.saida} Data da alta
-  }
-}
+ }
 }
 \description{
 Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do Sistema de Informações Hospitalares do SUS - BD-SIH/SUS) do site FTP do DATASUS e classifica as internações segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária.
 }
 \details{
-\code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha.
-Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}.
-Faz apenas o download das variáveis exigidas pela função \code{\link{csapAIH}}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
+\code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha. Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}, e faz apenas o download das variáveis exigidas pela função \code{csapAIH}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
 }
 \examples{
 # Internações de todo o Brasil, "mês de competência" janeiro de 2023
@@ -64,4 +60,7 @@ fetchcsap("RS", 2023)
 fetchcsap("RS", 2023, mesfim = 12)
 }
 
+}
+\seealso{
+\code{\link{csapAIH}}
 }

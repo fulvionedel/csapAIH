@@ -17,6 +17,7 @@
 #'
 #' @references
 #' Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2014. SIH – Sistema de Informação Hospitalar do SUS: Manual Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015. 87p.
+#'
 #' Brasil. Ministério da Saúde. DATASUS. Tab para Windows - TabWin. Ministério da Saúde: Brasília, 2010.
 #'
 #' @examples
@@ -107,6 +108,7 @@ idadeSUS <- function(dados, sis = "SIH")
   #                         "30-34","35-39", "40-44","45-49","50-54", "55-59",
   #                         "60-64", "65-69", "70-74", "75-79", "80 +")
   #                )
+  #
   fxetar5 <- fxetar_quinq(idade)
 
   data.frame(idade,
