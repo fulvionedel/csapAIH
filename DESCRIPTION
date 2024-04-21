@@ -18,8 +18,7 @@ Suggests: brpop,
           tidyr
 Imports: data.table,
          dplyr,
-         haven,
-         Hmisc
+         haven
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8

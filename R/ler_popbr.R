@@ -20,7 +20,6 @@
 #' xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
 #'
 #' @importFrom utils download.file unzip read.csv
-#' @importFrom Hmisc upData
 #' @export
 
 ler_popbr <- function (arquivo = NULL, ano = NULL) {
@@ -39,7 +38,7 @@ ler_popbr <- function (arquivo = NULL, ano = NULL) {
     unlink(paste0(pop, ".csv"))
   } else if(!is.null(arquivo)) populacao <- foreign::read.dbf(arquivo)
 
-  populacao <- Hmisc::upData(populacao, lowernames = T, print = F)
+  names(populacao) <- tolower(names(populacao))
 
   if(unique(populacao$ano) %in% c(1980, 1991, 1996:2012)) {
     populacao$fxetar5 <- cut(as.numeric(populacao$fxetaria),
@@ -65,10 +64,6 @@ ler_popbr <- function (arquivo = NULL, ano = NULL) {
    attr(populacao$fxetar5, which = "label") <- "Faixa etaria quinquenal"
    attr(populacao$fxetaria, which = "label") <- "Faixa etaria detalhada"
    attr(populacao$munic_res, which = "label") <- "Codigo IBGE do municipio"
-   # Hmisc::label(populacao$fxetar5) <- "Faixa etaria quinquenal"
    # names(populacao)[5] <- "fxetar.det"
-   # Hmisc::label(populacao$fxetar.det) <- "Faixa etaria detalhada"
-   # Hmisc::label(populacao$fxetaria) <- "Faixa etaria detalhada"
-   # Hmisc::label(populacao$munic_res) <- "Codigo IBGE do municipio"
    return(populacao)
   }
