@@ -1,4 +1,4 @@
-#' @title Ler arquivos POPBR????.DBF
+#' @title Ler arquivos POPBR????.csv/DBF
 #' @aliases ler_popbr
 #' @description Lê os arquivos de população do DATASUS e cria uma variável com a faixa etária quinquenal
 #'
@@ -19,7 +19,7 @@
 #' popBR2010 <- ler_popbr(ano = 2010)
 #' xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
 #'
-#' @importFrom utils download.file unzip
+#' @importFrom utils download.file unzip read.csv
 #' @importFrom Hmisc upData
 #' @export
 
@@ -33,10 +33,10 @@ ler_popbr <- function (arquivo = NULL, ano = NULL) {
     url <- paste0("ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/", pop, ".zip")
     temp <- tempfile()
     download.file(url, temp)
-    unzip(temp, paste0(pop, ".DBF"))
-    populacao <- foreign::read.dbf(paste0(pop, ".DBF"))
+    unzip(temp, paste0(pop, ".csv"))
+    populacao <- read.csv(paste0(pop, ".csv"))
     unlink(temp)
-    unlink(paste0(pop, ".DBF"))
+    unlink(paste0(pop, ".csv"))
   } else if(!is.null(arquivo)) populacao <- foreign::read.dbf(arquivo)
 
   populacao <- Hmisc::upData(populacao, lowernames = T, print = F)
