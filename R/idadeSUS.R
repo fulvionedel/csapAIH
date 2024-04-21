@@ -1,7 +1,7 @@
 #' @title Computa a idade nas bases de dados do SIH/SUS e SIM
 #' @aliases idadeSUS
 #'
-#' @description Computa a idade, "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
+#' @description Computa a idade em anos completos, a "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 #'
 #' @param dados Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").
 #' @param sis O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão] ou "SIM", em maiúsculas ou minúsculas
@@ -91,17 +91,16 @@ idadeSUS <- function(dados, sis = "SIH")
                "70-74", "75-79", "80 e +")
     )
 
-  # rotulo5 <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-  #              "30-34","35-39", "40-44","45-49","50-54", "55-59",
-  #              "60-64", "65-69", "70-74", "75-79", "80 +")
-
   fxetar.det <- droplevels(
     cut(idade, right=FALSE,
         breaks = c(0:19, seq(20, 80, 5), Inf),
-        # labels = levels(fxetar.det) %in% rotulo.det)
         labels = rotulo.det[, 'rotulo'])
   )
 
+  # rotulo5 <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+  #              "30-34","35-39", "40-44","45-49","50-54", "55-59",
+  #              "60-64", "65-69", "70-74", "75-79", "80 +")
+  #
   # fxetar5 <- cut(idade, right=FALSE,
   #                breaks = c(seq(0, 80, 5), Inf),
   #                labels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
