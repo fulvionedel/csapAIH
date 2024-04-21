@@ -49,8 +49,8 @@ Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do S
 }
 \details{
 \code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha.
-Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}
-Faz apenas o download das variáveis exigidas pela função \code{\link{csapAIH}}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}
+Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}.
+Faz apenas o download das variáveis exigidas pela função \code{\link{csapAIH}}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
 }
 \examples{
 # Internações de todo o Brasil, "mês de competência" janeiro de 2023

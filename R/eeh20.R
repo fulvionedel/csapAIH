@@ -12,9 +12,6 @@
 #' @source
 #' \url{https://www.ecuadorencifras.gob.ec/}
 #'
-#' @references
-#' Arrumar
-#'
 #' @examples
 #' data("eeh20")
 #' str(eeh20)

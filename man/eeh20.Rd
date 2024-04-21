@@ -21,7 +21,4 @@ data("eeh20")
 str(eeh20)
 
 }
-\references{
-Arrumar
-}
 \keyword{datasets}
