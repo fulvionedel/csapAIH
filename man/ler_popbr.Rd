@@ -2,20 +2,20 @@
 % Please edit documentation in R/ler_popbr.R
 \name{ler_popbr}
 \alias{ler_popbr}
-\title{Ler arquivos POPBR????.csv/DBF}
+\title{Ler arquivos de população do DATASUS}
 \usage{
 ler_popbr(arquivo = NULL, ano = NULL)
 }
 \arguments{
-\item{arquivo}{Nome do arquivo DBF armazenado no computador. Padrão é \code{NULL}, v. details.}
+\item{arquivo}{Nome do arquivo armazenado no computador, em formato CSV ou DBF. Padrão é \code{NULL}, v. details.}
 
 \item{ano}{Ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Padrão é \code{NULL}, v. details.}
 }
 \description{
-Lê os arquivos de população do DATASUS e cria uma variável com a faixa etária quinquenal
+Lê os arquivos POPBR?? com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e cria uma variável com a faixa etária quinquenal.
 }
 \details{
-Apenas um dos dois parâmetros deve ser preenchido. Se a
+Apenas um dos dois parâmetros deve ser preenchido. Se o alvo é um arquivo no computador, o nome com a extensão (csv ou dbf) deve vir entre aspas; se for um arquivo csv, deve ser separado por vírgulas (é usada a função \link{read.csv} e não \link{read.csv2}). Se o alvo é um arquivo do servidor FTP do datasus, deve-se usar o argumando \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2012.
 }
 \examples{
 \dontrun{

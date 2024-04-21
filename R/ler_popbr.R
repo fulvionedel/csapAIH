@@ -1,11 +1,11 @@
-#' @title Ler arquivos POPBR????.csv/DBF
+#' @title Ler arquivos de população do DATASUS
 #' @aliases ler_popbr
-#' @description Lê os arquivos de população do DATASUS e cria uma variável com a faixa etária quinquenal
+#' @description Lê os arquivos POPBR?? com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e cria uma variável com a faixa etária quinquenal.
 #'
-#' @param arquivo Nome do arquivo DBF armazenado no computador. Padrão é \code{NULL}, v. details.
+#' @param arquivo Nome do arquivo armazenado no computador, em formato CSV ou DBF. Padrão é \code{NULL}, v. details.
 #' @param ano Ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Padrão é \code{NULL}, v. details.
 #'
-#' @details Apenas um dos dois parâmetros deve ser preenchido. Se a
+#' @details Apenas um dos dois parâmetros deve ser preenchido. Se o alvo é um arquivo no computador, o nome com a extensão (csv ou dbf) deve vir entre aspas; se for um arquivo csv, deve ser separado por vírgulas (é usada a função \link{read.csv} e não \link{read.csv2}). Se o alvo é um arquivo do servidor FTP do datasus, deve-se usar o argumando \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2012.
 #'
 #' @examples
 #' \dontrun{
@@ -36,7 +36,13 @@ ler_popbr <- function (arquivo = NULL, ano = NULL) {
     populacao <- read.csv(paste0(pop, ".csv"))
     unlink(temp)
     unlink(paste0(pop, ".csv"))
-  } else if(!is.null(arquivo)) populacao <- foreign::read.dbf(arquivo)
+  } else if(!is.null(arquivo)) {
+    if(grepl('dbf', ignore.case = TRUE) %in% arquivo) {
+      populacao <- foreign::read.dbf(arquivo)
+    } else if(grepl('csv', ignore.case = TRUE) %in% arquivo) {
+      populacao <- read.csv(arquivo)
+    }
+  }
 
   names(populacao) <- tolower(names(populacao))
 
