@@ -1,4 +1,4 @@
-#' Baixa os arquivos da AIH e classifica em CSAP
+#' Baixa os arquivos da AIH e classifica as internações em CSAP
 #' @aliases fetchcsap
 #'
 #' @description

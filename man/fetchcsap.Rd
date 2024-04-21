@@ -2,7 +2,7 @@
 % Please edit documentation in R/fetchcsap.R
 \name{fetchcsap}
 \alias{fetchcsap}
-\title{Baixa os arquivos da AIH e classifica em CSAP}
+\title{Baixa os arquivos da AIH e classifica as internações em CSAP}
 \usage{
 fetchcsap(
   uf = "all",
