@@ -2,7 +2,7 @@
 % Please edit documentation in R/ler_popbr.R
 \name{ler_popbr}
 \alias{ler_popbr}
-\title{Ler arquivos POPBR????.DBF}
+\title{Ler arquivos POPBR????.csv/DBF}
 \usage{
 ler_popbr(arquivo = NULL, ano = NULL)
 }
