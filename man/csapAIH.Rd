@@ -153,47 +153,54 @@ teste2 <- csapAIH(factor(cids), grupo=FALSE) ; class(teste2) ; teste2
 data("aih500")
 str(aih500)
 teste5 <- csapAIH(aih500)
+attributes(teste5)$resumo
 str(teste5)
 levels(teste5$grupo)
 
-# Com a lista de 20 grupos de causa (Alfradique et al.)
-teste6 <- csapAIH(aih500, lista = "Alfradique")
+# Sem excluir registros
+teste6 <- csapAIH(aih500, procobst.rm = FALSE, parto.rm = FALSE, longa.rm = FALSE)
 str(teste6)
-levels(teste6$grupo)
+attributes(teste6)$resumo
+
+# Com a lista de 20 grupos de causa (Alfradique et al.)
+teste7 <- csapAIH(aih500, lista = "Alfradique")
+str(teste7)
+levels(teste7$grupo)
 
 ## Uma base de dados com a estrutura dos "arquivos da AIH"
 ## mas sem as variáveis CEP ou CNES:
 ##--------------------------------------------------------
 aih <- subset(aih500, select = -c(CEP, CNES))
-teste7 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
-str(teste7)
+teste8 <- csapAIH(aih, cep = FALSE, cnes = FALSE)
+str(teste8)
 
 ## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
 ##--------------------------------------------------------
-teste8 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
-str(teste8)
-teste9 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+teste9 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
 str(teste9)
+teste10 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, parto.rm = FALSE)
+str(teste10)
 
 ## Uma base de dados com a estrutura dos "arquivos da AIH" mantendo
 ## todas suas variáveis
 ##-----------------------------------------------------------------
 ## Trate como se não fosse um arquivo da AIH e apenas acrescente
 ## a classificação ao banco:
-teste10 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
+teste11 <- csapAIH(aih500, sihsus = FALSE, cid = DIAG_PRINC)
+str(teste11)
 
 ## Acrescentar variáveis da AIH ao banco com as CSAP
 ##---------------------------------------------------------
 ## É necessário unir o banco da AIH com as variáveis de interesse
 ## ao banco resultante da função 'csapAIH':
 vars <- c('N_AIH', 'RACA_COR', 'INSTRU')
-teste11 <- csapAIH(aih500)
-teste11 <- merge(teste11, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
-names(teste11)
-## Ou, usando o encadeamento ("piping") de funções,
-teste12 <- csapAIH(aih500) |>
-merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+teste12 <- csapAIH(aih500)
+teste12 <- merge(teste12, aih500[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste12)
+## Ou, usando o encadeamento ("piping") de funções,
+teste13 <- csapAIH(aih500) |>
+merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
+names(teste13)
 
 }
 \references{
