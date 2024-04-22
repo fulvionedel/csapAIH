@@ -2,7 +2,7 @@
 % Please edit documentation in R/popbr2000_2021.R
 \name{popbr2000_2021}
 \alias{popbr2000_2021}
-\title{População municípios brasileiros, 2000-2021}
+\title{População dos municípios brasileiros, 2000-2021}
 \usage{
 popbr2000_2021(
   anoi = NULL,

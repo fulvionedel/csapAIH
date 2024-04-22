@@ -1,12 +1,13 @@
-#' @title Obstetric procedures from the Brazilian Hospital Information System data bases (BD-SIH/SUS)
+#' @title Procedimentos obstétricos do Sistema de Informação Hospitalar do SUS (SIH/SUS)
 #' @aliases proc.obst
 #'
-#' @description Identifies records of hospitalizations for non-morbidity obstetric procedures (v.g. deliveries etc.) from the Brazilian Hospital Information System data bases (BD-SIH/SUS) and, according to user options, (1) create a new variable \code{procobst} with the procedure identification, (2) exclude these records from the data frame, or (3) create a new data frame with only these records.
+#' @description Identifica os registros de hospitalizações por procedimentos obstétricos para internações por eventos não mórbidos (partos etc.) nas bases de dados do SIH/SUS (BD-SIH/SUS) e segundo as opções do usuário, (1) cria uma variável \code{procobst} com a identificação do procedimento, (2) exclui esses registros do banco de dados ou (3) cria um novo banco de dados somente com esses registros.
 #'
-#' @param x A data frame with the Brazilian records for hospital discharges from Unified Health System, the Hospital Admission Autorization Form -- "Autorização de Internação Hospitalar (AIH)", v.g. "AIH files -- arquivos da AIH", on the "Bases de Dados do Sistema de Informacao Hospitalar do SUS -- BD-SIH/SUS".
-#' @param procobst.action Character argument indicating the action to be fulfilled on the data frame: (1) \code{"exclude"} (default) returns a data frame without the hospitalizations for obstetric procedures, (2) \code{"extract"} returns a data frame with only the hospitalizations for obstetric procedures, (3) \code{"identify"} returns a data frame with all the original records plus one variable (\code{procobst}) of class \code{factor} indicating whether the hospitalization was for an obstetric procedure or not.
-#' @param proc.rea Procedure performed, name to the "procedimento realizado" field (\code{PROC_REA}) on the AIH file).
-#' @param language Language for displayed messages and summary of fulfilled actions; may be "pt" (default) for portuguese or "en" for english.
+#' @param x Um banco de dados com os registros da Autorização de Internação Hospitalar (AIH) nos "arquivos reduzidos da AIH" (RD<UFAAMM>.DBC), disponibilizados pelo Departamento de Informática do SUS, o DATASUS.
+#'
+#' @param procobst.action Argumento da classe caractere, indicando a ação a ser realizada sobre o banco de dados: (1) \code{"exclude"} (default) devolve um banco de dados sem as hospitalizações para procedimentos obstétricos, (2) \code{"extract"} devolve um banco de dados apenas com as internações para procedimentos obstétricos, (3) \code{"identify"} acrescenta ao banco uma variável de classe \code{factor} (\code{procobst}) indicando se a hospitalização foi para a realização de um procedimento obstétrico.
+#' @param proc.rea Procedimento realizado, campo (\code{PROC_REA}) no arquivo da AIH.
+#' @param language Idioma de apresentação das mensagens e resumo das ações executadas; pode ser "pt" (default) para português ou "en" para inglês.
 #'
 #' @seealso \link{csapAIH}
 #'

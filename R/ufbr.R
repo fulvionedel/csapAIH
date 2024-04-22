@@ -1,17 +1,17 @@
 #' @title Lista as Unidades da Federação por Região do Brasil
 #' @aliases ufbr
-#' 
+#'
 #' @description Lista as siglas e nomes das Unidades Federativas (UF) por Região do Brasil segundo seu código no IBGE, permitindo a decodificação do código do IBGE para a sigla ou nome da Unidade da Federação.
-#' 
+#'
 #' @param nomes Se \code{nomes = TRUE}, é incluída uma coluna com os nomes dos Estados. Se \code{nomes = FALSE} (padrão), a UF é identificada apenas pela sigla.
-#' 
-#' @returns Um objeto da classe \code{data.frame}
-#' 
+#'
+#' @returns Um objeto da classe \code{data.frame}, com a sigla da Região e o código, a sigla e, se \code{nomes = TRUE}, o nome da UF.
+#'
 #' @export
-#' @examples 
+#' @examples
 #' ufbr()
 #' ufbr(nomes = TRUE)
-#' 
+#'
 
 ufbr <- function(nomes = FALSE){
   CO_UF <- as.character(c(11:17,     # N
@@ -29,9 +29,9 @@ ufbr <- function(nomes = FALSE){
     "REGIAO"   = factor(substr(CO_UF, 1, 1), labels = c("N", "NE", "SE", "S", "CO"))
   )
   if(nomes == TRUE) {
-    tabela$UF_NOME <- c("Rond\U00f4nia", "Acre", "Amazonas", "Roraima", "Par\U00e1", 
+    tabela$UF_NOME <- c("Rond\U00f4nia", "Acre", "Amazonas", "Roraima", "Par\U00e1",
                         "Amap\U00e1", "Tocantins",
-                        "Maranh\U00e3o", "Piau\U00ed", "Cear\U00e1", "Rio Grande do Norte", 
+                        "Maranh\U00e3o", "Piau\U00ed", "Cear\U00e1", "Rio Grande do Norte",
                         "Para\U00edba", "Pernambuco", "Alagoas", "Sergipe", "Bahia",
                         "Minas Gerais", "Esp\U00edrito Santo", "Rio de Janeiro", "S\U00e3o Paulo",
                         "Paran\U00e1", "Santa Catarina", "Rio Grande do Sul",

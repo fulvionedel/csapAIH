@@ -1,4 +1,4 @@
-#' População municípios brasileiros, 2000-2021
+#' População dos municípios brasileiros, 2000-2021
 #'
 #' @aliases popbr2000_2021
 #'

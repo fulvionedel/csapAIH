@@ -10,7 +10,7 @@ ufbr(nomes = FALSE)
 \item{nomes}{Se \code{nomes = TRUE}, é incluída uma coluna com os nomes dos Estados. Se \code{nomes = FALSE} (padrão), a UF é identificada apenas pela sigla.}
 }
 \value{
-Um objeto da classe \code{data.frame}
+Um objeto da classe \code{data.frame}, com a sigla da Região e o código, a sigla e, se \code{nomes = TRUE}, o nome da UF.
 }
 \description{
 Lista as siglas e nomes das Unidades Federativas (UF) por Região do Brasil segundo seu código no IBGE, permitindo a decodificação do código do IBGE para a sigla ou nome da Unidade da Federação.
