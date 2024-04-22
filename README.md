@@ -3,39 +3,29 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 16 de abril de 2023
+Atualizado em 22 de abril de 2024
 
-- <a href="#apresentação" id="toc-apresentação">Apresentação</a>
-- <a href="#justificativa" id="toc-justificativa">Justificativa</a>
-- <a href="#instalação" id="toc-instalação">Instalação</a>
-- <a href="#conteúdo-timeline" id="toc-conteúdo-timeline">Conteúdo
-  (<em>timeline</em>)</a>
-- <a href="#dependências" id="toc-dependências">Dependências</a>
-- <a href="#exemplos-de-uso" id="toc-exemplos-de-uso">Exemplos de uso</a>
-  - <a href="#classificação-da-causa-código-cid-10"
-    id="toc-classificação-da-causa-código-cid-10">Classificação da causa
-    (código CID-10)</a>
-    - <a href="#em-arquivos-de-dados" id="toc-em-arquivos-de-dados">Em
-      arquivos de dados</a>
-    - <a href="#em-um-banco-de-dados-existente-na-sessão-de-trabalho"
-      id="toc-em-um-banco-de-dados-existente-na-sessão-de-trabalho">Em um
-      banco de dados existente na sessão de trabalho</a>
-    - <a href="#a-partir-de-uma-variável-com-códigos-da-cid-10"
-      id="toc-a-partir-de-uma-variável-com-códigos-da-cid-10">A partir de uma
-      variável com códigos da CID-10:</a>
-  - <a href="#apresentação-de-resultados"
-    id="toc-apresentação-de-resultados">Apresentação de resultados</a>
-    - <a href="#resumo-de-importação-de-dados"
-      id="toc-resumo-de-importação-de-dados">Resumo de importação de dados</a>
-    - <a href="#tabela-bruta" id="toc-tabela-bruta">Tabela “bruta”</a>
-    - <a href="#tabela-para-apresentação"
-      id="toc-tabela-para-apresentação">Tabela para apresentação</a>
-    - <a href="#calcular-taxas" id="toc-calcular-taxas">Calcular taxas</a>
-    - <a href="#gráficos" id="toc-gráficos">Gráficos</a>
-- <a href="#agradecimentos" id="toc-agradecimentos">Agradecimentos</a>
-- <a href="#referências" id="toc-referências">Referências</a>
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+- [Apresentação](#apresentação)
+- [Justificativa](#justificativa)
+- [Instalação](#instalação)
+- [Conteúdo (*timeline*)](#conteúdo-timeline)
+- [Dependências](#dependências)
+- [Exemplos de uso](#exemplos-de-uso)
+  - [Classificação da causa (código
+    CID-10)](#classificação-da-causa-código-cid-10)
+    - [Em arquivos de dados](#em-arquivos-de-dados)
+    - [Em um banco de dados existente na sessão de
+      trabalho](#em-um-banco-de-dados-existente-na-sessão-de-trabalho)
+    - [A partir de uma variável com códigos da
+      CID-10:](#a-partir-de-uma-variável-com-códigos-da-cid-10)
+  - [Apresentação de resultados](#apresentação-de-resultados)
+    - [Resumo de importação de dados](#resumo-de-importação-de-dados)
+    - [Tabela “bruta”](#tabela-bruta)
+    - [Tabela para apresentação](#tabela-para-apresentação)
+    - [Calcular taxas](#calcular-taxas)
+    - [Gráficos](#gráficos)
+- [Agradecimentos](#agradecimentos)
+- [Referências](#referências)
 
 ------------------------------------------------------------------------
 
@@ -50,16 +40,16 @@ csapAIH](https://img.shields.io/sourceforge/dm/csapaih.svg)](https://sourceforge
 
 Pacote em **R** para a classificação de códigos da CID-10 (Classificação
 Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de
-Condições Sensíveis à Atenção Primária (CSAP). É particularmente voltado
-ao trabalho com as bases de dados do Sistema de Informações Hospitalares
-do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS)
-contêm os “arquivos da AIH” (`RD??????.DBC`), que podem ser expandidos
-para o formato DBF (`RD??????.DBF`), com as informações de cada
-hospitalização ocorrida pelo SUS num período determinado. Assim, embora
-o pacote permita a classificação de qualquer listagem de códigos da
-CID-10, tem também algumas funcionalidades para facilitar o trabalho com
-os “arquivos da AIH” e, atualmente, do Sistema de Informações sobre
-Mortalidade (SIM).
+Internações por Condições Sensíveis à Atenção Primária (ICSAP). É
+particularmente voltado ao trabalho com as bases de dados do Sistema de
+Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro.
+Tais bases (BD-SIH/SUS) contêm os “arquivos da AIH” (`RD??????.DBC`),
+que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as
+informações de cada hospitalização ocorrida pelo SUS num período
+determinado. Assim, embora o pacote permita a classificação de qualquer
+listagem de códigos da CID-10, tem também algumas funcionalidades para
+facilitar o trabalho com os “arquivos da AIH” e, atualmente, do Sistema
+de Informações sobre Mortalidade (SIM).
 
 # Justificativa
 
@@ -154,33 +144,43 @@ criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote
 [brpop](https://cran.r-project.org/package=brpop)
 de<sup>[9](#ref-brpopref)</sup>) para acesso às estimativas
 populacionais publicadas pelo DATASUS e funções para categorização da
-idade em faixas etárias.
+idade em faixas etárias. Foi ainda criada uma função (`fetchsap`) a
+partir da função `fetchdatasus` do pacote
+`microdatasus`<sup>[10](#ref-Saldanha2019)</sup>, para ler os arquivos
+no site FTP do DATASUS e classificar as CSAP em um único comando. Foram
+criadas outras funções para facilitar o manejo e apresentação de dados
+em estudos ecológicos, como a categorização da idade em faixas etárias
+(`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de
+parto (`partos`), particularmente para o Brasil e os arquivos do
+DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a
+lista de procedimentos obstétricos em internações por eventos não
+mórbidos (`procobst`).
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
-[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.pdf)
+[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.4.pdf)
 ou, no R, com `?'csapAIH-package'`.
 
 # Dependências
 
 A leitura de arquivos .DBC exige a instalação prévia do pacote
-[`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)<sup>[10](#ref-readdbc)</sup>.
+[`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)<sup>[11](#ref-readdbc)</sup>.
 Sua falta não impede o funcionamento das demais funções do pacote
 (inclusive de leitura de arquivos em outro formato). A função
 `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado,
 mas sua instalação não é necessária para que ela funcione. A função
 `popbr2000_2021` usa o pacote
-[`dplyr`](https://cran.r-project.org/package=dplyr), que é importado.
-[`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) e
-[`haven`](https://cran.r-project.org/package=haven) também são
-importados.
+[`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. O
+pacote [`haven`](https://cran.r-project.org/package=haven) também é
+importado.
+[`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não
+o é mais.
 <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
 
 # Exemplos de uso
 
 ``` r
 library(dplyr) # facilitar o trabalho
-Warning: package 'dplyr' was built under R version 4.2.3
 library(csapAIH)
 ```
 
@@ -204,7 +204,7 @@ de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote
 [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek,
 também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao
 pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de
-Raphael Saldanha<sup>[11](#ref-Saldanha2019)</sup>, podemos ler com
+Raphael Saldanha<sup>[10](#ref-Saldanha2019)</sup>, podemos ler com
 facilidade esses arquivos na internet, sem necessidade de download.
 
 O código abaixo cria um banco com as informações das AIHs do “ano de
@@ -223,7 +223,7 @@ ncol(AIHRS2021) # colunas
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
 nrow(DORS2021) |> Rcoisas::formatL(digits = 0)
-[1] "117.158"
+[1] "117.722"
 ncol(DORS2021)
 [1] 87
 ```
@@ -237,15 +237,12 @@ num sub-diretório do diretório de trabalho da sessão ativa, chamado
 <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
 
 ``` r
-csap <- csapAIH("data-raw/RDRS1801.dbc") 
+csap.dbc <- csapAIH("data-raw/RDRS1801.dbc") 
 Importados 60.529 registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
-```
-
-``` r
-csap <- csapAIH("data-raw/RDRS1801.dbf") 
+csap.dbf <- csapAIH("data-raw/RDRS1801.dbf") 
 Importados 60.529 registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
@@ -256,11 +253,41 @@ Exportados 51.923 (85,8%) registros.
   campos, com o argumento `sep`.
 
 ``` r
-csap <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
+csap.csv <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
 Importados 60.529 registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
+```
+
+A função `fetchcsap` facilita o trabalho sobre os arquivos da AIH:
+
+``` r
+csap.ftp <- fetchcsap('RS', 2018)
+ℹ Your local Internet connection seems to be ok.
+ℹ DataSUS FTP server seems to be up and reachable.
+ℹ Starting download...
+Importados 60.529 registros.
+Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
+Excluídos 366 (0,6%) registros de AIH de longa permanência.
+Exportados 51.923 (85,8%) registros.
+```
+
+Os extratos são iguais:
+
+``` r
+all.equal(attributes(csap.dbc)$resumo, attributes(csap.dbf)$resumo)
+[1] TRUE
+all.equal(attributes(csap.dbc)$resumo, attributes(csap.csv)$resumo)
+[1] TRUE
+all.equal(attributes(csap.ftp)$resumo, attributes(csap.dbc)$resumo)
+[1] TRUE
+```
+
+``` r
+# Limpar o ambiente de trabalho, renomear um dos bancos de dados:
+csap <- csap.ftp
+rm(csap.csv, csap.dbc, csap.dbf, csap.ftp)
 ```
 
 ### Em um banco de dados existente na sessão de trabalho
@@ -349,14 +376,13 @@ A variável `CAUSABAS` tem o código da causa básica do óbito.
 
 De modo semelhante à AIH, as bases de dados da DO também têm a idade
 codificada e não a verdadeira idade da pessoa. Por exemplo, a variável
-`IDADE` em `DORS2021` é um `factor` com 215 níveis, em que o primeiro é
-‘001’ e o último é ‘999’. Neste caso podemos usar a função `idadeSUS`
-para computar a idade, mas como o resultado de `idadeSUS` é “um objeto
-da classe data frame com três variáveis” (v. `?idadeSUS`), necessitamos
-a função `unnest` (de `tidyr`) para desagrupar as variáveis antes de
-inseri-las em `DORS2021`. Além disso, foi excluída (com
-`unnest(...)[-2]`) a “faixa etária detalhada”, que é a segunda variável
-no output de `idadeSUS`.
+`IDADE` em `DORS2021` é um `factor` com 0 níveis, em que o primeiro é e
+o último é . Neste caso podemos usar a função `idadeSUS` para computar a
+idade, mas como o resultado de `idadeSUS` é “um objeto da classe data
+frame com três variáveis” (v. `?idadeSUS`), necessitamos a função
+`unnest` (de `tidyr`) para desagrupar as variáveis antes de inseri-las
+em `DORS2021`. Além disso, foi excluída (com `unnest(...)[-2]`) a “faixa
+etária detalhada”, que é a segunda variável no output de `idadeSUS`.
 
 ``` r
 DORS2021 <- DORS2021 %>%
@@ -364,12 +390,12 @@ DORS2021 <- DORS2021 %>%
   mutate(tidyr::unnest(idadeSUS(DORS2021, sis = "SIM"), cols = c())[-2],
          fxetar3 = fxetar3g(idade),
          SEXO = factor(SEXO, levels = c(1,2), labels = c("masc", "fem")))
-Importados 117.158 registros.
+Importados 117.722 registros.
 DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
   CONTADOR csap    grupo idade fxetar5 fxetar3
-1       52  não não-CSAP    64   60-64    60e+
-2       54  não não-CSAP    63   60-64    60e+
-3      112  sim      g08    70   70-74    60e+
+1        1  não não-CSAP    49   45-49   15-59
+2        2  não não-CSAP    41   40-44   15-59
+3        3  não não-CSAP    78   75-79    60e+
 ```
 
 ### A partir de uma variável com códigos da CID-10:
@@ -380,6 +406,7 @@ cids
  [1] N189 O689 S423 H938 P584 I200 I442 C189 C409 K818
 3254 Levels: A009 A020 A044 A045 A048 A049 A050 A058 A059 A061 A069 A071 ... Z990
 csapAIH(cids) 
+Excluídos 0 registros de parto (0% do total).
     cid csap    grupo
 1  N189  não não-CSAP
 2  O689  não não-CSAP
@@ -402,12 +429,6 @@ guardado como atributo do banco de dados e pode ser recuperado com as
 funções `attr()` ou `attributes()`:
 
 ``` r
-csap <- csapAIH("data-raw/RDRS1801.dbc") # cria o data.frame
-Importados 60.529 registros.
-Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
-Excluídos 366 (0,6%) registros de AIH de longa permanência.
-Exportados 51.923 (85,8%) registros.
-
 attr(csap, "resumo")
           acao  freq  perc                                  objeto
 1   Importados 60529 100.0                              registros.
@@ -772,7 +793,7 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .1
 gr
 ```
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-26-1.png" width="50%" style="display: block; margin: auto;" />
 
 #### Estratificado por categorias de outra variável presente no banco de dados:
 
@@ -789,7 +810,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-25-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-25-2.png" width="45%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-27-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-27-2.png" width="45%" style="display: block; margin: auto;" />
 
 ``` r
  DORS2021 %>% 
@@ -800,7 +821,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
+<img src="man/figures/README-unnamed-chunk-28-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
 <p class="caption">
 Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 2021.
@@ -811,7 +832,7 @@ Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.3.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.4.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
@@ -836,10 +857,10 @@ E, sempre, meus profundos agradecimentos a
 
 <div id="ref-Nedel2011" class="csl-entry">
 
-<span class="csl-left-margin">1. </span><span
-class="csl-right-inline">Nedel FB, Facchini LA, Bastos JL, Martín-Mateo
-M. <span class="nocase">Conceptual and methodological aspects in the
-study of hospitalizations for ambulatory care sensitive
+<span class="csl-left-margin">1.
+</span><span class="csl-right-inline">Nedel FB, Facchini LA, Bastos JL,
+Martín-Mateo M. <span class="nocase">Conceptual and methodological
+aspects in the study of hospitalizations for ambulatory care sensitive
 conditions</span>. Ciência & Saúde Coletiva \[Internet\]. 2011;16(SUPPL.
 1):1145–54. Available from:
 <http://www.scielo.br/j/csc/a/4BYnRnKGjwdhYstBkKk7X7M/?lang=en></span>
@@ -848,25 +869,25 @@ conditions</span>. Ciência & Saúde Coletiva \[Internet\]. 2011;16(SUPPL.
 
 <div id="ref-MS2008lista" class="csl-entry">
 
-<span class="csl-left-margin">2. </span><span
-class="csl-right-inline">Brasil. Ministério da Saúde. Secretaria de
-Atenção à Saúde. <span class="nocase">Portaria Nº 221, de 17 de abril de
-2008.</span> \[Internet\]. Ministério da Saúde; 2008. p. 70. Available
-from:
+<span class="csl-left-margin">2.
+</span><span class="csl-right-inline">Brasil. Ministério da Saúde.
+Secretaria de Atenção à Saúde. <span class="nocase">Portaria Nº 221, de
+17 de abril de 2008.</span> \[Internet\]. Ministério da Saúde; 2008. p.
+70. Available from:
 <https://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html></span>
 
 </div>
 
 <div id="ref-Alfradique2009" class="csl-entry">
 
-<span class="csl-left-margin">3. </span><span
-class="csl-right-inline">Alfradique ME, Bonolo P de F, Dourado I,
-Lima-Costa MF, Macinko J, Mendonça CS, et al. <span
-class="nocase">Interna<span class="nocase">ç</span><span
-class="nocase">õ</span>es por condi<span class="nocase">ç</span><span
-class="nocase">õ</span>es sens<span class="nocase">í</span>veis <span
-class="nocase">à</span> aten<span class="nocase">ç</span><span
-class="nocase">ã</span>o prim<span class="nocase">á</span>ria: a
+<span class="csl-left-margin">3.
+</span><span class="csl-right-inline">Alfradique ME, Bonolo P de F,
+Dourado I, Lima-Costa MF, Macinko J, Mendonça CS, et al.
+<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
+por condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+sens<span class="nocase">í</span>veis <span class="nocase">à</span>
+aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+prim<span class="nocase">á</span>ria: a
 constru<span class="nocase">ç</span><span class="nocase">ã</span>o da
 lista brasileira como ferramenta para medir o desempenho do sistema de
 sa<span class="nocase">ú</span>de (Projeto ICSAP - Brasil)</span>.
@@ -878,11 +899,11 @@ Available from:
 
 <div id="ref-Nedel2008" class="csl-entry">
 
-<span class="csl-left-margin">4. </span><span
-class="csl-right-inline">Nedel FB, Facchini LA, Martín-Mateo M, Vieira
-LAS, Thumé E. <span class="nocase">Programa Sa<span
-class="nocase">ú</span>de da Fam<span class="nocase">í</span>lia e
-condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+<span class="csl-left-margin">4.
+</span><span class="csl-right-inline">Nedel FB, Facchini LA,
+Martín-Mateo M, Vieira LAS, Thumé E. <span class="nocase">Programa
+Sa<span class="nocase">ú</span>de da Fam<span class="nocase">í</span>lia
+e condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria, Bag<span class="nocase">é</span>
@@ -894,15 +915,16 @@ Available from:
 
 <div id="ref-NedelTese" class="csl-entry">
 
-<span class="csl-left-margin">5. </span><span
-class="csl-right-inline">Nedel FB. <span class="nocase">Interna<span
-class="nocase">ç</span><span class="nocase">õ</span>es hospitalares
-evit<span class="nocase">á</span>veis pela aten<span
-class="nocase">ç</span><span class="nocase">ã</span>o prim<span
-class="nocase">á</span>ria: estudo do impacto do Programa Sa<span
-class="nocase">ú</span>de da Fam<span class="nocase">ı́</span>lia sobre
-as interna<span class="nocase">ç</span><span class="nocase">õ</span>es
-por Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+<span class="csl-left-margin">5.
+</span><span class="csl-right-inline">Nedel FB.
+<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
+hospitalares evit<span class="nocase">á</span>veis pela
+aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+prim<span class="nocase">á</span>ria: estudo do impacto do Programa
+Sa<span class="nocase">ú</span>de da Fam<span class="nocase">ı́</span>lia
+sobre as
+interna<span class="nocase">ç</span><span class="nocase">õ</span>es por
+Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 Sens<span class="nocase">ı́</span>veis <span class="nocase">à</span>
 Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 Prim<span class="nocase">á</span>ria no Rio Grande do Sul,
@@ -914,75 +936,78 @@ Universidade Federal de Pelotas - UFPel; 2009. p. 279. Available from:
 
 <div id="ref-Nedel2017" class="csl-entry">
 
-<span class="csl-left-margin">6. </span><span
-class="csl-right-inline">Nedel FB. <span class="nocase">csapAIH: uma
+<span class="csl-left-margin">6.
+</span><span class="csl-right-inline">Nedel FB.
+<span class="nocase">csapAIH: uma
 fun<span class="nocase">ç</span><span class="nocase">ã</span>o para a
 classifica<span class="nocase">ç</span><span class="nocase">ã</span>o
 das condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
-prim<span class="nocase">á</span>ria no programa estat<span
-class="nocase">í</span>stico R</span>. Epidemiologia e Serviços de Saúde
-\[Internet\]. 2017;26(01):199–209. Available from:
+prim<span class="nocase">á</span>ria no programa
+estat<span class="nocase">í</span>stico R</span>. Epidemiologia e
+Serviços de Saúde \[Internet\]. 2017;26(01):199–209. Available from:
 <https://www.scielo.br/j/ress/a/cLvdvwyTpy8cQh5LnhJfd3G/?lang=pt></span>
 
 </div>
 
 <div id="ref-Nedel2019" class="csl-entry">
 
-<span class="csl-left-margin">7. </span><span
-class="csl-right-inline">Nedel FB. <span class="nocase">Pacote csapAIH:
-a Lista Brasileira de Interna<span class="nocase">ç</span><span
-class="nocase">õ</span>es por Condi<span class="nocase">ç</span><span
-class="nocase">õ</span>es Sens<span class="nocase">í</span>veis <span
-class="nocase">à</span> Aten<span class="nocase">ç</span><span
-class="nocase">ã</span>o Prim<span class="nocase">á</span>ria no
-programa R</span>. Epidemiologia e Serviços de Saúde \[Internet\]. 2019
-Sep;28(2):e2019084. Available from:
+<span class="csl-left-margin">7.
+</span><span class="csl-right-inline">Nedel FB.
+<span class="nocase">Pacote csapAIH: a Lista Brasileira de
+Interna<span class="nocase">ç</span><span class="nocase">õ</span>es por
+Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+Sens<span class="nocase">í</span>veis <span class="nocase">à</span>
+Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+Prim<span class="nocase">á</span>ria no programa R</span>. Epidemiologia
+e Serviços de Saúde \[Internet\]. 2019 Sep;28(2):e2019084. Available
+from:
 <https://www.scielo.br/j/ress/a/7XsGCYRVdD6PZxPzmNCFqvp/abstract/?lang=pt></span>
 
 </div>
 
 <div id="ref-OPS2014" class="csl-entry">
 
-<span class="csl-left-margin">8. </span><span
-class="csl-right-inline">Organización Panamericana de la Salud (OPS).
-<span class="nocase">Compendio de indicadores del impacto y resultados
-intermedios. Plan estrat<span class="nocase">é</span>gico de la OPS
-2014-2019: "En pro de la salud: Desarrollo sostenible y equidad"</span>
-\[Internet\]. OPS, editor. Washington; 2014. Available from:
+<span class="csl-left-margin">8.
+</span><span class="csl-right-inline">Organización Panamericana de la
+Salud (OPS). <span class="nocase">Compendio de indicadores del impacto y
+resultados intermedios. Plan estrat<span class="nocase">é</span>gico de
+la OPS 2014-2019: "En pro de la salud: Desarrollo sostenible y
+equidad"</span> \[Internet\]. OPS, editor. Washington; 2014. Available
+from:
 <https://www.paho.org/hq/dmdocuments/2016/ops-pe-14-19-compendium-indicadores-nov-2014.pdf></span>
 
 </div>
 
 <div id="ref-brpopref" class="csl-entry">
 
-<span class="csl-left-margin">9. </span><span
-class="csl-right-inline">Saldanha R. Brpop: Brazilian population
-estimatives \[Internet\]. 2022. Available from:
+<span class="csl-left-margin">9.
+</span><span class="csl-right-inline">Saldanha R. Brpop: Brazilian
+population estimatives \[Internet\]. 2022. Available from:
 <https://CRAN.R-project.org/package=brpop></span>
-
-</div>
-
-<div id="ref-readdbc" class="csl-entry">
-
-<span class="csl-left-margin">10. </span><span
-class="csl-right-inline">Petruzalek D. Read.dbc: Read data stored in DBC
-(compressed DBF) files \[Internet\]. 2016. Available from:
-<https://CRAN.R-project.org/package=read.dbc></span>
 
 </div>
 
 <div id="ref-Saldanha2019" class="csl-entry">
 
-<span class="csl-left-margin">11. </span><span
-class="csl-right-inline">Saldanha R de F, Bastos RR, Barcellos C. <span
-class="nocase">Microdatasus: pacote para download e pr<span
-class="nocase">é</span>-processamento de microdados do Departamento de
-Inform<span class="nocase">á</span>tica do SUS (DATASUS)</span>.
-Cadernos de Saúde Pública \[Internet\]. 2019;35(9):e00032419. Available
-from:
+<span class="csl-left-margin">10.
+</span><span class="csl-right-inline">Saldanha R de F, Bastos RR,
+Barcellos C. <span class="nocase">Microdatasus: pacote para download e
+pr<span class="nocase">é</span>-processamento de microdados do
+Departamento de Inform<span class="nocase">á</span>tica do SUS
+(DATASUS)</span>. Cadernos de Saúde Pública \[Internet\].
+2019;35(9):e00032419. Available from:
 <https://www.scielo.br/j/csp/a/gdJXqcrW5PPDHX8rwPDYL7F/?lang=pt></span>
+
+</div>
+
+<div id="ref-readdbc" class="csl-entry">
+
+<span class="csl-left-margin">11.
+</span><span class="csl-right-inline">Petruzalek D. Read.dbc: Read data
+stored in DBC (compressed DBF) files \[Internet\]. 2016. Available from:
+<https://CRAN.R-project.org/package=read.dbc></span>
 
 </div>
 
