@@ -29,17 +29,17 @@ csapAIH(
 
 \item{sihsus}{argumento lógico, obrigatório se \code{x} for um arquivo; \code{TRUE} (padrão) indica que o arquivo ou banco de dados a ser tabulado tem minimamente os seguintes campos dos arquivos da AIH:
 \itemize{
-  \item{DIAG_PRINC }{diagnóstico principal da internação;}
-  \item NASC {data de nascimento; }
-  \item DT_INTER {    data da internação; }
-  \item DT_SAIDA {    data da alta hospitalar; }
-  \item COD_IDADE {    código indicando a faixa etária a que se refere o valor registrado no campo idade; }
-  \item IDADE    {idade (tempo de vida acumulado) do paciente, na unidade indicada no campo COD_IDADE;}
-  \item MUNIC_RES    {município de residência do paciente; }
-  \item MUNIC_MOV {município de internação do paciente; }
-  \item SEXO { sexo do paciente; }
-  \item N_AIH    { número da AIH; }
-  \item {PROC_REA} { procedimento realizado, segundo a tabela do SIH/SUS.}
+  \item DIAG_PRINC: diagnóstico principal da internação;
+  \item NASC: data de nascimento;
+  \item DT_INTER: data da internação;
+  \item DT_SAIDA: data da alta hospitalar;
+  \item COD_IDADE: código indicando a faixa etária a que se refere o valor registrado no campo idade;
+  \item IDADE: idade (tempo de vida acumulado) do paciente, na unidade indicada no campo COD_IDADE;
+  \item MUNIC_RES: município de residência do paciente;
+  \item MUNIC_MOV: município de internação do paciente;
+  \item SEXO: sexo do paciente;
+  \item N_AIH: número da AIH;
+  \item PROC_REA: procedimento realizado, segundo a tabela do SIH/SUS.
   }}
 
 \item{procobst.rm}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (\code{ver detalhes});}
@@ -63,17 +63,18 @@ csapAIH(
 \value{
 A função tem diferentes possibilidades de retorno, segundo a estrutura dos dados lidos e as opções de leitura:
 \itemize{
- \item{ Se for um arquivo ou \code{data frame} com a estrutura dos arquivos da AIH:
+ \item Se for um arquivo ou \code{data frame} com a estrutura dos arquivos da AIH:
    \itemize{
      \item um \code{data frame} com as variáveis nº da AIH, município de residência, município de internação, sexo, data de nascimento, idade em anos completos, faixa etária detalhada, faixa etária quinquenal, data da internação, data da saída, procedimento realizado, cid, CSAP, grupo csap, CEP e CNES do hospital
        \itemize{
          \item Nesse caso, o banco resultante tem um argumento "resumo" com o resumo da importação de dados, segundo as opções de seleção
-         \item{ Se os argumentos \code{grupo}, \code{cep} ou \code{cnes} forem definidos como \code{FALSE}, o banco é construído sem essas variáveis}
-     }}}
-   \item{Se um fator ou data frame sem a estrutura dos arquivos da AIH:}
+         \item Se os argumentos \code{grupo}, \code{cep} ou \code{cnes} forem definidos como \code{FALSE}, o banco é construído sem essas variáveis
+     }
+     \item Se um fator ou data frame sem a estrutura dos arquivos da AIH:}
  \itemize{
- \item{Se \code{grupos = TRUE}: }{ um banco de dados com as variáveis \code{csap} (sim ou não), \code{grupo} (subgrupo CSAP) e \code{cid} (código da CID-10)};
- \item{Se \code{factor} e \code{grupos = FALSE}: }{ um fator com as observações classificadas como CSAP ou não-CSAP}.    }
+   \item Se \code{grupos = TRUE}: um banco de dados com as variáveis \code{csap} (sim ou não), \code{grupo} (subgrupo CSAP) e \code{cid} (código da CID-10);
+   \item Se \code{factor} e \code{grupos = FALSE}: um fator com as observações classificadas como CSAP ou não-CSAP.
+  }
  }
 }
 \description{
@@ -81,45 +82,43 @@ Classifica códigos da 10ª Revisão da Classificação Internacional de Doença
 }
 \details{
 \itemize{
-  \item{x pode ser:}{
+  \item x pode ser:
    \enumerate{
-    \item{ }{um arquivo de dados armazenado num diretório; }
-    \item{ }{um banco de dados, ou um vetor da classe \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10. }
+    \item um arquivo de dados armazenado num diretório;
+    \item um banco de dados, ou um vetor da classe \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10.
    }
 
 Se for um arquivo, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBC, DBF ou CSV, em minúsculas ou maíusculas). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\link{read.table}} para leitura dos dados.
 
 Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(<objeto>)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(<objeto>, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(<objeto>))}.
-}
 
-\item{lista} A Lista Brasileira de ICSAP publicada pelo Ministério da Saúde (Brasil, 2008) se diferencia da lista publicada pelxs construtorxs da lista (Alfradique et al., 2009), em um único aspecto: a Portaria Ministerial uniu os dois primeiros grupos de causa da lista publicada por Alfradique et al. -- doenças evitáveis por vacinação e doenças evitáveis por outros meios (sífilis, tuberculose e febre reumática). Não há diferença no total de diagnósticos considerados, ou na distribuição dos diagnósticos entre os demais grupos.
+\item \code{lista} A Lista Brasileira de ICSAP publicada pelo Ministério da Saúde (Brasil, 2008) se diferencia da lista publicada pelxs construtorxs da lista (Alfradique et al., 2009), em um único aspecto: a Portaria Ministerial uniu os dois primeiros grupos de causa da lista publicada por Alfradique et al. -- doenças evitáveis por vacinação e doenças evitáveis por outros meios (sífilis, tuberculose e febre reumática). Não há diferença no total de diagnósticos considerados, ou na distribuição dos diagnósticos entre os demais grupos.
 
-\item{procbst.rm } {= TRUE (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento. São excluídas as internações pelos seguintes procedimentos obstétricos, independente do diagnóstico:
+\item \code{procbst.rm} TRUE (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento. São excluídas as internações pelos seguintes procedimentos obstétricos, independente do diagnóstico:
   \itemize{
-   \item{0310010012 } ASSISTENCIA AO PARTO S/ DISTOCIA
-   \item{0310010020 } ATENDIMENTO AO RECÉM-NASCIDO EM SALA DE PARTO
-   \item{0310010039 } PARTO NORMAL
-   \item{0310010047 } PARTO NORMAL EM GESTAÇÃO DE ALTO RISCO
-   \item{0411010018 } DESCOLAMENTO MANUAL DE PLACENTA
-   \item{0411010026 } PARTO CESARIANO EM GESTAÇÃO ALTO RISCO
-   \item{0411010034 } PARTO CESARIANO
-   \item{0411010042 } PARTO CESARIANO C/ LAQUEADURA TUBÁRIA
-   \item{0411020013 } CURETAGEM PÓS-ABORTAMENTO / PUERPERAL
-   \item{0411020021 } EMBRIOTOMIA
-   } }
-\item{parto.rm } {= TRUE (padrão) exclui as internações por parto pelo campo diagnóstico, independente do procedimento. São excluídas as internações com os seguintes diagnósticos (CID-10):
+   \item 0310010012  ASSISTENCIA AO PARTO S/ DISTOCIA
+   \item 0310010020  ATENDIMENTO AO RECÉM-NASCIDO EM SALA DE PARTO
+   \item 0310010039  PARTO NORMAL
+   \item 0310010047  PARTO NORMAL EM GESTAÇÃO DE ALTO RISCO
+   \item 0411010018  DESCOLAMENTO MANUAL DE PLACENTA
+   \item 0411010026  PARTO CESARIANO EM GESTAÇÃO ALTO RISCO
+   \item 0411010034  PARTO CESARIANO
+   \item 0411010042  PARTO CESARIANO C/ LAQUEADURA TUBÁRIA
+   \item 0411020013  CURETAGEM PÓS-ABORTAMENTO / PUERPERAL
+   \item 0411020021  EMBRIOTOMIA
+   }
+\item \code{parto.rm } TRUE (padrão) exclui as internações por parto pelo campo diagnóstico, independente do procedimento. São excluídas as internações com os seguintes diagnósticos (CID-10):
  \itemize{
-  \item{O80} Parto único espontâneo
-  \item{O81} Parto único por fórceps ou vácuo-extrator
-  \item{O82} Parto único por cesariana
-  \item{O83} Outros tipos de parto único assistido
-  \item{O84} Parto múltiplo
+  \item O80 Parto único espontâneo
+  \item O81 Parto único por fórceps ou vácuo-extrator
+  \item O82 Parto único por cesariana
+  \item O83 Outros tipos de parto único assistido
+  \item O84 Parto múltiplo
  }
-}
 
 É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.
 
-\item{\code{sihsus}  }{ A própria função define este argumento como \code{FALSE} quando "x" (o alvo da função) é um fator. Quando o alvo é um objeto da clase \code{data frame} sem a estrutura dos arquivos da AIH, a variável com os códigos da CID-10 deve ser trabalhada como um \code{factor}. }
+\item \code{sihsus}  A própria função define este argumento como \code{FALSE} quando "x" (o alvo da função) é um fator. Quando o alvo é um objeto da clase \code{data frame} sem a estrutura dos arquivos da AIH, a variável com os códigos da CID-10 deve ser trabalhada como um \code{factor}.
 }
 }
 \note{
