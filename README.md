@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 22 de abril de 2024
+Atualizado em 12 de maio de 2024
 
 - [Apresentação](#apresentação)
 - [Justificativa](#justificativa)
@@ -84,26 +84,24 @@ tese<sup>[5](#ref-NedelTese)</sup>) que automatize esse trabalho.
 
 O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
 
-- baixando o arquivo em de instalação no
+- baixando o arquivo de instalação no
   [SourceForge](https://sourceforge.net/projects/csapaih/) e depois
-  instalando no R, com a IDE de preferência ou com o comando
-  `install.packages("csapAIH_<versão>.tar.gz")` ou
-  `install.packages("csapAIH_<versão>.zip")`;
+  instalando, com a IDE de preferência ou com o comando
+  `install.packages("csapAIH_<versão>.tar.gz")` (em Linux ou Mac) ou
+  `install.packages("csapAIH_<versão>.zip")` (em Windows);
 
-- com a função `install.packages()` sobre os arquivos de instalação no
-  [SourceForge](https://sourceforge.net/projects/csapaih/):
+- com a função `install.packages()` sobre o arquivo tar.gz no
+  [SourceForge](https://sourceforge.net/projects/csapaih/) [^1]:
 
 ``` r
-#  arquivos .tar.gz
-install.packages("https://sourceforge.net/projects/csapaih/files/<versão>.tar.gz/download", type = "source", repos = NULL) 
-
-# arquivos .zip
-install.packages("https://sourceforge.net/projects/csapaih/files/<versão>.zip/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.4.tar.gz/download", type = "source", repos = NULL) 
+Installing package into 'C:/Users/fulvi/AppData/Local/Temp/RtmpMrNE7F/temp_libpath57c04c64472'
+(as 'lib' is unspecified)
 ```
 
 ou
 
-- através do pacote `remotes` sobre os arquivos-fonte do pacote em
+- através do pacote `remotes` sobre os arquivos-fonte da versão em
   desenvolvimento, no [GitHub](https://github.com/fulvionedel/csapAIH):
 
 ``` r
@@ -789,7 +787,7 @@ ICSAP em Cerro Largo, RS, 2021. Taxas por 100.000 hab.
 ### Gráficos
 
 ``` r
-gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18)
+gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4)
 gr
 ```
 
@@ -810,11 +808,11 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" width="45%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-27-2.png" width="45%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-27-1.png" width="75%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-27-2.png" width="75%" style="display: block; margin: auto;" />
 
 ``` r
  DORS2021 %>% 
-  filter(!is.na(SEXO)) %>% 
+  filter(!is.na(SEXO), !is.na(idade)) %>% 
   desenhaCSAP(x.size = 7, y.size = 8) + 
     ggplot2::facet_grid(SEXO ~ fxetar3)
 ```
@@ -1012,3 +1010,9 @@ stored in DBC (compressed DBF) files \[Internet\]. 2016. Available from:
 </div>
 
 </div>
+
+[^1]: Como informado por [Rafael
+    Barros](https://github.com/fulvionedel/csapAIH/issues/13#top), a
+    instalação pelo arquivo .zip da internet resulta em erro.
+    Estranhamente (pra mim, ao menos), uma vez baixado, o arquivo .zip é
+    instalado sem erro.

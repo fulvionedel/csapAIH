@@ -5,3 +5,4 @@ tests/*
 ^data-raw/*
 ^README\.Rmd$
 ^LICENSE\.md$
+README_cache/*
