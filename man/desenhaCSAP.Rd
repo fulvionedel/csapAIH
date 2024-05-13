@@ -2,7 +2,7 @@
 % Please edit documentation in R/desenhaCSAP.R
 \name{desenhaCSAP}
 \alias{desenhaCSAP}
-\title{Grafico das Condicoes Sensiveis a Atencao Primaria}
+\title{Gráfico das Condições Sensíveis à Atenção Primária}
 \usage{
 desenhaCSAP(
   dados,
@@ -86,17 +86,17 @@ Na opção padrão e com \code{\link[ggplot2]{ggplot2}} instalado, devolve um ob
 Desenha um gráfico de barras das CSAP por grupo de causa segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite a lista oficial publicada em Portaria Ministerial, com 19 grupos de causa, ou a lista com 20 grupos, publicada por Alfradique et al.
 }
 \details{
-O gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite a adição de outros comandos ao objeto devolvido. O vetor \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
+Por padrão, o gráfico é desenhado com \code{\link[ggplot2]{ggplot2}}. Portanto, segue essa filosofia e permite a adição de outros comandos ao objeto devolvido. O vetor \code{grupos} não precisa ser gerado com a função \code{\link{csapAIH}}, mas deve usar os mesmos caracteres de identificação dos grupos CSAP que o resultado da função, v.g. "g01", "g02", ..., "g19".
 }
 \examples{
 library(csapAIH)
 df   <- csapAIH(aih100) # Computar as CSAP, lista MS
 
-#  Graficos com ggplot
+#  Gráficos com ggplot
 # =====================
 
-# Cria o grafico a partir do banco,
-# uma vez que a variavel com os grupos se chama "grupo":
+# Cria o gráfico a partir do banco,
+# uma vez que a variável com os grupos se chama "grupo":
 # ----------------------------------------------------------
 # Com titulo "automatico":
 desenhaCSAP(df, titulo = "auto", onde = "Rio Grande do Sul")
@@ -123,30 +123,30 @@ desenhaCSAP(df, colorir = "cinza")
 desenhaCSAP(df, colorir = "yellow")
 #
 # Usando o banco todo pode-se tirar proveito de facilidades do ggplot2,
-# como a reproducao do grafico por estratos de outras variaveis, como no
-# exemplo abaixo com o sexo. Para isso temos de descolorir o grafico, que
-# pode ser novamente colorido mais tarde. Como a ordenacao dos grupos de
-# causa continua sendo feita pela frequencia da distribuicao global, aqui
+# como a reprodução do gráfico por estratos de outras variáveis, como no
+# exemplo abaixo com o sexo. Para isso temos de descolorir o gráfico, que
+# pode ser novamente colorido mais tarde. Como a ordenação dos grupos de
+# causa continua sendo feita pela frequência da distribuição global, aqui
 # ela faz menos sentido.
   desenhaCSAP(df, ordenar = FALSE) +
     ggplot2::facet_wrap(~sexo)
 
-# Cria o grafico a partir de uma variavel:
+# Cria o gráfico a partir de uma variável:
 # ---------------------------------------
 fator <- df$grupo
 desenhaCSAP(fator)
 carater <- as.character(fator)
 desenhaCSAP(carater, limsup = 4.4)
 
-# Se \code{titulo = "auto"}, o argumento \code{quando} eh obrigatorio:
+# Se \code{titulo = "auto"}, o argumento \code{quando} é obrigatório:
 \dontrun{
  desenhaCSAP(carater, titulo = "auto", onde = 'RS') # resulta em erro
  }
  desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
  desenhaCSAP(carater, titulo = "Título manual")
 
-# Cria o grafico a partir de uma tabela com a primeira coluna contendo
-# os 19 grupos de causa e a segunda coluna contendo o numero de casos:
+# Cria o gráfico a partir de uma tabela com a primeira coluna contendo
+# os 19 grupos de causa e a segunda coluna contendo o número de casos:
 # --------------------------------------------------------------------
 tabela <- descreveCSAP(df)
 desenhaCSAP(tabela, jaetabela = TRUE)
@@ -158,7 +158,7 @@ desenhaCSAP(tabela, jaetabela = TRUE,
             titulo = "auto", onde = "RS", quando = "jan/2012")
 desenhaCSAP(tabela, jaetabela = TRUE, titulo = "Título manual")
 
-#  Graficos com as funcoes basicas
+#  Gráficos com as funções básicas
 # =================================
 desenhaCSAP(df, tipo.graf = "base", titulo = "dados = banco")
 desenhaCSAP(df$grupo, tipo.graf = "base", titulo = "dados = fator")

@@ -13,10 +13,10 @@ tabCSAP(x, digits = 2, lang = "pt.ca", format = FALSE)
 
 \item{lang}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 
-\item{format}{Should the table be formatted to print? (default = FALSE).}
+\item{format}{A tabela deve ser formatada para impressão? (default = FALSE).}
 }
 \value{
-Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição proporcional sobre o total de internações e sobre o total de ICSAP. Se os grupos forem classificados segundo a Lista Brasileira publicada em Portaria Ministerial, a tabela terá
+Uma tabela com a frequência absoluta dos grupos de causa e sua distribuição proporcional sobre o total de internações e sobre o total de ICSAP. #'
 }
 \description{
 Tabular Condições Sensíveis à Atenção Primária (CSAP) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária. Permite o uso da lista da portaria ministerial, com 19 grupos de causa, e da lista publicada por Alfradique et al., com 20 grupos de causa.

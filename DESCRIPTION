@@ -9,13 +9,16 @@ Description: Classifica um vetor com códigos da CID-10 segundo a Lista Brasilei
           de Condições Sensíveis à Atenção Primária e oferece outras funções, 
           especialmente para o manejo dos 'arquivos da AIH' (BD-SIH/SUS).
 License: GPL (>= 3)
-Suggests: brpop,
-          foreign,
-          ggplot2,
-          microdatasus,
-          read.dbc,
-          scales,
-          tidyr
+Suggests: 
+    brpop,
+    foreign,
+    ggplot2,
+    knitr,
+    microdatasus,
+    read.dbc,
+    rmarkdown,
+    scales,
+    tidyr
 Imports: data.table,
          dplyr,
          haven
@@ -28,3 +31,4 @@ Depends:
     R (>= 2.10)
 URL: https://github.com/fulvionedel/csapAIH 
 BugRepoorts: https://github.com/fulvionedel/csapAIH/issues  
+VignetteBuilder: knitr

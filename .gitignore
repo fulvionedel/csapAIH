@@ -4,3 +4,6 @@
 .Ruserdata
 *.Rproj
 *_cache/
+inst/doc
+/doc/
+/Meta/

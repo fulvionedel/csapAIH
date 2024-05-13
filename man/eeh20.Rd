@@ -14,7 +14,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 data(eeh20)
 }
 \description{
-A *Encuesta de Egresos Hospiatalarios* registra as hospitalizações ocorridas em todo o Equador, no setor público e privado. Aqui é apresentada uma amostra aleatória da base de dados do ano 2020.
+A \emph{Encuesta de Egresos Hospitalarios} registra as hospitalizações ocorridas em todo o Equador, no setor público e privado. Aqui é apresentada uma amostra aleatória da base de dados do ano 2020.
 }
 \examples{
 data("eeh20")

@@ -3,7 +3,7 @@
 #' @aliases eeh20
 #' @docType data
 #'
-#' @description A *Encuesta de Egresos Hospiatalarios* registra as hospitalizações ocorridas em todo o Equador, no setor público e privado. Aqui é apresentada uma amostra aleatória da base de dados do ano 2020.
+#' @description A \emph{Encuesta de Egresos Hospitalarios} registra as hospitalizações ocorridas em todo o Equador, no setor público e privado. Aqui é apresentada uma amostra aleatória da base de dados do ano 2020.
 #'
 #' @usage data(eeh20)
 #'

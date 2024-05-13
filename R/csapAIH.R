@@ -38,13 +38,13 @@
 #'     \item um banco de dados, ou um vetor da classe \code{factor} presente como objeto no espaço de trabalho do R, em que uma das variáveis, ou o vetor, contenha códigos da CID-10.
 #'    }
 #'
-#' Se for um arquivo, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBC, DBF ou CSV, em minúsculas ou maíusculas). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\link{read.table}} para leitura dos dados.
+#' Se for um arquivo, o nome deve ser escrito entre aspas e com a extensão do arquivo (DBC, DBF ou CSV, em minúsculas ou maiúsculas). Se não estiver no diretório de trabalho ativo, seu nome deve ser precedido pelo caminho (path) até o diretório de armazenamento. Se estiver em outro formato, podem-se usar os argumentos da função \code{\link{read.table}} para leitura dos dados.
 #'
-#' Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(<objeto>)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(<objeto>, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(<objeto>))}.
+#' Se a função for dirigida a um objeto no espaço de trabalho da classe \code{factor} ou \code{data.frame}, estes também são reconhecidos e o comando é o mesmo: \code{csapAIH(x)}. Se o objeto for de outra classe, como \code{character} ou \code{matrix}, é necessário definir o argumento "arquivo" como FALSE: \code{csapAIH(x, arquivo = FALSE)}, ou, para vetores isolados, defini-lo como fator: \code{csapAIH(as.factor(x))}.
 #'
 #' \item \code{lista} A Lista Brasileira de ICSAP publicada pelo Ministério da Saúde (Brasil, 2008) se diferencia da lista publicada pelxs construtorxs da lista (Alfradique et al., 2009), em um único aspecto: a Portaria Ministerial uniu os dois primeiros grupos de causa da lista publicada por Alfradique et al. -- doenças evitáveis por vacinação e doenças evitáveis por outros meios (sífilis, tuberculose e febre reumática). Não há diferença no total de diagnósticos considerados, ou na distribuição dos diagnósticos entre os demais grupos.
 #'
-#' \item \code{procbst.rm} TRUE (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento. São excluídas as internações pelos seguintes procedimentos obstétricos, independente do diagnóstico:
+#' \item \code{procbst.rm} TRUE (padrão) exclui as internações por procedimentos relacionados ao parto ou abortamento. São excluídas as internações pelos seguintes procedimentos obstétricos, independente do diagnóstico principal de internação (variável `DIAGPRINC`):
 #'   \itemize{
 #'    \item 0310010012  ASSISTENCIA AO PARTO S/ DISTOCIA
 #'    \item 0310010020  ATENDIMENTO AO RECÉM-NASCIDO EM SALA DE PARTO
@@ -125,8 +125,7 @@
 #'  teste3.dbf <- csapAIH("RDRS1201.dbf")
 #'  str(teste3.dbf)
 #'  teste4.dbc <- csapAIH("data-raw/RDRS1801.dbc")
-#'  str(teste4.dbc)
-#' }
+#'  str(teste4.dbc) }
 #'
 #' ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
 #' ##-------------------------------------------------------

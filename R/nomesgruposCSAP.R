@@ -1,4 +1,4 @@
-#' @title Nomes dos grupos de causa da Lista Brasileira de Condicoes Sensiveis a Atencao Primaria
+#' @title Nomes dos grupos de causa da Lista Brasileira de Condições Sensíveis à Atenção Primária
 #' @aliases nomesgruposCSAP
 #'
 #' @description Lista os 19 grupos de causa CSAP, em ordem crescente.

@@ -95,8 +95,6 @@ O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
 
 ``` r
 install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.4.tar.gz/download", type = "source", repos = NULL) 
-Installing package into 'C:/Users/fulvi/AppData/Local/Temp/RtmpMrNE7F/temp_libpath57c04c64472'
-(as 'lib' is unspecified)
 ```
 
 ou
@@ -837,8 +835,8 @@ Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 # Agradecimentos
 
 Agradeço a todxs os usuárixs do pacote, particularmente a quem informa
-problemas e sugere mudanças, como @laiovictor e @igortadeu, e (muito!!)
-a quem apresenta soluções, como @denis-or.
+problemas e sugere mudanças, como @laiovictor e @igortadeu @rafadbarros,
+e (muito!!) a quem apresenta soluções, como @denis-or.
 
 E, sempre, meus profundos agradecimentos a
 

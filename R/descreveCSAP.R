@@ -1,4 +1,4 @@
-#' @title Tabular Condicoes Sensiveis a Atencao Primaria
+#' @title Tabular Condições Sensíveis à Atenção Primária
 #' @description Constrói uma tabela de frequências absolutas e relativas das CSAP por grupo de causa
 #' @aliases descreveCSAP
 #'

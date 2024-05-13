@@ -2,7 +2,7 @@
 % Please edit documentation in R/descreveCSAP.R
 \name{descreveCSAP}
 \alias{descreveCSAP}
-\title{Tabular Condicoes Sensiveis a Atencao Primaria}
+\title{Tabular Condições Sensíveis à Atenção Primária}
 \usage{
 descreveCSAP(grupos, digits = 2)
 }

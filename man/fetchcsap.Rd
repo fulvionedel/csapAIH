@@ -53,12 +53,11 @@ Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do S
 \dontrun{
   fetchcsap(anoinicio = 2023)
 }
-# Internações no RS, jan 2023
+# Internações no RS, mês de competência jan 2023:
 fetchcsap("RS", 2023)
-## RS, 2023
+## Internações no RS, ano de competência 2023:
 \dontrun{
-fetchcsap("RS", 2023, mesfim = 12)
-}
+fetchcsap("RS", 2023, mesfim = 12) }
 
 }
 \seealso{

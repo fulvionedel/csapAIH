@@ -2,12 +2,12 @@
 % Please edit documentation in R/cid10cap.R
 \name{cid10cap}
 \alias{cid10cap}
-\title{Função para classificar códigos da CID-10 em Capítulos}
+\title{Classifica códigos da CID-10 em Capítulos}
 \usage{
 cid10cap(cid, droplevels = FALSE)
 }
 \arguments{
-\item{cid}{Nome do vetor com os códigos da CID-10}
+\item{cid}{Nome do vetor com os códigos da CID-10.}
 
 \item{droplevels}{Se TRUE, desconsidera os capítulos sem nenhuma ocorrência de casos. O padrão é FALSE, o que retorna uma tabela com zeros nos capítulos sem ocorrência de casos.}
 }
@@ -15,7 +15,7 @@ cid10cap(cid, droplevels = FALSE)
 Um \code{factor} com o capítulo da CID-10 correspondente a cada código diagnóstico.
 }
 \description{
-Tomando um vetor com códigos da CID-10, acrescenta uma variável com os capítulos da CID-10 correspondentes
+Tomando um vetor com códigos da 10ª Revisão da Classificação Internacional de Doenças (CID-10), acrescenta uma variável com os capítulos da CID-10 correspondentes.
 }
 \examples{
 # Arquivos da AIH

@@ -6,3 +6,6 @@ tests/*
 ^README\.Rmd$
 ^LICENSE\.md$
 README_cache/*
+^doc$
+^Meta$
+^vignettes/articles$
