@@ -55,7 +55,7 @@ O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
   
   * com a função `install.packages()` sobre o arquivo tar.gz no [SourceForge](https://sourceforge.net/projects/csapaih/) ^[Como informado por [Rafael Barros](https://github.com/fulvionedel/csapAIH/issues/13#top), a instalação pelo arquivo .zip da internet resulta em erro. Estranhamente (pra mim, ao menos), uma vez baixado, o arquivo .zip é instalado sem erro.]:
 
-```{r}
+```{r eval=FALSE}
 install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.4.tar.gz/download", type = "source", repos = NULL) 
 ```
 
@@ -358,7 +358,7 @@ https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.4.pdf
 
 # Agradecimentos
 
-Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como \@laiovictor e \@igortadeu, e (muito!!) a quem apresenta soluções, como \@denis-or. 
+Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como \@laiovictor e \@igortadeu \@rafadbarros, e (muito!!) a quem apresenta soluções, como \@denis-or. 
 
 E, sempre, meus profundos agradecimentos a  
 
