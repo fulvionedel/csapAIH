@@ -53,8 +53,9 @@
                "From 60 to 64 years", "From 65 to 69 years", "From 70 to 74 years",
                "From 75 to 79 years", "From 80 years or more")
 
-   popbr <- brpop::mun_sex_pop() |>
-     data.table::setDT(key = c("year", "mun"))
+   # popbr <- brpop::mun_sex_pop() |>
+   #   data.table::setDT(key = c("year", "mun"))
+   popbr <- data.table::setDT(brpop::mun_sex_pop(), key = c("year", "mun"))
 
    if(!is.null(anoi)) popbr <- popbr[year >= anoi]
    if(!is.null(anof)) popbr <- popbr[year <= anof]
