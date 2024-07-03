@@ -18,5 +18,19 @@ Lista as siglas e nomes das Unidades Federativas (UF) por Região do Brasil segu
 \examples{
 ufbr()
 ufbr(nomes = TRUE)
+# Para acrescentar as informações a um banco de dados existente, junte os
+# bancos, como no exemplo abaixo.
+# O banco "POPBR10" tem a população dos municípios brasileiros em 2010.
+# O município é informado pelo código do IBGE e não há informação sobre a UF:
+data("POPBR10")
+str(POPBR10)
+# O código abaixo
+# - acrescenta a 'POPBR10' uma variável chamada "CO_UF" com o código da UF,
+# tomado dos dois primeiros dígitos de 'MUNIC_RES';
+# - une os bancos, com a função \code{\link{merge}}; e
+# - seleciona os registros da Região Norte ("N")
 
+POPBR10$CO_UF <- substr(POPBR10$MUNIC_RES, 1, 2)
+POPBR10  <- merge(POPBR10, ufbr())
+POPBR10[POPBR10$REGIAO == "N", ]
 }

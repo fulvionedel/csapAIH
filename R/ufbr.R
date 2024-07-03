@@ -11,7 +11,21 @@
 #' @examples
 #' ufbr()
 #' ufbr(nomes = TRUE)
+#' # Para acrescentar as informações a um banco de dados existente, junte os
+#' # bancos, como no exemplo abaixo.
+#' # O banco "POPBR10" tem a população dos municípios brasileiros em 2010.
+#' # O município é informado pelo código do IBGE e não há informação sobre a UF:
+#' data("POPBR10")
+#' str(POPBR10)
+#' # O código abaixo
+#' # - acrescenta a 'POPBR10' uma variável chamada "CO_UF" com o código da UF,
+#' # tomado dos dois primeiros dígitos de 'MUNIC_RES';
+#' # - une os bancos, com a função \code{\link{merge}}; e
+#' # - seleciona os registros da Região Norte ("N")
 #'
+#' POPBR10$CO_UF <- substr(POPBR10$MUNIC_RES, 1, 2)
+#' POPBR10  <- merge(POPBR10, ufbr())
+#' POPBR10[POPBR10$REGIAO == "N", ]
 
 ufbr <- function(nomes = FALSE){
   CO_UF <- as.character(c(11:17,     # N
@@ -32,11 +46,12 @@ ufbr <- function(nomes = FALSE){
     tabela$UF_NOME <- c("Rond\U00f4nia", "Acre", "Amazonas", "Roraima", "Par\U00e1",
                         "Amap\U00e1", "Tocantins",
                         "Maranh\U00e3o", "Piau\U00ed", "Cear\U00e1", "Rio Grande do Norte",
-                        "Para\U00edba", "Pernambuco", "Alagoas", "Sergipe", "Bahia",
+                        "Para\u00edba", "Pernambuco", "Alagoas", "Sergipe", "Bahia",
                         "Minas Gerais", "Esp\U00edrito Santo", "Rio de Janeiro", "S\U00e3o Paulo",
                         "Paran\U00e1", "Santa Catarina", "Rio Grande do Sul",
                         "Mato Grosso do Sul", "Mato Grosso", "Goi\U00e1s", "Distrito Federal")
     tabela <- tabela[c(1:2, 4, 3)]
+    levels(tabela$REGIAO) <- c("Norte", "Nordeste", "Sudeste", "Sul", "Centro-Oeste")
   }
   tabela
 }
