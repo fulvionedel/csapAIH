@@ -64,8 +64,9 @@ idade.fxet5 <- idadeSUS(aih100)["fxetar5"] ; str(idade.fxet5)
 \dontrun{
 library(microdatasus)
 dors19 <- fetch_datasus(2019, 01, 2019, 12, "RS", "SIM-DO")
-idade <- idadeSUS(dors19, "sim")
-summary(idade)
+idadeSUS(dors19, "sim") |> summary(idade)
+
+idadeSUS(dors19, "SIM-DOINF") |> table()
 }
 
 }

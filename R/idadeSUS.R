@@ -59,59 +59,60 @@
 #' \dontrun{
 #' library(microdatasus)
 #' dors19 <- fetch_datasus(2019, 01, 2019, 12, "RS", "SIM-DO")
-#' idade <- idadeSUS(dors19, "sim")
-#' summary(idade)
+#' idadeSUS(dors19, "sim") |> summary(idade)
+#'
+#' idadeSUS(dors19, "SIM-DOINF") |> table()
 #' }
 #'
 #' @export
 idadeSUS <- function(dados, sis = "SIH")
 {
-  if(sis %in% c("sih", "SIH", "sim", "SIM") == FALSE) {
-    stop("sis precisa ser 'SIH' ou 'SIM'")
+  if(sis %in% c("sih", "SIH", "sim", "SIM", "sim-doinf", "SIM-DOINF") == FALSE) {
+    stop("sis precisa ser 'SIH', 'SIM' ou 'SIM-DOINF")
   }
-  x <- dados
-  if(sis == "SIH" | sis == "sih") COD_IDADE <- as.character(x$COD_IDADE)
-  if (sis == "SIM" | sis == "sim") {
-    COD_IDADE <- substr(x$IDADE, 1, 1)
-    x$IDADE <- as.numeric(substr(x$IDADE, 2, 3))
+  if(sis == "SIH" | sis == "sih") COD_IDADE <- as.character(dados$COD_IDADE)
+  if(grepl("sim", sis, ignore.case = T)) {
+    COD_IDADE <- substr(dados$IDADE, 1, 1)
+    dados$IDADE <- as.numeric(substr(dados$IDADE, 2, 3))
   }
-
-  idade <- ifelse(COD_IDADE == 4, x$IDADE,
-                  ifelse(COD_IDADE  < 4, 0,
-                         ifelse(COD_IDADE == 5, x$IDADE+100, NA))
-                  )
-  comment(idade) <- "em anos completos"
-
-  rotulo.det <- cbind(
-    faixa = levels(cut(idade, right=FALSE, breaks = c(0:19, seq(20, 85, 5)))),
-    rotulo = c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
-               " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos",
-               "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
-               "18anos", "19anos", "20-24", "25-29", "30-34", "35-39",
-               "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
-               "70-74", "75-79", "80 e +")
-    )
-
-  fxetar.det <- droplevels(
-    cut(idade, right=FALSE,
-        breaks = c(0:19, seq(20, 80, 5), Inf),
-        labels = rotulo.det[, 'rotulo'])
-  )
-
-  # rotulo5 <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-  #              "30-34","35-39", "40-44","45-49","50-54", "55-59",
-  #              "60-64", "65-69", "70-74", "75-79", "80 +")
-  #
-  # fxetar5 <- cut(idade, right=FALSE,
-  #                breaks = c(seq(0, 80, 5), Inf),
-  #                labels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-  #                         "30-34","35-39", "40-44","45-49","50-54", "55-59",
-  #                         "60-64", "65-69", "70-74", "75-79", "80 +")
-  #                )
-  #
-  fxetar5 <- fxetar_quinq(idade)
-
-  data.frame(idade,
-             fxetar.det,
-             fxetar5)
+  if(sis == "SIM" | sis == "sim") {
+    idade <- ifelse(COD_IDADE == 4, dados$IDADE,
+                    ifelse(COD_IDADE  < 4, 0,
+                           ifelse(COD_IDADE == 5, dados$IDADE+100, NA))
+                    )
+    comment(idade) <- "em anos completos"
+    rotulo.det <- cbind(
+      faixa = levels(cut(idade, right=FALSE, breaks = c(0:19, seq(20, 85, 5)))),
+      rotulo = c("<1ano", " 1ano", " 2anos", " 3anos", " 4anos", " 5anos",
+                 " 6anos", " 7anos", " 8anos", " 9anos", "10anos", "11anos",
+                 "12anos", "13anos", "14anos", "15anos", "16anos", "17anos",
+                 "18anos", "19anos", "20-24", "25-29", "30-34", "35-39",
+                 "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+                 "70-74", "75-79", "80 e +"))
+    fxetar.det <- droplevels(
+      cut(idade, right=FALSE,
+          breaks = c(0:19, seq(20, 80, 5), Inf),
+          labels = rotulo.det[, 'rotulo']))
+    # rotulo5 <- c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+    #              "30-34","35-39", "40-44","45-49","50-54", "55-59",
+    #              "60-64", "65-69", "70-74", "75-79", "80 +")
+    #
+    # fxetar5 <- cut(idade, right=FALSE,
+    #                breaks = c(seq(0, 80, 5), Inf),
+    #                labels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+    #                           "30-34","35-39", "40-44","45-49","50-54", "55-59",
+    #                           "60-64", "65-69", "70-74", "75-79", "80 +"))
+    fxetar5 <- fxetar_quinq(idade)
+    data.frame(idade,
+               fxetar.det,
+               fxetar5)
+    } else if(sis == "SIM-DOINF" | sis == "sim-doinf") {
+      idade <- ifelse(COD_IDADE < 2, 1,
+                    ifelse(COD_IDADE == 2 & dados$IDADE < 7, 1,
+                           ifelse(COD_IDADE == 2 & dados$IDADE >= 7 & dados$IDADE <= 28, 2,
+                                  ifelse(COD_IDADE == 2 & dados$IDADE == 29, 3,
+                                         ifelse(COD_IDADE == 3, 3, NA)))))
+    idade <- factor(idade, labels = c("Neonatal precoce", "Neonatal tardia", "Pós-neonatal"))
+    idade
+  }
 }
