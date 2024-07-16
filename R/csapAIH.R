@@ -251,11 +251,11 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
                               "registros."))
       }
 
-      # Garantir o trabalho com operadores mais tarde, no CID
-      if (sihsus==FALSE) {
-        if(!is.character(cid)) cid <- as.character(cid)
-        # if(is.labelled(cid)) cid <- zap_labels(cid)
-      }
+      # # Garantir o trabalho com operadores mais tarde, no CID
+      # if (sihsus==FALSE) {
+      #   if(!is.character(cid)) cid <- as.character(cid)
+      #   # if(is.labelled(cid)) cid <- zap_labels(cid)
+      # }
 
       #-------------------------------------------------------------------------#
       #   Organização e seleção de variáveis de bancos com estrutura do SIHSUS  #

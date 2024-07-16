@@ -2,89 +2,64 @@
 #               Alfradique et al., https://doi.org/10.1590/S0102-311X2009000600016
 #            --- --- --- --- --- --- --- --- --- --- --- ---
 #
-#' @importFrom dplyr if_else
+#' @importFrom dplyr case_when
 #'
 listaBRAlfradique <- function(cid){
   if(!is.character(cid)) cid <- as.character(cid)
-  cid3 <- substr(cid, 1, 3)
-
+  grupo <- dplyr::case_when(
 # GRUPO 01 - Doenças preveníveis por imunização
-g01 <- if_else(cid3 >= "A33" & cid3 < "A38" | cid3 == "A95" | cid3 == "B16" |
-               cid3 >= "B05" & cid3 < "B07" | cid3 == "B26" | cid == "G000" |
-               cid == "A170"  | cid3 == "A19", 1, 2)
+    grepl(x = cid, pattern = "A170|^A19|^A3[3-7]|^A95|^B0[5-6]|^B16|^B26|G000") ~ "g01",
 # GRUPO 02 - Condições evitáveis
-g02 <- if_else(cid3 >= "A15" & cid3 < "A17" | cid >= "A171" & cid3 <= "A19" |
-              cid >= "I00" & cid < "I03" | cid >= "A51" & cid < "A54" |
-              cid >= "B50" & cid < "B55" | cid3 == "B77", 1, 2)
+    grepl(x = cid, pattern = "^A1[5-6]|A17[1-9]|^A18|^I0[0-2]|^A5[1-3]|^B5[0-4]|^B77") ~ "g02",
 # GRUPO 03 - Gastrenterites
-g03 <- if_else(substr(cid, 1,2)=="A0" | cid3=="E86", 1, 2)
-#GRUPO 04 - Anemia
-g04 <- if_else(cid3=="D50", 1, 2)
-#GRUPO 05 - Deficiências nutricionais
-g05 <- if_else(cid >= "E40" & cid < "E47" | cid >= "E50" & cid < "E65", 1, 2)
-#GRUPO 06 - Infec. ouvido, nariz e garganta
-g06 <- if_else(cid3=="H66" | cid >= "J0" & cid < "J04" | cid3=="J06" |
-                cid3=="J31", 1, 2)
-#GRUPO 07 - Pneumonias bacterianas
-g07 <- if_else(cid >= "J13"  & cid < "J15" | cid >= "J153" & cid <= "J154" |
-                cid >= "J158" & cid <= "J159" | cid == "J181", 1, 2)
-#GRUPO 08 - Asma
-g08 <- if_else(cid >= "J45" & cid < "J47", 1, 2)
-#GRUPO 09 - DPOC
-g09 <- if_else(cid >= "J20" & cid < "J22" | cid >= "J40" & cid < "J45" | cid3 == "J47", 1, 2)
-#GRUPO 10 - Hipertensão
-g10 <- if_else(cid >= "I10" & cid < "I12", 1, 2)
-#GRUPO 11 - Angina pectoris
-g11 <- if_else(cid3=="I20", 1, 2)
-#GRUPO 12 - Insuficiência cardíaca
-g12 <- if_else(cid3=="I50" | cid3=="J81", 1, 2)
-#GRUPO 13 - D. cerebrovasculares
-g13 <- if_else(cid >= "I63" & cid < "I68" | cid3=="I69" | cid >= "G45" & cid < "G47", 1, 2)
-#GRUPO 14 - Diabete mellitus
-g14 <- if_else(cid >= "E10" & cid < "E15", 1, 2)
-#GRUPO 15 - Epilepsias
-g15 <- if_else(cid >= "G40" & cid < "G42", 1, 2)
-#GRUPO 16 - Inf. rim e trato urinário
-g16 <- if_else(cid >= "N10" & cid < "N13" | cid == "N390" | cid3 == "N34" |
-                cid3 == "N30", 1, 2)
-#GRUPO 17 - Inf. pele e tec. cel. subcutâneo
-g17 <- if_else(cid3 == "A46" | cid >= "L01" & cid < "L05" | cid3 == "L08", 1, 2)
-#GRUPO 18 - D. infl. órgãos pélvicos femininos
-g18 <- if_else(cid >= "N70" & cid < "N74" | cid >= "N75" & cid < "N77", 1, 2)
-#GRUPO 19 - Úlcera gastroint. com hemorr. ou perf.
-g19 <- if_else(cid >= "K25" & cid < "K29" | cid >= "K920" & cid <= "K922", 1, 2)
-#GRUPO 20 - D. relacionadas ao pré-natal e parto
-g20 <- if_else(cid3=="O23" | cid3=="A50" | cid=="P350", 1, 2)
+    grepl(x = cid, pattern = "^A0[0-9]|^E86") ~ "g03",
+# GRUPO 04 - Anemia
+    grepl(x = cid, pattern = "^D50") ~ "g04",
+# GRUPO 05 - Deficiências nutricionais
+    grepl(x = cid, pattern = "^E4[0-6]|^E5[0-9]|^E6[0-4]") ~ "g05",
+# GRUPO 06 - Infec. ouvido, nariz e garganta
+    grepl(x = cid, pattern = "^H66|^J0[0-3]|^J06|^J31") ~ "g06",
+# GRUPO 07 - Pneumonias bacterianas
+    grepl(x = cid, pattern = "^J1[3-4]|J15[3-4]|J15[8-9]|J181") ~ "g07",
+# GRUPO 08 - Asma
+    grepl(x = cid, pattern = "^J4[5-6]") ~ "g08",
+# GRUPO 09 - DPOC
+    grepl(x = cid, pattern = "^J2[0-1]|^J4[0-4]|^J47") ~ "g09",
+# GRUPO 10 - Hipertensão
+    grepl(x = cid, pattern = "^I1[0-1]") ~ "g10",
+# GRUPO 11 - Angina pectoris
+    grepl(x = cid, pattern = "^I20") ~ "g11",
+# GRUPO 12 - Insuficiência cardíaca
+    grepl(x = cid, pattern = "^I50|^J81") ~ "g12",
+# GRUPO 13 - D. cerebrovasculares
+    grepl(x = cid, pattern = "^I6[3-7]|^I69|^G4[5-6]") ~ "g13",
+# GRUPO 14 - Diabete mellitus
+    grepl(x = cid, pattern = "^E1[0-4]") ~ "g14",
+# GRUPO 15 - Epilepsias
+    grepl(x = cid, pattern = "^G4[0-1]") ~ "g15",
+# GRUPO 16 - Inf. rim e trato urinário
+    grepl(x = cid, pattern = "^N1[0-2]|^N30|^N34|N390") ~ "g16",
+# GRUPO 17 - Inf. pele e tec. cel. subcutâneo
+    grepl(x = cid, pattern = "^A46|^L0[1-4]|^L08") ~ "g17",
+# GRUPO 18 - D. infl. órgãos pélvicos femininos
+    grepl(x = cid, pattern = "^N7[0-3]|^N7[5-6]") ~ "g18",
+# GRUPO 19 - Úlcera gastroint. com hemorr. ou perf.
+    grepl(x = cid, pattern = "^K2[5-8]|K920|K921|K922") ~ "g19",
+# GRUPO 20 - D. relacionadas ao pré-natal e parto
+    grepl(x = cid, pattern = "^O23|^A50|P350") ~ "g20",
+# Demais causas
+    TRUE ~ "g00")
 
-csap <- factor(if_else(g01==1 | g02==1 | g03==1 | g04==1 | g05==1 | g06==1 | g07==1 |
-                       g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 |
-                       g15==1 | g16==1 | g17==1 | g18==1 | g19==1 | g20==1, 1, 2),
-               labels=c('sim', "n\u00E3o"))
-
-grupo <- if_else(g01==1, "g01",
-          if_else(g02==1, "g02",
-           if_else(g03==1, "g03",
-            if_else(g04==1, "g04",
-             if_else(g05==1, "g05",
-              if_else(g06==1, "g06",
-               if_else(g07==1, "g07",
-                if_else(g08==1, "g08",
-                 if_else(g09==1, "g09",
-                  if_else(g10==1, "g10",
-                   if_else(g11==1, "g11",
-                    if_else(g12==1, "g12",
-                     if_else(g13==1, "g13",
-                      if_else(g14==1, "g14",
-                       if_else(g15==1, "g15",
-                        if_else(g16==1, "g16",
-                         if_else(g17==1, "g17",
-                          if_else(g18==1, "g18",
-                           if_else(g19==1, "g19",
-                            if_else(g20==1, "g20",
-                             "n\u00E3o-CSAP"))))))))))))))))))))
-
+  csap <- ifelse(cid %in% grupo, "sim", "n\u00E3o")
+#
+#                        g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 |
+#                        g15==1 | g16==1 | g17==1 | g18==1 | g19==1 | g20==1, 1, 2),
+#                labels=c('sim', "n\u00E3o"))
+#
+#
 ### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
-niveis = c(paste0("g0", 1:9), paste0("g1", 0:9), "g20", "n\u00E3o-CSAP")
-grupo = factor(grupo, levels = niveis)
-return(data.frame(csap, grupo))
+niveis <- c(paste0("g0", 1:9), paste0("g1", 0:9), "g20", "g00")
+grupo <- factor(grupo, levels = niveis, labels = c(niveis[1:20], "n\u00E3o-CSAP"))
+
+data.frame(csap, grupo)
 }
