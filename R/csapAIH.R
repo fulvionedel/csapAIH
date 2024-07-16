@@ -295,7 +295,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
           if (parto.rm == TRUE) {
             x <- subset(x, subset = x$DIAG_PRINC < "O80" | x$DIAG_PRINC >= "O85")
           }
-          x <- droplevels(x)
+          # x <- droplevels(x)
           excluidos.obst <- freqs(nlidos, nrow(x))
         } else if (procobst.rm == FALSE) {
           if (parto.rm == TRUE) {
@@ -355,13 +355,13 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
         # Criar as variáveis do banco final
         #
         cid <- as.character(x$DIAG_PRINC)
-        nasc <- as.Date(format(x$NASC), format="%Y%m%d")
-        data.inter <- as.Date(format(x$DT_INTER), format="%Y%m%d")
-        data.saida <- as.Date(format(x$DT_SAIDA), format="%Y%m%d")
-        COD_IDADE <- as.character(x$COD_IDADE)
-        idade <- csapAIH::idadeSUS(x)["idade"]
-        fxetar <- csapAIH::idadeSUS(x)["fxetar.det"]
-        fxetar5 <- csapAIH::idadeSUS(x)["fxetar5"]
+        nasc <- as.Date(x$NASC, format="%Y%m%d")
+        data.inter <- as.Date(x$DT_INTER, format="%Y%m%d")
+        data.saida <- as.Date(x$DT_SAIDA, format="%Y%m%d")
+        # COD_IDADE <- as.character(x$COD_IDADE)
+        idade    <- csapAIH::idadeSUS(x)["idade"]
+        fxetar   <- csapAIH::idadeSUS(x)["fxetar.det"]
+        fxetar5  <- csapAIH::idadeSUS(x)["fxetar5"]
         munres   <- x$MUNIC_RES
         munint   <- x$MUNIC_MOV
         sexo     <- factor(x$SEXO, levels=c(1,3), labels=c("masc", "fem"))
@@ -383,14 +383,14 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       ## Criar as variáveis 'CSAP' e 'grupo' ====
       ##
       # Definir missings no cid:
-      cid[is.na(cid)] <- NA
+      # cid[is.na(cid)] <- NA
       cid[cid==""] <- NA
       #
       ################################################################################
       #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
       ################################################################################
       if(lista == "MS") {
-        #  Portaria MS nº 221, de 17 de abril de 2008
+        # Portaria MS nº 221, de 17 de abril de 2008
         csap  <- listaBRMS(cid)[,'csap']
         grupo <- listaBRMS(cid)[,'grupo']
       } else if (lista == "Alfradique") {
