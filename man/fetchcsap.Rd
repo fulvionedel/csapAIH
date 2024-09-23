@@ -8,10 +8,9 @@ fetchcsap(
   uf = "all",
   anoinicio,
   mesinicio = 1,
-  anofim = anoinicio + 1,
-  mesfim = 6,
+  anofim = NULL,
+  mesfim = NULL,
   periodo = "interna",
-  fim.periodo = NULL,
   cep = FALSE,
   cnes = FALSE,
   ...
@@ -29,8 +28,6 @@ fetchcsap(
 \item{mesfim}{Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.}
 
 \item{periodo}{O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detahes.}
-
-\item{fim.periodo}{Se o período for definido pela data de internação, qual a data final? O padrão é 31 de dezembro do ano anterior ao definido no argumênto \code{anofim}. V. detalhes.}
 
 \item{cep}{CEP de internação}
 
@@ -75,10 +72,10 @@ Período de download dos arquivos e de internação dos sujeitos.
 }
 # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
 # exemplo com as internações no Acre, registradas no mês de competência jan 2023:
-ac.comp <- fetchcsap("AC", 2023, mesfim = 1, periodo = 'competencia')
+ac.comp <- fetchcsap("AC", 2023, periodo = 'competencia')
 nrow(ac.comp)
 summary(ac.comp$data.inter)
-ac.int <- fetchcsap("AC", 2023, mesfim = 1)
+ac.int <- fetchcsap("AC", 2023, mesfim = 1, anofim = 2023)
 nrow(ac.int)
 summary(ac.int$data.inter)
 # Assim, há

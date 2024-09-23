@@ -10,7 +10,6 @@
 #' @param mesfim Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.
 #' @param anofim Ano de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é igual ao ano seguinte ao ano de início (\code{anoinicio + 1}).
 #' @param periodo O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detahes.
-#' @param fim.periodo Se o período for definido pela data de internação, qual a data final? O padrão é 31 de dezembro do ano anterior ao definido no argumênto \code{anofim}. V. detalhes.
 #' @param  cep CEP de internação
 #' @param cnes CNES do estabelecimento que gerou a AIH
 #' @param ... Permite o uso de outros parâmetros de \code{\link{csapAIH}}
@@ -51,10 +50,10 @@
 #' }
 #' # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
 #' # exemplo com as internações no Acre, registradas no mês de competência jan 2023:
-#' ac.comp <- fetchcsap("AC", 2023, mesfim = 1, periodo = 'competencia')
+#' ac.comp <- fetchcsap("AC", 2023, periodo = 'competencia')
 #' nrow(ac.comp)
 #' summary(ac.comp$data.inter)
-#' ac.int <- fetchcsap("AC", 2023, mesfim = 1)
+#' ac.int <- fetchcsap("AC", 2023, mesfim = 1, anofim = 2023)
 #' nrow(ac.int)
 #' summary(ac.int$data.inter)
 #' # Assim, há
@@ -65,13 +64,31 @@
 #'
 #' @export
 fetchcsap <- function(uf = "all", anoinicio, mesinicio = 1,
-                      anofim = anoinicio + 1 , mesfim = 6,
-                      periodo = "interna", fim.periodo = NULL,
+                      anofim = NULL, mesfim = NULL,
+                      periodo = "interna",
                       cep = FALSE, cnes = FALSE, ...) {
 ':=' <- setDT <- DT_INTER <- idade <- NULL
 
   # Seleção de variáveis da AIH
   vars <- c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "IDADE", "COD_IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA", "IDENT", "CEP", "CNES")
+
+  # Definir extração de dados de interesse
+  if( periodo == "interna" | periodo == "int" | periodo == "i" ) {
+    periodo = "i"
+    if( is.null(anofim) ) {
+      anofim = anoinicio + 1
+    } else anofim = anofim
+    if( is.null(mesfim) ) {
+      mesfim = mesinicio + 6
+    } else mesfim = mesfim
+    mesi <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
+    peri <- paste0(anoinicio, mesi, "01")
+    mesf <- ifelse(mesfim < 10, paste0("0", mesfim), mesfim)
+    perf <- paste0(anofim, mesf, "31")
+  } else if( periodo == "competencia" | periodo == "comp" | periodo == "c" ) {
+    anofim = anoinicio
+    mesfim = mesinicio
+  }
 
   # Baixar os dados do DATASUS
   aih  <- microdatasus::fetch_datasus(year_start  = anoinicio,
@@ -82,20 +99,13 @@ fetchcsap <- function(uf = "all", anoinicio, mesinicio = 1,
                                       uf = uf,
                                       information_system = "SIH-RD",
                                       vars = vars)
-
-  # Selecionar o período de interesse
-  if( periodo == "interna") {
-    mesinicio <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
-    peri <- paste0(anoinicio, mesinicio, "01")
-    if( is.null(fim.periodo) ) {
-      perf <- paste0(anofim - 1, "1231")
-    }
-    setDT(aih)
-    aih <- aih[as.character(DT_INTER) >= peri, ]
-    aih <- aih[as.character(DT_INTER) <= perf, ]
-    aih <- data.frame(aih)
+  setDT(aih)
+  if(periodo == 'i') {
+    aih <- aih[if(periodo == 'i') DT_INTER >= peri, ]
+    aih <- aih[if(periodo == 'i') DT_INTER <= perf, ]
   }
-#
+  aih <- data.frame(aih)
+
   # Classificar as CSAP
   csap <- csapAIH::csapAIH(aih, cep = cep, cnes = cnes, ...) |>
     setDT()
