@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 12 de maio de 2024
+Atualizado em 23 de setembro de 2024
 
 - [Apresentação](#apresentação)
 - [Justificativa](#justificativa)
@@ -60,13 +60,14 @@ acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja
 por não prevenir a ocorrência da doença (caso das doenças evitáveis por
 vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como
 na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico
-(como é o caso da diabete).<sup>[1](#ref-Nedel2011)</sup>
+(como é o caso da diabete). ([Nedel et al. 2011](#ref-Nedel2011))
 
 O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo
 processo de validação, uma lista com várias causas de internação
-hospitalar consideradas CSAP, definindo em portaria a Lista
-Brasileira.<sup>[2](#ref-MS2008lista),[3](#ref-Alfradique2009)</sup> A
-Lista envolve vários códigos da CID-10 e classifica as CSAP em 19
+hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira.
+([Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde
+2008](#ref-MS2008lista); [Alfradique et al. 2009](#ref-Alfradique2009))
+A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19
 subgrupos de causa, o que torna complexa e trabalhosa a sua
 decodificação. Há alguns anos o Departamento de Informática do SUS
 (DATASUS) incluiu em seu excelente programa de tabulação de dados
@@ -75,10 +76,10 @@ opção de tabulação por essas causas, apresentando sua frequência segundo
 a tabela definida pelo usuário.
 
 Entretanto, muitas vezes a pesquisa exige a classificação de cada
-internação individual como uma variável na base de
-dados.<sup>[4](#ref-Nedel2008)</sup> E não conheço outro programa ou
-*script* (além do que tive de escrever em minha
-tese<sup>[5](#ref-NedelTese)</sup>) que automatize esse trabalho.
+internação individual como uma variável na base de dados. ([Nedel et al.
+2008](#ref-Nedel2008)) E não conheço outro programa ou *script* (além do
+que tive de escrever em minha tese ([Nedel 2009](#ref-NedelTese))) que
+automatize esse trabalho.
 
 # Instalação
 
@@ -94,7 +95,7 @@ O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
   [SourceForge](https://sourceforge.net/projects/csapaih/) [^1]:
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.4.tar.gz/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.5.tar.gz/download", type = "source", repos = NULL) 
 ```
 
 ou
@@ -109,8 +110,8 @@ remotes::install_github("fulvionedel/csapAIH")
 
 # Conteúdo (*timeline*)
 
-Na sua primeira versão<sup>[6](#ref-Nedel2017)</sup>, o pacote `csapAIH`
-continha apenas uma função, homônima: `csapAIH`.
+Na sua primeira versão ([Nedel 2017](#ref-Nedel2017)), o pacote
+`csapAIH` continha apenas uma função, homônima: `csapAIH`.
 
 Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`,
 `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e
@@ -120,7 +121,7 @@ expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de
 Daniela Petruzalek
 (<https://cran.r-project.org/web/packages/read.dbc/index.html>).
 
-A partir da versão 0.0.3<sup>[7](#ref-Nedel2019)</sup>, a função
+A partir da versão 0.0.3 ([Nedel 2019](#ref-Nedel2019)), a função
 `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros
 fatores do banco de dados, com o uso das funções `facet_wrap()` e
 `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com
@@ -131,46 +132,56 @@ usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
 CSAP em 20 grupos de causa, conforme proposto no processo de construção
-da Lista Brasileira<sup>[3](#ref-Alfradique2009)</sup>. Essa é a lista
-sugerida pela Organização Panamericana da
-Saúde<sup>[8](#ref-OPS2014)</sup>. As funções `desenhaCSAP` e `tabCSAP`
-têm um argumento para seleção do idioma dos nomes de grupos, em
-português (`pt`, padrão), espanhol (`es`) ou inglês (`en`). Foram
-criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote
-[brpop](https://cran.r-project.org/package=brpop)
-de<sup>[9](#ref-brpopref)</sup>) para acesso às estimativas
-populacionais publicadas pelo DATASUS e funções para categorização da
-idade em faixas etárias. Foi ainda criada uma função (`fetchsap`) a
-partir da função `fetchdatasus` do pacote
-`microdatasus`<sup>[10](#ref-Saldanha2019)</sup>, para ler os arquivos
-no site FTP do DATASUS e classificar as CSAP em um único comando. Foram
-criadas outras funções para facilitar o manejo e apresentação de dados
-em estudos ecológicos, como a categorização da idade em faixas etárias
+da Lista Brasileira ([Alfradique et al. 2009](#ref-Alfradique2009)).
+Essa é a lista sugerida pela Organização Panamericana da Saúde
+([Organización Panamericana de la Salud (OPS) 2014](#ref-OPS2014)). As
+funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do
+idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`)
+ou inglês (`en`). Foram criadas as funções `ler_popbr` e
+`popbr2000_2021` (esta sobre o pacote
+[brpop](https://cran.r-project.org/package=brpop) de R. Saldanha
+([2022](#ref-brpopref))) para acesso às estimativas populacionais
+publicadas pelo DATASUS e funções para categorização da idade em faixas
+etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função
+`fetchdatasus` do pacote `microdatasus`([R. de F. Saldanha, Bastos, and
+Barcellos 2019](#ref-Saldanha2019)), para ler os arquivos no site FTP do
+DATASUS e classificar as CSAP em um único comando. Foram criadas outras
+funções para facilitar o manejo e apresentação de dados em estudos
+ecológicos, como a categorização da idade em faixas etárias
 (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de
 parto (`partos`), particularmente para o Brasil e os arquivos do
 DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a
 lista de procedimentos obstétricos em internações por eventos não
-mórbidos (`procobst`).
+mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na
+v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os
+casos como “não” (embora estivessem classificados corretamente na
+variável `grupo`).
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
-[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.4.pdf)
+[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf)
 ou, no R, com `?'csapAIH-package'`.
 
 # Dependências
 
 A leitura de arquivos .DBC exige a instalação prévia do pacote
-[`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)<sup>[11](#ref-readdbc)</sup>.
-Sua falta não impede o funcionamento das demais funções do pacote
-(inclusive de leitura de arquivos em outro formato). A função
-`desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado,
-mas sua instalação não é necessária para que ela funcione. A função
-`popbr2000_2021` usa o pacote
+[`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)
+([Petruzalek 2016](#ref-readdbc)). Sua falta não impede o funcionamento
+das demais funções do pacote (inclusive de leitura de arquivos em outro
+formato). Da mesma forma, `popbr2000_2021` exige a instalação do
+pacote[`brpop`](https://rfsaldanha.github.io/brpop/) e `fetchcsap` exige
+a instalação do pacote
+[`microdatasus`](https://github.com/rfsaldanha/microdatasus).
+
+A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2`
+instalado, mas sua instalação não é necessária para que ela funcione.
+
+A função `popbr2000_2021` usa o pacote
 [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. O
 pacote [`haven`](https://cran.r-project.org/package=haven) também é
-importado.
+importado. A partir da v0.0.4.4
 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não
-o é mais.
+é mais.
 <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
 
 # Exemplos de uso
@@ -200,8 +211,9 @@ de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote
 [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek,
 também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao
 pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de
-Raphael Saldanha<sup>[10](#ref-Saldanha2019)</sup>, podemos ler com
-facilidade esses arquivos na internet, sem necessidade de download.
+Raphael Saldanha ([R. de F. Saldanha, Bastos, and Barcellos
+2019](#ref-Saldanha2019)), podemos ler com facilidade esses arquivos na
+internet, sem necessidade de download.
 
 O código abaixo cria um banco com as informações das AIHs do “ano de
 competência” 2021 ocorridas no RS e outro com as informações das
@@ -256,10 +268,13 @@ Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
 ```
 
-A função `fetchcsap` facilita o trabalho sobre os arquivos da AIH:
+A função `fetchcsap` foi pensada para apresentar um extrato dos
+registros por período de internação e não de “competência” da AIH, que é
+commo se organizam os arquivos de dados. Assim, precisamos modificar
+alguns argumentos para ter os mesmos registros:
 
 ``` r
-csap.ftp <- fetchcsap('RS', 2018)
+csap.ftp <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "competencia")
 ℹ Your local Internet connection seems to be ok.
 ℹ DataSUS FTP server seems to be up and reachable.
 ℹ Starting download...
@@ -278,6 +293,66 @@ all.equal(attributes(csap.dbc)$resumo, attributes(csap.csv)$resumo)
 [1] TRUE
 all.equal(attributes(csap.ftp)$resumo, attributes(csap.dbc)$resumo)
 [1] TRUE
+```
+
+Mas em estudos epidemiológicos geralmente nos interessa delimitar a
+população pela data de internação, o que exige trabalho posterior à
+leitura do arquivo “RD”, pois o arquivo de um determinado mês e ano de
+“competência” pode conter registros de internações ocorridas em outro
+momento. Vemos abaixo que a data de internação nos objetos criados
+anteriormente (a partir de “RDRS1801.dbc”) varia de 01ago2017 a
+31out2017. Além disso, o arquivo pode não conter o registro de todas as
+internações ocorridas naquele mês.
+
+Por isso `fetchcsap` tem seus argumentos de forma a devolver o banco de
+dados apenas com os registros do período de interesse. Veja a seguir o
+resultado com as internações não-obstétricas para jan2018 segundo a
+seleção dos registros: a. todos daquele mês de competência (mesmo
+comando anterior para a construção de csap.ftp”); b. apenas as
+internações ocorridas no mesmo mês de competência da AIH; e c. apenas as
+internações ocorridas em jan2018 e registradas nor arquivos “RD” dos
+meses de competência janeiro a fevereiro de 20018.
+
+``` r
+a <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "c")
+ℹ Your local Internet connection seems to be ok.
+ℹ DataSUS FTP server seems to be up and reachable.
+ℹ Starting download...
+Importados 60.529 registros.
+Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
+Excluídos 366 (0,6%) registros de AIH de longa permanência.
+Exportados 51.923 (85,8%) registros.
+nrow(a)
+[1] 51923
+summary(a$data.inter)
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2017-06-06" "2017-12-08" "2017-12-28" "2017-12-20" "2018-01-10" "2018-01-31" 
+b <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018)
+ℹ Your local Internet connection seems to be ok.
+ℹ DataSUS FTP server seems to be up and reachable.
+ℹ Starting download...
+Importados 29.086 registros.
+Excluídos 5.005 (17,2%) registros de procedimentos obstétricos.
+Excluídos NA (NA%) registros de AIH de longa permanência.
+Exportados 24.081 (82,8%) registros.
+nrow(b)
+[1] 24081
+summary(b$data.inter)
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2018-01-01" "2018-01-05" "2018-01-11" "2018-01-12" "2018-01-18" "2018-01-31" 
+c <- fetchcsap('RS', 2018, mesfim = 2, anofim = 2018)
+ℹ Your local Internet connection seems to be ok.
+ℹ DataSUS FTP server seems to be up and reachable.
+ℹ Starting download...
+Importados 75.818 registros.
+Excluídos 12.363 (16,3%) registros de procedimentos obstétricos.
+Excluídos 164 (0,2%) registros de AIH de longa permanência.
+Exportados 63.291 (83,5%) registros.
+nrow(c)
+[1] 63291
+summary(c$data.inter)
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2018-01-01" "2018-01-11" "2018-01-23" "2018-01-24" "2018-02-05" "2018-02-28" 
 ```
 
 ``` r
@@ -304,16 +379,16 @@ $ n.aih      <chr> "4318100063695", "4318100349508", "4318100349563", "4318100�
 $ munres     <int> 431340, 430450, 430450, 430450, 430450, 430450, 430450, 430…
 $ munint     <int> 431080, 430450, 430450, 430450, 430450, 430450, 430450, 430…
 $ sexo       <fct> masc, fem, fem, fem, masc, masc, masc, masc, fem, masc, fem…
-$ nasc       <date> 1960-01-14, 1992-09-21, 1993-05-31, 1984-07-06, 1937-09-15…
+$ nasc       <date> 55633-04-16, 56511-08-19, 56537-12-10, 56292-01-04, 55005-…
 $ idade      <dbl> 58, 25, 24, 33, 80, 69, 50, 58, 70, 69, 88, 61, 26, 42, 67,…
 $ fxetar.det <fct> 55-59, 25-29, 20-24, 30-34, 80 e +, 65-69, 50-54, 55-59, 70…
 $ fxetar5    <fct> 55-59, 25-29, 20-24, 30-34, 80 e +, 65-69, 50-54, 55-59, 70…
-$ csap       <fct> não, não, não, não, sim, sim, não, não, sim, sim, não, não,…
+$ csap       <chr> "não", "não", "não", "não", "sim", "sim", "não", "não", "si…
 $ grupo      <fct> não-CSAP, não-CSAP, não-CSAP, não-CSAP, g12, g03, não-CSAP,…
 $ cid        <chr> "K439", "O628", "O641", "O623", "I64", "D500", "I408", "T63…
 $ proc.rea   <int> 407040064, 411010034, 411010034, 303100044, 303040149, 3030…
-$ data.inter <date> 2018-01-14, 2018-01-01, 2018-01-11, 2018-01-11, 2018-01-19…
-$ data.saida <date> 2018-01-16, 2018-01-03, 2018-01-13, 2018-01-12, 2018-01-24…
+$ data.inter <date> 57221-04-11, 57221-03-29, 57221-04-08, 57221-04-08, 57221-…
+$ data.saida <date> 57221-04-13, 57221-03-31, 57221-04-10, 57221-04-09, 57221-…
 $ cep        <int> 93544360, 96600000, 96600000, 96600000, 96600000, 96600000,…
 $ cnes       <int> 2232189, 2232928, 2232928, 2232928, 2232928, 2232928, 22329…
 ```
@@ -459,7 +534,7 @@ das CSAP por grupo de causa.
 ``` r
 descreveCSAP(csap)
                                    Grupo  Casos %Total %CSAP
-1   1. Prev. vacinação e cond. evitáveis    118   0,23  1,09
+1   1. Prev. vacinação e cond. evitáveis    116   0,22  1,07
 2                      2. Gastroenterite    802   1,54  7,38
 3                              3. Anemia     73   0,14  0,67
 4                 4. Defic. nutricionais    241   0,46  2,22
@@ -474,12 +549,12 @@ descreveCSAP(csap)
 13                 13. Diabetes mellitus    743   1,43  6,84
 14                        14. Epilepsias    331   0,64  3,05
 15                   15. Infec. urinária  1.360   2,62 12,52
-16          16. Infec. pele e subcutâneo    459   0,88  4,22
+16          16. Infec. pele e subcutâneo    459   0,88  4,23
 17     17. D. infl. órgãos pélvicos fem.    133   0,26  1,22
-18           18. Úlcera gastrointestinal    195   0,38  1,79
+18           18. Úlcera gastrointestinal    195   0,38  1,80
 19                 19. Pré-natal e parto    222   0,43  2,04
-20                            Total CSAP 10.864  20,92   100
-21                              não-CSAP 41.059  79,08    --
+20                            Total CSAP 10.862  20,92   100
+21                              não-CSAP 41.061  79,08    --
 22                  Total de internações 51.923    100    --
 ```
 
@@ -492,7 +567,7 @@ descreveCSAP(csap) |>
 
 | Grupo                                 |  Casos | %Total | %CSAP |
 |:--------------------------------------|-------:|-------:|------:|
-| 1\. Prev. vacinação e cond. evitáveis |    118 |   0,23 |  1,09 |
+| 1\. Prev. vacinação e cond. evitáveis |    116 |   0,22 |  1,07 |
 | 2\. Gastroenterite                    |    802 |   1,54 |  7,38 |
 | 3\. Anemia                            |     73 |   0,14 |  0,67 |
 | 4\. Defic. nutricionais               |    241 |   0,46 |  2,22 |
@@ -507,12 +582,12 @@ descreveCSAP(csap) |>
 | 13\. Diabetes mellitus                |    743 |   1,43 |  6,84 |
 | 14\. Epilepsias                       |    331 |   0,64 |  3,05 |
 | 15\. Infec. urinária                  |  1.360 |   2,62 | 12,52 |
-| 16\. Infec. pele e subcutâneo         |    459 |   0,88 |  4,22 |
+| 16\. Infec. pele e subcutâneo         |    459 |   0,88 |  4,23 |
 | 17\. D. infl. órgãos pélvicos fem.    |    133 |   0,26 |  1,22 |
-| 18\. Úlcera gastrointestinal          |    195 |   0,38 |  1,79 |
+| 18\. Úlcera gastrointestinal          |    195 |   0,38 |  1,80 |
 | 19\. Pré-natal e parto                |    222 |   0,43 |  2,04 |
-| Total CSAP                            | 10.864 |  20,92 |   100 |
-| não-CSAP                              | 41.059 |  79,08 |     – |
+| Total CSAP                            | 10.862 |  20,92 |   100 |
+| não-CSAP                              | 41.061 |  79,08 |     – |
 | Total de internações                  | 51.923 |    100 |     – |
 
 Entretanto, ao transformar os valores para o formato latino, sua classe
@@ -535,7 +610,7 @@ tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
 
 | Group                                |  Cases | Total % | ACSC % |
 |:-------------------------------------|-------:|--------:|-------:|
-| 1\. Vaccine prev. and amenable cond. |    118 |     0.2 |    1.1 |
+| 1\. Vaccine prev. and amenable cond. |    116 |     0.2 |    1.1 |
 | 2\. Gastroenteritis                  |    802 |     1.5 |    7.4 |
 | 3\. Anemia                           |     73 |     0.1 |    0.7 |
 | 4\. Nutritional deficiency           |    241 |     0.5 |    2.2 |
@@ -554,8 +629,8 @@ tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
 | 17\. Pelvic inflammatory disease     |    133 |     0.3 |    1.2 |
 | 18\. Gastrointestinal ulcers         |    195 |     0.4 |    1.8 |
 | 19\. Pre-natal and childbirth        |    222 |     0.4 |    2.0 |
-| ACSC                                 | 10,864 |    20.9 |    100 |
-| Non ACSC                             | 41,059 |    79.1 |      – |
+| ACSC                                 | 10,862 |    20.9 |    100 |
+| Non ACSC                             | 41,061 |    79.1 |      – |
 | TOTAL hospitalizations               | 51,923 |     100 |      – |
 
 ``` r
@@ -566,7 +641,7 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
 
 | Grupo                                     |  Casos | % Total | % CSAP |
 |:------------------------------------------|-------:|--------:|-------:|
-| 1\. Prev. vacunación y otros medios       |    118 |     0,2 |    1,1 |
+| 1\. Prev. vacunación y otros medios       |    116 |     0,2 |    1,1 |
 | 2\. Gastroenteritis                       |    802 |     1,5 |    7,4 |
 | 3\. Anemia                                |     73 |     0,1 |    0,7 |
 | 4\. Def. nutricionales                    |    241 |     0,5 |    2,2 |
@@ -585,8 +660,8 @@ tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
 | 17\. Enf infl órganos pélvicos femeninos  |    133 |     0,3 |    1,2 |
 | 18\. Úlcera gastrointestinal              |    195 |     0,4 |    1,8 |
 | 19\. Enf. del embarazo, parto y puerperio |    222 |     0,4 |    2,0 |
-| Total CSAP                                | 10.864 |    20,9 |    100 |
-| No-CSAP                                   | 41.059 |    79,1 |      – |
+| Total CSAP                                | 10.862 |    20,9 |    100 |
+| No-CSAP                                   | 41.061 |    79,1 |      – |
 | Total de ingresos                         | 51.923 |     100 |      – |
 
 Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a
@@ -789,7 +864,7 @@ gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .1
 gr
 ```
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-27-1.png" width="50%" style="display: block; margin: auto;" />
 
 #### Estratificado por categorias de outra variável presente no banco de dados:
 
@@ -806,7 +881,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
                                                            "TRUE" = "Capital")))
 ```
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" width="75%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-27-2.png" width="75%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-28-1.png" width="75%" style="display: block; margin: auto;" /><img src="man/figures/README-unnamed-chunk-28-2.png" width="75%" style="display: block; margin: auto;" />
 
 ``` r
  DORS2021 %>% 
@@ -817,7 +892,7 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-28-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
+<img src="man/figures/README-unnamed-chunk-29-1.png" alt="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021." width="80%" />
 <p class="caption">
 Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 2021.
@@ -828,7 +903,7 @@ Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS,
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.4.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
@@ -849,71 +924,41 @@ E, sempre, meus profundos agradecimentos a
 
 # Referências
 
-<div id="refs" class="references csl-bib-body">
-
-<div id="ref-Nedel2011" class="csl-entry">
-
-<span class="csl-left-margin">1.
-</span><span class="csl-right-inline">Nedel FB, Facchini LA, Bastos JL,
-Martín-Mateo M. <span class="nocase">Conceptual and methodological
-aspects in the study of hospitalizations for ambulatory care sensitive
-conditions</span>. Ciência & Saúde Coletiva \[Internet\]. 2011;16(SUPPL.
-1):1145–54. Available from:
-<http://www.scielo.br/j/csc/a/4BYnRnKGjwdhYstBkKk7X7M/?lang=en></span>
-
-</div>
-
-<div id="ref-MS2008lista" class="csl-entry">
-
-<span class="csl-left-margin">2.
-</span><span class="csl-right-inline">Brasil. Ministério da Saúde.
-Secretaria de Atenção à Saúde. <span class="nocase">Portaria Nº 221, de
-17 de abril de 2008.</span> \[Internet\]. Ministério da Saúde; 2008. p.
-70. Available from:
-<https://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html></span>
-
-</div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
 <div id="ref-Alfradique2009" class="csl-entry">
 
-<span class="csl-left-margin">3.
-</span><span class="csl-right-inline">Alfradique ME, Bonolo P de F,
-Dourado I, Lima-Costa MF, Macinko J, Mendonça CS, et al.
-<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
+Alfradique, Maria Elmira, Palmira de Fátima Bonolo, Inês Dourado, Maria
+Fernanda Lima-Costa, James Macinko, Claunara Schilling Mendonça, Veneza
+Berenice Oliveira, Luís Fernando Rolim Sampaio, Carmen de Simoni, and
+Maria Aparecida Turci. 2009.
+“<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
 por condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria: a
 constru<span class="nocase">ç</span><span class="nocase">ã</span>o da
 lista brasileira como ferramenta para medir o desempenho do sistema de
-sa<span class="nocase">ú</span>de (Projeto ICSAP - Brasil)</span>.
-Cadernos de Saúde Pública \[Internet\]. 2009 Jun;25(6):1337–49.
-Available from:
-<https://www.scielo.br/j/csp/a/y5n975h7b3yW6ybnk6hJwft/?lang=pt></span>
+sa<span class="nocase">ú</span>de (Projeto ICSAP - Brasil)</span>.”
+*Cadernos de Saúde Pública* 25 (6): 1337–49.
+<https://doi.org/10.1590/S0102-311X2009000600016>.
 
 </div>
 
-<div id="ref-Nedel2008" class="csl-entry">
+<div id="ref-MS2008lista" class="csl-entry">
 
-<span class="csl-left-margin">4.
-</span><span class="csl-right-inline">Nedel FB, Facchini LA,
-Martín-Mateo M, Vieira LAS, Thumé E. <span class="nocase">Programa
-Sa<span class="nocase">ú</span>de da Fam<span class="nocase">í</span>lia
-e condi<span class="nocase">ç</span><span class="nocase">õ</span>es
-sens<span class="nocase">í</span>veis <span class="nocase">à</span>
-aten<span class="nocase">ç</span><span class="nocase">ã</span>o
-prim<span class="nocase">á</span>ria, Bag<span class="nocase">é</span>
-(RS)</span>. Rev Saude Publica \[Internet\]. 2008;42(6):1041–52.
-Available from:
-<https://www.scielo.br/j/rsp/a/NHNcRYsk8kwv4KYZqRD6S8c/?lang=pt></span>
+Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. 2008.
+“<span class="nocase">Portaria Nº 221, de 17 de abril de 2008.</span>”
+Ministério da Saúde.
+<https://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html>.
 
 </div>
 
 <div id="ref-NedelTese" class="csl-entry">
 
-<span class="csl-left-margin">5.
-</span><span class="csl-right-inline">Nedel FB.
-<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
+Nedel, Fúlvio Borges. 2009.
+“<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
 hospitalares evit<span class="nocase">á</span>veis pela
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria: estudo do impacto do Programa
@@ -924,86 +969,98 @@ Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 Sens<span class="nocase">ı́</span>veis <span class="nocase">à</span>
 Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 Prim<span class="nocase">á</span>ria no Rio Grande do Sul,
-Brasil.</span> \[Internet\] \[PhD thesis\]. \[Pelotas, RS\]:
-Universidade Federal de Pelotas - UFPel; 2009. p. 279. Available from:
-<http://repositorio.ufpel.edu.br:8080/bitstream/prefix/3654/1/tese%20nedel.pdf></span>
+Brasil.</span>” PhD thesis, Pelotas, RS: Universidade Federal de
+Pelotas - UFPel.
+<http://repositorio.ufpel.edu.br:8080/bitstream/prefix/3654/1/tese%20nedel.pdf>.
 
 </div>
 
 <div id="ref-Nedel2017" class="csl-entry">
 
-<span class="csl-left-margin">6.
-</span><span class="csl-right-inline">Nedel FB.
-<span class="nocase">csapAIH: uma
+———. 2017. “<span class="nocase">csapAIH: uma
 fun<span class="nocase">ç</span><span class="nocase">ã</span>o para a
 classifica<span class="nocase">ç</span><span class="nocase">ã</span>o
 das condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 aten<span class="nocase">ç</span><span class="nocase">ã</span>o
 prim<span class="nocase">á</span>ria no programa
-estat<span class="nocase">í</span>stico R</span>. Epidemiologia e
-Serviços de Saúde \[Internet\]. 2017;26(01):199–209. Available from:
-<https://www.scielo.br/j/ress/a/cLvdvwyTpy8cQh5LnhJfd3G/?lang=pt></span>
+estat<span class="nocase">í</span>stico R</span>.” *Epidemiologia e
+Serviços de Saúde* 26 (01): 199–209.
+<https://doi.org/10.5123/S1679-49742017000100021>.
 
 </div>
 
 <div id="ref-Nedel2019" class="csl-entry">
 
-<span class="csl-left-margin">7.
-</span><span class="csl-right-inline">Nedel FB.
-<span class="nocase">Pacote csapAIH: a Lista Brasileira de
+———. 2019. “<span class="nocase">Pacote csapAIH: a Lista Brasileira de
 Interna<span class="nocase">ç</span><span class="nocase">õ</span>es por
 Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
 Sens<span class="nocase">í</span>veis <span class="nocase">à</span>
 Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
-Prim<span class="nocase">á</span>ria no programa R</span>. Epidemiologia
-e Serviços de Saúde \[Internet\]. 2019 Sep;28(2):e2019084. Available
-from:
-<https://www.scielo.br/j/ress/a/7XsGCYRVdD6PZxPzmNCFqvp/abstract/?lang=pt></span>
+Prim<span class="nocase">á</span>ria no programa R</span>.”
+*Epidemiologia e Serviços de Saúde* 28 (2): e2019084.
+<https://doi.org/10.5123/S1679-49742019000200021>.
+
+</div>
+
+<div id="ref-Nedel2011" class="csl-entry">
+
+Nedel, Fúlvio Borges, Luiz Augusto Facchini, João Luiz Bastos, and
+Miguel Martín-Mateo. 2011. “<span class="nocase">Conceptual and
+methodological aspects in the study of hospitalizations for ambulatory
+care sensitive conditions</span>.” *Ciência & Saúde Coletiva* 16 (SUPPL.
+1): 1145–54. <https://doi.org/10.1590/S1413-81232011000700046>.
+
+</div>
+
+<div id="ref-Nedel2008" class="csl-entry">
+
+Nedel, Fúlvio Borges, Luiz Augusto Facchini, Miguel Martín-Mateo, Lúcia
+Azambuja Saraiva Vieira, and Elaine Thumé. 2008.
+“<span class="nocase">Programa Sa<span class="nocase">ú</span>de da
+Fam<span class="nocase">í</span>lia e
+condi<span class="nocase">ç</span><span class="nocase">õ</span>es
+sens<span class="nocase">í</span>veis <span class="nocase">à</span>
+aten<span class="nocase">ç</span><span class="nocase">ã</span>o
+prim<span class="nocase">á</span>ria, Bag<span class="nocase">é</span>
+(RS)</span>.” *Rev Saude Publica* 42 (6): 1041–52.
+<https://www.scielo.br/j/rsp/a/NHNcRYsk8kwv4KYZqRD6S8c/?lang=pt>.
 
 </div>
 
 <div id="ref-OPS2014" class="csl-entry">
 
-<span class="csl-left-margin">8.
-</span><span class="csl-right-inline">Organización Panamericana de la
-Salud (OPS). <span class="nocase">Compendio de indicadores del impacto y
-resultados intermedios. Plan estrat<span class="nocase">é</span>gico de
-la OPS 2014-2019: "En pro de la salud: Desarrollo sostenible y
-equidad"</span> \[Internet\]. OPS, editor. Washington; 2014. Available
-from:
-<https://www.paho.org/hq/dmdocuments/2016/ops-pe-14-19-compendium-indicadores-nov-2014.pdf></span>
-
-</div>
-
-<div id="ref-brpopref" class="csl-entry">
-
-<span class="csl-left-margin">9.
-</span><span class="csl-right-inline">Saldanha R. Brpop: Brazilian
-population estimatives \[Internet\]. 2022. Available from:
-<https://CRAN.R-project.org/package=brpop></span>
-
-</div>
-
-<div id="ref-Saldanha2019" class="csl-entry">
-
-<span class="csl-left-margin">10.
-</span><span class="csl-right-inline">Saldanha R de F, Bastos RR,
-Barcellos C. <span class="nocase">Microdatasus: pacote para download e
-pr<span class="nocase">é</span>-processamento de microdados do
-Departamento de Inform<span class="nocase">á</span>tica do SUS
-(DATASUS)</span>. Cadernos de Saúde Pública \[Internet\].
-2019;35(9):e00032419. Available from:
-<https://www.scielo.br/j/csp/a/gdJXqcrW5PPDHX8rwPDYL7F/?lang=pt></span>
+Organización Panamericana de la Salud (OPS). 2014.
+*<span class="nocase">Compendio de indicadores del impacto y resultados
+intermedios. Plan estrat<span class="nocase">é</span>gico de la OPS
+2014-2019: "En pro de la salud: Desarrollo sostenible y
+equidad"</span>*. Edited by OPS. Washington.
+<https://www.paho.org/hq/dmdocuments/2016/ops-pe-14-19-compendium-indicadores-nov-2014.pdf>.
 
 </div>
 
 <div id="ref-readdbc" class="csl-entry">
 
-<span class="csl-left-margin">11.
-</span><span class="csl-right-inline">Petruzalek D. Read.dbc: Read data
-stored in DBC (compressed DBF) files \[Internet\]. 2016. Available from:
-<https://CRAN.R-project.org/package=read.dbc></span>
+Petruzalek, Daniela. 2016. *Read.dbc: Read Data Stored in DBC
+(Compressed DBF) Files*. <https://CRAN.R-project.org/package=read.dbc>.
+
+</div>
+
+<div id="ref-brpopref" class="csl-entry">
+
+Saldanha, Raphael. 2022. “Brpop: Brazilian Population Estimatives.”
+<https://CRAN.R-project.org/package=brpop>.
+
+</div>
+
+<div id="ref-Saldanha2019" class="csl-entry">
+
+Saldanha, Raphael de Freitas, Ronaldo Rocha Bastos, and Christovam
+Barcellos. 2019. “<span class="nocase">Microdatasus: pacote para
+download e pr<span class="nocase">é</span>-processamento de microdados
+do Departamento de Inform<span class="nocase">á</span>tica do SUS
+(DATASUS)</span>.” *Cadernos de Saúde Pública* 35 (9): e00032419.
+<https://doi.org/10.1590/0102-311x00032419>.
 
 </div>
 
