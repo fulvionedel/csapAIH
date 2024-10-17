@@ -111,8 +111,8 @@ idadeSUS <- function(dados, sis = "SIH")
     rotulos <- c("Neonatal precoce", "Neonatal tardia", "P\U000F3s-neonatal")
     idade <- ifelse(COD_IDADE < 2, 1,
                     ifelse(COD_IDADE == 2 & dados$IDADE < 7, 1,
-                           ifelse(COD_IDADE == 2 & dados$IDADE >= 7 & dados$IDADE <= 28, 2,
-                                  ifelse(COD_IDADE == 2 & dados$IDADE == 29, 3,
+                           ifelse(COD_IDADE == 2 & dados$IDADE >= 7 & dados$IDADE < 28, 2,
+                                  ifelse(COD_IDADE == 2 & dados$IDADE >= 28, 3,
                                          ifelse(COD_IDADE == 3, 3, NA)))))
     idade <- factor(idade, labels = rotulos)
   }
