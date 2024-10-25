@@ -40,7 +40,7 @@
 
  popbr2000_2021 <- function(anoi = NULL, anof = NULL, uf = NULL, munic = NULL, droplevels = TRUE) {
 
-   . <- UF_SIGLA <- age_group <- ano <- mun <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
+   . <- UF_SIGLA <- age_group <- ano <- mun <- code_muni <- fxetar5 <- pop <- sex <- sexo <- year <- NULL
 
    if( !is.null(anoi) & is.null(anof)) {
      anof = anoi
@@ -54,16 +54,16 @@
                "From 75 to 79 years", "From 80 years or more")
 
    # popbr <- brpop::mun_sex_pop() |>
-   #   data.table::setDT(key = c("year", "mun"))
-   popbr <- data.table::setDT(brpop::mun_sex_pop(), key = c("year", "mun"))
+   #   data.table::setDT(key = c("year", "code_muni"))
+   popbr <- data.table::setDT(brpop::mun_sex_pop(), key = c("year", "code_muni"))
 
    if(!is.null(anoi)) popbr <- popbr[year >= anoi]
    if(!is.null(anof)) popbr <- popbr[year <= anof]
 
-   popbr <- popbr[age_group != "Total" & substr(mun, 3, 6) != "0000",
+   popbr <- popbr[age_group != "Total" & substr(code_muni, 3, 6) != "0000",
                   .(ano = year,
-                    mun = as.character(mun),
-                    CO_UF = substr(mun, 1, 2),
+                    code_muni = as.character(code_muni),
+                    CO_UF = substr(code_muni, 1, 2),
                     sexo = factor(sex, levels = c("Male", "Female"),
                                   labels = c("masc", "fem")),
                     fxetar5 = factor(age_group,
@@ -72,13 +72,13 @@
                     pop = pop)]
 
 
-   popbr <- data.table::merge.data.table(setDT(csapAIH::ufbr()), popbr)
+   popbr <- data.table::merge.data.table(data.table::setDT(csapAIH::ufbr()), popbr)
 
    if(!is.null(uf)) {
      data.table::setkeyv(popbr, "UF_SIGLA")
      popbr <- popbr[UF_SIGLA == uf]
    }
-   if(!is.null(munic)) popbr <- popbr[mun == munic]
+   if(!is.null(munic)) popbr <- popbr[code_muni == munic]
 
   if(droplevels == TRUE) {
     popbr <- droplevels(popbr)
