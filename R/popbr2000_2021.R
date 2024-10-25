@@ -71,7 +71,6 @@
                                      labels = csapAIH::fxetar_quinq()),
                     pop = pop)]
 
-
    popbr <- data.table::merge.data.table(data.table::setDT(csapAIH::ufbr()), popbr)
 
    if(!is.null(uf)) {
