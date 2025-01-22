@@ -4,24 +4,45 @@
 \alias{nomesgruposCSAP}
 \title{Nomes dos grupos de causa da Lista Brasileira de Condições Sensíveis à Atenção Primária}
 \usage{
-nomesgruposCSAP(lista = "MS", lang = "pt.ca")
+nomesgruposCSAP(
+  lista = "MS",
+  lang = "pt.ca",
+  classe = "vetor",
+  numgrupo = FALSE
+)
 }
 \arguments{
 \item{lista}{Lista de causas a ser considerada (v. referências); pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.}
 
 \item{lang}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
+
+\item{classe}{O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome  definido por \code{"data.frame"}, \code{"df"} ou \code{2})?}
+
+\item{numgrupo}{No caso de se definir um "data frame" no parâmetro \code{classe}, a variável com o nome do grupo deve iniciar com o número do grupo? (v. exemplos).}
 }
 \value{
-Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.
+Um vetor da classe \code{character} ou uma tabela na classe \code{data frame} com os nomes (abreviados) dos grupos de causa segundo a lista definida pelo usuário.
 }
 \description{
 Lista os 19 grupos de causa CSAP, em ordem crescente.
 }
 \examples{
 nomesgruposCSAP()
+nomesgruposCSAP(classe = "df")
 nomesgruposCSAP(lang = "pt.ca")
 nomesgruposCSAP(lang = "en")
 nomesgruposCSAP(lang = "es")
+nomesgruposCSAP(lista = 'Alfradique', lang = 'es', classe = 'df', numgrupo = TRUE)
+
+require(dplyr)
+aih100 \%>\%
+  csapAIH() \%>\%
+  left_join(nomesgruposCSAP(classe = 2)) \%>\%
+  mutate(nomegrupo = ifelse(is.na(nomegrupo), "não-CSAP", nomegrupo)) \%>\%
+  relocate(nomegrupo, .after = grupo)\%>\%
+  select(9:12) \%>\%
+  relocate(cid) \%>\%
+  head()
 
 }
 \references{

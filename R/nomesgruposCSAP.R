@@ -5,8 +5,10 @@
 #'
 #' @param lista Lista de causas a ser considerada (v. referências); pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
 #' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
+#' @param classe O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome  definido por \code{"data.frame"}, \code{"df"} ou \code{2})?
+#' @param numgrupo No caso de se definir um "data frame" no parâmetro \code{classe}, a variável com o nome do grupo deve iniciar com o número do grupo? (v. exemplos).
 #'
-#' @return Um vetor da classe \code{character} com os nomes (abreviados) dos 19 grupos de causa segundo a Lista Brasileira.
+#' @return Um vetor da classe \code{character} ou uma tabela na classe \code{data frame} com os nomes (abreviados) dos grupos de causa segundo a lista definida pelo usuário.
 #'
 #' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}
 #'
@@ -18,13 +20,25 @@
 #'
 #' @examples
 #' nomesgruposCSAP()
+#' nomesgruposCSAP(classe = "df")
 #' nomesgruposCSAP(lang = "pt.ca")
 #' nomesgruposCSAP(lang = "en")
 #' nomesgruposCSAP(lang = "es")
+#' nomesgruposCSAP(lista = 'Alfradique', lang = 'es', classe = 'df', numgrupo = TRUE)
+#'
+#' require(dplyr)
+#' aih100 %>%
+#'   csapAIH() %>%
+#'   left_join(nomesgruposCSAP(classe = 2)) %>%
+#'   mutate(nomegrupo = ifelse(is.na(nomegrupo), "não-CSAP", nomegrupo)) %>%
+#'   relocate(nomegrupo, .after = grupo)%>%
+#'   select(9:12) %>%
+#'   relocate(cid) %>%
+#'   head()
 #'
 #' @export
 #'
-nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
+nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numgrupo = FALSE) {
   # Nuntius errorum
   # ----------------
   if( !any(lista == "MS" | lista == "Alfradique") ) {
@@ -36,12 +50,17 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
            lang != "es") ) {
     stop('lang must be one of "pt.ca", "pt.sa", "en" or "es"')
   }
+  if(lista == "MS") {
+    grupo <-  c(paste0("g0", 1:9), paste0("g1", 0:9))
+  } else if(lista == "Alfradique") {
+    grupo <- c(paste0("g0", 1:9), paste0("g1", 0:9), "g20")
+  }
 
   # Nomes em Português com códigos UTF para os acentos
   # ---------------------------------------------------
 
   nomes.pt.ca.MS <- c(" 1. Prev. vacina\U00E7\U00E3o e cond. evit\U00E1veis",
-                      " 2. Gastroenterite",
+                      " 2. Gastroenterites",
                       " 3. Anemia",
                       " 4. Defic. nutricionais",
                       " 5. Infec. ouvido, nariz e garganta",
@@ -58,7 +77,8 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
                       "16. Infec. pele e subcut\U00E2neo",
                       "17. D. infl. \U00F3rg\U00E3os p\U00E9lvicos fem.",
                       "18. \U00DAlcera gastrointestinal",
-                      "19. Pr\U00E9-natal e parto"
+                      "19. Pr\U00E9-natal e parto"#,
+                      # "    N\U00E3o-CSAP"
                       )
 
   nomes.pt.ca.Alfradique <- c(" 1. Prev. por vacina\U00E7\U00E3o",
@@ -73,7 +93,7 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
   # Nomes em Português sem acentos
   # -------------------------------
   nomes.pt.sa.MS <- c(" 1. Prev. vacinacao e cond. evitaveis",
-                      " 2. Gastroenterite",
+                      " 2. Gastroenterites",
                       " 3. Anemia",
                       " 4. Def. nutricion.",
                       " 5. Infec. ouvido, nariz e garganta",
@@ -188,19 +208,33 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca") {
 
 
   if(lang == "pt.ca") {
-    if(lista == "MS") return(nomes.pt.ca.MS)
-    else if(lista == "Alfradique") return(nomes.pt.ca.Alfradique)
+    if(lista == "MS") {
+      nomegrupo <- nomes.pt.ca.MS
+    } else if(lista == "Alfradique") {
+      nomegrupo <- nomes.pt.ca.Alfradique
+    }
   }
   if(lang == "pt.sa") {
-    if(lista == "MS") return(nomes.pt.sa.MS)
-    else if(lista == "Alfradique") return(nomes.pt.sa.Alfradique)
+    if(lista == "MS") {
+      nomegrupo <- nomes.pt.sa.MS
+    } else if(lista == "Alfradique") nomegrupo <- nomes.pt.sa.Alfradique
   }
   if(lang == "es") {
-    if(lista == "MS") return(nomes.es.MS)
-    else if(lista == "Alfradique") return(nomes.es.Alfradique)
+    if(lista == "MS") {
+      nomegrupo <- nomes.es.MS
+    } else if(lista == "Alfradique") nomegrupo <- nomes.es.Alfradique
   }
   if(lang == "en") {
-    if(lista == "MS") return(nomes.en.MS)
-    else if(lista == "Alfradique") return(nomes.en.Alfradique)
+    if(lista == "MS") {
+      nomegrupo <- nomes.en.MS
+    } else if(lista == "Alfradique") nomegrupo <- nomes.en.Alfradique
   }
+
+  if(classe %in% c("data.frame", "df", "2")) {
+    if(isFALSE(numgrupo)) {
+      nomegrupo <- substr(nomegrupo, 5, nchar(nomegrupo))
+    }
+    nomegrupo <- data.frame(grupo, nomegrupo)
+  } else if(classe %in% c("vetor", "v", "1")) return(nomegrupo)
+  nomegrupo
 }
