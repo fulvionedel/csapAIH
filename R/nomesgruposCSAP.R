@@ -23,18 +23,26 @@
 #' nomesgruposCSAP(classe = "df")
 #' nomesgruposCSAP(lang = "pt.ca")
 #' nomesgruposCSAP(lang = "en")
+#' nomesgruposCSAP(lang = "en", classe = "df")
 #' nomesgruposCSAP(lang = "es")
-#' nomesgruposCSAP(lista = 'Alfradique', lang = 'es', classe = 'df', numgrupo = TRUE)
+#' nomesgruposCSAP(lista = 'Alfradique')
+#' nomesgruposCSAP(lista = 'Alfradique', classe = "df")
+#' nomesgruposCSAP(lista = 'Alfradique', lang = 'es',
+#'                 classe = 'df', numgrupo = TRUE)
 #'
 #' require(dplyr)
 #' aih100 %>%
 #'   csapAIH() %>%
 #'   left_join(nomesgruposCSAP(classe = 2)) %>%
-#'   mutate(nomegrupo = ifelse(is.na(nomegrupo), "não-CSAP", nomegrupo)) %>%
-#'   relocate(nomegrupo, .after = grupo)%>%
-#'   select(9:12) %>%
-#'   relocate(cid) %>%
-#'   head()
+#'   group_by(csap, grupo, nomegrupo) %>%
+#'   reframe()
+#'
+#' left_join(
+#'   fetchcsap("RS", 2022, anofim = 2022, mesfim = 1, lista = "Alfradique"),
+#'   nomesgruposCSAP(classe = 2, lista = "Alfradique", numgrupo = TRUE)
+#' ) %>%
+#'   group_by(csap, grupo, nomegrupo) %>%
+#'   reframe()
 #'
 #' @export
 #'
@@ -77,8 +85,7 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numg
                       "16. Infec. pele e subcut\U00E2neo",
                       "17. D. infl. \U00F3rg\U00E3os p\U00E9lvicos fem.",
                       "18. \U00DAlcera gastrointestinal",
-                      "19. Pr\U00E9-natal e parto"#,
-                      # "    N\U00E3o-CSAP"
+                      "19. Pr\U00E9-natal e parto"
                       )
 
   nomes.pt.ca.Alfradique <- c(" 1. Prev. por vacina\U00E7\U00E3o",
