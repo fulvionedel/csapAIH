@@ -30,13 +30,13 @@
 #'
 #' @details
 #'
-#' Período de download dos arquivos e de internação dos sujeitos.
+#' - Período de download dos arquivos e de internação dos sujeitos.
 #' \itemize{
 #'   \item Os "arquivos da AIH" são definidos por mês e ano de "competência", e não da data de internação. Assim, o arquivo de um determinado "mês de competência" pode incluir registros de internações ocorridas em outro mês ou ano, enquanto pode não incluir todos os casos ocorridos naquele mês. Por padrão, \code{fetchcsap} usa o argumento \code{periodo = "interna"} para selecionar os casos por data de internação de acordo com o período definido nos argumentos \code{anoinicio}, \code{mesinicio} e \code{anofim}, de modo a iniciar no primeiro dia do ano e mês de competência (\code{anoinicio} e \code{mesinicio}) e terminar em 31 de dezembro do ano anterior ao definido em \code{anofim}.
 #'   \item Assim, por padrão, a função exige apenas a definição do ano de início dos casos. Se o usuário definir apenas esse argumento, \code{fetchcsap} fará o download e leitura dos arquivos (de todo o Brasil) de todos os meses até junho do ano seguinte para então selecionar as internações ocorridas no ano definido em \code{anoinicio}.
 #' }
 #'
-#' \code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha. Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}, e faz apenas o download das variáveis exigidas pela função \code{csapAIH}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
+#' - \code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha. Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}, e faz apenas o download das variáveis exigidas pela função \code{csapAIH}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
 #'
 #' @seealso \code{\link{csapAIH}}
 #'
