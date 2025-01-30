@@ -50,7 +50,7 @@ listaBRAlfradique <- function(cid){
 # Demais causas
     TRUE ~ "g00")
 
-  csap <- ifelse(cid %in% grupo, "sim", "n\u00E3o")
+  csap <- ifelse(grupo %in% "g00", "n\u00E3o", "sim")
 #
 #                        g08==1 | g09==1 | g10==1 | g11==1 | g12==1 | g13==1 | g14==1 |
 #                        g15==1 | g16==1 | g17==1 | g18==1 | g19==1 | g20==1, 1, 2),
