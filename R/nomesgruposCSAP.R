@@ -1,9 +1,9 @@
 #' @title Nomes dos grupos de causa da Lista Brasileira de Condições Sensíveis à Atenção Primária
 #' @aliases nomesgruposCSAP
 #'
-#' @description Lista os 19 grupos de causa CSAP, em ordem crescente.
+#' @description Lista os grupos de causa da Lista Brasileira de Condições Sensíveis à Atenção Primária, segundo a Portaria do Ministério da Saúde do Brasil, com 19 grupos, ou segundo a publicação em Alfradique et al. (2009), com 20 grupos. Facilita a inclusão ddo grupo de causa como uma variável de um banco de dados. O texto pode ser apresentado em português, espanhol ou inglês.
 #'
-#' @param lista Lista de causas a ser considerada (v. referências); pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
+#' @param lista Lista de causas a ser considerada; pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
 #' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
 #' @param classe O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome  definido por \code{"data.frame"}, \code{"df"} ou \code{2})?
 #' @param numgrupo No caso de se definir um "data frame" no parâmetro \code{classe}, a variável com o nome do grupo deve iniciar com o número do grupo? (v. exemplos).
@@ -21,28 +21,31 @@
 #' @examples
 #' nomesgruposCSAP()
 #' nomesgruposCSAP(classe = "df")
-#' nomesgruposCSAP(lang = "pt.ca")
+#' nomesgruposCSAP(classe = "df", numgrupo = TRUE)
+#' nomesgruposCSAP(lang = "pt.sa")
 #' nomesgruposCSAP(lang = "en")
-#' nomesgruposCSAP(lang = "en", classe = "df")
 #' nomesgruposCSAP(lang = "es")
 #' nomesgruposCSAP(lista = 'Alfradique')
 #' nomesgruposCSAP(lista = 'Alfradique', classe = "df")
+
 #' nomesgruposCSAP(lista = 'Alfradique', lang = 'es',
 #'                 classe = 'df', numgrupo = TRUE)
 #'
+#' # Uso de `classe = 'df'`
 #' require(dplyr)
+#' ## Inclui o nome do grupo como uma variável no banco de dados:
 #' aih100 %>%
 #'   csapAIH() %>%
-#'   left_join(nomesgruposCSAP(classe = 2)) %>%
-#'   group_by(csap, grupo, nomegrupo) %>%
-#'   reframe()
+#'   filter(csap == "sim") %>%
+#'   select(c(4, 6, 9:11)) %>%
+#'   left_join(nomesgruposCSAP(classe = 'df'))
 #'
 #' left_join(
-#'   fetchcsap("RS", 2022, anofim = 2022, mesfim = 1, lista = "Alfradique"),
-#'   nomesgruposCSAP(classe = 2, lista = "Alfradique", numgrupo = TRUE)
-#' ) %>%
+#'   csapAIH(aih500, lista = "Alfradique"),
+#'   nomesgruposCSAP(classe = 2, lista = "Alfradique", lang = "en", numgrupo = TRUE)) %>%
 #'   group_by(csap, grupo, nomegrupo) %>%
-#'   reframe()
+#'   reframe(n()) %>%
+#'   print(n = 21)
 #'
 #' @export
 #'

@@ -12,7 +12,7 @@ nomesgruposCSAP(
 )
 }
 \arguments{
-\item{lista}{Lista de causas a ser considerada (v. referências); pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.}
+\item{lista}{Lista de causas a ser considerada; pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.}
 
 \item{lang}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 
@@ -24,33 +24,35 @@ nomesgruposCSAP(
 Um vetor da classe \code{character} ou uma tabela na classe \code{data frame} com os nomes (abreviados) dos grupos de causa segundo a lista definida pelo usuário.
 }
 \description{
-Lista os 19 grupos de causa CSAP, em ordem crescente.
+Lista os grupos de causa da Lista Brasileira de Condições Sensíveis à Atenção Primária, segundo a Portaria do Ministério da Saúde do Brasil, com 19 grupos, ou segundo a publicação em Alfradique et al. (2009), com 20 grupos. Facilita a inclusão ddo grupo de causa como uma variável de um banco de dados. O texto pode ser apresentado em português, espanhol ou inglês.
 }
 \examples{
 nomesgruposCSAP()
 nomesgruposCSAP(classe = "df")
-nomesgruposCSAP(lang = "pt.ca")
+nomesgruposCSAP(classe = "df", numgrupo = TRUE)
+nomesgruposCSAP(lang = "pt.sa")
 nomesgruposCSAP(lang = "en")
-nomesgruposCSAP(lang = "en", classe = "df")
 nomesgruposCSAP(lang = "es")
 nomesgruposCSAP(lista = 'Alfradique')
 nomesgruposCSAP(lista = 'Alfradique', classe = "df")
 nomesgruposCSAP(lista = 'Alfradique', lang = 'es',
                 classe = 'df', numgrupo = TRUE)
 
+# Uso de `classe = 'df'`
 require(dplyr)
+## Inclui o nome do grupo como uma variável no banco de dados:
 aih100 \%>\%
   csapAIH() \%>\%
-  left_join(nomesgruposCSAP(classe = 2)) \%>\%
-  group_by(csap, grupo, nomegrupo) \%>\%
-  reframe()
+  filter(csap == "sim") \%>\%
+  select(c(4, 6, 9:11)) \%>\%
+  left_join(nomesgruposCSAP(classe = 'df'))
 
 left_join(
-  fetchcsap("RS", 2022, anofim = 2022, mesfim = 1, lista = "Alfradique"),
-  nomesgruposCSAP(classe = 2, lista = "Alfradique", numgrupo = TRUE)
-) \%>\%
+  csapAIH(aih500, lista = "Alfradique"),
+  nomesgruposCSAP(classe = 2, lista = "Alfradique", lang = "en", numgrupo = TRUE)) \%>\%
   group_by(csap, grupo, nomegrupo) \%>\%
-  reframe()
+  reframe(n()) \%>\%
+  print(n = 21)
 
 }
 \references{
