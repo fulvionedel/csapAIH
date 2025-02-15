@@ -4,29 +4,37 @@
 \alias{ler_popbr}
 \title{Ler arquivos de população do DATASUS}
 \usage{
-ler_popbr(arquivo = NULL, ano = NULL)
+ler_popbr(x)
 }
 \arguments{
-\item{arquivo}{Nome do arquivo armazenado no computador, em formato CSV ou DBF. Padrão é \code{NULL}, v. details.}
-
-\item{ano}{Ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Padrão é \code{NULL}, v. details.}
+\item{x}{Nome do arquivo armazenado no computador, ou ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.}
 }
 \description{
-Lê os arquivos POPBR?? com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e cria uma variável com a faixa etária quinquenal.
-}
-\details{
-Apenas um dos dois parâmetros deve ser preenchido. Se o alvo é um arquivo no computador, o nome com a extensão (csv ou dbf) deve vir entre aspas; se for um arquivo csv, deve ser separado por vírgulas (é usada a função \link{read.csv} e não \link{read.csv2}). Se o alvo é um arquivo do servidor FTP do datasus, deve-se usar o argumando \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2012.
+Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e entrega um banco de dados com as variáveis originais mais a faixa etária quinquenal.
 }
 \examples{
 \dontrun{
-# Um arquivo no mesmo diretório de trabalho da sessão ativa:
+# Um arquivo no computador:
 popBR2010 <- ler_popbr("data-raw/POPBR10.DBF")
 head(popBR2010)
 xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
+
+popBR2024 <- ler_popbr("data-raw/POPBR24.DBF")
+head(popBR2024)
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
 }
 
 # Um arquivo no diretório FTP do DATASUS
-popBR2010 <- ler_popbr(ano = 2010)
+popBR2010 <- ler_popbr(2010)
+head(popBR2010)
 xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
+
+popBR2013 <- ler_popbr(2013)
+head(popBR2013)
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2013)
+
+popBR2024 <- ler_popbr(2024)
+head(popBR2024)
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
 
 }
