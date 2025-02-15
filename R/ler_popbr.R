@@ -77,9 +77,15 @@ ler_popbr <- function(x) {
     names(populacao)[1] <- "munic_res"
     names(populacao)[4] <- "fxetaria"
     names(populacao)[5] <- "populacao"
+
+
+    populacao$fxetar5 <- populacao$fxetaria |>
+      as.character() |>
+      as.numeric() |>
+      cut(breaks = c(seq(0, 80, 5), Inf), right = FALSE)
   }
 
-  if(unique(populacao$ano) %in% c(1980, 1991, 1996:2024)) {
+  if(unique(populacao$ano) %in% c(1980, 1991, 1996:2012)) {
     populacao$fxetar5 <- cut(as.numeric(populacao$fxetaria),
                              breaks = c(0, 5, 10, 15, 20:33))
   } else if(unique(populacao$ano) %in% c(1981:1990, 1992)) {
