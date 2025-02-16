@@ -22,6 +22,8 @@ Suggests:
 Imports: data.table,
          dplyr,
          haven
+Remotes: microdatasus,
+         read.dbc
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
@@ -32,3 +34,4 @@ Depends:
 URL: https://github.com/fulvionedel/csapAIH, http://fulvionedel.github.io/csapAIH/
 BugRepoorts: https://github.com/fulvionedel/csapAIH/issues  
 VignetteBuilder: knitr
+Config/Needs/website: rmarkdown
