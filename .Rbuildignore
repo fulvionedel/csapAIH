@@ -7,9 +7,9 @@ tests/*
 ^LICENSE\.md$
 README_cache/*
 ^doc$
-^Meta$
 ^vignettes/articles$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
 ^\.github$
+^inst$
