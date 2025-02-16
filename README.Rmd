@@ -1,15 +1,15 @@
 ---
 title: 'csapAIH: <font size="2"> Classificar Condições Sensíveis à Atenção Primária</font>'
-author: |
-  | Fúlvio Borges Nedel
+author: "Fúlvio Borges Nedel"
 date: |
   | Atualizado em `r format(Sys.Date(), c("%d de %B de %Y"))`
 output: 
   github_document:
-    toc: true
+    toc: yes
     toc_depth: 3
 link-citations: yes
 bibliography: inst/pacote.bib
+always_allow_html: true
 # csl: docs/vancouver-superscript.csl
 # https://github.com/citation-style-language/styles
 # csl: https://raw.githubusercontent.com/citation-style-language/styles/master/research-institute-for-nature-and-forest.csl
