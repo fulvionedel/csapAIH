@@ -55,6 +55,7 @@ Nedel FB. csapAIH: uma função para a classificação das condições sensívei
 Useful links:
 \itemize{
   \item \url{https://github.com/fulvionedel/csapAIH}
+  \item \url{http://fulvionedel.github.io/csapAIH/}
 }
 
 }
