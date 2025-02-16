@@ -1,103 +1,17 @@
 ---
-title: 'csapAIH: Classificar Condições Sensíveis à Atenção Primária'
-author: "Fúlvio Borges Nedel"
-date: |
-  | Atualizado em `r format(Sys.Date(), c("%d de %B de %Y"))`
-output: 
-  github_document:
-    toc: yes
-    toc_depth: 3
-link-citations: yes
-bibliography: inst/pacote.bib
-always_allow_html: true
-# csl: docs/vancouver-superscript.csl
-# https://github.com/citation-style-language/styles
-# csl: https://raw.githubusercontent.com/citation-style-language/styles/master/research-institute-for-nature-and-forest.csl
-# zotero: true
+title: "Exemplos de uso"
 ---
-
-
----
-
-No [SourceForge](https://sourceforge.net/projects/csapaih/): 
-[![Download csapAIH](https://img.shields.io/sourceforge/dt/csapaih.svg)](https://sourceforge.net/projects/csapaih/files/latest/download) 
-[![Download csapAIH](https://img.shields.io/sourceforge/dm/csapaih.svg)](https://sourceforge.net/projects/csapaih/files/latest/download)
-
----
-
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = NULL,
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = NULL
 )
 ```
 
-# Apresentação
-
-Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH" e, atualmente, do Sistema de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e contagens populacionais por sexo e faixa etária para os municípios brasileiros, de 2012 a 2024.
-
-# Justificativa
-
-A hospitalização por CSAP é um indicador da efetividade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições ---pneumonia, infecção urinária, sarampo, diabetes etc.---  só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças evitáveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete). [@Nedel2011]
-
-O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. [@MS2008lista;@Alfradique2009] A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/) a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.
-
-Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. [@Nedel2008] E não conheço outro programa ou *script* (além do que tive de escrever em minha tese [@NedelTese]) que automatize esse trabalho.
-
-# Instalação
-
-O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
-
-  * baixando o arquivo de instalação no [SourceForge](https://sourceforge.net/projects/csapaih/) e depois instalando, com a IDE de preferência ou com o comando `install.packages("csapAIH_<versão>.tar.gz")` (em Linux ou Mac) ou `install.packages("csapAIH_<versão>.zip")` (em Windows);
-  
-  * com a função `install.packages()` sobre o arquivo tar.gz no [SourceForge](https://sourceforge.net/projects/csapaih/) ^[Como informado por [Rafael Barros](https://github.com/fulvionedel/csapAIH/issues/13#top), a instalação pelo arquivo .zip da internet resulta em erro. Estranhamente (pra mim, ao menos), uma vez baixado, o arquivo .zip é instalado sem erro.]:
-
-```{r eval=FALSE}
-install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.5.tar.gz/download", type = "source", repos = NULL) 
-```
-
-ou
-  
-  * através do pacote `remotes` sobre os arquivos-fonte da versão em desenvolvimento, no [GitHub](https://github.com/fulvionedel/csapAIH):
-
-```{r eval=FALSE}
-# install.packages("remotes") # desnecessário se o pacote já estiver instalado
-remotes::install_github("fulvionedel/csapAIH")
-```
-
-
-# Conteúdo (_timeline_)
-
-Na sua primeira versão [@Nedel2017], o pacote `csapAIH` continha apenas uma função, homônima: `csapAIH`. 
-
-Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html). 
-
-A partir da versão 0.0.3 [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
-
-Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009]. Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`).
-Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019], para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando. Foram criadas outras funções para facilitar o manejo e apresentação de dados em estudos ecológicos, como a categorização da idade em faixas etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de parto (`partos`), particularmente para o Brasil e os arquivos do DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a lista de procedimentos obstétricos em internações por eventos não mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os casos como "não" (embora estivessem classificados corretamente na variável `grupo`). A v0.0.4.6 corrige um erro em `ler_popbr` e, principalmente, acrescenta a possibilidade de leitura dos arquivos com as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além de incluir novas possiblidades em `nomesgruposCSAP`.
-
-A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.6.pdf) ou, no R, com `?'csapAIH-package'`.
-
-
-# Dependências
-
-A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). Da mesma forma,  `popbr2000_2021` exige a instalação do pacote[`brpop`](https://rfsaldanha.github.io/brpop/) e  `fetchcsap` exige a instalação do pacote [`microdatasus`](https://github.com/rfsaldanha/microdatasus). 
-
-A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. 
-
-A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. O pacote [`haven`](https://cran.r-project.org/package=haven) também é importado. A partir da v0.0.4.4 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não é mais.
-<!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
-
-
-# Exemplos de uso
-
-```{r message=FALSE}
-library(dplyr) # facilitar o trabalho
+```{r setup, message=FALSE}
 library(csapAIH)
+library(dplyr) # facilitar o trabalho
 ```
 
 ## Classificação da causa (código CID-10)
@@ -130,14 +44,14 @@ Se o arquivo de dados estiver armazenado no computador, basta digitar, entre asp
  <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
  
 ```{r}
-csap.dbc <- csapAIH("data-raw/RDRS1801.dbc") 
-csap.dbf <- csapAIH("data-raw/RDRS1801.dbf") 
+csap.dbc <- csapAIH("../../data-raw/RDRS1801.dbc") 
+csap.dbf <- csapAIH("../../data-raw/RDRS1801.dbf") 
 ```
 
 - No caso de arquivos CSV é mandatório indicar o tipo de separador de campos, com o argumento `sep`.
 
 ```{r}
-csap.csv <- csapAIH("data-raw/RDRS1801.csv", sep = ",")
+csap.csv <- csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
 ```
 
 A função `fetchcsap` foi pensada para apresentar um extrato dos registros por período de internação e não de "competência" da AIH, que é commo se organizam os arquivos de dados. Assim, precisamos modificar alguns argumentos para ter os mesmos registros:
@@ -155,10 +69,10 @@ all.equal(attributes(csap.ftp)$resumo, attributes(csap.dbc)$resumo)
 
 Mas em estudos epidemiológicos geralmente nos interessa delimitar a população pela data de internação, o que exige trabalho posterior à leitura do arquivo "RD", pois o arquivo de um determinado mês e ano de "competência" pode conter registros de internações ocorridas em outro momento. Vemos abaixo que a data de internação nos objetos criados anteriormente (a partir de "RDRS1801.dbc") varia de `r min(format(csap.ftp$data.inter, "%d%b%Y"))` a `r max(format(csap.ftp$data.inter, "%d%b%Y"))`. Além disso, o arquivo pode não conter o registro de todas as internações ocorridas naquele mês. 
 
-Por isso `fetchcsap` tem seus argumentos de forma a devolver o banco de dados apenas com os registros do período de interesse. Veja a seguir o resultado com as internações não-obstétricas para jan2018 segundo a seleção dos registros:
+Por isso `fetchcsap` tem seus argumentos de forma a devolver o banco de dados apenas com os registros do período de interesse. Veja a seguir o resultado com as internações não-obstétricas para jan2018 segundo a seleção dos registros:  
   a. todos daquele mês de competência (mesmo comando anterior para a construção de csap.ftp");
   b. apenas as internações ocorridas no mesmo mês de competência da AIH; e 
-  c. apenas as internações ocorridas em jan2018 e registradas nor arquivos "RD" dos meses de competência janeiro a fevereiro de 20018.
+  c. apenas as internações ocorridas em jan2018 e registradas nos arquivos "RD" dos meses de competência janeiro a fevereiro de 20018.
 
 ```{r}
 a <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "c")
@@ -184,7 +98,7 @@ rm(csap.csv, csap.dbc, csap.dbf, csap.ftp)
 #### Com a estrutura dos arquivos da AIH
   
 ```{r}
-read.csv("data-raw/RDRS1801.csv") |> # criar o data.frame
+read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
   csapAIH() |>
   glimpse()
 ```
@@ -312,7 +226,7 @@ claih <- AIHRS2021 %>%
 
 #### A população
 
-Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Ano passado (2022) Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)). 
+Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)). 
 
 Entretanto, as tabelas no pacote *brpop* têm o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estão em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total). Assim, a população estimada para Cerro Largo em 2021 foi capturada com o seguinte comando,
 
@@ -372,23 +286,4 @@ gr + ggplot2::facet_wrap(~ munres == "431490",
   desenhaCSAP(x.size = 7, y.size = 8) + 
     ggplot2::facet_grid(SEXO ~ fxetar3)
 ```
-
----
-***Veja o manual do pacote em:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf
-
-<!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
-
-
-# Agradecimentos
-
-Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como \@laiovictor e \@igortadeu \@rafadbarros, e (muito!!) a quem apresenta soluções, como \@denis-or. 
-
-E, sempre, meus profundos agradecimentos a  
-
-  - Daniela Petruzalek, pelo pacote [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html); e
-  - A Raphael Saldanha, pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
-
-
-# Referências
 
