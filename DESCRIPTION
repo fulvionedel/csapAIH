@@ -22,7 +22,7 @@ Suggests:
 Imports: data.table,
          dplyr,
          haven
-Remotes: microdatasus,
+Remotes: microdatasus@2.3.1,
          read.dbc
 LazyData: true
 NeedsCompilation: no
