@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   articles/indicadores: indicadores.html
-last_built: 2025-02-16T20:45Z
+last_built: 2025-02-16T20:49Z
 urls:
   reference: https://fulvionedel.github.io/csapAIH/reference
   article: https://fulvionedel.github.io/csapAIH/articles
