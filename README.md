@@ -3,7 +3,7 @@ Primária</font>
 ================
 Fúlvio Borges Nedel
 
-Atualizado em 23 de setembro de 2024
+Atualizado em 16 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
 - [Justificativa](#justificativa)
@@ -49,7 +49,9 @@ informações de cada hospitalização ocorrida pelo SUS num período
 determinado. Assim, embora o pacote permita a classificação de qualquer
 listagem de códigos da CID-10, tem também algumas funcionalidades para
 facilitar o trabalho com os “arquivos da AIH” e, atualmente, do Sistema
-de Informações sobre Mortalidade (SIM).
+de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e
+contagens populacionais por sexo e faixa etária para os municípios
+brasileiros, de 2012 a 2024.
 
 # Justificativa
 
@@ -155,11 +157,14 @@ lista de procedimentos obstétricos em internações por eventos não
 mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na
 v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os
 casos como “não” (embora estivessem classificados corretamente na
-variável `grupo`).
+variável `grupo`). A v0.0.4.6 corrige um erro em `ler_popbr` e,
+principalmente, acrescenta a possibilidade de leitura dos arquivos com
+as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além
+de incluir novas possiblidades em `nomesgruposCSAP`.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
-[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf)
+[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.6.pdf)
 ou, no R, com `?'csapAIH-package'`.
 
 # Dependências
@@ -384,7 +389,7 @@ $ idade      <dbl> 58, 25, 24, 33, 80, 69, 50, 58, 70, 69, 88, 61, 26, 42, 67,�
 $ fxetar.det <fct> 55-59, 25-29, 20-24, 30-34, 80 e +, 65-69, 50-54, 55-59, 70…
 $ fxetar5    <fct> 55-59, 25-29, 20-24, 30-34, 80 e +, 65-69, 50-54, 55-59, 70…
 $ csap       <chr> "não", "não", "não", "não", "sim", "sim", "não", "não", "si…
-$ grupo      <fct> não-CSAP, não-CSAP, não-CSAP, não-CSAP, g12, g03, não-CSAP,…
+$ grupo      <fct> no-CSAP, no-CSAP, no-CSAP, no-CSAP, g12, g03, no-CSAP, no-C…
 $ cid        <chr> "K439", "O628", "O641", "O623", "I64", "D500", "I408", "T63…
 $ proc.rea   <int> 407040064, 411010034, 411010034, 303100044, 303040149, 3030…
 $ data.inter <date> 57221-04-11, 57221-03-29, 57221-04-08, 57221-04-08, 57221-…
@@ -435,10 +440,10 @@ names(csap.eeh20)
 [36] "cau298rx"   "csap"       "grupo"     
 csap.eeh20[c(30,37:38)] |> 
   head(3) 
-  cau_cie10 csap    grupo
-1      C169  não não-CSAP
-2      U072  não não-CSAP
-3      A090  sim      g02
+  cau_cie10 csap   grupo
+1      C169  não no-CSAP
+2      U072  não no-CSAP
+3      A090  sim     g02
 ```
 
 ##### A Declaração de Óbito (DO) do SIM
@@ -463,10 +468,10 @@ DORS2021 <- DORS2021 %>%
          SEXO = factor(SEXO, levels = c(1,2), labels = c("masc", "fem")))
 Importados 117.722 registros.
 DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
-  CONTADOR csap    grupo idade fxetar5 fxetar3
-1        1  não não-CSAP    49   45-49   15-59
-2        2  não não-CSAP    41   40-44   15-59
-3        3  não não-CSAP    78   75-79    60e+
+  CONTADOR csap   grupo idade fxetar5 fxetar3
+1        1  não no-CSAP    49   45-49   15-59
+2        2  não no-CSAP    41   40-44   15-59
+3        3  não no-CSAP    78   75-79    60e+
 ```
 
 ### A partir de uma variável com códigos da CID-10:
@@ -478,17 +483,17 @@ cids
 3254 Levels: A009 A020 A044 A045 A048 A049 A050 A058 A059 A061 A069 A071 ... Z990
 csapAIH(cids) 
 Excluídos 0 registros de parto (0% do total).
-    cid csap    grupo
-1  N189  não não-CSAP
-2  O689  não não-CSAP
-3  S423  não não-CSAP
-4  H938  não não-CSAP
-5  P584  não não-CSAP
-6  I200  sim      g10
-7  I442  não não-CSAP
-8  C189  não não-CSAP
-9  C409  não não-CSAP
-10 K818  não não-CSAP
+    cid csap   grupo
+1  N189  não no-CSAP
+2  O689  não no-CSAP
+3  S423  não no-CSAP
+4  H938  não no-CSAP
+5  P584  não no-CSAP
+6  I200  sim     g10
+7  I442  não no-CSAP
+8  C189  não no-CSAP
+9  C409  não no-CSAP
+10 K818  não no-CSAP
 ```
 
 ## Apresentação de resultados
@@ -535,7 +540,7 @@ das CSAP por grupo de causa.
 descreveCSAP(csap)
                                    Grupo  Casos %Total %CSAP
 1   1. Prev. vacinação e cond. evitáveis    116   0,22  1,07
-2                      2. Gastroenterite    802   1,54  7,38
+2                     2. Gastroenterites    802   1,54  7,38
 3                              3. Anemia     73   0,14  0,67
 4                 4. Defic. nutricionais    241   0,46  2,22
 5     5. Infec. ouvido, nariz e garganta    168   0,32  1,55
@@ -554,7 +559,7 @@ descreveCSAP(csap)
 18           18. Úlcera gastrointestinal    195   0,38  1,80
 19                 19. Pré-natal e parto    222   0,43  2,04
 20                            Total CSAP 10.862  20,92   100
-21                              não-CSAP 41.061  79,08    --
+21                               no-CSAP 41.061  79,08    --
 22                  Total de internações 51.923    100    --
 ```
 
@@ -568,7 +573,7 @@ descreveCSAP(csap) |>
 | Grupo                                 |  Casos | %Total | %CSAP |
 |:--------------------------------------|-------:|-------:|------:|
 | 1\. Prev. vacinação e cond. evitáveis |    116 |   0,22 |  1,07 |
-| 2\. Gastroenterite                    |    802 |   1,54 |  7,38 |
+| 2\. Gastroenterites                   |    802 |   1,54 |  7,38 |
 | 3\. Anemia                            |     73 |   0,14 |  0,67 |
 | 4\. Defic. nutricionais               |    241 |   0,46 |  2,22 |
 | 5\. Infec. ouvido, nariz e garganta   |    168 |   0,32 |  1,55 |
@@ -587,7 +592,7 @@ descreveCSAP(csap) |>
 | 18\. Úlcera gastrointestinal          |    195 |   0,38 |  1,80 |
 | 19\. Pré-natal e parto                |    222 |   0,43 |  2,04 |
 | Total CSAP                            | 10.862 |  20,92 |   100 |
-| não-CSAP                              | 41.061 |  79,08 |     – |
+| no-CSAP                               | 41.061 |  79,08 |     – |
 | Total de internações                  | 51.923 |    100 |     – |
 
 Entretanto, ao transformar os valores para o formato latino, sua classe
@@ -684,7 +689,7 @@ tabCSAP(listaOPS$grupo)
                                  grupo  casos perctot percsap
 1               1. Prev. por vacinação    127    0.02    0.13
 2            2. Outras cond. evitáveis   1316    0.21    1.31
-3                    3. Gastroenterite   4205    0.68    4.20
+3                   3. Gastroenterites   4205    0.68    4.20
 4                            4. Anemia    695    0.11    0.69
 5               5. Defic. nutricionais   1765    0.29    1.76
 6   6. Infec. ouvido, nariz e garganta    954    0.15    0.95
@@ -703,7 +708,7 @@ tabCSAP(listaOPS$grupo)
 19         19. Úlcera gastrointestinal   2261    0.37    2.26
 20               20. Pré-natal e parto   2260    0.37    2.25
 21                          Total CSAP 100228   16.23  100.00
-22                            Não-CSAP 517199   83.77      NA
+22                             No-CSAP 517199   83.77      NA
 23                Total de internações 617427  100.00      NA
 ```
 
@@ -755,6 +760,8 @@ capturada com o seguinte comando,
 
 ``` r
 clpop <- csapAIH::popbr2000_2021(2021, munic = "430520")
+Setting `max_tries = 2`.
+Setting `max_tries = 2`.
 ```
 
 Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da
@@ -790,7 +797,7 @@ clpop %>%
 16 75-79     167   219
 17 80 e +    192   361
 brpop::mun_sex_pop() %>% 
-  filter(mun == "430520", year == 2021, age_group != "Total") %>% 
+  filter(code_muni == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
   summarise(pop = sum(pop)) %>% 
   tidyr::pivot_wider(names_from = sex, values_from = pop)
@@ -833,7 +840,7 @@ tabCSAP(claih$grupo) %>%
 | grupo                                 | casos | perctot | percsap |    taxa |
 |:--------------------------------------|------:|--------:|--------:|--------:|
 | 1\. Prev. vacinação e cond. evitáveis |     2 |     0,3 |     1,9 |    14,0 |
-| 2\. Gastroenterite                    |     6 |     0,8 |     5,6 |    42,1 |
+| 2\. Gastroenterites                   |     6 |     0,8 |     5,6 |    42,1 |
 | 3\. Anemia                            |     0 |     0,0 |     0,0 |     0,0 |
 | 4\. Defic. nutricionais               |     0 |     0,0 |     0,0 |     0,0 |
 | 5\. Infec. ouvido, nariz e garganta   |     2 |     0,3 |     1,9 |    14,0 |
@@ -852,7 +859,7 @@ tabCSAP(claih$grupo) %>%
 | 18\. Úlcera gastrointestinal          |     0 |     0,0 |     0,0 |     0,0 |
 | 19\. Pré-natal e parto                |     0 |     0,0 |     0,0 |     0,0 |
 | Total CSAP                            |   108 |    15,3 |   100,0 |   758,3 |
-| Não-CSAP                              |   599 |    84,7 |      NA | 4.205,6 |
+| No-CSAP                               |   599 |    84,7 |      NA | 4.205,6 |
 | Total de internações                  |   707 |   100,0 |      NA | 4.963,8 |
 
 ICSAP em Cerro Largo, RS, 2021. Taxas por 100.000 hab.

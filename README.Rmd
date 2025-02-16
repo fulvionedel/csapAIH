@@ -9,7 +9,7 @@ output:
     toc: true
     toc_depth: 3
 link-citations: yes
-bibliography: docs/pacote.bib
+bibliography: inst/pacote.bib
 # csl: docs/vancouver-superscript.csl
 # https://github.com/citation-style-language/styles
 # csl: https://raw.githubusercontent.com/citation-style-language/styles/master/research-institute-for-nature-and-forest.csl
@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 # Apresentação
 
-Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH" e, atualmente, do Sistema de Informações sobre Mortalidade (SIM).
+Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH" e, atualmente, do Sistema de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e contagens populacionais por sexo e faixa etária para os municípios brasileiros, de 2012 a 2024.
 
 # Justificativa
 
@@ -78,9 +78,9 @@ Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP`
 A partir da versão 0.0.3 [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
 Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009]. Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`).
-Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019], para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando. Foram criadas outras funções para facilitar o manejo e apresentação de dados em estudos ecológicos, como a categorização da idade em faixas etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de parto (`partos`), particularmente para o Brasil e os arquivos do DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a lista de procedimentos obstétricos em internações por eventos não mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os casos como "não" (embora estivessem classificados corretamente na variável `grupo`).
+Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019], para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando. Foram criadas outras funções para facilitar o manejo e apresentação de dados em estudos ecológicos, como a categorização da idade em faixas etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de parto (`partos`), particularmente para o Brasil e os arquivos do DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a lista de procedimentos obstétricos em internações por eventos não mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os casos como "não" (embora estivessem classificados corretamente na variável `grupo`). A v0.0.4.6 corrige um erro em `ler_popbr` e, principalmente, acrescenta a possibilidade de leitura dos arquivos com as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além de incluir novas possiblidades em `nomesgruposCSAP`.
 
-A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf) ou, no R, com `?'csapAIH-package'`.
+A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.6.pdf) ou, no R, com `?'csapAIH-package'`.
 
 
 # Dependências
@@ -328,7 +328,7 @@ clpop %>%
   summarise(pop = sum(pop)) %>% 
   tidyr::pivot_wider(names_from = sexo, values_from = pop)
 brpop::mun_sex_pop() %>% 
-  filter(mun == "430520", year == 2021, age_group != "Total") %>% 
+  filter(code_muni == "430520", year == 2021, age_group != "Total") %>% 
   group_by(age_group, sex) %>% 
   summarise(pop = sum(pop)) %>% 
   tidyr::pivot_wider(names_from = sex, values_from = pop)
