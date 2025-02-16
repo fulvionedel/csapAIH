@@ -1,5 +1,4 @@
-csapAIH: <font size="2"> Classificar Condições Sensíveis à Atenção
-Primária</font>
+csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
 Fúlvio Borges Nedel
 Atualizado em 16 de fevereiro de 2025

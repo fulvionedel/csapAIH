@@ -1,5 +1,5 @@
 ---
-title: 'csapAIH: <font size="2"> Classificar Condições Sensíveis à Atenção Primária</font>'
+title: 'csapAIH: Classificar Condições Sensíveis à Atenção Primária'
 author: "Fúlvio Borges Nedel"
 date: |
   | Atualizado em `r format(Sys.Date(), c("%d de %B de %Y"))`
