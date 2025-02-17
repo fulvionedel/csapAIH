@@ -2,8 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  articles/indicadores: indicadores.html
-last_built: 2025-02-16T20:52Z
+  articles/exemplos: exemplos.html
+last_built: 2025-02-17T02:54Z
 urls:
   reference: https://fulvionedel.github.io/csapAIH/reference
   article: https://fulvionedel.github.io/csapAIH/articles
