@@ -25,6 +25,7 @@ Imports: data.table,
          haven
 Remotes: microdatasus@2.3.1,
          read.dbc@1.0.7
+         https://github.com/fulvionedel/Rcoisas
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
