@@ -1,6 +1,5 @@
 url: https://fulvionedel.github.io/csapAIH/
 template:
   bootstrap: 5
-  bootswatch: spacelab
+  bootswatch: lumen
 lang: pt
-
