@@ -14,13 +14,13 @@ library(csapAIH)
 library(dplyr) # facilitar o trabalho
 ```
 
-## Classificação da causa (código CID-10)
+# Classificação da causa (código CID-10)
 
-### Em arquivos de dados
+## Em arquivos de dados
 
 É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV, sem necessidade da leitura prévia dos dados. Para outras extensões de arquivo é necessária a prévia importação dos dados para um objeto de classe `data.frame`.
 
-#### Arquivos do DATASUS
+### Arquivos do DATASUS
 
 Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.  
 
@@ -93,9 +93,9 @@ csap <- csap.ftp
 rm(csap.csv, csap.dbc, csap.dbf, csap.ftp)
 ```
 
-### Em um banco de dados existente na sessão de trabalho
+## Em um banco de dados existente na sessão de trabalho
 
-#### Com a estrutura dos arquivos da AIH
+### Com a estrutura dos arquivos da AIH
   
 ```{r}
 read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
@@ -103,11 +103,11 @@ read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
   glimpse()
 ```
 
-#### Sem o padrão dos arquivos da AIH
+### Sem o padrão dos arquivos da AIH
 
 Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`) são acrescentadas ao final do banco de dados alvo da função.
 
-##### A _Encuesta de Egresos Hospitalarios_ do Equador.
+#### A _Encuesta de Egresos Hospitalarios_ do Equador.
 
 ```{r}
 data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2020
@@ -123,7 +123,7 @@ csap.eeh20[c(30,37:38)] |>
   head(3) 
 ```
 
-##### A Declaração de Óbito (DO) do SIM 
+#### A Declaração de Óbito (DO) do SIM 
 
 A variável `CAUSABAS` tem o código da causa básica do óbito.
 
@@ -140,7 +140,7 @@ DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
 ```
 
   
-### A partir de uma variável com códigos da CID-10:
+## A partir de uma variável com códigos da CID-10:
 
 ```{r}
 cids <- aih100$DIAG_PRINC[1:10]
@@ -149,9 +149,9 @@ csapAIH(cids)
 ```
 
 
-## Apresentação de resultados 
+# Apresentação de resultados 
 
-### Resumo de importação de dados
+## Resumo de importação de dados
 
 Um resumo de importação, apresentado durante a realização do trabalho, é guardado como atributo do banco de dados e pode ser recuperado com as funções `attr()` ou `attributes()`:
 
@@ -169,7 +169,7 @@ attributes(csap)$resumo |>
   suppressWarnings()
 ```
        
-### Tabela "bruta"
+## Tabela "bruta"
 
 A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela pronta para apresentação, com as frequências brutas e absolutas das CSAP por grupo de causa.
 
@@ -177,7 +177,7 @@ A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela
 descreveCSAP(csap)
 ```
  
-### Tabela para apresentação
+## Tabela para apresentação
 
 ```{r}
 descreveCSAP(csap) |>
@@ -206,13 +206,13 @@ tabCSAP(listaOPS$grupo)
 ```
 
 
-### Calcular taxas
+## Calcular taxas
 
 **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:**
 
 O código IBGE (os seis primeiros dígitos) de Cerro Largo é "430520".
 
-#### As ICSAP
+### As ICSAP
 
 Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021.
 
@@ -224,7 +224,7 @@ claih <- AIHRS2021 %>%
 ```
 
 
-#### A população
+### A população
 
 Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)). 
 
@@ -248,7 +248,7 @@ brpop::mun_sex_pop() %>%
   tidyr::pivot_wider(names_from = sex, values_from = pop)
 ```
 
-#### A tabela com as taxas
+### A tabela com as taxas
 
 ```{r}
 cte <- 1e5
@@ -260,14 +260,14 @@ tabCSAP(claih$grupo) %>%
 ```
 
 
-### Gráficos
+## Gráficos
 
 ```{r out.width="50%", fig.align='center', message=FALSE}
 gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4)
 gr
 ```
 
-#### Estratificado por categorias de outra variável presente no banco de dados:
+### Estratificado por categorias de outra variável presente no banco de dados:
 
 Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
   
