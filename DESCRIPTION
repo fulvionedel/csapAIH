@@ -15,6 +15,7 @@ Suggests:
     ggplot2,
     knitr,
     microdatasus,
+    Rcoisas,
     read.dbc,
     rmarkdown,
     scales,
