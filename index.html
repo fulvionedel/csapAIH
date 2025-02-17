@@ -56,8 +56,12 @@
 </h1></div>
 <p>Fúlvio Borges Nedel Atualizado em 17 de fevereiro de 2025</p>
 <ul>
-<li><a href="#apresenta%C3%A7%C3%A3o">Apresentação</a></li>
+<li>
+<a href="#apresenta%C3%A7%C3%A3o">Apresentação</a>
+<ul>
 <li><a href="#justificativa">Justificativa</a></li>
+</ul>
+</li>
 <li><a href="#instala%C3%A7%C3%A3o">Instalação</a></li>
 <li><a href="#conte%C3%BAdo-timeline">Conteúdo (<em>timeline</em>)</a></li>
 <li><a href="#depend%C3%AAncias">Dependências</a></li>
@@ -72,13 +76,13 @@
 <h1 id="apresentação">Apresentação<a class="anchor" aria-label="anchor" href="#apresenta%C3%A7%C3%A3o"></a>
 </h1>
 <p>Pacote em <strong>R</strong> para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os “arquivos da AIH” (<code>RD??????.DBC</code>), que podem ser expandidos para o formato DBF (<code>RD??????.DBF</code>), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os “arquivos da AIH” e, atualmente, do Sistema de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e contagens populacionais por sexo e faixa etária para os municípios brasileiros, de 2012 a 2024.</p>
-</div>
-<div class="section level1">
-<h1 id="justificativa">Justificativa<a class="anchor" aria-label="anchor" href="#justificativa"></a>
-</h1>
+<div class="section level2">
+<h2 id="justificativa">Justificativa<a class="anchor" aria-label="anchor" href="#justificativa"></a>
+</h2>
 <p>A hospitalização por CSAP é um indicador da efetividade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições —pneumonia, infecção urinária, sarampo, diabetes etc.— só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças evitáveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete). (<a href="#ref-Nedel2011">Nedel et al. 2011</a>)</p>
 <p>O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. (<a href="#ref-MS2008lista">Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde 2008</a>; <a href="#ref-Alfradique2009">Alfradique et al. 2009</a>) A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados <a href="https://datasus.saude.gov.br/transferencia-de-arquivos/" class="external-link">TabWin</a> a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.</p>
 <p>Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. (<a href="#ref-Nedel2008">Nedel et al. 2008</a>) E não conheço outro programa ou <em>script</em> (além do que tive de escrever em minha tese (<a href="#ref-NedelTese">Nedel 2009</a>)) que automatize esse trabalho.</p>
+</div>
 </div>
 <div class="section level1">
 <h1 id="instalação">Instalação<a class="anchor" aria-label="anchor" href="#instala%C3%A7%C3%A3o"></a>
