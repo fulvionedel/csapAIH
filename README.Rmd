@@ -1,7 +1,9 @@
 ---
 title: 'csapAIH: Classificar Condições Sensíveis à Atenção Primária'
-date: |
-  | Atualizado em `r format(Sys.Date(), c("%d de %B de %Y"))`
+date: | 
+  | Em atualização
+  <!-- | Atualizado em  -->
+  | `r format(Sys.Date(), c("%d de %B de %Y"))`
 output: 
   github_document:
     toc: yes
