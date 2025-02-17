@@ -30,12 +30,12 @@ O código abaixo cria um banco com as informações das AIHs do "ano de competê
 # remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
 AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
                                          information_system = "SIH-RD")
-nrow(AIHRS2021) |> Rcoisas::formatL(digits = 0) # linhas
+nrow(AIHRS2021) # linhas
 ncol(AIHRS2021) # colunas
 
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
                                         information_system = "SIM-DO") 
-nrow(DORS2021) |> Rcoisas::formatL(digits = 0)
+nrow(DORS2021) 
 ncol(DORS2021)
 ```
 
@@ -251,12 +251,11 @@ brpop::mun_sex_pop() %>%
 ### A tabela com as taxas
 
 ```{r}
-cte <- 1e5
 tabCSAP(claih$grupo) %>% 
-  mutate(taxa = casos / sum(clpop$pop)*cte) %>% 
+  mutate(taxa = casos / sum(clpop$pop)*10000) %>% 
   knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, 
-               caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por", 
-                               Rcoisas::formatL(cte, digits = 0), "hab.")) 
+               caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por", 10.000, "hab."
+                               ))
 ```
 
 
