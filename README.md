@@ -1,6 +1,10 @@
 csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
-Atualizado em 17 de fevereiro de 2025
+Em atualização
+
+<!-- | Atualizado em  -->
+
+17 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
   - [Justificativa](#justificativa)
