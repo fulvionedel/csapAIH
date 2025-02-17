@@ -26,7 +26,7 @@ Imports: data.table,
 Remotes: microdatasus@2.3.1,
          read.dbc@1.0.7
 Additional_repositories: 
-  https://github.com/fulvionedel/Rcoisas
+         https://github.com/fulvionedel/Rcoisas
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
