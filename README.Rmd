@@ -1,6 +1,5 @@
 ---
 title: 'csapAIH: Classificar Condições Sensíveis à Atenção Primária'
-author: "Fúlvio Borges Nedel"
 date: |
   | Atualizado em `r format(Sys.Date(), c("%d de %B de %Y"))`
 output: 
@@ -45,7 +44,7 @@ A hospitalização por CSAP é um indicador da efetividade do sistema de saúde 
 
 O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. [@MS2008lista;@Alfradique2009] A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/) a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.
 
-Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. [@Nedel2008] E não conheço outro programa ou *script* (além do que tive de escrever em minha tese [@NedelTese]) que automatize esse trabalho.
+Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. [@Nedel2008] 
 
 # Instalação
 

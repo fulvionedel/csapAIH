@@ -1,6 +1,5 @@
 csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
-Fúlvio Borges Nedel
 Atualizado em 17 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
@@ -63,9 +62,7 @@ a tabela definida pelo usuário.
 
 Entretanto, muitas vezes a pesquisa exige a classificação de cada
 internação individual como uma variável na base de dados. ([Nedel et al.
-2008](#ref-Nedel2008)) E não conheço outro programa ou *script* (além do
-que tive de escrever em minha tese ([Nedel 2009](#ref-NedelTese))) que
-automatize esse trabalho.
+2008](#ref-Nedel2008))
 
 # Instalação
 
@@ -228,29 +225,9 @@ Ministério da Saúde.
 
 </div>
 
-<div id="ref-NedelTese" class="csl-entry">
-
-Nedel, Fúlvio Borges. 2009.
-“<span class="nocase">Interna<span class="nocase">ç</span><span class="nocase">õ</span>es
-hospitalares evit<span class="nocase">á</span>veis pela
-aten<span class="nocase">ç</span><span class="nocase">ã</span>o
-prim<span class="nocase">á</span>ria: estudo do impacto do Programa
-Sa<span class="nocase">ú</span>de da Fam<span class="nocase">ı́</span>lia
-sobre as
-interna<span class="nocase">ç</span><span class="nocase">õ</span>es por
-Condi<span class="nocase">ç</span><span class="nocase">õ</span>es
-Sens<span class="nocase">ı́</span>veis <span class="nocase">à</span>
-Aten<span class="nocase">ç</span><span class="nocase">ã</span>o
-Prim<span class="nocase">á</span>ria no Rio Grande do Sul,
-Brasil.</span>” PhD thesis, Pelotas, RS: Universidade Federal de
-Pelotas - UFPel.
-<http://repositorio.ufpel.edu.br:8080/bitstream/prefix/3654/1/tese%20nedel.pdf>.
-
-</div>
-
 <div id="ref-Nedel2017" class="csl-entry">
 
-———. 2017. “<span class="nocase">csapAIH: uma
+Nedel, Fúlvio Borges. 2017. “<span class="nocase">csapAIH: uma
 fun<span class="nocase">ç</span><span class="nocase">ã</span>o para a
 classifica<span class="nocase">ç</span><span class="nocase">ã</span>o
 das condi<span class="nocase">ç</span><span class="nocase">õ</span>es
