@@ -1,7 +1,7 @@
 csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
 Fúlvio Borges Nedel
-Atualizado em 16 de fevereiro de 2025
+Atualizado em 17 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
 - [Justificativa](#justificativa)
