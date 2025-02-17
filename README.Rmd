@@ -39,7 +39,7 @@ knitr::opts_chunk$set(
 
 Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH" e, atualmente, do Sistema de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e contagens populacionais por sexo e faixa etária para os municípios brasileiros, de 2012 a 2024.
 
-# Justificativa
+## Justificativa
 
 A hospitalização por CSAP é um indicador da efetividade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições ---pneumonia, infecção urinária, sarampo, diabetes etc.---  só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças evitáveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete). [@Nedel2011]
 

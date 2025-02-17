@@ -4,7 +4,7 @@ Fúlvio Borges Nedel
 Atualizado em 17 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
-- [Justificativa](#justificativa)
+  - [Justificativa](#justificativa)
 - [Instalação](#instalação)
 - [Conteúdo (*timeline*)](#conteúdo-timeline)
 - [Dependências](#dependências)
@@ -37,7 +37,7 @@ de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e
 contagens populacionais por sexo e faixa etária para os municípios
 brasileiros, de 2012 a 2024.
 
-# Justificativa
+## Justificativa
 
 A hospitalização por CSAP é um indicador da efetividade do sistema de
 saúde em sua primeira instância de atenção, uma vez que a internação por
