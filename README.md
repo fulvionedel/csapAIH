@@ -68,20 +68,19 @@ internação individual como uma variável na base de dados. ([Nedel et al.
 
 # Instalação
 
-A última versão lançada do pacote `csapAIH` pode ser instalada no **R**
-de diferentes maneiras:
+A última versão lançada do pacote pode ser instalada no **R**:
 
 - baixando o arquivo de instalação no
-  [SourceForge](https://sourceforge.net/projects/csapaih/files/latest/download)
-  e depois instalando, com a IDE de preferência ou com o comando
+  [SourceForge](https://sourceforge.net/projects/csapaih/) e depois
+  instalando, com a IDE de preferência ou com o comando
   `install.packages("csapAIH_<versão>.tar.gz")` (em Linux ou Mac) ou
-  `install.packages("csapAIH_<versão>.zip")` (em Windows);
+  `install.packages("csapAIH_<versão>.zip")` (em Windows); ou
 
 - com a função `install.packages()` sobre o arquivo tar.gz no
-  [SourceForge](https://sourceforge.net/projects/csapaih/files/latest/download)
+  [SourceForge](https://sourceforge.net/projects/csapaih/files/)
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/latest/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.5/v0.0.4.5%20source%20code.tar.gz/download", type = "source", repos = NULL) 
 ```
 
 A versão em desenvolvimento pode ser instalada através do pacote
