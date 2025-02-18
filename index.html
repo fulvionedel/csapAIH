@@ -55,9 +55,8 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="csapaih-classificar-condições-sensíveis-à-atenção-primária">csapAIH: Classificar Condições Sensíveis à Atenção Primária<a class="anchor" aria-label="anchor" href="#csapaih-classificar-condi%C3%A7%C3%B5es-sens%C3%ADveis-%C3%A0-aten%C3%A7%C3%A3o-prim%C3%A1ria"></a>
 </h1></div>
-<p>Em atualização</p>
-<!-- | Atualizado em  -->
-<p>17 de fevereiro de 2025</p>
+<!-- | Em atualização -->
+<p>18 de fevereiro de 2025</p>
 <ul>
 <li>
 <a href="#apresenta%C3%A7%C3%A3o">Apresentação</a>
@@ -90,17 +89,14 @@
 <div class="section level1">
 <h1 id="instalação">Instalação<a class="anchor" aria-label="anchor" href="#instala%C3%A7%C3%A3o"></a>
 </h1>
-<p>O pacote <code>csapAIH</code> pode ser instalado no <strong>R</strong> de diferentes maneiras:</p>
+<p>A última versão lançada do pacote <code>csapAIH</code> pode ser instalada no <strong>R</strong> de diferentes maneiras:</p>
 <ul>
-<li><p>baixando o arquivo de instalação no <a href="https://sourceforge.net/projects/csapaih/" class="external-link">SourceForge</a> e depois instalando, com a IDE de preferência ou com o comando <code>install.packages("csapAIH_&lt;versão&gt;.tar.gz")</code> (em Linux ou Mac) ou <code>install.packages("csapAIH_&lt;versão&gt;.zip")</code> (em Windows);</p></li>
-<li><p>com a função <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> sobre o arquivo tar.gz no <a href="https://sourceforge.net/projects/csapaih/" class="external-link">SourceForge</a> <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Como informado por &lt;a href="https://github.com/fulvionedel/csapAIH/issues/13#top" class="external-link"&gt;Rafael Barros&lt;/a&gt;, a instalação pelo arquivo .zip da internet resulta em erro. Estranhamente (pra mim, ao menos), uma vez baixado, o arquivo .zip é instalado sem erro.&lt;/p&gt;'><sup>1</sup></a>:</p></li>
+<li><p>baixando o arquivo de instalação no <a href="https://sourceforge.net/projects/csapaih/files/latest/download" class="external-link">SourceForge</a> e depois instalando, com a IDE de preferência ou com o comando <code>install.packages("csapAIH_&lt;versão&gt;.tar.gz")</code> (em Linux ou Mac) ou <code>install.packages("csapAIH_&lt;versão&gt;.zip")</code> (em Windows);</p></li>
+<li><p>com a função <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> sobre o arquivo tar.gz no <a href="https://sourceforge.net/projects/csapaih/files/latest/download" class="external-link">SourceForge</a></p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.5.tar.gz/download"</span>, type <span class="op">=</span> <span class="st">"source"</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> </span></code></pre></div>
-<p>ou</p>
-<ul>
-<li>através do pacote <code>remotes</code> sobre os arquivos-fonte da versão em desenvolvimento, no <a href="https://github.com/fulvionedel/csapAIH" class="external-link">GitHub</a>:</li>
-</ul>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"https://sourceforge.net/projects/csapaih/files/latest/download"</span>, type <span class="op">=</span> <span class="st">"source"</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> </span></code></pre></div>
+<p>A versão em desenvolvimento pode ser instalada através do pacote <code>remotes</code> sobre os arquivos-fonte no <a href="https://github.com/fulvionedel/csapAIH" class="external-link">GitHub</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes") # desnecessário se o pacote já estiver instalado</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"fulvionedel/csapAIH"</span><span class="op">)</span></span></code></pre></div>
@@ -117,11 +113,11 @@
 <div class="section level1">
 <h1 id="dependências">Dependências<a class="anchor" aria-label="anchor" href="#depend%C3%AAncias"></a>
 </h1>
-<p>A leitura de arquivos .DBC exige a instalação prévia do pacote <a href="https://cran.r-project.org/web/packages/read.dbc/index.html" class="external-link"><code>read.dbc</code></a> (<a href="#ref-readdbc">Petruzalek 2016</a>). Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). Da mesma forma, <code>popbr2000_2021</code> exige a instalação do pacote<a href="https://rfsaldanha.github.io/brpop/" class="external-link"><code>brpop</code></a> e <code>fetchcsap</code> exige a instalação do pacote <a href="https://github.com/rfsaldanha/microdatasus" class="external-link"><code>microdatasus</code></a>.</p>
+<p>A leitura de arquivos .DBC exige a instalação prévia do pacote <a href="https://cran.r-project.org/web/packages/read.dbc/index.html" class="external-link"><code>read.dbc</code></a> (<a href="#ref-readdbc">Petruzalek 2016</a>). Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). Da mesma forma, <code>popbr2000_2021</code> exige a instalação do pacote<a href="https://rfsaldanha.github.io/brpop/" class="external-link"><code>brpop</code></a> (mas a função é mantida apenas para documentação) e <code>fetchcsap</code> exige a instalação do pacote <a href="https://github.com/rfsaldanha/microdatasus" class="external-link"><code>microdatasus</code></a>.</p>
 <p>A função <code>desenhaCSAP</code> tem melhor desempenho com o pacote <code>ggplot2</code> instalado, mas sua instalação não é necessária para que ela funcione.</p>
 <p>A função <code>popbr2000_2021</code> usa o pacote <a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a>, que é importado. O pacote <a href="https://cran.r-project.org/package=haven" class="external-link"><code>haven</code></a> também é importado. A partir da v0.0.4.4 <a href="https://cran.r-project.org/web/packages/Hmisc/index.html" class="external-link"><code>Hmisc</code></a> não é mais. <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). --></p>
 <hr>
-<p><strong><em>Veja o manual do pacote em:</em></strong> <a href="https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf" class="external-link uri">https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf</a></p>
+<p><strong><em>Veja o manual do pacote em:</em></strong> <a href="https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.6.pdf" class="external-link uri">https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.6.pdf</a></p>
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 </div>
 <div class="section level1">
@@ -170,7 +166,6 @@ Saldanha, Raphael de Freitas, Ronaldo Rocha Bastos, and Christovam Barcellos. 20
 </div>
 </div>
 </div>
-
 
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
