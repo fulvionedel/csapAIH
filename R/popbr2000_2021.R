@@ -14,13 +14,11 @@
 #'
 #' @details
 #'
-#' Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012) e, após um hiato nas informações, foram publicadas as "Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021", passou a ser necessária a tabulação no TABNET e posterior leitura dessas tabelas no programa de análise.
+#' Até a recente publicação dos dados do Censo 2022 e após um hiato na publicação de estimativas populacionais, em que o último arquivo de dados publicado no DATASUS era da população em 2012, trabalhávamos com as "Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021", que podiam ser tabuladas no TABNET mas cujos arquivos de dados não estavam disponíveis.
 #'
-#' Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)).
+#' Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas tabulações necessárias e nos brindou o pacote \code{\link{brpop}}, com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021. Entretanto, as tabelas em \emph{brpop} tinham (têm) o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estavam (estão) em inglês, por isso criei outra função (\code{popbr2000_2021}) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total).
 #'
-#' Entretanto, as tabelas no pacote *brpop* tinham (têm) o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estavam (estão) em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total).
-#'
-#' Com o Censo 2022 viu-se que os resultados estavam superestimados (Nota técnica) e foi realizado novo estudo, atualizando aquelas informações e expandindo o período até 2024. Essas novas informações voltaram a ser publicadas em arquivos no servidor FTP do DATASUS, facilitando seu uso como banco de dados, sem exigir a tabulação no TABNET.
+#' Com o Censo 2022 viu-se que os resultados estavam superestimados e as informações foram atualizadas e o período expandido até 2024. Essas novas informações voltaram a ser publicadas em arquivos no servidor FTP do DATASUS, facilitando seu uso como banco de dados, sem exigir a tabulação no TABNET.
 #'
 #' Assim, a função \code{popbr2000_2021} não é mais necessária e não deve ser usada em novos estudos, a não ser para análises metodológicas e comparação de resultados com as medidas atualizadas. Por esse motivo ela é mantida no pacote.
 #'

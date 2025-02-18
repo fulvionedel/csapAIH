@@ -27,6 +27,9 @@ Com a atualização das estimativas populacionais após o Censo 2022, o Departam
 ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/ e  ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/.
 
 
+Com a atualização das estimativas populacionais após o Censo 2022, o Departamento de Informática do SUS (DATASUS) voltou a disponibilizar arquivos com as contagens e estimativas da população por sexo e faixa etária para os municípios brasileiros. Assim, além das tabulações no [TABNET](página), podemos novamente baixar os arquivos na página de [download de arquivos](página) ou no site FTP do DATASUS, em 
+ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/ e  ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/.
+
 
 ```{r}
 clpop <- csapAIH::popbr2000_2021(2021, munic = "430520")

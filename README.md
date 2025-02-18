@@ -1,10 +1,8 @@
 csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
-Em atualização
+<!-- | Em atualização -->
 
-<!-- | Atualizado em  -->
-
-17 de fevereiro de 2025
+18 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
   - [Justificativa](#justificativa)
@@ -70,25 +68,25 @@ internação individual como uma variável na base de dados. ([Nedel et al.
 
 # Instalação
 
-O pacote `csapAIH` pode ser instalado no **R** de diferentes maneiras:
+A última versão lançada do pacote `csapAIH` pode ser instalada no **R**
+de diferentes maneiras:
 
 - baixando o arquivo de instalação no
-  [SourceForge](https://sourceforge.net/projects/csapaih/) e depois
-  instalando, com a IDE de preferência ou com o comando
+  [SourceForge](https://sourceforge.net/projects/csapaih/files/latest/download)
+  e depois instalando, com a IDE de preferência ou com o comando
   `install.packages("csapAIH_<versão>.tar.gz")` (em Linux ou Mac) ou
   `install.packages("csapAIH_<versão>.zip")` (em Windows);
 
 - com a função `install.packages()` sobre o arquivo tar.gz no
-  [SourceForge](https://sourceforge.net/projects/csapaih/) [^1]:
+  [SourceForge](https://sourceforge.net/projects/csapaih/files/latest/download)
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/csapAIH_0.0.4.5.tar.gz/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/latest/download", type = "source", repos = NULL) 
 ```
 
-ou
-
-- através do pacote `remotes` sobre os arquivos-fonte da versão em
-  desenvolvimento, no [GitHub](https://github.com/fulvionedel/csapAIH):
+A versão em desenvolvimento pode ser instalada através do pacote
+`remotes` sobre os arquivos-fonte no
+[GitHub](https://github.com/fulvionedel/csapAIH):
 
 ``` r
 # install.packages("remotes") # desnecessário se o pacote já estiver instalado
@@ -159,9 +157,9 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote
 ([Petruzalek 2016](#ref-readdbc)). Sua falta não impede o funcionamento
 das demais funções do pacote (inclusive de leitura de arquivos em outro
 formato). Da mesma forma, `popbr2000_2021` exige a instalação do
-pacote[`brpop`](https://rfsaldanha.github.io/brpop/) e `fetchcsap` exige
-a instalação do pacote
-[`microdatasus`](https://github.com/rfsaldanha/microdatasus).
+pacote[`brpop`](https://rfsaldanha.github.io/brpop/) (mas a função é
+mantida apenas para documentação) e `fetchcsap` exige a instalação do
+pacote [`microdatasus`](https://github.com/rfsaldanha/microdatasus).
 
 A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2`
 instalado, mas sua instalação não é necessária para que ela funcione.
@@ -177,7 +175,7 @@ importado. A partir da v0.0.4.4
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.5.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.6.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
@@ -319,9 +317,3 @@ do Departamento de Inform<span class="nocase">á</span>tica do SUS
 </div>
 
 </div>
-
-[^1]: Como informado por [Rafael
-    Barros](https://github.com/fulvionedel/csapAIH/issues/13#top), a
-    instalação pelo arquivo .zip da internet resulta em erro.
-    Estranhamente (pra mim, ao menos), uma vez baixado, o arquivo .zip é
-    instalado sem erro.
