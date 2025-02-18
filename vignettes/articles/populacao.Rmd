@@ -18,11 +18,9 @@ library(csapAIH)
 library(dplyr) # facilitar o trabalho
 ```
 
-Com a atualização das estimativas populacionais após o Censo 2022, o Departamento de Informática do SUS (DATASUS) voltou a disponibilizar arquivos com as contagens e estimativas da população por sexo e faixa etária para os municípios brasileiros. 
+Com a atualização das estimativas populacionais após o Censo 2022, o Departamento de Informática do SUS (DATASUS) voltou a disponibilizar arquivos com as contagens e estimativas da população por sexo e faixa etária para os municípios brasileiros. Assim, além das tabulações no [TABNET](página), podemos novamente baixar os arquivos na página de [download de arquivos](página) ou no site FTP do DATASUS, em 
+ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/ e  ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/.
 
-ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/ e ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/
-
-as estimativas populacionais por sexo e faixa etária para os municípios 
 
 Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)). 
 
