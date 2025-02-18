@@ -12,6 +12,9 @@ ler_popbr(x)
 \description{
 Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e entrega um banco de dados com as variáveis originais mais a faixa etária quinquenal.
 }
+\details{
+Essas informações podem ser tabuladas em http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def
+}
 \examples{
 \dontrun{
 # Um arquivo no computador:
@@ -37,4 +40,7 @@ popBR2024 <- ler_popbr(2024)
 head(popBR2024)
 xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
 
+}
+\references{
+http://tabnet.datasus.gov.br/cgi/IBGE/SEI_MS-0034745983-Nota_Tecnica_final.pdf
 }

@@ -27,12 +27,18 @@ popbr2000_2021(
 Um banco de dados de classes \code{data.table} e \code{data.frame} com oito variáveis: \code{CO_UF, UF_SIGLA, REGIAO, ano, mun, sexo, fxetar5, pop}. A variável sexo é um \code{factor} com dois \code{levels}: "masc" e "fem". A variável \code{fxetar5} representa a idade agrupada em 17 categorias -- 16 faixas quinquenais (0-4, ... 75-79) e a última aberta a partir dos 80 anos (80 e +).
 }
 \description{
-Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote \code{brpop} (\url{https://github.com/rfsaldanha/brpop}), permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo(v. Value). Exige a instalação prévia dos pacotes \code{brpop} e \code{\link{dplyr}}.
+Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021, calculadas antes do Censo 2022. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote \code{brpop} (\url{https://github.com/rfsaldanha/brpop}), permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo(v. Value). Exige a instalação prévia dos pacotes \code{brpop} e \code{\link{dplyr}}. Essas estimativas foram posteriormente  atualizadas e são mantidas aqui apenas para fins de registro e comparação com as medidas e estimativas atuais. (V. Details)
 }
 \details{
-Essas informações podem ser tabuladas em \url{http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def}.
+Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012) e, após um hiato nas informações, foram publicadas as "Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021", passou a ser necessária a tabulação no TABNET e posterior leitura dessas tabelas no programa de análise.
 
-A nota técnica do estudo: \url{http://tabnet.datasus.gov.br/cgi/IBGE/SEI_MS-0034745983-Nota_Tecnica_final.pdf}
+Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)).
+
+Entretanto, as tabelas no pacote *brpop* tinham (têm) o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estavam (estão) em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total).
+
+Com o Censo 2022 viu-se que os resultados estavam superestimados (Nota técnica) e foi realizado novo estudo, atualizando aquelas informações e expandindo o período até 2024. Essas novas informações voltaram a ser publicadas em arquivos no servidor FTP do DATASUS, facilitando seu uso como banco de dados, sem exigir a tabulação no TABNET.
+
+Assim, a função \code{popbr2000_2021} não é mais necessária e não deve ser usada em novos estudos, a não ser para análises metodológicas e comparação de resultados com as medidas atualizadas. Por esse motivo ela é mantida no pacote.
 }
 \examples{
 library(dplyr)
@@ -52,6 +58,11 @@ popbr2000_2021(2014, 2016, munic = "430520") \%>\%
   summarise(pop = sum(pop))
 
 }
+\references{
+Nota técnica atualização: \url{http://tabnet.datasus.gov.br/cgi/IBGE/SEI_MS-0034745983-Nota_Tecnica_final.pdf}
+Nota técnica do estudo original: http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF
+Essas informações podem ser tabuladas em \url{http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def}.
+}
 \seealso{
-\code{\link[brpop]{mun_sex_pop}}
+\code{\link[brpop]{mun_sex_pop}}, \code{\link{ler_popbr}}.
 }
