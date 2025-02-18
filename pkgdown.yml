@@ -3,7 +3,8 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   articles/exemplos: exemplos.html
-last_built: 2025-02-17T23:00Z
+  articles/populacao: populacao.html
+last_built: 2025-02-18T01:46Z
 urls:
   reference: https://fulvionedel.github.io/csapAIH/reference
   article: https://fulvionedel.github.io/csapAIH/articles
