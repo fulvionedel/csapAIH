@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/exemplos: exemplos.html
   articles/populacao: populacao.html
-last_built: 2025-02-18T01:46Z
+last_built: 2025-02-18T01:57Z
 urls:
   reference: https://fulvionedel.github.io/csapAIH/reference
   article: https://fulvionedel.github.io/csapAIH/articles
