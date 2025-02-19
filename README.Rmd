@@ -1,7 +1,7 @@
 ---
 title: 'csapAIH: Classificar Condições Sensíveis à Atenção Primária'
 date: | 
-  | Em atualização
+  <!-- | Em atualização -->
   | `r format(Sys.Date(), c("%d de %B de %Y"))`
 output: 
   github_document:
@@ -56,7 +56,7 @@ A última versão lançada do pacote pode ser instalada no **R**:
   * com a função `install.packages()` sobre o arquivo tar.gz no [SourceForge](https://sourceforge.net/projects/csapaih/files/)
 
 ```{r eval=FALSE}
-install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.6/v0.0.4.6%20source%20code.zip/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.6/v0.0.4.6%20source%20code.tar.gz/download", type = "source", repos = NULL) 
 ```
 
 A versão em desenvolvimento pode ser instalada através do pacote `remotes` sobre os arquivos-fonte no [GitHub](https://github.com/fulvionedel/csapAIH):

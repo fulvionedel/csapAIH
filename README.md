@@ -1,6 +1,7 @@
 csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
-Em atualização  
+<!-- | Em atualização -->
+
 18 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
@@ -79,7 +80,7 @@ A última versão lançada do pacote pode ser instalada no **R**:
   [SourceForge](https://sourceforge.net/projects/csapaih/files/)
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.6/v0.0.4.6%20source%20code.zip/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.6/v0.0.4.6%20source%20code.tar.gz/download", type = "source", repos = NULL) 
 ```
 
 A versão em desenvolvimento pode ser instalada através do pacote
