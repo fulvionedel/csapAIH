@@ -22,6 +22,8 @@ Suggests:
 Imports: data.table,
          dplyr,
          haven
+Remotes: microdatasus@2.3.1,
+         read.dbc@1.0.7
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
