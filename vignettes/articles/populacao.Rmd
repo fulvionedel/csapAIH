@@ -59,6 +59,7 @@ br2024$fxetaria |> unique()
 ```
 
 Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` das estimativas até 2012 e retirar a variável `fxetaria` de todos os bancos.
+Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` e a categoria `IOO` das estimativas até 2012 e a variável `fxetaria` de todos os bancos.
 
 
 ```{r}
