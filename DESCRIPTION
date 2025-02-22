@@ -15,6 +15,7 @@ Suggests:
     ggplot2,
     knitr,
     microdatasus,
+    Rcoisas,
     read.dbc,
     rmarkdown,
     scales,
@@ -23,7 +24,8 @@ Imports: data.table,
          dplyr,
          haven
 Remotes: microdatasus@2.3.1,
-         read.dbc@1.0.7
+         read.dbc@1.0.7,
+         fulvionedel/Rcoisas
 LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
