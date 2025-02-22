@@ -42,7 +42,7 @@ br2024 <- ler_popbr(2024)
 all.equal( str(ler_popbr(2013)), str(br2024) )
 ```
 
-No primeiro período os bancos têm `r Rcoisas::numescrito(ncol(br1980))` variáveis, já de 2013 em diante apenas `r Rcoisas::numescrito(ncol(br2024))`, porque estes últimos não contêm a variável \code{`r names(br1980)[names(br1980) %in% names(br2024) == FALSE]`} (`r levels(br1980$situacao)[1]` ou `r levels(br1980$situacao)[2]`). Além disso, a variável `fxetaria`, que tem o mesmo nome e rótulo nos dois períodos (`r attr(br1980$fxetaria, "label")`, e `r attr(br2024$fxetaria, "label")`) tampouco tem a mesma estrutura nos dois períodos. De 1980 a 2012 a "Faixa etária detalhada" se refere a essa classificação em algumas tabulações do DATASUS, em que a idade é definida anualmente até os 19 anos de idade e em faixas quinquenais até 80 anos ou mais (34 categorias), enquanto nas estimativas atualizadas a "Faixa etária detalhada" é a idade em anos até 80 ou mais (81 categorias).
+No primeiro período os bancos têm `r Rcoisas::numescrito(ncol(br1980))` variáveis, já de 2013 em diante apenas `r Rcoisas::numescrito(ncol(br2024))`, porque estes últimos não contêm a variável \code{`r names(br1980)[names(br1980) %in% names(br2024) == FALSE]`} (`r levels(br1980$situacao)[1]` ou `r levels(br1980$situacao)[2]`). Além disso, a variável `fxetaria`, que tem o mesmo nome e rótulo nos dois períodos (`r attr(br1980$fxetaria, "label")`, e `r attr(br2024$fxetaria, "label")`) tampouco tem a mesma estrutura nos dois períodos. De 1980 a 2012 a "Faixa etária detalhada" se refere a essa classificação em algumas tabulações do DATASUS, em que a idade é definida anualmente até os 19 anos de idade e em faixas quinquenais até 80 anos ou mais (e mais uma categoria para ignorados, com um total de 34 categorias), enquanto nas estimativas atualizadas a "Faixa etária detalhada" é a idade em anos até 80 ou mais (81 categorias).
 
 Vejamos novamente a variável `fxetaria`:
 
@@ -58,8 +58,7 @@ str(br2024$fxetaria)
 br2024$fxetaria |> unique()
 ```
 
-
-Ao ter a mesma estrutura, os bancos podem ser unidos pelo empilhamento de linhas 
+Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso fazer previamente as adequações necessárias, isto é, retirar a variável `situacao` das estimativas até 2012 
 
 
 
@@ -72,5 +71,8 @@ Aqui é apresentado um uso da função, tomando o município de Cerro Largo, RS,
 
 ```{r fig.alt="Pirâmide populacional"}
 Rcoisas::plot_pir(cl2[cl2$ano == 2013, ])
+ler_popbr(2013)
+Rcoisas::ggplot_pir(cl2, "fxetar5", "sexo", "populacao", nsize = 2.5) +
+  ggplot2::facet_wrap(vars(ano))
 ```
 

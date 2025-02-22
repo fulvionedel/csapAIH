@@ -13,6 +13,7 @@ Suggests:
     brpop,
     foreign,
     ggplot2,
+    Hmisc,
     knitr,
     microdatasus,
     Rcoisas,
