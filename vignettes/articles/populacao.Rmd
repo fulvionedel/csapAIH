@@ -24,7 +24,7 @@ Com a atualização das estimativas populacionais após o Censo 2022, o DATASUS 
 além das tabulações no [TABNET](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def),
 podemos novamente baixar os arquivos na página de [download de arquivos](página) ou no site FTP do DATASUS, em <ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/> e <ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/>. [Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2024.PDF)
 
-Portanto, a função `popbr2000_2021` não é mais necessária e é mantida no pacote apenas para documentação, reprodução de resultados anteriores e eventual comparação com as estimativas atualizadas, disponíveis em `ler_popbr` que anteriormente lia os arquivos de [1980 a 2012](ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/) e agora lê as novas estimativas e medidas, disponíveis nos arquivos de [2013 a 2024](ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/).
+Portanto, a função `?popbr2000_2021` não é mais necessária e é mantida no pacote apenas para documentação, reprodução de resultados anteriores e eventual comparação com as estimativas atualizadas, disponíveis em `ler_popbr` que anteriormente lia os arquivos de [1980 a 2012](ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POP/) e agora lê as novas estimativas e medidas, disponíveis nos arquivos de [2013 a 2024](ftp://ftp.datasus.gov.br/dissemin/publicos/IBGE/POPSVS/).
 
 ## Os arquivos de população
 
@@ -59,6 +59,7 @@ br2024$fxetaria |> unique()
 ```
 
 Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` das estimativas até 2012 e retirar a variável `fxetaria` de todos os bancos.
+Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` e a categoria `IOO` das estimativas até 2012 e a variável `fxetaria` de todos os bancos.
 
 
 ```{r}
