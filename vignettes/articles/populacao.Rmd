@@ -59,8 +59,7 @@ str(br2024$fxetaria)
 br2024$fxetaria |> unique()
 ```
 
-Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` das estimativas até 2012 e retirar a variável `fxetaria` de todos os bancos.
-Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` e a categoria `I000` das estimativas até 2012 e a variável `fxetaria` de todos os bancos.
+Assim, se queremos um banco com as estimativas para vários anos, há que se levar em conta se o período desejado inclui arquivos com diferente estrutura e em tal caso retirar a variável `situacao` e as linhas de idade ignorada (registro `I000`) das estimativas até 2012 e retirar a variável `fxetaria` de todos os bancos.
 
 
 ```{r}
@@ -73,7 +72,7 @@ br <- rbind(
   )
 ```
 
-
+Uma tabela com a população por sexo e faixa etária pode ser conseguida da seguinte forma: 
 ```{r}
 br %>% 
   filter(ano %in% c("1980", "2024"), !is.na(fxetar5)) %>% 
@@ -82,17 +81,22 @@ br %>%
   tidyr::pivot_wider(names_from = c(ano, sexo), values_from = populacao) %>% 
   mutate(tot80 = `1980_masc` + `1980_fem`,
          tot24 = `2024_masc` + `2024_fem`) %>% 
-  relocate(tot80, .after = `1980_fem`) #%>% 
-  # adissoma()
+  relocate(tot80, .after = `1980_fem`) %>% 
+  adissoma() %>% 
+  print()
 ```
 
-```{r fig.alt="Pirâmide populacional", results='hide', out.width="48%", fig.show='hold', fig.align='center'}
-Rcoisas::plot_pir(br1980)
-Rcoisas::plot_pir(br2024)
+```{r results='hide', out.width="47%", fig.show='hold', fig.align='center'}
+#| fig.alt: >
+#|   Pirâmide populacional com a função plot_pir
+plot_pir(br1980, local = "Brasil")
+plot_pir(br2024, local = "Brasil")
 ```
 
 ```{r fig.alt="Pirâmide populacional"}
-Rcoisas::ggplot_pir(br, "fxetar5", "sexo", "populacao", nsize = 2.5) +
+#| fig.alt: >
+#|   Pirâmide populacional com a função ggplot_pir
+ggplot_pir(br, "fxetar5", "sexo", "populacao", nsize = 2.5) +
   ggplot2::facet_wrap(vars(ano))
 ```
 
