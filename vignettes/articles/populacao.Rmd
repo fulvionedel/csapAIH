@@ -86,7 +86,7 @@ br %>%
   print()
 ```
 
-```{r results='hide', out.width="47%", fig.show='hold', fig.align='center'}
+```{r results='hide', out.width="45%", fig.show='hold', fig.align='center'}
 #| fig.alt: >
 #|   Pirâmide populacional com a função plot_pir
 plot_pir(br1980, local = "Brasil")
