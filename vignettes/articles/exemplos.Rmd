@@ -266,6 +266,10 @@ tabCSAP(claih$grupo) %>%
 ## Gráficos
 
 ```{r out.width="50%", fig.align='center', message=FALSE}
+#| fig.alt: >
+#|   Gráfico de barras com a distribuição proporcional 
+#|   dos grupos de causa CSAP entre as ICSAP
+
 gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4)
 gr
 ```

@@ -66,10 +66,15 @@ Assim, se queremos um banco com as estimativas para vários anos, há que se lev
 ```{r}
 br <- rbind(
   rbind(br1980, ler_popbr(1991), ler_popbr(2010)) %>%
+    filter(fxetaria != "I000") %>% 
     select(-c(situacao, fxetaria)),
   rbind(ler_popbr(2013), ler_popbr(2022), br2024) %>% 
     select(-fxetaria)
   )
+```
+
+
+```{r}
 br %>% 
   filter(ano %in% c("1980", "2024"), !is.na(fxetar5)) %>% 
   group_by(ano, sexo, fxetar5) %>% 
@@ -81,7 +86,7 @@ br %>%
   # adissoma()
 ```
 
-```{r fig.alt="Pirâmide populacional"}
+```{r fig.alt="Pirâmide populacional", results='hide', out.width="48%", fig.show='hold', fig.align='center'}
 Rcoisas::plot_pir(br1980)
 Rcoisas::plot_pir(br2024)
 ```
