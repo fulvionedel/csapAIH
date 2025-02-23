@@ -2,4 +2,6 @@ url: https://fulvionedel.github.io/csapAIH/
 template:
   bootstrap: 5
   bootswatch: lumen
+  theme: arrow-dark
+  light-switch: true
 lang: pt
