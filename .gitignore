@@ -4,7 +4,5 @@
 .Ruserdata
 *.Rproj
 *_cache/
-/doc/
-/Meta/
 .Rproj.user
 docs
