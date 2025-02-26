@@ -56,7 +56,8 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Essas informações podem ser tabuladas em
+    <p>Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. <code>ler_popbr</code> devolve uma variável (<code>munic_res</code>) de caracteres com os seis primeiros dígitos.</p>
+<p>As informações atualizadas podem ser tabuladas em
  http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def</p>
     </div>
     <div class="section level2">
@@ -111,12 +112,12 @@
 <span class="r-in"><span><span class="va">popBR2013</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2013</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2013</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetaria populacao fxetar5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015 2013 masc      000       201     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015 2013 masc      001       204     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015 2013 masc      002       202     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015 2013 masc      003       198     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015 2013 masc      004       197     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015 2013 masc      005       195     5-9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2013 masc      000       201     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2013 masc      001       204     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2013 masc      002       202     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2013 masc      003       198     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2013 masc      004       197     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2013 masc      005       195     5-9</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2013</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        sexo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5    masc     fem</span>
@@ -141,12 +142,12 @@
 <span class="r-in"><span><span class="va">popBR2024</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2024</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetaria populacao fxetar5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015 2024 masc      000       158     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015 2024 masc      001       159     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015 2024 masc      002       161     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015 2024 masc      003       163     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015 2024 masc      004       168     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015 2024 masc      005       176     5-9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2024 masc      000       158     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2024 masc      001       159     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2024 masc      002       161     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2024 masc      003       163     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2024 masc      004       168     0-4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2024 masc      005       176     5-9</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2024</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        sexo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5    masc     fem</span>
