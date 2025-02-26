@@ -6,3 +6,5 @@
 *_cache/
 .Rproj.user
 docs
+^_pkgdown\.yml$
+^pkgdown$
