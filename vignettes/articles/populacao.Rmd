@@ -1,7 +1,6 @@
 ---
 title: "Estimativas populacionais por sexo e faixa etária para os municípios brasileiros, 1980 - 2024."
 date: |
-  | Atualizado em
   | `r format(Sys.Date(), c("%d de %B de %Y"))`
 ---
 

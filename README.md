@@ -2,7 +2,7 @@ csapAIH: Classificar Condições Sensíveis à Atenção Primária
 ================
 <!-- | Em atualização -->
 
-18 de fevereiro de 2025
+26 de fevereiro de 2025
 
 - [Apresentação](#apresentação)
   - [Justificativa](#justificativa)
@@ -76,11 +76,11 @@ A última versão lançada do pacote pode ser instalada no **R**:
   `install.packages("csapAIH_<versão>.tar.gz")` (em Linux ou Mac) ou
   `install.packages("csapAIH_<versão>.zip")` (em Windows); ou
 
-- com a função `install.packages()` sobre o arquivo tar.gz no
-  [SourceForge](https://sourceforge.net/projects/csapaih/files/)
+- com a função `install.packages()` sobre o link da última versão no
+  [SourceForge](https://sourceforge.net/projects/csapaih/files/):
 
 ``` r
-install.packages("https://sourceforge.net/projects/csapaih/files/v0.0.4.6/v0.0.4.6%20source%20code.tar.gz/download", type = "source", repos = NULL) 
+install.packages("https://sourceforge.net/projects/csapaih/files/latest/download", type = "source", repos = NULL) 
 ```
 
 A versão em desenvolvimento pode ser instalada através do pacote
@@ -139,14 +139,19 @@ lista de procedimentos obstétricos em internações por eventos não
 mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na
 v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os
 casos como “não” (embora estivessem classificados corretamente na
-variável `grupo`). A v0.0.4.6 corrige um erro em `ler_popbr` e,
+variável `grupo`). A v0.0.4.6 corrige um erro em `ler_popbr()` e,
 principalmente, acrescenta a possibilidade de leitura dos arquivos com
 as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além
-de incluir novas possiblidades em `nomesgruposCSAP`.
+de incluir novas possiblidades em `nomesgruposCSAP()`. A atualização de
+`ler_popbr` foi a razão de lançamento dessa versão do pacote, mas depois
+percebi que o código IBGE do município vinha com sete dígitos, diferente
+de tudo o mais no DATASUS e então atualizei a função e lancei nova
+versão do pacote. A diferença da nova versão, v0.0.4.7, está apenas
+nessa atualização.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
-[manual](https://github.com/fulvionedel/csapAIH/blob/master/docs/csapAIH_0.0.4.6.pdf)
+[manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.4.7.pdf)
 ou, no R, com `?'csapAIH-package'`.
 
 # Dependências
@@ -174,7 +179,7 @@ importado. A partir da v0.0.4.4
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.6.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.7.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
