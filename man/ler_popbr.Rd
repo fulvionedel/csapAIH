@@ -13,7 +13,9 @@ ler_popbr(x)
 Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e entrega um banco de dados com as variáveis originais mais a faixa etária quinquenal.
 }
 \details{
-Essas informações podem ser tabuladas em
+Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
+
+ As informações atualizadas podem ser tabuladas em
  http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def
 }
 \examples{

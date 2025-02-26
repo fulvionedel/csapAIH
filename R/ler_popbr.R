@@ -1,11 +1,14 @@
 #' @title Ler arquivos de população do DATASUS
 #' @aliases ler_popbr
+#'
 #' @description Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e entrega um banco de dados com as variáveis originais mais a faixa etária quinquenal.
 #'
 #' @param x Nome do arquivo armazenado no computador, ou ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.
 #'
 #' @details
-#'  Essas informações podem ser tabuladas em
+#'  Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
+#'
+#'  As informações atualizadas podem ser tabuladas em
 #'  http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def
 #'
 #' @references
@@ -85,7 +88,6 @@ ler_popbr <- function(x) {
     names(populacao)[4] <- "fxetaria"
     names(populacao)[5] <- "populacao"
 
-
     populacao$fxetar5 <- populacao$fxetaria |>
       as.character() |>
       as.numeric() |>
@@ -102,6 +104,10 @@ ler_popbr <- function(x) {
                               breaks = c(0, 5:21))
   }
 
+  # Deixar o código IBGE do município com os seis primeiros caracteres (de 2013 em diante tem sete) e a variável como caractere:
+  populacao$munic_res <- as.character(populacao$munic_res) |> substr(1,6)
+
+  # Rótulos para a faixa etária
   levels(populacao$fxetar5) <- c(  "0-4",   "5-9", "10-14", "15-19", "20-24",
                                  "25-29", "30-34", "35-39", "40-44", "45-49",
                                  "50-54", "55-59", "60-64", "65-69", "70-74",
