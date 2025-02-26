@@ -6,10 +6,7 @@ tests/*
 ^README\.Rmd$
 ^LICENSE\.md$
 README_cache/*
-^doc$
 ^vignettes/articles$
-^_pkgdown\.yml$
 ^docs$
-^pkgdown$
 ^\.github$
 ^inst$
