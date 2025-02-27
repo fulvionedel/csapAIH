@@ -15,282 +15,144 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 library(csapAIH)
-library(dplyr) # facilitar o trabalho
+library(dplyr) 
 ```
 
-# Classificação da causa (código CID-10)
-
-## Em arquivos de dados
+<!-- # Apresentação de resultados  -->
 
-É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV, sem necessidade da leitura prévia dos dados. Para outras extensões de arquivo é necessária a prévia importação dos dados para um objeto de classe `data.frame`.
-
-### Arquivos do DATASUS
-
-Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.  
-
-O código abaixo cria um banco com as informações das AIHs do "ano de competência" 2021 ocorridas no RS e outro com as informações das Declarações de Óbito (DO) de residentes no RS ocorridas em 2021:
+<!-- ## Resumo de importação de dados -->
 
-```{r fig.show='hold', message=FALSE, cache=TRUE}
-# remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
-AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", 
-                                         information_system = "SIH-RD")
-nrow(AIHRS2021) # linhas
-ncol(AIHRS2021) # colunas
+<!-- Um resumo de importação, apresentado durante a realização do trabalho, é guardado como atributo do banco de dados e pode ser recuperado com as funções `attr()` ou `attributes()`: -->
 
-DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", 
-                                        information_system = "SIM-DO") 
-nrow(DORS2021) 
-ncol(DORS2021)
-```
+<!-- ```{r} -->
+<!-- csap <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "competencia") -->
 
-Se o arquivo de dados estiver armazenado no computador, basta digitar, entre aspas, o nome do arquivo --- com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw'). 
- 
- <!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
- 
-```{r}
-csap.dbc <- csapAIH("../../data-raw/RDRS1801.dbc") 
-csap.dbf <- csapAIH("../../data-raw/RDRS1801.dbf") 
-```
-
-- No caso de arquivos CSV é mandatório indicar o tipo de separador de campos, com o argumento `sep`.
+<!-- attr(csap, "resumo") -->
+<!-- # attributes(csap)$resumo -->
+<!-- ``` -->
 
-```{r}
-csap.csv <- csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
-```
+<!-- Em tabela para apresentação: -->
 
-A função `fetchcsap` foi pensada para apresentar um extrato dos registros por período de internação e não de "competência" da AIH, que é commo se organizam os arquivos de dados. Assim, precisamos modificar alguns argumentos para ter os mesmos registros:
+<!-- ```{r} -->
+<!-- attributes(csap)$resumo |> -->
+<!--   knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","),  -->
+<!--                col.names = c("Ação", "N", "%", "Objeto") ) |> -->
+<!--   suppressWarnings() -->
+<!-- ``` -->
 
-```{r}
-csap.ftp <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "competencia")
-```
+<!-- ## Tabela "bruta" -->
 
-Os extratos são iguais:
-```{r}
-all.equal(attributes(csap.dbc)$resumo, attributes(csap.dbf)$resumo)
-all.equal(attributes(csap.dbc)$resumo, attributes(csap.csv)$resumo)
-all.equal(attributes(csap.ftp)$resumo, attributes(csap.dbc)$resumo)
-```
+<!-- A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela pronta para apresentação, com as frequências brutas e absolutas das CSAP por grupo de causa. -->
 
-Mas em estudos epidemiológicos geralmente nos interessa delimitar a população pela data de internação, o que exige trabalho posterior à leitura do arquivo "RD", pois o arquivo de um determinado mês e ano de "competência" pode conter registros de internações ocorridas em outro momento. Vemos abaixo que a data de internação nos objetos criados anteriormente (a partir de "RDRS1801.dbc") varia de `r min(format(csap.ftp$data.inter, "%d%b%Y"))` a `r max(format(csap.ftp$data.inter, "%d%b%Y"))`. Além disso, o arquivo pode não conter o registro de todas as internações ocorridas naquele mês. 
+<!-- ```{r} -->
+<!-- descreveCSAP(csap) -->
+<!-- ``` -->
 
-Por isso `fetchcsap` tem seus argumentos de forma a devolver o banco de dados apenas com os registros do período de interesse. Veja a seguir o resultado com as internações não-obstétricas para jan2018 segundo a seleção dos registros:  
-  a. todos daquele mês de competência (mesmo comando anterior para a construção de csap.ftp");
-  b. apenas as internações ocorridas no mesmo mês de competência da AIH; e 
-  c. apenas as internações ocorridas em jan2018 e registradas nos arquivos "RD" dos meses de competência janeiro a fevereiro de 20018.
+<!-- ## Tabela para apresentação -->
 
-```{r}
-a <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "c")
-nrow(a)
-summary(a$data.inter)
-b <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018)
-nrow(b)
-summary(b$data.inter)
-c <- fetchcsap('RS', 2018, mesfim = 2, anofim = 2018)
-nrow(c)
-summary(c$data.inter)
-```
+<!-- ```{r} -->
+<!-- descreveCSAP(csap) |> -->
+<!--   knitr::kable(align = c('l', rep('r', 3))) -->
+<!-- ``` -->
 
+<!-- Entretanto, ao transformar os valores para o formato latino, sua classe se transforma em `character` e assim é impossível realizar cálculos com esse output. Além disso, não serve para publicações em inglês. Por isso a função `descreveCSAP` permanecerá no pacote mas seu desenvolvimento seguirá em outra função, agora de nome `tabCSAP`. Nessa nova função, a apresentação de uma tabela formatada se faz a partir do argumento `format = TRUE`. Por padrão esse argumento é `FALSE`, o que permite operações matemáticas com os valores da tabela (um `data.frame`, na verdade), como veremos em seguida. -->
 
-```{r}
-# Limpar o ambiente de trabalho, renomear um dos bancos de dados:
-csap <- csap.ftp
-rm(csap.csv, csap.dbc, csap.dbf, csap.ftp)
-```
+<!-- A função `tabCSAP` permite também a apresentação da tabela em inglês ou espanhol, através do argumento `lang`: -->
 
-## Em um banco de dados existente na sessão de trabalho
+<!-- ```{r} -->
+<!-- tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |> -->
+<!--   knitr::kable(align = c('l', rep('r', 3))) -->
 
-### Com a estrutura dos arquivos da AIH
-  
-```{r}
-read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
-  csapAIH() |>
-  glimpse()
-```
+<!-- tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |> -->
+<!--   knitr::kable(align = c('l', rep('r', 3))) -->
+<!-- ``` -->
 
-### Sem o padrão dos arquivos da AIH
+<!-- Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`. Note ainda que, à diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas. -->
 
-Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`) são acrescentadas ao final do banco de dados alvo da função.
+<!-- ```{r} -->
+<!-- AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", information_system = "SIH-RD") -->
 
-#### A _Encuesta de Egresos Hospitalarios_ do Equador.
+<!-- listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique") -->
+<!-- # descreveCSAP(listaOPS) # Retorna o erro: "O vetor precisa ter os 19 grupos da Lista Brasileira. -->
+<!-- #   Se essa for a lista 'Alfradique' use 'tabCSAP'."" -->
+<!-- tabCSAP(listaOPS$grupo) -->
+<!-- ``` -->
 
-```{r}
-data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2020
-names(eeh20) # Os nomes das variáveis
-```
 
-A variável `cau_cie10` (posição `r which(names(eeh20) == 'cau_cie10')`) tem o código do diagnóstico de internação. A função csapAIH acrescenta à base duas (se `grupo == TRUE`) variáveis, `csap` e `grupo`, dispostas nas últimas colunas (posição `r paste(which(names(eeh20) == 'csap'), "e", which(names(eeh20) == 'grupo'), "respectivamente.")`)
+<!-- ## Calcular taxas -->
 
-```{r}
-csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
-names(csap.eeh20)
-csap.eeh20[c(30,37:38)] |> 
-  head(3) 
-```
+<!-- **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:** -->
 
-#### A Declaração de Óbito (DO) do SIM 
+<!-- O código IBGE (os seis primeiros dígitos) de Cerro Largo é "430520". -->
 
-A variável `CAUSABAS` tem o código da causa básica do óbito.
+<!-- ### As ICSAP -->
 
-De modo semelhante à AIH, as bases de dados da DO também têm a idade codificada e não a verdadeira idade da pessoa. Por exemplo, a variável `IDADE` em `DORS2021` é um `factor` com `r nlevels(DORS2021$IDADE)` níveis, em que o primeiro é `r levels(DORS2021$IDADE)[1] |> sQuote()`  e o último é `r levels(DORS2021$IDADE)[nlevels(DORS2021$IDADE)] |> sQuote()`. Neste caso podemos usar a função `idadeSUS` para computar a idade, mas como o resultado de `idadeSUS` é "um objeto da classe data frame com três variáveis" (v. `?idadeSUS`), necessitamos a função `unnest` (de `tidyr`) para desagrupar as variáveis antes de inseri-las em `DORS2021`. Além disso, foi excluída (com `unnest(...)[-2]`) a "faixa etária detalhada", que é a segunda variável no output de `idadeSUS`.
+<!-- Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021. -->
 
+<!-- ```{r} -->
+<!-- claih <- AIHRS2021 %>%  -->
+<!--   filter(MUNIC_RES == "430520") %>%  -->
+<!--   droplevels() %>%  -->
+<!--   csapAIH() -->
+<!-- ``` -->
 
-```{r}
-DORS2021 <- DORS2021 %>%
-  csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>%
-  mutate(tidyr::unnest(idadeSUS(DORS2021, sis = "SIM"), cols = c())[-2],
-         fxetar3 = fxetar3g(idade),
-         SEXO = factor(SEXO, levels = c(1,2), labels = c("masc", "fem")))
-DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
-```
 
-  
-## A partir de uma variável com códigos da CID-10:
+<!-- ### A população -->
 
-```{r}
-cids <- aih100$DIAG_PRINC[1:10]
-cids
-csapAIH(cids) 
-```
+<!-- ```{r} -->
+<!-- clpop <- ler_popbr(2021) %>%  -->
+<!--   filter(munic_res == "430520") %>%  -->
+<!--   group_by(sexo, fxetar5) %>%  -->
+<!--   reframe(pop = sum(populacao)) -->
 
+<!-- clpop %>%  -->
+<!--   tidyr::pivot_wider(names_from = sexo, values_from = pop) -->
+<!-- ``` -->
 
-# Apresentação de resultados 
+<!-- ### A tabela com as taxas -->
 
-## Resumo de importação de dados
+<!-- ```{r} -->
+<!-- tabCSAP(claih$grupo) %>%  -->
+<!--   mutate(taxa = casos / sum(clpop$pop)*10000) %>%  -->
+<!--   knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por 10.000 hab.")) -->
+<!-- ``` -->
 
-Um resumo de importação, apresentado durante a realização do trabalho, é guardado como atributo do banco de dados e pode ser recuperado com as funções `attr()` ou `attributes()`:
 
-```{r}
-attr(csap, "resumo")
-# attributes(csap)$resumo
-```
-
-Em tabela para apresentação:
-
-```{r}
-attributes(csap)$resumo |>
-  knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","), 
-               col.names = c("Ação", "N", "%", "Objeto") ) |>
-  suppressWarnings()
-```
-       
-## Tabela "bruta"
-
-A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela pronta para apresentação, com as frequências brutas e absolutas das CSAP por grupo de causa.
-
-```{r}
-descreveCSAP(csap)
-```
- 
-## Tabela para apresentação
-
-```{r}
-descreveCSAP(csap) |>
-  knitr::kable(align = c('l', rep('r', 3)))
-```
-
-Entretanto, ao transformar os valores para o formato latino, sua classe se transforma em `character` e assim é impossível realizar cálculos com esse output. Além disso, não serve para publicações em inglês. Por isso a função `descreveCSAP` permanecerá no pacote mas seu desenvolvimento seguirá em outra função, agora de nome `tabCSAP`. Nessa nova função, a apresentação de uma tabela formatada se faz a partir do argumento `format = TRUE`. Por padrão esse argumento é `FALSE`, o que permite operações matemáticas com os valores da tabela (um `data.frame`, na verdade), como veremos em seguida.
-
-A função `tabCSAP` permite também a apresentação da tabela em inglês ou espanhol, através do argumento `lang`:
-
-```{r}
-tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |>
-  knitr::kable(align = c('l', rep('r', 3)))
-
-tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |>
-  knitr::kable(align = c('l', rep('r', 3)))
-```
-
-Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`. Note ainda que, à diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas.
-
-```{r}
-listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique")
-# descreveCSAP(listaOPS) # Retorna o erro: "O vetor precisa ter os 19 grupos da Lista Brasileira.
-#   Se essa for a lista 'Alfradique' use 'tabCSAP'.""
-tabCSAP(listaOPS$grupo)
-```
-
-
-## Calcular taxas
-
-**Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:**
-
-O código IBGE (os seis primeiros dígitos) de Cerro Largo é "430520".
-
-### As ICSAP
-
-Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021.
-
-```{r}
-claih <- AIHRS2021 %>% 
-  filter(MUNIC_RES == "430520") %>% 
-  droplevels() %>% 
-  csapAIH()
-```
-
-
-### A população
-
-Desde que o DATASUS interrompeu a publicação dos arquivos com as estimativas populacionais por sexo e faixa etária para os municípios brasileiros (último arquivo no FTP é da população em 2012), passou a ser necessária a tabulação no TABNET e posterior leitura dos dados no programa de análise. Em 2022 Raphael Saldanha dispôs-se ao trabalho de fazer as muitas [tabulações necessárias](http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def) e nos brindou outro excelente e muito esperado pacote preenchendo essa lacuna: [brpop](https://rfsaldanha.github.io/brpop/), com as as estimativas da população por sexo e faixa etária para os municípios brasileiros, de 2000 a 2021 ([Nota técnica](http://tabnet.datasus.gov.br/cgi/IBGE/NT-POPULACAO-RESIDENTE-2000-2021.PDF)). 
-
-Entretanto, as tabelas no pacote *brpop* têm o total (a soma da população nas diferentes faixas etárias), e os rótulos das faixas etárias são longos e estão em inglês, por isso resolvi criar outra função (`popbr2000_2021`) que retornasse a população com os rótulos em português e apenas com a população estimada em cada faixa etária (sem o total). Assim, a população estimada para Cerro Largo em 2021 foi capturada com o seguinte comando,
-
-```{r}
-clpop <- csapAIH::popbr2000_2021(2021, munic = "430520")
-```
-
-Com o pacote brpop, teríamos de acrescentar o filtro de exclusão da categoria "Total" na faixa etária e os resultados seriam os mesmos, porém com outra estrutura do objeto e outros rótulos de categorias:
-
-```{r}
-clpop %>% 
-  group_by(fxetar5, sexo) %>% 
-  summarise(pop = sum(pop)) %>% 
-  tidyr::pivot_wider(names_from = sexo, values_from = pop)
-brpop::mun_sex_pop() %>% 
-  filter(code_muni == "430520", year == 2021, age_group != "Total") %>% 
-  group_by(age_group, sex) %>% 
-  summarise(pop = sum(pop)) %>% 
-  tidyr::pivot_wider(names_from = sex, values_from = pop)
-```
-
-### A tabela com as taxas
-
-```{r}
-tabCSAP(claih$grupo) %>% 
-  mutate(taxa = casos / sum(clpop$pop)*10000) %>% 
-  knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, 
-               caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por", 10.000, "hab."
-                               ))
-```
-
-
-## Gráficos
-
-```{r out.width="50%", fig.align='center', message=FALSE}
-#| fig.alt: >
-#|   Gráfico de barras com a distribuição proporcional 
-#|   dos grupos de causa CSAP entre as ICSAP
-
-gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4)
-gr
-```
-
-### Estratificado por categorias de outra variável presente no banco de dados:
-
-Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão).
-  
-```{r out.width="75%", fig.align='center', fig.show='hold', fig.height=4}
-rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total"))
-gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot)
-
-gr + ggplot2::facet_wrap(~ munres == "431490", 
-                         labeller = ggplot2::as_labeller(c("FALSE" = "Interior", 
-                                                           "TRUE" = "Capital")))
-```
-
-```{r out.width="80%", fig.cap="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021."}
- DORS2021 %>% 
-  filter(!is.na(SEXO), !is.na(idade)) %>% 
-  desenhaCSAP(x.size = 7, y.size = 8) + 
-    ggplot2::facet_grid(SEXO ~ fxetar3)
-```
+<!-- ## Gráficos -->
+
+<!-- ```{r out.width="50%", fig.align='center', message=FALSE} -->
+<!-- #| fig.alt: > -->
+<!-- #|   Gráfico de barras com a distribuição proporcional  -->
+<!-- #|   dos grupos de causa CSAP entre as ICSAP -->
+
+<!-- gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4) -->
+<!-- gr -->
+<!-- ``` -->
+
+<!-- ### Estratificado por categorias de outra variável presente no banco de dados: -->
+
+<!-- Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão). -->
+
+<!-- ```{r out.width="75%", fig.align='center', fig.show='hold', fig.height=4} -->
+<!-- #| fig.alt: > -->
+<!-- #|   O gráfico anterior por estratos de sexo -->
+
+<!-- rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total")) -->
+<!-- gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot) -->
+
+<!-- gr + ggplot2::facet_wrap(~ munres == "431490",  -->
+<!--                          labeller = ggplot2::as_labeller(c("FALSE" = "Interior",  -->
+<!--                                                            "TRUE" = "Capital"))) -->
+<!-- ``` -->
+
+<!-- ```{r out.width="80%", fig.cap="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021."} -->
+<!-- #| fig.alt: > -->
+<!-- #|   Gráfico da distribuição proporcional por grupo de causa entre as ICSAP, -->
+<!-- #|   por estratos de sexo -->
+
+<!-- DORS2021 %>%  -->
+<!--   filter(!is.na(SEXO), !is.na(idade)) %>%  -->
+<!--   desenhaCSAP(x.size = 7, y.size = 8) +  -->
+<!--     ggplot2::facet_grid(SEXO ~ fxetar3) -->
+<!-- ``` -->
 

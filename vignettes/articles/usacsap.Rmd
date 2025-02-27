@@ -1,0 +1,150 @@
+---
+title: "Classificar códigos da CID-10 em Condições Sensíveis à Atenção Primária"
+subtitle: "A função `csapAIH`"
+date: |
+  | Em atualização
+  <!-- | Atualizado em  -->
+  | `r format(Sys.Date(), c("%d de %B de %Y"))`
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = NULL
+)
+```
+
+```{r setup, message=FALSE}
+library(csapAIH)
+library(dplyr)
+```
+
+# Em arquivos de dados
+
+É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV, sem necessidade da leitura prévia dos dados. Para outras extensões de arquivo é necessária a prévia importação dos dados para um objeto de classe `data.frame`.
+
+### Arquivos do DATASUS
+
+Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.
+
+O código abaixo cria um banco com as informações das AIHs do "ano de competência" 2021 ocorridas no RS e outro com as informações das Declarações de Óbito (DO) de residentes no RS ocorridas em 2021:
+
+```{r fig.show='hold', message=FALSE, cache=TRUE}
+# remotes::install_github("rfsaldanha/microdatasus") # desnecessário se o pacote estiver instalado
+AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", information_system = "SIH-RD")
+nrow(AIHRS2021) # linhas
+ncol(AIHRS2021) # colunas
+
+DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", information_system = "SIM-DO")
+nrow(DORS2021)
+ncol(DORS2021)
+```
+
+Se o arquivo de dados estiver armazenado no computador, basta digitar, entre aspas, o nome do arquivo --- com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw').
+
+<!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
+
+```{r}
+csap.dbc <- csapAIH("../../data-raw/RDRS1801.dbc")
+csap.dbf <- csapAIH("../../data-raw/RDRS1801.dbf")
+```
+
+- No caso de arquivos CSV é mandatório indicar o tipo de separador de campos, com o argumento `sep`.
+
+```{r}
+csap.csv <- csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
+```
+
+A função `fetchcsap` foi pensada para apresentar um extrato dos registros por período de internação e não de "competência" da AIH, que é commo se organizam os arquivos de dados. Assim, precisamos modificar alguns argumentos para ter os mesmos registros:
+
+```{r}
+csap.ftp <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "competencia")
+```
+
+Os extratos são iguais:
+```{r}
+all.equal(attributes(csap.dbc)$resumo, attributes(csap.dbf)$resumo)
+all.equal(attributes(csap.dbc)$resumo, attributes(csap.csv)$resumo)
+all.equal(attributes(csap.ftp)$resumo, attributes(csap.dbc)$resumo)
+```
+
+Mas em estudos epidemiológicos geralmente nos interessa delimitar a população pela data de internação, o que exige trabalho posterior à leitura do arquivo "RD", pois o arquivo de um determinado mês e ano de "competência" pode conter registros de internações ocorridas em outro momento. Vemos abaixo que a data de internação nos objetos criados anteriormente (a partir de "RDRS1801.dbc") varia de `r min(format(csap.ftp$data.inter, "%d%b%Y"))` a `r max(format(csap.ftp$data.inter, "%d%b%Y"))`. Além disso, o arquivo pode não conter o registro de todas as internações ocorridas naquele mês.
+
+Por isso `fetchcsap` tem seus argumentos de forma a devolver o banco de dados apenas com os registros do período de interesse. Veja a seguir o resultado com as internações não-obstétricas para jan2018 segundo a seleção dos registros:  
+  a. todos daquele mês de competência (mesmo comando anterior para a construção de csap.ftp");
+  b. apenas as internações ocorridas no mesmo mês de competência da AIH; e
+  c. apenas as internações ocorridas em jan2018 e registradas nos arquivos "RD" dos meses de competência janeiro a fevereiro de 20018.
+
+```{r}
+a <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "c")
+nrow(a)
+summary(a$data.inter)
+b <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018)
+nrow(b)
+summary(b$data.inter)
+c <- fetchcsap('RS', 2018, mesfim = 2, anofim = 2018)
+nrow(c)
+summary(c$data.inter)
+```
+
+
+```{r}
+# Limpar o ambiente de trabalho, renomear um dos bancos de dados:
+csap <- csap.ftp
+rm(csap.csv, csap.dbc, csap.dbf, csap.ftp)
+```
+
+## Em um banco de dados existente na sessão de trabalho
+
+### Com a estrutura dos arquivos da AIH
+
+```{r}
+read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
+  csapAIH() |>
+  glimpse()
+```
+
+### Sem o padrão dos arquivos da AIH
+
+Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`) são acrescentadas ao final do banco de dados alvo da função.
+
+#### A _Encuesta de Egresos Hospitalarios_ do Equador.
+
+```{r}
+data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2020
+names(eeh20) # Os nomes das variáveis
+```
+
+A variável `cau_cie10` (posição `r which(names(eeh20) == 'cau_cie10')`) tem o código do diagnóstico de internação. A função csapAIH acrescenta à base duas (se `grupo == TRUE`) variáveis, `csap` e `grupo`, dispostas nas últimas colunas (posição `r paste(which(names(eeh20) == 'csap'), "e", which(names(eeh20) == 'grupo'), "respectivamente.")`)
+
+```{r}
+csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
+names(csap.eeh20)
+csap.eeh20[c(30,37:38)] |>
+  head(3)
+```
+
+#### A Declaração de Óbito (DO) do SIM
+
+A variável `CAUSABAS` tem o código da causa básica do óbito.
+
+De modo semelhante à AIH, as bases de dados da DO também têm a idade codificada e não a verdadeira idade da pessoa. Por exemplo, a variável `IDADE` em `DORS2021` é um `factor` com `r nlevels(DORS2021$IDADE)` níveis, em que o primeiro é `r levels(DORS2021$IDADE)[1] |> sQuote()`  e o último é `r levels(DORS2021$IDADE)[nlevels(DORS2021$IDADE)] |> sQuote()`. Neste caso podemos usar a função `idadeSUS` para computar a idade, mas como o resultado de `idadeSUS` é "um objeto da classe data frame com três variáveis" (v. `?idadeSUS`), necessitamos a função `unnest` (de `tidyr`) para desagrupar as variáveis antes de inseri-las em `DORS2021`. Além disso, foi excluída (com `unnest(...)[-2]`) a "faixa etária detalhada", que é a segunda variável no output de `idadeSUS`.
+
+
+```{r}
+DORS2021 <- DORS2021 %>%
+  csapAIH(sihsus = FALSE, cid = CAUSABAS, parto.rm = FALSE) %>%
+  mutate(tidyr::unnest(idadeSUS(DORS2021, sis = "SIM"), cols = c())[-2],
+         fxetar3 = fxetar3g(idade),
+         SEXO = factor(SEXO, levels = c(1,2), labels = c("masc", "fem")))
+DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
+```
+
+
+## A partir de uma variável com códigos da CID-10:
+
+```{r}
+cids <- aih100$DIAG_PRINC[1:10]
+cids
+csapAIH(cids)
+```
