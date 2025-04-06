@@ -10,3 +10,4 @@ README_cache/*
 ^docs$
 ^\.github$
 ^inst$
+_pkgdown.yml
