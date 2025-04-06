@@ -256,9 +256,12 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
       } else {
     # ----- Com o banco --------------------------------------------
     # Comandos exclusivos para o gráfico usando todo o banco de dados
+        # Os níveis/grupos
+        grupos <- c(paste0("g0", 1:9), paste0("g1", 0:9))
         # O banco de dados
-        df <- droplevels(dados[dados$grupo != 'no-CSAP',])
-        # df$grupo <- arrumaniveis(df$grupo) # tem de aplicar novamente, pelo droplevels acima
+        df <- droplevels(dados[dados$grupo %in% grupos, ])
+        rm(grupos)
+        # df$grupo <- arrumaniveis(df$grupo) # tem de aplicar novamente, pelo droplevels acima ## Parece que não precisa não
         levels(df$grupo) <- nomesgruposCSAP(lista = lista, lang = lang)[as.numeric(substr(levels(df$grupo), 2,3))] # Passa os nomes dos grupos
         # df$grupo <- droplevels(df$grupo) # exclui grupos com frequência zero
         ngrupos <- nlevels(df$grupo)
