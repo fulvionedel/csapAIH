@@ -47,9 +47,10 @@ tabCSAP <- function(x, digits = 2, lang = "pt.ca", format = FALSE){
                      )
 
   substr(names(tabelagrupos)[ngrupos+1], 1,1) <- "N"
-  nomesgrupos                          <- nomesgruposCSAP(lang = lang, lista = lista)
-  # nomesgrupos                          <- groupnamesCSAP(lang = lang)
-  names(tabelagrupos)[ngrupos+2]              <- "Total de interna\U00E7\u00F5es"
+  nomesgrupos                                 <- nomesgruposCSAP(lang = lang, lista = lista)
+  # nomesgrupos                                 <- groupnamesCSAP(lang = lang)
+  names(tabelagrupos)[ngrupos + 1:2]          <- c("N\u00e3o-CSAP",
+                                                   "Total de interna\U00E7\u00F5es")
 
   if (lang == "en") {
     names(tabelagrupos)[ngrupos + 0:2] <- c("ACSC",
