@@ -5,11 +5,12 @@
 \title{Baixa os arquivos da AIH e classifica as internações em CSAP}
 \usage{
 fetchcsap(
-  uf = "all",
   anoinicio,
-  mesinicio = 1,
   anofim = NULL,
+  mesinicio = 1,
   mesfim = NULL,
+  uf = "all",
+  regiao = NULL,
   periodo = "interna",
   cep = FALSE,
   cnes = FALSE,
@@ -17,15 +18,17 @@ fetchcsap(
 )
 }
 \arguments{
-\item{uf}{Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".}
-
 \item{anoinicio}{Ano de competência da AIH para início da seleção dos dados, em formato numérico; sem padrão.}
-
-\item{mesinicio}{Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.}
 
 \item{anofim}{Ano de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é igual ao ano seguinte ao ano de início (\code{anoinicio + 1}).}
 
+\item{mesinicio}{Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.}
+
 \item{mesfim}{Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.}
+
+\item{uf}{Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".}
+
+\item{regiao}{Região administrativa do Brasil ("Grandes Regiões). O padrão é \code{NULL}. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".}
 
 \item{periodo}{O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detahes.}
 
@@ -68,19 +71,22 @@ Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do S
 # download dos arquivos RD??????.DBC de todas as UF de jan/2023 a jun/2024 e
 # então extrais apenas os registros com data de internação em 2023.
 \dontrun{
-  fetchcsap(anoinicio = 2023)
+  fetchcsap(2023)
 }
 # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
 # exemplo com as internações no Acre, registradas no mês de competência jan 2023:
-ac.comp <- fetchcsap("AC", 2023, periodo = 'competencia')
+ac.comp <- fetchcsap(2023, uf = "AC", periodo = 'competencia')
 nrow(ac.comp)
 summary(ac.comp$data.inter)
-ac.int <- fetchcsap("AC", 2023, mesfim = 1, anofim = 2023)
+ac.int <- fetchcsap(2023, anofim = 2023, mesfim = 1, uf = "AC")
 nrow(ac.int)
 summary(ac.int$data.inter)
 # Assim, há
 nrow(ac.comp) - nrow(ac.int)
-# internações registradas naquele mês de competência, mas que ocorreram em outro momento.
+# internações registradas naquele mês de competência, mas que ocorreram antes.
+
+# Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
+fetchcsap(2023, 2023, mesfim = 1, regiao = "N")
 
 }
 \seealso{

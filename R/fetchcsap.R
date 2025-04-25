@@ -4,11 +4,12 @@
 #' @description
 #' Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do Sistema de Informações Hospitalares do SUS - BD-SIH/SUS) do site FTP do DATASUS e classifica as internações segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária.
 #'
-#' @param uf Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".
-#' @param mesinicio Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.
 #' @param anoinicio Ano de competência da AIH para início da seleção dos dados, em formato numérico; sem padrão.
-#' @param mesfim Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.
 #' @param anofim Ano de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é igual ao ano seguinte ao ano de início (\code{anoinicio + 1}).
+#' @param mesinicio Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.
+#' @param mesfim Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.
+#' @param uf Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".
+#' @param regiao Região administrativa do Brasil ("Grandes Regiões). O padrão é \code{NULL}. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".
 #' @param periodo O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detahes.
 #' @param  cep CEP de internação
 #' @param cnes CNES do estabelecimento que gerou a AIH
@@ -46,25 +47,29 @@
 #' # download dos arquivos RD??????.DBC de todas as UF de jan/2023 a jun/2024 e
 #' # então extrais apenas os registros com data de internação em 2023.
 #' \dontrun{
-#'   fetchcsap(anoinicio = 2023)
+#'   fetchcsap(2023)
 #' }
 #' # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
 #' # exemplo com as internações no Acre, registradas no mês de competência jan 2023:
-#' ac.comp <- fetchcsap("AC", 2023, periodo = 'competencia')
+#' ac.comp <- fetchcsap(2023, uf = "AC", periodo = 'competencia')
 #' nrow(ac.comp)
 #' summary(ac.comp$data.inter)
-#' ac.int <- fetchcsap("AC", 2023, mesfim = 1, anofim = 2023)
+#' ac.int <- fetchcsap(2023, anofim = 2023, mesfim = 1, uf = "AC")
 #' nrow(ac.int)
 #' summary(ac.int$data.inter)
 #' # Assim, há
 #' nrow(ac.comp) - nrow(ac.int)
-#' # internações registradas naquele mês de competência, mas que ocorreram em outro momento.
+#' # internações registradas naquele mês de competência, mas que ocorreram antes.
+#'
+#' # Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
+#' fetchcsap(2023, 2023, mesfim = 1, regiao = "N")
 #'
 #' @importFrom data.table setDT `:=`
 #'
 #' @export
-fetchcsap <- function(uf = "all", anoinicio, mesinicio = 1,
-                      anofim = NULL, mesfim = NULL,
+fetchcsap <- function(anoinicio, anofim = NULL,
+                      mesinicio = 1, mesfim = NULL,
+                      uf = "all", regiao = NULL,
                       periodo = "interna",
                       cep = FALSE, cnes = FALSE, ...) {
 ':=' <- setDT <- DT_INTER <- idade <- NULL
@@ -79,7 +84,7 @@ fetchcsap <- function(uf = "all", anoinicio, mesinicio = 1,
       anofim = anoinicio + 1
     } else anofim = anofim
     if( is.null(mesfim) ) {
-      mesfim = mesinicio + 6
+      mesfim = mesinicio + 5
     } else mesfim = mesfim
     mesi <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
     peri <- paste0(anoinicio, mesi, "01")
@@ -90,15 +95,223 @@ fetchcsap <- function(uf = "all", anoinicio, mesinicio = 1,
     mesfim = mesinicio
   }
 
-  # Baixar os dados do DATASUS
-  aih  <- microdatasus::fetch_datasus(year_start  = anoinicio,
-                                      month_start = mesinicio,
-                                      year_end    = anofim,
-                                      month_end   = mesfim,
-                                      # uf = deparse(substitute(uf)),
-                                      uf = uf,
-                                      information_system = "SIH-RD",
-                                      vars = vars)
+  # Definir a(s) UF
+  if(!is.null(regiao)) {
+    if(regiao == "N") {
+      uf <- c("RO", "AC", "AM", "RR", "PA", "AP", "TO")
+      aih  <- rbind(microdatasus::fetch_datasus(year_start  = anoinicio,
+                                          month_start = mesinicio,
+                                          year_end    = anofim,
+                                          month_end   = mesfim,
+                                          uf = uf[1],
+                                          information_system = "SIH-RD",
+                                          vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[2],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[3],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[4],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[5],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[6],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[7],
+                                                information_system = "SIH-RD",
+                                                vars = vars)
+      )
+    } else if(regiao == "NE") {
+      uf <- c("MA", "PI", "CE", "RN", "PB", "PE", "AL", "SE", "BA")
+      aih  <- rbind(microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[1],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[2],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[3],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[4],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[5],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[6],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[7],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[8],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[9],
+                                                information_system = "SIH-RD",
+                                                vars = vars)
+      )
+    } else if(regiao == "SE") {
+      uf <- c("MG", "ES", "RJ", "SP")
+      aih  <- rbind(microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[1],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[2],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[3],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[4],
+                                                information_system = "SIH-RD",
+                                                vars = vars)
+      )
+    } else if(regiao == "S") {
+      uf <- c("PR", "SC", "RS")
+      aih  <- rbind(microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[1],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[2],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[3],
+                                                information_system = "SIH-RD",
+                                                vars = vars)
+      )
+    } else if(regiao == "CO") {
+      uf <- c("MS", "MT", "GO", "DF")
+      aih  <- rbind(microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[1],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[2],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[3],
+                                                information_system = "SIH-RD",
+                                                vars = vars),
+                    microdatasus::fetch_datasus(year_start  = anoinicio,
+                                                month_start = mesinicio,
+                                                year_end    = anofim,
+                                                month_end   = mesfim,
+                                                uf = uf[4],
+                                                information_system = "SIH-RD",
+                                                vars = vars)
+      )
+    } else
+      stop("'regiao' deve ser uma entre 'N', 'NE', 'SE', 'S' e 'CO'")
+  } else
+    aih  <- microdatasus::fetch_datasus(year_start  = anoinicio,
+                                        month_start = mesinicio,
+                                        year_end    = anofim,
+                                        month_end   = mesfim,
+                                        # uf = deparse(substitute(uf)),
+                                        uf = uf,
+                                        information_system = "SIH-RD",
+                                        vars = vars)
   setDT(aih)
   if(periodo == 'i') {
     aih <- aih[if(periodo == 'i') DT_INTER >= peri, ]
