@@ -75,7 +75,7 @@ Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do S
 }
 # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
 # exemplo com as internações no Acre, registradas no mês de competência jan 2023:
-ac.comp <- fetchcsap(2023, uf = "AC", periodo = 'competencia')
+ac.comp <- fetchcsap(2023, uf = "AC", mesfim = 1, periodo = 'competencia')
 nrow(ac.comp)
 summary(ac.comp$data.inter)
 ac.int <- fetchcsap(2023, anofim = 2023, mesfim = 1, uf = "AC")
