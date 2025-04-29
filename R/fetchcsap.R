@@ -50,10 +50,13 @@
 #'   fetchcsap(2023)
 #' }
 #' # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
-#' # exemplo com as internações no Acre, registradas no mês de competência jan 2023:
+#' # exemplo com as internações no Acre:
+#' # - todas as internações registradas no mês de competência jan 2023:
 #' ac.comp <- fetchcsap(2023, uf = "AC", mesfim = 1, periodo = 'competencia')
 #' nrow(ac.comp)
 #' summary(ac.comp$data.inter)
+#' # - internações ocorridas em jan/2023 e registradas nos meses de competência
+#' # janeiro a junho de 2023:
 #' ac.int <- fetchcsap(2023, anofim = 2023, mesfim = 1, uf = "AC")
 #' nrow(ac.int)
 #' summary(ac.int$data.inter)
@@ -78,18 +81,36 @@ fetchcsap <- function(anoinicio, anofim = NULL,
   vars <- c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "IDADE", "COD_IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA", "IDENT", "CEP", "CNES")
 
   # Definir extração de dados de interesse
+  mesi <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
+  peri <- paste0(anoinicio, mesi, "01")
+  # Data de competência
   if (periodo  %in% c("competencia", "comp", "c")) {
     if (is.null(anofim)) { anofim = anoinicio }
     if (is.null(mesfim)) { mesfim = 12 }
-  } else if (periodo %in% c("interna", "int", "i")) {
-    periodo = "i"
-    if( is.null(anofim) ) { anofim = anoinicio + 1 } # else anofim = anofim
-    if( is.null(mesfim) ) { mesfim = mesinicio + 5 } # else mesfim = mesfim
-  }
-    mesi <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
-    peri <- paste0(anoinicio, mesi, "01")
     mesf <- ifelse(mesfim < 10, paste0("0", mesfim), mesfim)
     perf <- paste0(anofim, mesf, "31")
+  }
+  # Data de internação
+  if (periodo %in% c("interna", "int", "i")) {
+    periodo = "i"
+    if( is.null(anofim) & is.null(mesfim) ) {
+      anof = anofim = anoinicio
+      # mesfim = mesinicio + 5
+      mesf = 12
+    } else anof = anofim
+    if( is.null(anofim) & !is.null(mesfim) ) {
+      anof = anofim = anoinicio
+    }
+    if( !is.null(anofim) & is.null(mesfim) ) {
+      anofim = anofim + 1
+      mesf = 12
+    }
+    if( is.null(mesfim) ) { mesfim = mesinicio + 5 } else mesfim = mesfim + 5
+    if( !exists("mesf") ) {
+      mesf <- ifelse(mesfim < 10, paste0("0", mesfim - 5), mesfim - 5)
+    }
+    perf <- paste0(anof, mesf, "31")
+  }
 #
   # Definir a(s) UF
   if(!is.null(regiao)) {
@@ -310,11 +331,11 @@ fetchcsap <- function(anoinicio, anofim = NULL,
                                         vars = vars)
   setDT(aih)
   if(periodo == 'i') {
-    aih <- aih[if(periodo == 'i') DT_INTER >= peri, ]
-    aih <- aih[if(periodo == 'i') DT_INTER <= perf, ]
+    aih <- aih[aih$DT_INTER >= peri, ]
+    aih <- aih[aih$DT_INTER <= perf, ]
   }
   aih <- data.frame(aih)
-
+ # return(list("mesf" = mesf, "anof" = anof, "peri" = peri, "perf" = perf))
   # Classificar as CSAP
   csap <- csapAIH::csapAIH(aih, cep = cep, cnes = cnes, ...) |>
     setDT()
