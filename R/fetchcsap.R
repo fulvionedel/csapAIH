@@ -83,6 +83,7 @@ fetchcsap <- function(anoinicio, anofim = NULL,
   # Definir extração de dados de interesse
   mesi <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
   peri <- paste0(anoinicio, mesi, "01")
+
   # Data de competência
   if (periodo  %in% c("competencia", "comp", "c")) {
     if (is.null(anofim)) { anofim = anoinicio }
@@ -95,7 +96,6 @@ fetchcsap <- function(anoinicio, anofim = NULL,
     periodo = "i"
     if( is.null(anofim) & is.null(mesfim) ) {
       anof = anofim = anoinicio
-      # mesfim = mesinicio + 5
       mesf = 12
     } else anof = anofim
     if( is.null(anofim) & !is.null(mesfim) ) {
@@ -110,7 +110,13 @@ fetchcsap <- function(anoinicio, anofim = NULL,
       mesf <- ifelse(mesfim < 10, paste0("0", mesfim - 5), mesfim - 5)
     }
     perf <- paste0(anof, mesf, "31")
+  } else if (periodo %in% c("interna", "int", "i")) {
+    periodo = "i"
+    if( is.null(anofim) ) { anofim = anoinicio + 1 } # else anofim = anofim
+    if( is.null(mesfim) ) { mesfim = mesinicio + 5 } else mesfim = mesfim + 5
+    mesf <- ifelse(mesfim < 10, paste0("0", mesfim - 5), mesfim - 5)
   }
+  perf <- paste0(anofim, mesf, "31")
 #
   # Definir a(s) UF
   if(!is.null(regiao)) {
