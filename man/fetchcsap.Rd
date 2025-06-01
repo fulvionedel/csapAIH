@@ -81,7 +81,7 @@ nrow(ac.comp)
 summary(ac.comp$data.inter)
 # - internações ocorridas em jan/2023 e registradas nos meses de competência
 # janeiro a junho de 2023:
-ac.int <- fetchcsap(2023, anofim = 2023, mesfim = 1, uf = "AC")
+ac.int <- fetchcsap(2023, mesfim = 1, uf = "AC")
 nrow(ac.int)
 summary(ac.int$data.inter)
 # Assim, há
@@ -89,7 +89,7 @@ nrow(ac.comp) - nrow(ac.int)
 # internações registradas naquele mês de competência, mas que ocorreram antes.
 
 # Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
-fetchcsap(2023, 2023, mesfim = 1, regiao = "N")
+fetchcsap(2023, mesfim = 1, regiao = "N")
 
 }
 \seealso{

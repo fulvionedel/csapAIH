@@ -57,7 +57,7 @@
 #' summary(ac.comp$data.inter)
 #' # - internações ocorridas em jan/2023 e registradas nos meses de competência
 #' # janeiro a junho de 2023:
-#' ac.int <- fetchcsap(2023, anofim = 2023, mesfim = 1, uf = "AC")
+#' ac.int <- fetchcsap(2023, mesfim = 1, uf = "AC")
 #' nrow(ac.int)
 #' summary(ac.int$data.inter)
 #' # Assim, há
@@ -65,7 +65,7 @@
 #' # internações registradas naquele mês de competência, mas que ocorreram antes.
 #'
 #' # Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
-#' fetchcsap(2023, 2023, mesfim = 1, regiao = "N")
+#' fetchcsap(2023, mesfim = 1, regiao = "N")
 #'
 #' @importFrom data.table setDT `:=`
 #'
@@ -110,14 +110,9 @@ fetchcsap <- function(anoinicio, anofim = NULL,
       mesf <- ifelse(mesfim < 10, paste0("0", mesfim - 5), mesfim - 5)
     }
     perf <- paste0(anof, mesf, "31")
-  } else if (periodo %in% c("interna", "int", "i")) {
-    periodo = "i"
     if( is.null(anofim) ) { anofim = anoinicio + 1 } # else anofim = anofim
-    if( is.null(mesfim) ) { mesfim = mesinicio + 5 } else mesfim = mesfim + 5
-    mesf <- ifelse(mesfim < 10, paste0("0", mesfim - 5), mesfim - 5)
   }
-  perf <- paste0(anofim, mesf, "31")
-#
+
   # Definir a(s) UF
   if(!is.null(regiao)) {
     if(regiao == "N") {
