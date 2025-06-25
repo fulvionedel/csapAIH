@@ -23,7 +23,7 @@ listaBRAlfradique <- function(cid){
     grepl(x = cid, pattern = "^J1[3-4]|J15[3-4]|J15[8-9]|J181") ~ "g07",
 # GRUPO 08 - Asma
     grepl(x = cid, pattern = "^J4[5-6]") ~ "g08",
-# GRUPO 09 - DPOC
+# GRUPO 09 - Pulmonares
     grepl(x = cid, pattern = "^J2[0-1]|^J4[0-4]|^J47") ~ "g09",
 # GRUPO 10 - Hipertensão
     grepl(x = cid, pattern = "^I1[0-1]") ~ "g10",
