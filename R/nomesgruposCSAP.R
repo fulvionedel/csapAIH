@@ -248,3 +248,27 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numg
   } else if(classe %in% c("vetor", "v", "1")) return(nomegrupo)
   nomegrupo
 }
+
+#'
+#' Adiciona o nome dos grupos
+#'
+#' Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função `csapAIH` ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)
+#' @param x Banco de dados
+#' @param lista Lista CSAP a ser utilizada. O padrão é "MS" (v. \link{nomesgruposCSAP}).
+#' @details
+#' Define como missing os não-CSAP
+#' @examples
+#' data("aih100")
+#' adinomes(csapAIH(aih100))[1:5, 9:11]
+#' @seealso nomesgruposCSAP()
+#' @seealso [listaBRMS()]
+#' @seealso [listaBRAlfradique]
+# @importFrom dplyr left_join
+#' @export
+adinomes <- function(x, lista = "MS") {
+  nomegrupo <- grupo <- NULL
+  lista = lista
+  x <- dplyr::left_join(x, nomesgruposCSAP(lista = lista, classe = "df")) |>
+    dplyr::relocate(nomegrupo, .after = grupo)
+  x
+}
