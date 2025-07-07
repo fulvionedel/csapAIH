@@ -40,9 +40,11 @@
 #' xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
 #'
 #' @importFrom utils download.file unzip
+#' @importFrom dplyr relocate
 #' @export
 
 ler_popbr <- function(x) {
+  fxetar5 <- fxetaria <- situacao <- NULL
 
   ano <- arquivo <- NULL
   if(x %in% 1980:2024) ano = x
@@ -120,9 +122,84 @@ ler_popbr <- function(x) {
       levels(populacao$situacao) <- c("urbana", "rural")
     }
    # populacao$ano <- as.integer(as.character(populacao$ano))
-   attr(populacao$fxetar5, which = "label") <- "Faixa etaria quinquenal"
-   attr(populacao$fxetaria, which = "label") <- "Faixa etaria detalhada"
-   attr(populacao$munic_res, which = "label") <- "Codigo IBGE do municipio"
+   attr(populacao$fxetar5, which = "label") <- "Faixa et\u00e1ria quinquenal"
+   # attr(populacao$munic_res, which = "label") <- "Codigo IBGE do municipio"
    # names(populacao)[5] <- "fxetar.det"
-   return(populacao)
+   populacao <- relocate(populacao, fxetar5, .before = fxetaria)
+   if (x <= 2012) {
+     populacao <- relocate(populacao, situacao, .before = ano)
+     attr(populacao$fxetaria, which = "label") <- "Faixa et\u00e1ria detalhada"
+   } else if (x > 2012) {
+     attr(populacao$fxetaria, which = "label") <- "Idade em anos completos"
+   }
+ populacao
+}
+
+#'
+#' Estimativas populacionais para os municípios brasileiros.
+#'
+#' @description Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
+#' @param x Ano ou vetor com os anos a serem lidos.
+#' @param uf Unidade(s) da Federação de interesse para seleção. O padrão é todas.
+#' @param municipio Município(s) de interesse para seleção. O padrão é todos. Ainda não implementado.
+#' @param idade Argumento lógico. A idade detalhada deve ser apresentada? O padrão é FALSE (v. Details).
+#' @examples
+#' popbr(2017:2019) |> str()
+#' popbr(c(2017, 2019))  |> str()
+#' popbr(2022, "SC") |> head()
+#' popbr(2010, "RS", idade = TRUE) |> head()
+#' # O exemplo seguinte dá erro, porque a estrutura da base muda em 2013.
+#' \dontrun{
+#' popbr(2012:2013)
+#' }
+#'
+#' @importFrom dplyr `%>%` group_by group_by_at reframe inner_join mutate select filter
+#' @export
+#'
+popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
+  # Nuntius errorum
+    if(!is.null(uf)) {
+      if(!uf %in% ufbr()$UF_SIGLA) {
+      stop("'uf' deve ser uma de RO, AC, AM, RR, PA, AP, TO, MA, PI, CE, RN,
+    PB, PE, AL, SE, BA, MG, ES, RJ, SP, PR, SC, RS, MS, MT, GO ou DF") }
+    }
+  # ---------
+
+  munic_res <- UF_SIGLA <- fxetar5 <- fxetaria <- situacao <- NULL
+
+  if (length(x) > 1) {
+    resultados <- lapply(x, ler_popbr)
+    populacao <- do.call(rbind, resultados)
+  } else {
+    populacao <- ler_popbr(x)
   }
+  vars <- c("munic_res", "ano", "sexo", "fxetar5", "fxetaria")
+  if(!is.null(uf)) {
+    vars <- vars[-1]
+    populacao <- populacao %>%
+      mutate(CO_UF = substr(munic_res, 1, 2)) %>%
+      inner_join(csapAIH::ufbr()) %>%
+      filter(UF_SIGLA %in% uf) %>%
+      reframe(populacao = sum(populacao), .by = c(UF_SIGLA, vars))
+  } else if(!is.null(municipio)) {
+    # Nuntius errorum
+    # if(!is.null(uf)) { stop("Para a população por município, deixe 'uf' em branco.")}
+    if(!municipio %in% populacao$munic_res) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
+    # ---------
+    # vars <- vars[-1]
+    populacao <- populacao %>%
+      filter(municipio %in% munic_res) %>%
+      reframe(populacao = sum(populacao), .by = vars)
+  }
+  if(isFALSE(idade)) {
+    vars <- names(populacao)[-c(4,6)]
+    return(list(vars, nomes = names(populacao)))
+    populacao <- populacao %>%
+      # select(-fxetaria) %>%
+      reframe(populacao = sum(populacao), .by = vars)
+  } #else if (is.null(idade)) populacao <- populacao
+
+
+  populacao
+}
+#'
