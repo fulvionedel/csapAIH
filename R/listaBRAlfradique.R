@@ -59,7 +59,7 @@ listaBRAlfradique <- function(cid){
 #
 ### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
 niveis <- c(paste0("g0", 1:9), paste0("g1", 0:9), "g20", "g00")
-grupo <- factor(grupo, levels = niveis, labels = c(niveis[1:20], "no-CSAP"))
+grupo <- factor(grupo, levels = niveis, labels = c(niveis[1:20], "nao-CSAP"))
 
 data.frame(csap, grupo)
 }
