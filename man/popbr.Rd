@@ -13,7 +13,7 @@ popbr(x, uf = NULL, municipio = NULL, idade = FALSE)
 
 \item{municipio}{Município(s) de interesse para seleção. O padrão é todos. Ainda não implementado.}
 
-\item{idade}{Argumento lógico. A idade detalhada deve ser apresentada? O padrão é FALSE (v. Details).}
+\item{idade}{Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.}
 }
 \description{
 Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
@@ -23,7 +23,8 @@ popbr(2017:2019) |> str()
 popbr(c(2017, 2019))  |> str()
 popbr(2022, "SC") |> head()
 popbr(2010, "RS", idade = TRUE) |> head()
-# O exemplo seguinte dá erro, porque a estrutura da base muda em 2013.
+# O exemplo seguinte dá erro, porque a estrutura das bases de origem
+# muda em 2013 (e isso ainda não foi trabalhado na função).
 \dontrun{
 popbr(2012:2013)
 }

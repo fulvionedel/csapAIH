@@ -8,6 +8,10 @@
 #' @details
 #'  Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
 #'
+#'  Os bancos de dados de origem têm uma estrutura até 2012, com a variável "situação" (urbano/rural) para alguns anos e a faixa etária detalhada (variável "fxetaria") em um campo de quatro dígitos com faixas anuais até os 20 anos e então quinquenais até 80 e mais anos de idade, enquanto os arquivos a partir de 2013 não têm a variável "situação" e a variável "fxetaria" é um campo com três dígitos com a idade em anos completos até os 79 anos e então 80 e mais anos de idade.
+#'
+#'  A função será descontinuada em favor de \code{\link{popbr}}, que permite a captura de períodos maiores de um ano e oferece opções para o \code{data frame} resultante.
+#'
 #'  As informações atualizadas podem ser tabuladas em
 #'  http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def
 #'
@@ -142,13 +146,14 @@ ler_popbr <- function(x) {
 #' @param x Ano ou vetor com os anos a serem lidos.
 #' @param uf Unidade(s) da Federação de interesse para seleção. O padrão é todas.
 #' @param municipio Município(s) de interesse para seleção. O padrão é todos. Ainda não implementado.
-#' @param idade Argumento lógico. A idade detalhada deve ser apresentada? O padrão é FALSE (v. Details).
+#' @param idade Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.
 #' @examples
 #' popbr(2017:2019) |> str()
 #' popbr(c(2017, 2019))  |> str()
 #' popbr(2022, "SC") |> head()
 #' popbr(2010, "RS", idade = TRUE) |> head()
-#' # O exemplo seguinte dá erro, porque a estrutura da base muda em 2013.
+#' # O exemplo seguinte dá erro, porque a estrutura das bases de origem
+#' # muda em 2013 (e isso ainda não foi trabalhado na função).
 #' \dontrun{
 #' popbr(2012:2013)
 #' }
@@ -192,14 +197,10 @@ popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
       reframe(populacao = sum(populacao), .by = vars)
   }
   if(isFALSE(idade)) {
-    vars <- names(populacao)[-c(4,6)]
-    return(list(vars, nomes = names(populacao)))
+    vars <- names(populacao)[-c(5:6)]
     populacao <- populacao %>%
-      # select(-fxetaria) %>%
       reframe(populacao = sum(populacao), .by = vars)
-  } #else if (is.null(idade)) populacao <- populacao
-
+  }
 
   populacao
 }
-#'

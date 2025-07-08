@@ -15,6 +15,10 @@ Lê os arquivos com estimativas e contagens da população dos municípios brasi
 \details{
 Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
 
+ Os bancos de dados de origem têm uma estrutura até 2012, com a variável "situação" (urbano/rural) para alguns anos e a faixa etária detalhada (variável "fxetaria") em um campo de quatro dígitos com faixas anuais até os 20 anos e então quinquenais até 80 e mais anos de idade, enquanto os arquivos a partir de 2013 não têm a variável "situação" e a variável "fxetaria" é um campo com três dígitos com a idade em anos completos até os 79 anos e então 80 e mais anos de idade.
+
+ A função será descontinuada em favor de \code{\link{popbr}}, que permite a captura de períodos maiores de um ano e oferece opções para o \code{data frame} resultante.
+
  As informações atualizadas podem ser tabuladas em
  http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def
 }
