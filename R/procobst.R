@@ -20,7 +20,7 @@ proc.obst <- function(x, procobst.action = "exclude", proc.rea = "PROC_REA", lan
   {
   if(!is.data.frame(x)) stop("x must be a data frame")
   if(! procobst.action %in% c("exclude", "extract", "identify")) {
-    stop("'language' must be 'exclude', 'extract' or 'identify'")
+    stop("'procobst.action' must be 'exclude', 'extract' or 'identify'")
   }
 
   # Total of read records
@@ -48,7 +48,8 @@ proc.obst <- function(x, procobst.action = "exclude", proc.rea = "PROC_REA", lan
   procobst <- c('0310010012', '0310010020', '0310010039', '0310010047', '0411010018',
                 '0411010026',  '0411010034', '0411010042', '0411020013', '0411020021')
 
-  proc.rea = as.character(x[,proc.rea])
+  if(data.table::is.data.table(x)) x <- data.frame(x)
+  proc.rea = as.character(x[, proc.rea])
   nprocobst = sum(proc.rea %in% procobst)
   pprocobst = nprocobst/readrecs
   rpprocobst = round(pprocobst*100, 1)
