@@ -27,10 +27,13 @@ leraih(
 
 \item{vars}{Variáveis da AIH para seleção. O padrão (\code{vars = NULL}), seleciona o conjunto usado em \code{\link{csapAIH}}. V. details.}
 
-\item{...}{outros parâmetros das funções utilizadas
-
-#' @details
- \itemize{
+\item{...}{outros parâmetros das funções utilizadas}
+}
+\description{
+Lê os "arquivos reduzidos" da Autorização de Internação Hospitalar (AIH).
+}
+\details{
+\itemize{
   \item x pode ser:
    \enumerate{
     \item um arquivo de dados armazenado num diretório;
@@ -62,8 +65,18 @@ Se for um arquivo, o nome deve ser escrito entre aspas e com a extensão do arqu
 
 É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.
 
-}}
 }
-\description{
-Lê os "arquivos reduzidos" da Autorização de Internação Hospitalar (AIH).
+}
+\examples{
+leraih(aih500) |> head()
+leraih(aih500, procobst.rm = FALSE) |> head()
+leraih(aih500, parto.rm = FALSE) |> head()
+\dontrun{
+leraih("data-raw/RDRS1801.dbc", vars = c("DIAG_PRINC", "SEXO", "IDADE", "MUNIC_RES")) |> head()
+leraih("data-raw/RDRS1801.dbf", vars = c("DIAG_PRINC", "SEXO", "IDADE", "COD_IDADE")) |> head()
+}
+
+}
+\seealso{
+[idadeSUS()]
 }

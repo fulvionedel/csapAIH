@@ -21,13 +21,14 @@
 #'     \item N_AIH: número da AIH;
 #'     \item PROC_REA: procedimento realizado, segundo a tabela do SIH/SUS.
 #'     }
-#' @param procobst.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (\code{ver detalhes em \link{leraih}});
-#' @param parto.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes em \link{leraih}});
-#' @param longa.rm argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE} (\code{ver detalhes em \link{leraih}});
+#' @param procobst.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (ver detalhes em \code{\link{leraih}});
+#' @param parto.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (ver detalhes em \code{\link{leraih}});
+#' @param longa.rm argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE} (ver detalhes em \code{\link{leraih}});
 #' @param arquivo argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;
 #' @param sep usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal;
 #' @param cid identifica a varivável contendo os códigos da CID-10, em bancos de dados sem a estrutura do SIHSUS; argumento obrigatório nesses casos;
-#' @param ... permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas.
+#' @param vars lista de variáveis da AIH a serem selecionadas (ver detalhes em \code{\link{leraih}});
+#' @param ... permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas e de \code{\link{leraih}}.
 #'
 #' @details
 #'  \itemize{
@@ -108,23 +109,19 @@
 #' ##---------------------------------
 #' cids <- c("I200", "K929", "T16", "I509", "I10",  "I509", "S068")
 #' #
-#' # Se o vetor for da classe 'character', deve-se transformá-lo em fator ou
-#' # mudar o argumento 'arquivo' para 'FALSE':
-#' # teste1 <- csapAIH2(cids) # Erro
-#' teste1 <- csapAIH2(factor(cids)) ; class(teste1) ; teste1
-#' teste1 <- csapAIH2(cids, arquivo=FALSE) ; class(teste1) ; teste1
-#' teste2 <- csapAIH2(cids, arquivo=FALSE,  grupo=FALSE) ; class(teste2) ; teste2
-#' teste2 <- csapAIH2(factor(cids), grupo=FALSE) ; class(teste2) ; teste2
-#' #
-
+#' # Ao contrário de csapAIH, o vetor pode ser da classe 'character'
+#' csapAIH2(cids)
+#' csapAIH2(factor(cids))
+#' csapAIH2(cids,  grupo=FALSE)
 #'
 #' ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 #' ##---------------------------------------------------------
 #' \dontrun{
-#'  teste3.dbf <- csapAIH2("RDRS1201.dbf")
-#'  str(teste3.dbf)
-#'  teste4.dbc <- csapAIH2("data-raw/RDRS1801.dbc")
-#'  str(teste4.dbc) }
+#'  teste.dbf <- csapAIH2("data-raw/RDRS1801.dbf")
+#'  str(teste.dbf)
+#'  teste.dbc <- csapAIH2("data-raw/RDRS1801.dbc")
+#'  str(teste.dbc)
+#'  }
 #'
 #' ## Um 'data.frame' com a estrutura dos 'arquivos da AIH':
 #' ##-------------------------------------------------------
@@ -144,13 +141,6 @@
 #' teste7 <- csapAIH2(aih500, lista = "Alfradique")
 #' str(teste7)
 #' levels(teste7$grupo)
-#'
-#' ## Uma base de dados com a estrutura dos "arquivos da AIH"
-#' ## mas sem as variáveis CEP ou CNES:
-#' ##--------------------------------------------------------
-#' aih <- subset(aih500, select = -c(CEP, CNES))
-#' teste8 <- csapAIH2(aih, cep = FALSE, cnes = FALSE)
-#' str(teste8)
 #'
 #' ## Uma base de dados sem a estrutura dos arquivos RD*.dbc:
 #' ##--------------------------------------------------------
@@ -176,102 +166,68 @@
 #'
 #' @export
 #'
-csapAIH2 <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
-  {
-    # Lista de causas a ser usada
+csapAIH2 <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, arquivo=TRUE, sep, cid = NULL, vars = NULL, ...) {
+  # Lista de causas a ser usada
   if(lista == "MS") {
     lista <- listaBRMS
-  } else if (lista == "Alfradique") {
-    lista <- listaBRAlfradique
-  }
+    } else if (lista == "Alfradique") {
+      lista <- listaBRAlfradique
+    }
 
-  # Preparar os dados
-  #
-  # ## Se for fator já resolve agora
-  if (is.factor(x)) {
-    # x <- as.character(x)
-    cid <- as.character(x)
-    arquivo     <- FALSE
-    sihsus      <- FALSE
-    procobst.rm <- FALSE
-    longa.rm    <- FALSE
-    cep         <- FALSE
-    cnes        <- FALSE
-    return(lista(cid))
-  }
-  # Se for character também (será que tem mesmo de incluir "arquivo = FALSE"?)
-  if (is.character(x) ) { #& isFALSE(arquivo)) {
-    cid <- x
-    sihsus      <- FALSE
-    procobst.rm <- FALSE
-    longa.rm    <- FALSE
-    cep         <- FALSE
-    cnes        <- FALSE
-    return(lista(cid))
-  }
+  # ## Se for fator ou caractere já resolve agora
+  if ( is.factor(x) | is.character(x) ) {
+    banco <- lista(x)
+    if(isFALSE(grupos)) { banco <- banco[[1]] }
+    return(banco)
+  } #else
   if (is.data.frame(x)) {
     arquivo <- FALSE
-    if(is.tbl(x)) x <- as.data.frame(x)
+    if(is.tbl(x)) { x <- as.data.frame(x) }
   }
   if (isFALSE(sihsus)) {
-   # # Garantir o trabalho com operadores mais tarde, no CID
-   #   if(!is.character(cid)) cid <- as.character(cid)
-    # if(is.labelled(cid)) cid <- haven::zap_labels(cid)
-      # if (is.data.frame(x)) {
-        cid <- x[, deparse(substitute(cid))]
-        juntar <- x
-        banco <- cbind(x, lista(cid))
+  # # Garantir o trabalho com operadores mais tarde, no CID
+  #   if(!is.character(cid)) cid <- as.character(cid)
+  # if(is.labelled(cid)) cid <- haven::zap_labels(cid)
+    # if (is.data.frame(x)) {
+      cid <- x[, deparse(substitute(cid))]
+      juntar <- x
+      banco <- cbind(x, lista(cid))
+  }
+#
+  #   Bancos com estrutura do SIHSUS  usam a função 'leraih'         #
+  if( isTRUE(sihsus) ) {
+    x <- leraih(x, vars = vars, ...)
+    banco <- cbind(x, lista(x$DIAG_PRINC))
+  }
+  banco$csap <- factor(banco$csap, levels = c("sim", "n\u00E3o"))
+  attr(banco, "resumo") <- attr(x, "resumo")
+  # cid[cid==""] <- NA
+
+  ###########################
+  ### Montar o objeto final #
+  ###########################
+  if (grupos==FALSE ) { banco$grupo <- NULL }
+
+  ## Exclusão de partos em bancos sem a estrutura do SIH/SUS
+  if (sihsus == FALSE) {
+    if(parto.rm == TRUE) {
+      if(is.factor(cid)) { cid <- as.character(cid) }
+      nlidos <- nrow(banco)
+      banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = TRUE)
+      pexcluidos <- round((1-(nrow(banco)/nlidos))*100,1)
+      message(paste0(c("Exclu\u00EDdos ",
+                       suppressWarnings(formatC(nlidos-nrow(banco), big.mark = ".")),
+                       " registros de parto",
+                       " (", formatC(pexcluidos, decimal.mark = ","), "\u0025 do total).")))
     }
-#
-#
-#   #------------------------------------------------------------------#
-#   #   Bancos com estrutura do SIHSUS  usam a função 'leraih'         #
-#   #------------------------------------------------------------------#
-      if( isTRUE(sihsus) ) {
-        x <- leraih(x, ...)
-        # if(lista == "MS") {
-          # banco <- cbind(x, listaBRMS(x$DIAG_PRINC))
-        # } else if (lista == "Alfradique") {
-          # banco <- cbind(x, listaBRAlfradique(x$DIAG_PRINC))
-        banco <- cbind(x, lista(x$DIAG_PRINC))
-        }
-        banco$csap <- factor(banco$csap, levels = c("sim", "n\u00E3o"))
-        attr(banco, "resumo") <- attr(x, "resumo")
+  }
 
-      # cid[cid==""] <- NA
+  rownames(banco) <-  NULL
 
-      ###########################
-      ### Montar o objeto final #
-      ###########################
-        # attr(banco$csap, which = "label") <- "CSAP"
-        # attr(banco$grupo, which = "label") <- "Grupo de causa CSAP"
-        if (grupos==FALSE ) {
-          # grupo <- resumo <- NULL
-          # banco <- subset(banco, select = - grupo)
-          banco$grupo <- NULL
-          # attr(banco, which = "resumo") <- resumo
-          # attr(banco, which = "excluidos.obst") <- excluidos.obst
-        }
+  if( !is.data.frame(x) & isFALSE(sihsus) & isFALSE(grupos) ) {
+    banco <- banco[['csap']]
+  }
 
-      ## Exclusão de partos em bancos sem a estrutura do SIH/SUS
-      if (sihsus == FALSE) {
-        if(parto.rm == TRUE) {
-          nlidos <- nrow(banco)
-          banco <- subset(banco, subset = cid < "O80" | cid >= "O85", drop = TRUE)
-          pexcluidos <- round((1-(nrow(banco)/nlidos))*100,1)
-          message(paste0(c("Exclu\u00EDdos ",
-                           suppressWarnings(formatC(nlidos-nrow(banco),
-                                                    big.mark = ".")),
-                           " registros de parto",
-                           " (", formatC(pexcluidos, decimal.mark = ","), "\u0025 do total).")))
-        }
-      }
+  banco
 
-      rownames(banco) <-  NULL
-
-      if(!is.data.frame(x) & sihsus == FALSE & grupos == FALSE) {
-        banco <- banco[['csap']]
-        }
-
-      return(banco)
 }

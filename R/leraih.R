@@ -10,7 +10,7 @@
 #' @param longa.rm As internações de longa permanência (tipo 5) devem ser excluídas? Padrão é \code{TRUE}. V. details.
 #' @param ... outros parâmetros das funções utilizadas
 #'
-#' #' @details
+#' @details
 #'  \itemize{
 #'   \item x pode ser:
 #'    \enumerate{
@@ -45,6 +45,17 @@
 #'
 #' }
 #'
+#' @examples
+#' leraih(aih500) |> head()
+#' leraih(aih500, procobst.rm = FALSE) |> head()
+#' leraih(aih500, parto.rm = FALSE) |> head()
+#' \dontrun{
+#' leraih("data-raw/RDRS1801.dbc", vars = c("DIAG_PRINC", "SEXO", "IDADE", "MUNIC_RES")) |> head()
+#' leraih("data-raw/RDRS1801.dbf", vars = c("DIAG_PRINC", "SEXO", "IDADE", "COD_IDADE")) |> head()
+#' }
+#'
+#' @seealso [idadeSUS()]
+#'
 #' @export
 #'
 leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, vars = NULL, ...)
@@ -78,11 +89,6 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
                 O objeto deve ser da um "data.frame" ou um arquivo \n
                 no formato .dbc, .dbf ou .csv. \n
                 -----------------------------------------------------\n ')
-      # stop('------------------------------------------------------\n
-      #       Reading error in', deparse(substitute(x)), '. x is  \n
-      #       not a file in format .DBC, .DBF or .CSV., neither   \n
-      #       an object of class data.frame.
-      #    -----------------------------------------------------\n ')
     if(!data.table::is.data.table(x)) x <- data.table::setDT(x)
   }
 #
@@ -121,9 +127,9 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
     excluidos.obst
   }
   # ----------------------- fim da função
-  #
-      # Procedimentos obstétricos
-      # ---------------------------
+
+  # Procedimentos obstétricos
+  # ---------------------------
   x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
   if (procobst.rm == TRUE) {
     # x <- proc.obst(x)
@@ -140,8 +146,8 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
     }
   }
 
-      #   Exclusão das AIHs de longa permanência
-      #--------------------------------------------
+  #   Exclusão das AIHs de longa permanência
+  #--------------------------------------------
   if (isTRUE(longa.rm)) {
     fr <- table(x$IDENT)[2]
     pfr <- round((fr/nlidos)*100,1)
@@ -194,14 +200,15 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
         # vars = c("DIAG_PRINC", vars)
         vars = vars
       } else {
-        vars = c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "COD_IDADE", "IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA")
+        vars = c("MUNIC_RES", "COD_IDADE", "IDADE", "SEXO", "DIAG_PRINC", "PROC_REA", "DT_INTER", "DT_SAIDA")
       }
       x <- x[, vars] |> as.data.frame()
       if(length(vars == 1)) names(x) <- vars
 
-      if("N_AIH" %in% vars) {
-        x$N_AIH <- as.character(x$N_AIH)
-      }
+      # if("N_AIH" %in% vars) {
+      #   x$N_AIH <- as.character(x$N_AIH)
+      #   # names(x)[which(names(x) == 'N_AIH')] <- 'n.aih'
+      # }
       if( "IDADE" %in% vars ) {
         if (!"COD_IDADE" %in% vars) {
           warning("Para computar a idade, inclua o campo 'COD_IDADE'.")
@@ -218,18 +225,20 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
         x$NASC <- as.Date(format(x$NASC), format="%Y%m%d")
       }
       if("DT_INTER" %in% vars) {
-        x$data.inter <- as.Date(format(x$DT_INTER), format="%Y%m%d")
+        x$DT_INTER <- as.Date(format(x$DT_INTER), format="%Y%m%d")
+        # names(x)[which(names(x) == 'DT_INTER')] <- 'data.inter'
       }
       if("DT_SAIDA" %in% vars) {
-        x$data.saida <- as.Date(format(x$DT_SAIDA), format="%Y%m%d")
+        x$DT_SAIDA <- as.Date(format(x$DT_SAIDA), format="%Y%m%d")
+        # names(x)[which(names(x) == 'DT_SAIDA')] <- 'data.saida'
       }
       if("MUNIC_RES" %in% vars) {
-        x$munres   <- x$MUNIC_RES
-        x$MUNIC_RES <- NULL
+        x$MUNIC_RES <- x$MUNIC_RES
+        # names(x)[which(names(x) == 'MUNIC_RES')] <- 'munres'
       }
       if("MUNIC_MOV" %in% vars) {
-        x$munint   <- x$MUNIC_MOV
-        x$MUNIC_MOV <- NULL
+        x$MUNIC_MOV   <- x$MUNIC_MOV
+        # names(x)[which(names(x) == 'MUNIC_MOV')] <- 'munint'
       }
       # if("CEP" %in% vars) {
       #   X$cep <- x$CEP
@@ -244,9 +253,8 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
       #   # attr(x$cnes, which = "label") <- "No. do hospital no CNES"
       # }
       # if("PROC_REA" %in% vars) {
-      #   proc.obst(x$PROC_REA)
-      #   # x$proc.rea <- x$PROC_REA
-      #   x$proc.obst <- ifelse(proc.rea %in% procobst, 1, 2), labels=c('sim', 'nao')
+      #   names(x)[which(names(x) == 'PROC_REA')] <- 'proc.rea'
+      #   # x$proc.obst <- factor(ifelse(x$proc.rea %in% procobst, 1, 2), labels=c('sim', 'nao'))
       # }
 
       attr(x, which = "resumo") <- resumo
