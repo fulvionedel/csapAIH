@@ -15,6 +15,7 @@ csapAIH2(
   arquivo = TRUE,
   sep,
   cid = NULL,
+  vars,
   ...
 )
 }
@@ -40,11 +41,11 @@ csapAIH2(
   \item PROC_REA: procedimento realizado, segundo a tabela do SIH/SUS.
   }}
 
-\item{procobst.rm}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (\code{ver detalhes em \link{leraih}});}
+\item{procobst.rm}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (ver detalhes em \code{\link{leraih}});}
 
-\item{parto.rm}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes em \link{leraih}});}
+\item{parto.rm}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (ver detalhes em \code{\link{leraih}});}
 
-\item{longa.rm}{argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE} (\code{ver detalhes em \link{leraih}});}
+\item{longa.rm}{argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE} (ver detalhes em \code{\link{leraih}});}
 
 \item{arquivo}{argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;}
 
@@ -52,7 +53,9 @@ csapAIH2(
 
 \item{cid}{identifica a varivável contendo os códigos da CID-10, em bancos de dados sem a estrutura do SIHSUS; argumento obrigatório nesses casos;}
 
-\item{...}{permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas.}
+\item{vars}{lista de variáveis da AIH a serem selecionadas (ver detalhes em \code{\link{leraih}});}
+
+\item{...}{permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas e de \code{\link{leraih}}.}
 }
 \value{
 A função tem diferentes possibilidades de retorno, segundo a estrutura dos dados lidos e as opções de leitura:

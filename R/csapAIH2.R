@@ -21,13 +21,14 @@
 #'     \item N_AIH: número da AIH;
 #'     \item PROC_REA: procedimento realizado, segundo a tabela do SIH/SUS.
 #'     }
-#' @param procobst.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (\code{ver detalhes em \link{leraih}});
-#' @param parto.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes em \link{leraih}});
-#' @param longa.rm argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE} (\code{ver detalhes em \link{leraih}});
+#' @param procobst.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por procedimento obstétrico (ver detalhes em \code{\link{leraih}});
+#' @param parto.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (ver detalhes em \code{\link{leraih}});
+#' @param longa.rm argumento lógico; \code{TRUE} (padrão) exclui as AIH de longa permanência (AIH tipo 5), retornando uma mensagem com o número e proporção de registros excluídos e o total de registros importados; argumento válido apenas se \code{sihsus=TRUE} (ver detalhes em \code{\link{leraih}});
 #' @param arquivo argumento lógico, obrigatório; \code{TRUE} (padrão) indica que o alvo da função (\code{x}) é um arquivo; \code{FALSE} indica que \code{x} é um objeto no espaço de trabalho; é automaticamente marcado como \code{FALSE} quando \code{x} é um \code{factor} ou \code{data frame}; deve ser definido pelo usuário como \code{FALSE} apenas quando \code{x} contiver em seu nome as sequências "dbc", "dbf" ou "csv" sem que isso seja a extensão do arquivo; apenas arquivos com esses formatos podem ser lidos;
 #' @param sep usado para a leitura de arquivos da AIH em formato CSV; pode ser ";" para arquivos separados por ponto-e-vírgula e com vírgula como separador decimal, ou "," para arquivos separados por vírgula e com ponto como separador decimal;
 #' @param cid identifica a varivável contendo os códigos da CID-10, em bancos de dados sem a estrutura do SIHSUS; argumento obrigatório nesses casos;
-#' @param ... permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas.
+#' @param vars lista de variáveis da AIH a serem selecionadas (ver detalhes em \code{\link{leraih}});
+#' @param ... permite a inclusão de argumentos das funções \code{\link{read.table}} e suas derivadas e de \code{\link{leraih}}.
 #'
 #' @details
 #'  \itemize{
@@ -176,7 +177,7 @@
 #'
 #' @export
 #'
-csapAIH2 <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, arquivo=TRUE, sep, cid = NULL, ...)
+csapAIH2 <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, arquivo=TRUE, sep, cid = NULL, vars, ...)
   {
     # Lista de causas a ser usada
   if(lista == "MS") {

@@ -78,11 +78,6 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
                 O objeto deve ser da um "data.frame" ou um arquivo \n
                 no formato .dbc, .dbf ou .csv. \n
                 -----------------------------------------------------\n ')
-      # stop('------------------------------------------------------\n
-      #       Reading error in', deparse(substitute(x)), '. x is  \n
-      #       not a file in format .DBC, .DBF or .CSV., neither   \n
-      #       an object of class data.frame.
-      #    -----------------------------------------------------\n ')
     if(!data.table::is.data.table(x)) x <- data.table::setDT(x)
   }
 #
@@ -121,9 +116,9 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
     excluidos.obst
   }
   # ----------------------- fim da função
-  #
-      # Procedimentos obstétricos
-      # ---------------------------
+
+  # Procedimentos obstétricos
+  # ---------------------------
   x$DIAG_PRINC <- as.character(x$DIAG_PRINC)
   if (procobst.rm == TRUE) {
     # x <- proc.obst(x)
@@ -140,8 +135,8 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
     }
   }
 
-      #   Exclusão das AIHs de longa permanência
-      #--------------------------------------------
+  #   Exclusão das AIHs de longa permanência
+  #--------------------------------------------
   if (isTRUE(longa.rm)) {
     fr <- table(x$IDENT)[2]
     pfr <- round((fr/nlidos)*100,1)
