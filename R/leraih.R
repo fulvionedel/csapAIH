@@ -56,6 +56,7 @@
 #'
 #' @seealso [idadeSUS()]
 #'
+#' @importFrom utils hasName
 #' @export
 #'
 leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TRUE, vars = NULL, ...)
@@ -148,6 +149,9 @@ leraih <- function(x, arquivo=TRUE, procobst.rm=TRUE, parto.rm=TRUE, longa.rm=TR
 
   #   Exclusão das AIHs de longa permanência
   #--------------------------------------------
+  if(isFALSE(hasName(x, "IDENT"))) {
+    longa.rm <- FALSE
+  }
   if (isTRUE(longa.rm)) {
     fr <- table(x$IDENT)[2]
     pfr <- round((fr/nlidos)*100,1)

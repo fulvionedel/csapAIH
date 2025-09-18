@@ -32,7 +32,7 @@ LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
 Language: pt-br
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: 
     R (>= 2.10)
 URL: https://github.com/fulvionedel/csapAIH, https://fulvionedel.github.io/csapAIH/
