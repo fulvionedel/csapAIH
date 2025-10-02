@@ -143,16 +143,25 @@ ler_popbr <- function(x) {
 #' @description Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
 #' @param x Ano ou vetor com os anos a serem lidos.
 #' @param uf Unidade(s) da Federação de interesse para seleção. O padrão é todas.
-#' @param municipio Município(s) de interesse para seleção. O padrão é todos. Ainda não implementado.
+#' @param municipio Município(s) de interesse para seleção. O padrão é todos.
 #' @param idade Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.
 #' @examples
-#' popbr(2017:2019) |> str()
+#' # Arquivos no diretório FTP do DATASUS
+#' popbr(2024) |> head()
+#' popbr(2024, idade = TRUE) |> head()
+#' anos <- popbr(2017:2019)
+#' xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 #' popbr(c(2017, 2019))  |> str()
-#' popbr(2022, "SC") |> head()
-#' popbr(2010, "RS", idade = TRUE) |> head()
-#' popbr(2010, municipio = "430520") |> head()
-#' # O exemplo seguinte dá erro, porque a estrutura das bases de origem
-#' # muda em 2013 (e isso ainda não foi trabalhado na função).
+#' popbr(2022, "RS") |> head()
+#' popsul22 <- popbr(2022, c("PR", "SC", "RS"))
+#' xtabs(populacao ~ fxetar5 + sexo + UF_SIGLA, popsul22) |> ftable(col.vars = c("UF_SIGLA", "sexo"))
+#' popbr(2013, municipio = "430520") |> head()
+#' popcap <- popbr(2013, municipio = c("431490", "420540"))
+#' xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("munic_res", "sexo"))
+#'
+#' # Até 2012 a estrutura era outra
+#' popbr(c(1980, 2012))  |> str()
+#' # Por isso o exemplo seguinte dá erro (e ainda não foi trabalhado na função):
 #' \dontrun{
 #' popbr(2012:2013)
 #' }
@@ -163,7 +172,7 @@ ler_popbr <- function(x) {
 popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
   # Nuntius errorum
     if(!is.null(uf)) {
-      if(!uf %in% ufbr()$UF_SIGLA) {
+      if(!all(uf %in% ufbr()$UF_SIGLA)) {
       stop("'uf' deve ser uma de RO, AC, AM, RR, PA, AP, TO, MA, PI, CE, RN,
     PB, PE, AL, SE, BA, MG, ES, RJ, SP, PR, SC, RS, MS, MT, GO ou DF") }
     }
@@ -184,21 +193,20 @@ popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
       mutate(CO_UF = substr(munic_res, 1, 2)) %>%
       inner_join(csapAIH::ufbr()) %>%
       filter(UF_SIGLA %in% uf) %>%
-      reframe(populacao = sum(populacao), .by = c(UF_SIGLA, vars))
+      reframe(populacao = sum(populacao), .by = c(UF_SIGLA, vars)) %>%
+      droplevels()
   } else if(!is.null(municipio)) {
     # Nuntius errorum
     # ---------------
     # if(!is.null(uf)) { stop("Para a população por município, deixe 'uf' em branco.")}
-    if(!municipio %in% populacao$munic_res) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
+    if(!all(municipio %in% populacao$munic_res)) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
     # ---------------
     populacao <- populacao %>%
       filter(munic_res %in% municipio) %>%
       reframe(populacao = sum(populacao), .by = vars)
   }
   if(isFALSE(idade)) {
-    vars <- names(populacao)[-c(5:6)]
-    populacao <- populacao %>%
-      reframe(populacao = sum(populacao), .by = vars)
+   populacao$fxetaria <- NULL
   }
 
   populacao

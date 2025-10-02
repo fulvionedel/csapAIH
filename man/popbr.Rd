@@ -11,7 +11,7 @@ popbr(x, uf = NULL, municipio = NULL, idade = FALSE)
 
 \item{uf}{Unidade(s) da Federação de interesse para seleção. O padrão é todas.}
 
-\item{municipio}{Município(s) de interesse para seleção. O padrão é todos. Ainda não implementado.}
+\item{municipio}{Município(s) de interesse para seleção. O padrão é todos.}
 
 \item{idade}{Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.}
 }
@@ -19,13 +19,22 @@ popbr(x, uf = NULL, municipio = NULL, idade = FALSE)
 Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
 }
 \examples{
-popbr(2017:2019) |> str()
+# Arquivos no diretório FTP do DATASUS
+popbr(2024) |> head()
+popbr(2024, idade = TRUE) |> head()
+anos <- popbr(2017:2019)
+xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 popbr(c(2017, 2019))  |> str()
-popbr(2022, "SC") |> head()
-popbr(2010, "RS", idade = TRUE) |> head()
-popbr(2010, municipio = "430520") |> head()
-# O exemplo seguinte dá erro, porque a estrutura das bases de origem
-# muda em 2013 (e isso ainda não foi trabalhado na função).
+popbr(2022, "RS") |> head()
+popsul22 <- popbr(2022, c("PR", "SC", "RS"))
+xtabs(populacao ~ fxetar5 + sexo + UF_SIGLA, popsul22) |> ftable(col.vars = c("UF_SIGLA", "sexo"))
+popbr(2013, municipio = "430520") |> head()
+popcap <- popbr(2013, municipio = c("431490", "420540"))
+xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("munic_res", "sexo"))
+
+# Até 2012 a estrutura era outra
+popbr(c(1980, 2012))  |> str()
+# Por isso o exemplo seguinte dá erro (e ainda não foi trabalhado na função):
 \dontrun{
 popbr(2012:2013)
 }
