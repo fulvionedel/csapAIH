@@ -166,7 +166,7 @@ ler_popbr <- function(x) {
 #' popbr(2012:2013)
 #' }
 #'
-#' @importFrom dplyr `%>%` group_by group_by_at reframe inner_join mutate select filter
+#' @importFrom dplyr `%>%` across filter group_by inner_join mutate reframe
 #' @export
 #'
 popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
@@ -206,7 +206,9 @@ popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
       reframe(populacao = sum(populacao), .by = vars)
   }
   if(isFALSE(idade)) {
-   populacao$fxetaria <- NULL
+    populacao <- populacao %>%
+      group_by(across(-c(fxetaria, populacao))) %>%
+      reframe(populacao = sum(populacao))
   }
 
   populacao
