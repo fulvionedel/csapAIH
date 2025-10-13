@@ -4,10 +4,10 @@
 \alias{popbr}
 \title{Estimativas populacionais para os municípios brasileiros.}
 \usage{
-popbr(x, uf = NULL, municipio = NULL, idade = FALSE)
+popbr(ano, uf = NULL, municipio = NULL, idade = FALSE)
 }
 \arguments{
-\item{x}{Ano ou vetor com os anos a serem lidos.}
+\item{ano}{Ano ou vetor com os anos a serem lidos. Pode ser um arquivo armazenado no computador, ou ano(s) da estimativa ou contagem populacional a ser (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.}
 
 \item{uf}{Unidade(s) da Federação de interesse para seleção. O padrão é todas.}
 

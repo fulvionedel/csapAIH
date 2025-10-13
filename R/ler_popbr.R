@@ -141,7 +141,7 @@ ler_popbr <- function(x) {
 #' Estimativas populacionais para os municípios brasileiros.
 #'
 #' @description Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
-#' @param x Ano ou vetor com os anos a serem lidos.
+#' @param ano Ano ou vetor com os anos a serem lidos. Pode ser um arquivo armazenado no computador, ou ano(s) da estimativa ou contagem populacional a ser (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.
 #' @param uf Unidade(s) da Federação de interesse para seleção. O padrão é todas.
 #' @param municipio Município(s) de interesse para seleção. O padrão é todos.
 #' @param idade Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.
@@ -169,7 +169,7 @@ ler_popbr <- function(x) {
 #' @importFrom dplyr `%>%` across filter group_by inner_join mutate reframe
 #' @export
 #'
-popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
+popbr <- function(ano, uf = NULL, municipio = NULL, idade = FALSE) {
   # Nuntius errorum
     if(!is.null(uf)) {
       if(!all(uf %in% ufbr()$UF_SIGLA)) {
@@ -180,12 +180,44 @@ popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
 
   munic_res <- UF_SIGLA <- fxetar5 <- fxetaria <- situacao <- NULL
 
-  if (length(x) > 1) {
-    resultados <- lapply(x, ler_popbr)
-    populacao <- do.call(rbind, resultados)
+  if (length(ano) > 1) {
+    # -------------
+    if(any(ano <= 2012) & any(ano >= 2013)) {
+      anovelho <- ano[ano < 2013]
+      pop1 <- lapply(anovelho, ler_popbr)
+      pop1 <- do.call(rbind, pop1)
+      pop1 <- pop1 %>%
+        group_by(munic_res, ano, sexo, fxetar5) %>%
+        reframe(populacao = sum(populacao))
+      anonovo <- ano[ano > 2012]
+      pop2 <- lapply(anonovo, ler_popbr)
+      pop2 <- do.call(rbind, pop2)
+      pop2 <- pop2 %>%
+        group_by(munic_res, ano, sexo, fxetar5) %>%
+        reframe(populacao = sum(populacao))
+      populacao <- rbind(pop1, pop2)
+      # reses <- rbind(pop1, pop2)
+      # return(reses)
+    } else {
+      resultados <- lapply(ano, ler_popbr)
+      populacao <- do.call(rbind, resultados)
+    } # -------------
   } else {
-    populacao <- ler_popbr(x)
+    populacao <- ler_popbr(ano)
   }
+
+
+  if(!is.null(municipio)) {
+  uf <- NULL
+    # Nuntius errorum
+    # ---------------
+    if(!all(municipio %in% populacao$munic_res)) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
+    # ---------------
+    populacao <- populacao %>%
+      filter(munic_res %in% municipio)
+  }
+
+
   vars <- c("munic_res", "ano", "sexo", "fxetar5", "fxetaria")
   if(!is.null(uf)) {
     vars <- vars[-1]
@@ -195,16 +227,16 @@ popbr <- function(x, uf = NULL, municipio = NULL, idade = FALSE) {
       filter(UF_SIGLA %in% uf) %>%
       reframe(populacao = sum(populacao), .by = c(UF_SIGLA, vars)) %>%
       droplevels()
-  } else if(!is.null(municipio)) {
-    # Nuntius errorum
-    # ---------------
-    # if(!is.null(uf)) { stop("Para a população por município, deixe 'uf' em branco.")}
-    if(!all(municipio %in% populacao$munic_res)) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
-    # ---------------
-    populacao <- populacao %>%
-      filter(munic_res %in% municipio) %>%
-      reframe(populacao = sum(populacao), .by = vars)
-  }
+  } #else if(!is.null(municipio)) {
+  #   # Nuntius errorum
+  #   # ---------------
+  #   # if(!is.null(uf)) { stop("Para a população por município, deixe 'uf' em branco.")}
+  #   if(!all(municipio %in% populacao$munic_res)) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
+  #   # ---------------
+  #   populacao <- populacao %>%
+  #     filter(munic_res %in% municipio) %>%
+  #     reframe(populacao = sum(populacao), .by = vars)
+  # }
   if(isFALSE(idade)) {
     populacao <- populacao %>%
       group_by(across(-c(fxetaria, populacao))) %>%
