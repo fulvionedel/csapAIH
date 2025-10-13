@@ -58,7 +58,7 @@ csap.csv <- csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
 A função `fetchcsap` foi pensada para apresentar um extrato dos registros por período de internação e não de "competência" da AIH, que é commo se organizam os arquivos de dados. Assim, precisamos modificar alguns argumentos para ter os mesmos registros:
 
 ```{r}
-csap.ftp <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "competencia")
+csap.ftp <- fetchcsap(2018, mesfim = 1, uf = 'RS', periodo = "competencia")
 ```
 
 Os extratos são iguais:
@@ -76,13 +76,13 @@ Por isso `fetchcsap` tem seus argumentos de forma a devolver o banco de dados ap
   c. apenas as internações ocorridas em jan2018 e registradas nos arquivos "RD" dos meses de competência janeiro a fevereiro de 20018.
 
 ```{r}
-a <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "c")
+a <- fetchcsap(2018, mesfim = 1, uf = 'RS', periodo = "c")
 nrow(a)
 summary(a$data.inter)
-b <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018)
+b <- fetchcsap(2018, mesfim = 1, uf = 'RS')
 nrow(b)
 summary(b$data.inter)
-c <- fetchcsap('RS', 2018, mesfim = 2, anofim = 2018)
+c <- fetchcsap(2018, mesfim = 2, uf = 'RS')
 nrow(c)
 summary(c$data.inter)
 ```
