@@ -178,7 +178,7 @@ popbr <- function(ano, uf = NULL, municipio = NULL, idade = FALSE) {
     }
   # ---------
 
-  munic_res <- UF_SIGLA <- fxetar5 <- fxetaria <- situacao <- NULL
+  munic_res <- UF_SIGLA <- sexo <- fxetar5 <- fxetaria <- situacao <- NULL
 
   if (length(ano) > 1) {
     # -------------

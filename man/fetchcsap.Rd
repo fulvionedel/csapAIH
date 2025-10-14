@@ -28,15 +28,15 @@ fetchcsap(
 
 \item{uf}{Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".}
 
-\item{regiao}{Região administrativa do Brasil ("Grandes Regiões). O padrão é \code{NULL}. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".}
+\item{regiao}{Região administrativa do Brasil ("Grandes Regiões"). O padrão é \code{NULL}. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".}
 
-\item{periodo}{O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detahes.}
+\item{periodo}{O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detalhes.}
 
-\item{cep}{CEP de internação}
+\item{cep}{CEP de internação.}
 
-\item{cnes}{CNES do estabelecimento que gerou a AIH}
+\item{cnes}{Código CNES do estabelecimento que gerou a AIH.}
 
-\item{...}{Permite o uso de outros parâmetros de \code{\link{csapAIH}}}
+\item{...}{Permite o uso de outros parâmetros de \code{\link{csapAIH}}.}
 }
 \value{
 Um objeto de classes \code{data.table} e \code{data.frame} com as seguintes variáveis:

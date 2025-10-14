@@ -9,11 +9,11 @@
 #' @param mesinicio Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.
 #' @param mesfim Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.
 #' @param uf Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".
-#' @param regiao Região administrativa do Brasil ("Grandes Regiões). O padrão é \code{NULL}. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".
-#' @param periodo O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detahes.
-#' @param  cep CEP de internação
-#' @param cnes CNES do estabelecimento que gerou a AIH
-#' @param ... Permite o uso de outros parâmetros de \code{\link{csapAIH}}
+#' @param regiao Região administrativa do Brasil ("Grandes Regiões"). O padrão é \code{NULL}. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".
+#' @param periodo O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (\code{"interna"}) é a internação. V. detalhes.
+#' @param cep CEP de internação.
+#' @param cnes Código CNES do estabelecimento que gerou a AIH.
+#' @param ... Permite o uso de outros parâmetros de \code{\link{csapAIH}}.
 #'
 #' @returns Um objeto de classes \code{data.table} e \code{data.frame} com as seguintes variáveis:
 #'  \itemize{

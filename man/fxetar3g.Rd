@@ -10,7 +10,7 @@ fxetar3g(idade = NULL)
 \item{idade}{Vetor representando a idade ou a faixa etária. Pode ser numérico, em valores contínuos ou inteiros, ou da classe \code{factor} ou \code{character} representando 17 faixas etárias quinquenais, rotuladas conforme o resultado da função \code{\link{fxetar_quinq}} (números separados por hífen, sem espaços: "0-4", ..., "75-79", "80 e +").}
 }
 \value{
-\emph{Se fornecida a idade}, devolve um fator com as frequências observadas em cada faixa etária; \emph{se fornecida a faixa etária}, devolve um vetor da classe caractere com as frequências de cada faixa etária; \emph{se não é informado o argumento}, a função devolve um vetor com os nomes das faixas etárias. V. exemplos.
+\emph{Se fornecida a idade ou a faixa etária}, devolve um vetor da classe \code{factor} com a classificação de cadao registro; \emph{se não é informado o argumento}, a função devolve um vetor com os nomes das faixas etárias. V. exemplos.
 }
 \description{
 Recodifica vetores com a idade em números inteiros ou em faixas etárias quinquenais em três grandes faixas etárias: 0-14, 15-59 e 60 e + anos.
@@ -19,15 +19,23 @@ Recodifica vetores com a idade em números inteiros ou em faixas etárias quinqu
 # Apenas citar os grupos:
 fxetar3g()
 
-# Categorizar a idade
+# Idade em anos
 ## Criar um vetor para idade
 idade <- as.integer(runif(100, 0, 100))
 ## Computar a faixa etária
+fxetar3g(idade) |> str()
 fxetar3g(idade) |> table()
 
-# Recategorizar a faixa etária quinquenal e
-# computar a faixa etária em três grandes gupos
+# Faixa etária
+# Categorizar a faixa etária quinquenal e
+# computar a faixa etária em três grandes grupos
+fxetar_quinq(idade) |> str()
 fxetar_quinq(idade) |>
-fxetar3g() |> table()
+  fxetar3g() |>
+  table()
 
+fxetar_quinq(idade, puer = TRUE) |> str()
+fxetar_quinq(idade, puer = TRUE) |>
+  fxetar3g() |>
+  table()
 }
