@@ -4,7 +4,7 @@
 #'
 #' @param idade Vetor representando a idade ou a faixa etária. Pode ser numérico, em valores contínuos ou inteiros, ou da classe \code{factor} ou \code{character} representando 17 faixas etárias quinquenais, rotuladas conforme o resultado da função \code{\link{fxetar_quinq}} (números separados por hífen, sem espaços: "0-4", ..., "75-79", "80 e +").
 #'
-#' @returns \emph{Se fornecida a idade ou a faixa etária}, devolve um vetor da classe \code{factor} com a classificação de cadao registro; \emph{se não é informado o argumento}, a função devolve um vetor com os nomes das faixas etárias. V. exemplos.
+#' @returns \emph{Se fornecida a idade ou a faixa etária}, devolve um vetor da classe \code{factor} com a classificação de cada registro; \emph{se não é informado o argumento}, a função devolve um vetor com os nomes das faixas etárias. V. exemplos.
 #'
 #' @examples
 #' # Apenas citar os grupos:
