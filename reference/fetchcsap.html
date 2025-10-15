@@ -15,12 +15,12 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/csapAIH.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/exemplos.html">Exemplos de uso</a></li>
     <li><a class="dropdown-item" href="../articles/populacao.html">Estimativas populacionais por sexo e faixa etária para os municípios brasileiros, 1980 - 2024.</a></li>
-    <li><a class="dropdown-item" href="../articles/usacsap.html">Classificar códigos da CID-10 em Condições Sensíveis à Atenção Primária</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -45,11 +45,12 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetchcsap</span><span class="op">(</span></span>
-<span>  uf <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  <span class="va">anoinicio</span>,</span>
-<span>  mesinicio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  anofim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mesinicio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  mesfim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  uf <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  regiao <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  periodo <span class="op">=</span> <span class="st">"interna"</span>,</span>
 <span>  cep <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cnes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -61,40 +62,44 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-uf">uf<a class="anchor" aria-label="anchor" href="#arg-uf"></a></dt>
-<dd><p>Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".</p></dd>
-
-
-<dt id="arg-anoinicio">anoinicio<a class="anchor" aria-label="anchor" href="#arg-anoinicio"></a></dt>
+<dl><dt id="arg-anoinicio">anoinicio<a class="anchor" aria-label="anchor" href="#arg-anoinicio"></a></dt>
 <dd><p>Ano de competência da AIH para início da seleção dos dados, em formato numérico; sem padrão.</p></dd>
-
-
-<dt id="arg-mesinicio">mesinicio<a class="anchor" aria-label="anchor" href="#arg-mesinicio"></a></dt>
-<dd><p>Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.</p></dd>
 
 
 <dt id="arg-anofim">anofim<a class="anchor" aria-label="anchor" href="#arg-anofim"></a></dt>
 <dd><p>Ano de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é igual ao ano seguinte ao ano de início (<code>anoinicio + 1</code>).</p></dd>
 
 
+<dt id="arg-mesinicio">mesinicio<a class="anchor" aria-label="anchor" href="#arg-mesinicio"></a></dt>
+<dd><p>Mês de competência da AIH para início da seleção dos dados, em formato numérico; por padrão é 1.</p></dd>
+
+
 <dt id="arg-mesfim">mesfim<a class="anchor" aria-label="anchor" href="#arg-mesfim"></a></dt>
 <dd><p>Mês de competência da AIH para fim da seleção dos dados, em formato numérico; por padrão é 6 (junho). V. detalhes.</p></dd>
 
 
+<dt id="arg-uf">uf<a class="anchor" aria-label="anchor" href="#arg-uf"></a></dt>
+<dd><p>Unidade da Federação. A sigla da UF ou um vetor com as siglas das UF de interesse, entre aspas e em letras maiúsculas. Para todo o Brasil (padrão), use "all".</p></dd>
+
+
+<dt id="arg-regiao">regiao<a class="anchor" aria-label="anchor" href="#arg-regiao"></a></dt>
+<dd><p>Região administrativa do Brasil ("Grandes Regiões"). O padrão é <code>NULL</code>. Se usado, deve ser uma entre "N", "NE", "SE", "S" e "CO".</p></dd>
+
+
 <dt id="arg-periodo">periodo<a class="anchor" aria-label="anchor" href="#arg-periodo"></a></dt>
-<dd><p>O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (<code>"interna"</code>) é a internação. V. detahes.</p></dd>
+<dd><p>O período definido refere-se ao mês e ano de "competência" da AIH ou à data de internação? O padrão (<code>"interna"</code>) é a internação. V. detalhes.</p></dd>
 
 
 <dt id="arg-cep">cep<a class="anchor" aria-label="anchor" href="#arg-cep"></a></dt>
-<dd><p>CEP de internação</p></dd>
+<dd><p>CEP de internação.</p></dd>
 
 
 <dt id="arg-cnes">cnes<a class="anchor" aria-label="anchor" href="#arg-cnes"></a></dt>
-<dd><p>CNES do estabelecimento que gerou a AIH</p></dd>
+<dd><p>Código CNES do estabelecimento que gerou a AIH.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Permite o uso de outros parâmetros de <code><a href="csapAIH.html">csapAIH</a></code></p></dd>
+<dd><p>Permite o uso de outros parâmetros de <code><a href="csapAIH.html">csapAIH</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -128,11 +133,12 @@
 <span class="r-in"><span><span class="co"># download dos arquivos RD??????.DBC de todas as UF de jan/2023 a jun/2024 e</span></span></span>
 <span class="r-in"><span><span class="co"># então extrais apenas os registros com data de internação em 2023.</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span>  <span class="fu">fetchcsap</span><span class="op">(</span>anoinicio <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fetchcsap</span><span class="op">(</span><span class="fl">2023</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="co"># Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,</span></span></span>
-<span class="r-in"><span><span class="co"># exemplo com as internações no Acre, registradas no mês de competência jan 2023:</span></span></span>
-<span class="r-in"><span><span class="va">ac.comp</span> <span class="op">&lt;-</span> <span class="fu">fetchcsap</span><span class="op">(</span><span class="st">"AC"</span>, <span class="fl">2023</span>, periodo <span class="op">=</span> <span class="st">'competencia'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># exemplo com as internações no Acre:</span></span></span>
+<span class="r-in"><span><span class="co"># - todas as internações registradas no mês de competência jan 2023:</span></span></span>
+<span class="r-in"><span><span class="va">ac.comp</span> <span class="op">&lt;-</span> <span class="fu">fetchcsap</span><span class="op">(</span><span class="fl">2023</span>, uf <span class="op">=</span> <span class="st">"AC"</span>, mesfim <span class="op">=</span> <span class="fl">1</span>, periodo <span class="op">=</span> <span class="st">'competencia'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
@@ -145,23 +151,79 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ac.comp</span><span class="op">$</span><span class="va">data.inter</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "2022-07-17" "2022-11-27" "2022-12-26" "2022-12-14" "2023-01-10" "2023-01-31" </span>
-<span class="r-in"><span><span class="va">ac.int</span> <span class="op">&lt;-</span> <span class="fu">fetchcsap</span><span class="op">(</span><span class="st">"AC"</span>, <span class="fl">2023</span>, mesfim <span class="op">=</span> <span class="fl">1</span>, anofim <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># - internações ocorridas em jan/2023 e registradas nos meses de competência</span></span></span>
+<span class="r-in"><span><span class="co"># janeiro a junho de 2023:</span></span></span>
+<span class="r-in"><span><span class="va">ac.int</span> <span class="op">&lt;-</span> <span class="fu">fetchcsap</span><span class="op">(</span><span class="fl">2023</span>, mesfim <span class="op">=</span> <span class="fl">1</span>, uf <span class="op">=</span> <span class="st">"AC"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 1.917 registros.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 672 (35,1%) registros de procedimentos obstétricos.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 4.628 registros.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 1.253 (27,1%) registros de procedimentos obstétricos.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos NA (NA%) registros de AIH de longa permanência.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 1.245 (64,9%) registros.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 3.375 (72,9%) registros.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ac.int</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3375</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ac.int</span><span class="op">$</span><span class="va">data.inter</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "2023-01-01" "2023-01-06" "2023-01-12" "2023-01-12" "2023-01-18" "2023-01-31" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "2023-01-01" "2023-01-09" "2023-01-16" "2023-01-16" "2023-01-24" "2023-01-31" </span>
 <span class="r-in"><span><span class="co"># Assim, há</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ac.comp</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ac.int</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1740</span>
-<span class="r-in"><span><span class="co"># internações registradas naquele mês de competência, mas que ocorreram em outro momento.</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -390</span>
+<span class="r-in"><span><span class="co"># internações registradas naquele mês de competência, mas que ocorreram antes.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:</span></span></span>
+<span class="r-in"><span><span class="fu">fetchcsap</span><span class="op">(</span><span class="fl">2023</span>, mesfim <span class="op">=</span> <span class="fl">1</span>, regiao <span class="op">=</span> <span class="st">"N"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 90.711 registros.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 20.833 (23%) registros de procedimentos obstétricos.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos NA (NA%) registros de AIH de longa permanência.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 69.878 (77%) registros.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;char&gt; &lt;char&gt; &lt;fctr&gt; &lt;num&gt;  &lt;fctr&gt; &lt;char&gt;   &lt;fctr&gt; &lt;char&gt;     &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1: 110020 110020   masc    31   30-34    não nao-CSAP   N288 2023-01-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2: 110020 110020    fem    63   60-64    sim      g08   J441 2023-01-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3: 110020 110020   masc    68   65-69    sim      g12    I64 2023-01-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4: 110020 110020   masc    34   30-34    não nao-CSAP    B24 2023-01-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5: 110020 110020    fem    49   45-49    sim      g01   B518 2023-01-23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ---                                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69874: 171820 171820    fem    86  80 e +    não nao-CSAP    J18 2023-01-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69875: 170755 171820   masc    87  80 e +    não nao-CSAP    J18 2023-01-27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69876: 171870 171610   masc    58   55-59    sim      g13   E145 2023-01-25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69877: 171610 171610   masc     9     5-9    sim      g15   N390 2023-01-31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69878: 170210 170210    fem     0     0-4    não nao-CSAP   K564 2023-01-11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        data.saida</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1: 2023-01-20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2: 2023-01-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3: 2023-01-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4: 2023-01-31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5: 2023-01-31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ---           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69874: 2023-05-14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69875: 2023-02-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69876: 2023-02-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69877: 2023-02-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69878: 2023-01-11</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -174,7 +236,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

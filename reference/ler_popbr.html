@@ -15,12 +15,12 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/csapAIH.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/exemplos.html">Exemplos de uso</a></li>
     <li><a class="dropdown-item" href="../articles/populacao.html">Estimativas populacionais por sexo e faixa etária para os municípios brasileiros, 1980 - 2024.</a></li>
-    <li><a class="dropdown-item" href="../articles/usacsap.html">Classificar códigos da CID-10 em Condições Sensíveis à Atenção Primária</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -58,6 +58,8 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. <code>ler_popbr</code> devolve uma variável (<code>munic_res</code>) de caracteres com os seis primeiros dígitos.</p>
+<p>Os bancos de dados de origem têm uma estrutura até 2012, com a variável "situação" (urbano/rural) para alguns anos e a faixa etária detalhada (variável "fxetaria") em um campo de quatro dígitos com faixas anuais até os 20 anos e então quinquenais até 80 e mais anos de idade, enquanto os arquivos a partir de 2013 não têm a variável "situação" e a variável "fxetaria" é um campo com três dígitos com a idade em anos completos até os 79 anos e então 80 e mais anos de idade.</p>
+<p>A função será descontinuada em favor de <code><a href="popbr.html">popbr</a></code>, que permite a captura de períodos maiores de um ano e oferece opções para o <code>data frame</code> resultante.</p>
 <p>As informações atualizadas podem ser tabuladas em
  http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvs2024br.def</p>
     </div>
@@ -82,93 +84,93 @@
 <span class="r-in"><span><span class="co"># Um arquivo no diretório FTP do DATASUS</span></span></span>
 <span class="r-in"><span><span class="va">popBR2010</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2010</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2010</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo situacao fxetaria populacao fxetar5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2010 masc   urbana     0000       100     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2010 masc   urbana     0101        92     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2010 masc   urbana     0202        95     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2010 masc   urbana     0303       131     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2010 masc   urbana     0404       107     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2010 masc   urbana     0505       125     5-9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res situacao  ano sexo fxetar5 fxetaria populacao</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001   urbana 2010 masc     0-4     0000       100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001   urbana 2010 masc     0-4     0101        92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001   urbana 2010 masc     0-4     0202        95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001   urbana 2010 masc     0-4     0303       131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001   urbana 2010 masc     0-4     0404       107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001   urbana 2010 masc     5-9     0505       125</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2010</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        sexo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5    masc     fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4   7016987 6779172</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9   7624144 7345231</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14 8725413 8441348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19 8558868 8432002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24 8630227 8614963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29 8460995 8643418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34 7717657 8026855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39 6766665 7121916</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44 6320570 6688797</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49 5692013 6141338</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54 4834995 5305407</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59 3902344 4373875</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64 3041034 3468085</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69 2224065 2616745</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74 1667373 2074264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79 1090518 1472930</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   80 +  1133122 1802463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         sexo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5     masc     fem</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4    7016987 6779172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9    7624144 7345231</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14  8725413 8441348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19  8558868 8432002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24  8630227 8614963</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29  8460995 8643418</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34  7717657 8026855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39  6766665 7121916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44  6320570 6688797</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49  5692013 6141338</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54  4834995 5305407</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59  3902344 4373875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64  3041034 3468085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69  2224065 2616745</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74  1667373 2074264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79  1090518 1472930</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   80 e + 1133122 1802463</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">popBR2013</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2013</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2013</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetaria populacao fxetar5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2013 masc      000       201     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2013 masc      001       204     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2013 masc      002       202     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2013 masc      003       198     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2013 masc      004       197     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2013 masc      005       195     5-9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetar5 fxetaria populacao</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2013 masc     0-4      000       201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2013 masc     0-4      001       204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2013 masc     0-4      002       202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2013 masc     0-4      003       198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2013 masc     0-4      004       197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2013 masc     5-9      005       195</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2013</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        sexo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5    masc     fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4   7463884 7121178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9   7805624 7454699</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14 8426065 8138707</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19 8644694 8561467</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24 8412732 8488814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29 8524675 8724932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34 8310811 8648899</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39 7282908 7660500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44 6497525 6928918</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49 6021673 6540506</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54 5313955 5850019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59 4391704 4896250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64 3437752 3903087</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69 2536782 2951155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74 1804579 2228456</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79 1248516 1687030</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   80 +  1268870 2049336</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         sexo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5     masc     fem</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4    7463884 7121178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9    7805624 7454699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14  8426065 8138707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19  8644694 8561467</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24  8412732 8488814</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29  8524675 8724932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34  8310811 8648899</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39  7282908 7660500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44  6497525 6928918</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49  6021673 6540506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54  5313955 5850019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59  4391704 4896250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64  3437752 3903087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69  2536782 2951155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74  1804579 2228456</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79  1248516 1687030</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   80 e + 1268870 2049336</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">popBR2024</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2024</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetaria populacao fxetar5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2024 masc      000       158     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2024 masc      001       159     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2024 masc      002       161     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2024 masc      003       163     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2024 masc      004       168     0-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2024 masc      005       176     5-9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetar5 fxetaria populacao</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2024 masc     0-4      000       158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2024 masc     0-4      001       159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2024 masc     0-4      002       161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2024 masc     0-4      003       163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2024 masc     0-4      004       168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2024 masc     5-9      005       176</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2024</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        sexo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5    masc     fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4   6661380 6356612</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9   7439000 7092027</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14 7429136 7076552</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19 7651069 7320566</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24 8044783 7821129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29 8193616 8219079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34 7992515 8181015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39 8115656 8419414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44 8073611 8525842</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49 7171760 7693627</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54 6215140 6798626</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59 5603775 6318206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64 4833395 5622638</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69 3806961 4582309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74 2768674 3500843</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79 1840490 2463099</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   80 +  1821325 2929880</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         sexo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5     masc     fem</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4    6661380 6356612</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9    7439000 7092027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14  7429136 7076552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19  7651069 7320566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24  8044783 7821129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29  8193616 8219079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34  7992515 8181015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39  8115656 8419414</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44  8073611 8525842</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49  7171760 7693627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54  6215140 6798626</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59  5603775 6318206</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64  4833395 5622638</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69  3806961 4582309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74  2768674 3500843</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79  1840490 2463099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   80 e + 1821325 2929880</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -181,7 +183,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
