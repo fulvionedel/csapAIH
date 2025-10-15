@@ -25,10 +25,9 @@ Suggests:
 Imports: data.table,
          dplyr,
          haven
-Remotes: # microdatasus@2.3.1,
-         # read.dbc@1.0.7,
-         danicat/read.dbc,
+Remotes: danicat/read.dbc,
          rfsaldanha/microdatasus,
+         rfsaldanha/brpop,
          fulvionedel/Rcoisas
 LazyData: true
 NeedsCompilation: no

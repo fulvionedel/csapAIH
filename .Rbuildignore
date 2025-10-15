@@ -11,3 +11,5 @@ README_cache/*
 ^\.github$
 ^inst$
 _pkgdown.yml
+^_pkgdown\.yml$
+^pkgdown$
