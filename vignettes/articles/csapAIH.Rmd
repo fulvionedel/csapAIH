@@ -1,6 +1,7 @@
 ---
 title: "Classificar códigos da CID-10 em Condições Sensíveis à Atenção Primária"
 subtitle: "A função `csapAIH`"
+lang: pt
 date: |
   | Em atualização
   <!-- | Atualizado em  -->
@@ -10,7 +11,8 @@ date: |
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = NULL
+  comment = NULL,
+  message = FALSE
 )
 ```
 
@@ -101,7 +103,7 @@ rm(csap.csv, csap.dbc, csap.dbf, csap.ftp)
 ```{r}
 read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
   csapAIH() |>
-  glimpse()
+  str()
 ```
 
 ### Sem o padrão dos arquivos da AIH

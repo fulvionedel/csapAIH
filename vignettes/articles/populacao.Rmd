@@ -121,7 +121,7 @@ plot_pir(br1980, local = "Brasil", fontsize = .8)
 plot_pir(br2024, local = "Brasil", fontsize = .8)
 ```
 
-```{r fig.alt="Pirâmide populacional", fig.align='center'}
+```{r fig.align='center'}
 #| fig.alt: >
 #|   Pirâmide populacional com a função ggplot_pir
 ggplot_pir(br, "fxetar5", "sexo", "populacao", nsize = 0) +
