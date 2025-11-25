@@ -4,7 +4,7 @@
 #' @description Computa a idade em anos completos, a "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 #'
 #' @param dados Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").
-#' @param sis O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão], "SIM" ou "SIM-DOINF, em maiúsculas ou minúsculas
+#' @param sis O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão], "SIM" ou "SIM-DOINF", em maiúsculas ou minúsculas
 #'
 #' @details O campo \code{IDADE} nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (\code{COD_IDADE}) no SIH, ou um "subcampo" (1º dígito do campo \code{IDADE}) no SIM. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin. Para os dados de hospitalização (\code{sis = "SIH"}) ou quando \code{sis = "SIM"}, é computada a idade em anos completos, a faixa etária quinquenal e a "faixa etária detalhada". Quando \code{sis = "SIM-DOINF"}, é computada a faixa etária em menores de um ano, classificada segundo os componentes da Taxa de Mortalidade Infantil (isto é, \emph{Neonatal precoce} (0 a 6 dias), \emph{Neonatal tardia} (7 a 27 dias), \emph{Pós-neonatal} (28 a 364 dias).
 #'

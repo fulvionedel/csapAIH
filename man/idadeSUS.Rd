@@ -9,7 +9,7 @@ idadeSUS(dados, sis = "SIH")
 \arguments{
 \item{dados}{Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").}
 
-\item{sis}{O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão], "SIM" ou "SIM-DOINF, em maiúsculas ou minúsculas}
+\item{sis}{O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão], "SIM" ou "SIM-DOINF", em maiúsculas ou minúsculas}
 }
 \value{
 Quando \code{sis = "SIM-DOINF"}, devolve um fator com os componentes da Taxa de Mortalidade Infantil. Para os dados de hospitalização (\code{sis = "SIH"}) ou quando \code{sis = "SIM"}, devolve um objeto da classe \code{data frame} com três variáveis:
