@@ -16,11 +16,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">csapAIH</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,8 +59,8 @@
 
       <h1>Estimativas populacionais por sexo e faixa etária para os municípios brasileiros, 1980 - 2024.</h1>
             
-            <h4 data-toc-skip class="date"><div class="line-block">15 de
-October de 2025</div></h4>
+            <h4 data-toc-skip class="date"><div class="line-block">25 de
+November de 2025</div></h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fulvionedel/csapAIH/blob/master/vignettes/articles/populacao.Rmd" class="external-link"><code>vignettes/articles/populacao.Rmd</code></a></small>
       <div class="d-none name"><code>populacao.Rmd</code></div>
@@ -429,7 +429,7 @@ brasileira ao longo desses anos:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://fulvionedel.github.io/Rcoisas/reference/plot_pir.html" class="external-link">plot_pir</a></span><span class="op">(</span><span class="va">br1980</span>, local <span class="op">=</span> <span class="st">"Brasil"</span>, fontsize <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://fulvionedel.github.io/Rcoisas/reference/plot_pir.html" class="external-link">plot_pir</a></span><span class="op">(</span><span class="va">br2024</span>, local <span class="op">=</span> <span class="st">"Brasil"</span>, fontsize <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span></span></code></pre></div>
-<p><img src="populacao_files/figure-html/unnamed-chunk-11-1.png" alt="Pirâmide populacional com a função plot_pir" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="populacao_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="Pirâmide populacional com a função plot_pir" width="90%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://fulvionedel.github.io/Rcoisas/reference/ggplot_pir.html" class="external-link">ggplot_pir</a></span><span class="op">(</span><span class="va">br</span>, <span class="st">"fxetar5"</span>, <span class="st">"sexo"</span>, <span class="st">"populacao"</span>, nsize <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">ano</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -438,7 +438,7 @@ brasileira ao longo desses anos:</p>
 <span>        legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
 <span>        legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">'mm'</span><span class="op">)</span>,</span>
 <span>        legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">'cm'</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="populacao_files/figure-html/unnamed-chunk-12-1.png" alt="Pirâmide populacional com a função ggplot_pir" width="700" style="display: block; margin: auto;"></p>
+<p><img src="populacao_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="Pirâmide populacional com a função ggplot_pir" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="validando-os-resultados">Validando os resultados<a class="anchor" aria-label="anchor" href="#validando-os-resultados"></a>
@@ -451,7 +451,7 @@ seguinte tabela:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"figuras/tabnetpop81.png"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figuras/tabnetpop81.png" alt="População por sexo e faixa etária. Brasil, 1981. Tabulação no TABNET, 25/02/2025."><p class="caption">
+<img src="figuras/tabnetpop81.png" class="r-plt" alt="População por sexo e faixa etária. Brasil, 1981. Tabulação no TABNET, 25/02/2025."><p class="caption">
 População por sexo e faixa etária. Brasil, 1981. Tabulação no TABNET,
 25/02/2025.
 </p>
@@ -587,7 +587,7 @@ População por sexo e faixa etária. Brasil, 1981. Tabulação no TABNET,
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"figuras/tabnetpop24.png"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figuras/tabnetpop24.png" alt="População por sexo e faixa etária. Brasil, 2024. Tabulação no TABNET, 25/02/2025."><p class="caption">
+<img src="figuras/tabnetpop24.png" class="r-plt" alt="População por sexo e faixa etária. Brasil, 2024. Tabulação no TABNET, 25/02/2025."><p class="caption">
 População por sexo e faixa etária. Brasil, 2024. Tabulação no TABNET,
 25/02/2025.
 </p>
@@ -857,7 +857,7 @@ População por sexo e faixa etária. Brasil, 2024. Tabulação no TABNET,
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
