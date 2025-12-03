@@ -27,5 +27,5 @@ Identifica os registros de hospitalizações por procedimentos obstétricos para
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2014. SIH – Sistema de Informação Hospitalar do SUS: Manual Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015. 87p.
 }
 \seealso{
-\link{csapAIH}
+\code{\link{csapAIH}} \code{\link{partos}}
 }

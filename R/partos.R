@@ -22,6 +22,8 @@
 #' aih100 <- cbind(aih100, partos(aih100$DIAG_PRINC, 3)[2]) |> print()
 #' aih100$parto2 <- partos(aih100$DIAG_PRINC, 3)$parto
 #'
+#' @seealso \code{\link{proc.obst}}
+#'
 #' @export
 #'
 partos <- function(cid, opus = 1) {

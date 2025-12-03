@@ -9,10 +9,10 @@ adinomes(x, lista = "MS")
 \arguments{
 \item{x}{Banco de dados}
 
-\item{lista}{Lista CSAP a ser utilizada. O padrão é "MS" (v. \link{nomesgruposCSAP}).}
+\item{lista}{Lista CSAP a ser utilizada. O padrão é "MS" (v. \code{\link{nomesgruposCSAP}}).}
 }
 \description{
-Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função `csapAIH` ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)
+Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função \code{\link{csapAIH}} ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)
 }
 \details{
 Define como missing os não-CSAP
@@ -20,11 +20,4 @@ Define como missing os não-CSAP
 \examples{
 data("aih100")
 adinomes(csapAIH(aih100))[1:5, 9:11]
-}
-\seealso{
-nomesgruposCSAP()
-
-[listaBRMS()]
-
-[listaBRAlfradique]
 }

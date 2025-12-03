@@ -3,7 +3,7 @@
 #'
 #' @description Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e entrega um banco de dados com as variáveis originais mais a faixa etária quinquenal.
 #'
-#' @param x Nome do arquivo armazenado no computador, ou ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.
+#' @param x Nome do arquivo armazenado no computador, ou ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Apenas arquivos em formato DBF são lidos. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se digitar o ano (sem aspas) desejado, de 1980 a 2024.
 #'
 #' @details
 #'  Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
@@ -142,8 +142,9 @@ ler_popbr <- function(x) {
 #'
 #' @description Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
 #' @param ano Ano ou vetor com os anos a serem lidos. Pode ser um arquivo armazenado no computador, ou ano(s) da estimativa ou contagem populacional a ser (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.
-#' @param uf Unidade(s) da Federação de interesse para seleção. O padrão é todas.
-#' @param municipio Município(s) de interesse para seleção. O padrão é todos.
+#' @param uf Unidade(s) da Federação de interesse para seleção. O padrão é \code{NULL}, que seleciona todas.
+#' @param pormun Se for selecionada uma (ou mais) UF, deve-se detalhar a população por município ou apresentar a população de toda UF? Argumento lógico, padrão é \code{FALSE}.
+#' @param municipio Município(s) de interesse para seleção. O padrão é \code{NULL}, que seleciona todos.
 #' @param idade Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.
 #' @examples
 #' # Arquivos no diretório FTP do DATASUS
@@ -153,23 +154,25 @@ ler_popbr <- function(x) {
 #' xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 #' popbr(c(2017, 2019))  |> str()
 #' popbr(2022, "RS") |> head()
+#' popbr(2022, "RS", pormun = FALSE) |> head()
 #' popsul22 <- popbr(2022, c("PR", "SC", "RS"))
 #' xtabs(populacao ~ fxetar5 + sexo + UF_SIGLA, popsul22) |> ftable(col.vars = c("UF_SIGLA", "sexo"))
 #' popbr(2013, municipio = "430520") |> head()
 #' popcap <- popbr(2013, municipio = c("431490", "420540"))
 #' xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("munic_res", "sexo"))
 #'
-#' # Até 2012 a estrutura era outra
+#' # A estrutura do arquivo fonte até 2012 no DATASUS é outra,
+#' # com outra categorização da "idade detalhada":
 #' popbr(c(1980, 2012))  |> str()
-#' # Por isso o exemplo seguinte dá erro (e ainda não foi trabalhado na função):
-#' \dontrun{
-#' popbr(2012:2013)
-#' }
+#' # Por isso, quando a seleção de interesse contempla os dois períodos, como no exemplo seguinte,
+#' # a faixa etária detalhada não é apresentada, e o argumento \code{idade} não tem efeito.
+#' popbr(2012:2013) |> str()
+#' popbr(2012:2013, idade = TRUE) |> str()
 #'
 #' @importFrom dplyr `%>%` across filter group_by inner_join mutate reframe
 #' @export
 #'
-popbr <- function(ano, uf = NULL, municipio = NULL, idade = FALSE) {
+popbr <- function(ano, uf = NULL, pormun = TRUE, municipio = NULL, idade = FALSE) {
   # Nuntius errorum
     if(!is.null(uf)) {
       if(!all(uf %in% ufbr()$UF_SIGLA)) {
@@ -211,32 +214,26 @@ popbr <- function(ano, uf = NULL, municipio = NULL, idade = FALSE) {
   uf <- NULL
     # Nuntius errorum
     # ---------------
-    if(!all(municipio %in% populacao$munic_res)) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
+    if(!all(municipio %in% populacao$munic_res)) {
+      stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")
+    }
     # ---------------
     populacao <- populacao %>%
       filter(munic_res %in% municipio)
   }
 
-
   vars <- c("munic_res", "ano", "sexo", "fxetar5", "fxetaria")
+  if(isFALSE(pormun)) {vars <- vars[-1]}
+
   if(!is.null(uf)) {
-    vars <- vars[-1]
     populacao <- populacao %>%
       mutate(CO_UF = substr(munic_res, 1, 2)) %>%
       inner_join(csapAIH::ufbr()) %>%
       filter(UF_SIGLA %in% uf) %>%
       reframe(populacao = sum(populacao), .by = c(UF_SIGLA, vars)) %>%
       droplevels()
-  } #else if(!is.null(municipio)) {
-  #   # Nuntius errorum
-  #   # ---------------
-  #   # if(!is.null(uf)) { stop("Para a população por município, deixe 'uf' em branco.")}
-  #   if(!all(municipio %in% populacao$munic_res)) { stop("Digite o c\u00f3digo IBGE do munic\u00edpio com seis d\u00edgitos.")}
-  #   # ---------------
-  #   populacao <- populacao %>%
-  #     filter(munic_res %in% municipio) %>%
-  #     reframe(populacao = sum(populacao), .by = vars)
-  # }
+  }
+
   if(isFALSE(idade)) {
     populacao <- populacao %>%
       group_by(across(-c(fxetaria, populacao))) %>%

@@ -21,7 +21,7 @@ leraih(
 
 \item{procobst.rm}{As internações para procedimentos obstétricos devem ser excluídas? Padrão é \code{TRUE}. V. details.}
 
-\item{parto.rm}{argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes});}
+\item{parto.rm}{\code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes});}
 
 \item{longa.rm}{As internações de longa permanência (tipo 5) devem ser excluídas? Padrão é \code{TRUE}. V. details.}
 
@@ -62,10 +62,9 @@ Se for um arquivo, o nome deve ser escrito entre aspas e com a extensão do arqu
   \item O83 Outros tipos de parto único assistido
   \item O84 Parto múltiplo
  }
-
-É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.
-
+\item \code{longa.rm } TRUE (padrão) exclui as internações de "longa permanência" (Tipo 5).
 }
+É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.
 }
 \examples{
 leraih(aih500) |> head()
@@ -78,5 +77,5 @@ leraih("data-raw/RDRS1801.dbf", vars = c("DIAG_PRINC", "SEXO", "IDADE", "COD_IDA
 
 }
 \seealso{
-[idadeSUS()]
+\code{\link{proc.obst}} \code{\link{partos}}
 }

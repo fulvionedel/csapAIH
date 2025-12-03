@@ -4,14 +4,16 @@
 \alias{popbr}
 \title{Estimativas populacionais para os municípios brasileiros.}
 \usage{
-popbr(ano, uf = NULL, municipio = NULL, idade = FALSE)
+popbr(ano, uf = NULL, pormun = TRUE, municipio = NULL, idade = FALSE)
 }
 \arguments{
 \item{ano}{Ano ou vetor com os anos a serem lidos. Pode ser um arquivo armazenado no computador, ou ano(s) da estimativa ou contagem populacional a ser (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.}
 
-\item{uf}{Unidade(s) da Federação de interesse para seleção. O padrão é todas.}
+\item{uf}{Unidade(s) da Federação de interesse para seleção. O padrão é \code{NULL}, que seleciona todas.}
 
-\item{municipio}{Município(s) de interesse para seleção. O padrão é todos.}
+\item{pormun}{Se for selecionada uma (ou mais) UF, deve-se detalhar a população por município ou apresentar a população de toda UF? Argumento lógico, padrão é \code{FALSE}.}
+
+\item{municipio}{Município(s) de interesse para seleção. O padrão é \code{NULL}, que seleciona todos.}
 
 \item{idade}{Argumento lógico. Se TRUE, a idade detalhada é incluída como uma das variáveis. O padrão é FALSE.}
 }
@@ -26,17 +28,19 @@ anos <- popbr(2017:2019)
 xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 popbr(c(2017, 2019))  |> str()
 popbr(2022, "RS") |> head()
+popbr(2022, "RS", pormun = FALSE) |> head()
 popsul22 <- popbr(2022, c("PR", "SC", "RS"))
 xtabs(populacao ~ fxetar5 + sexo + UF_SIGLA, popsul22) |> ftable(col.vars = c("UF_SIGLA", "sexo"))
 popbr(2013, municipio = "430520") |> head()
 popcap <- popbr(2013, municipio = c("431490", "420540"))
 xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("munic_res", "sexo"))
 
-# Até 2012 a estrutura era outra
+# A estrutura do arquivo fonte até 2012 no DATASUS é outra,
+# com outra categorização da "idade detalhada":
 popbr(c(1980, 2012))  |> str()
-# Por isso o exemplo seguinte dá erro (e ainda não foi trabalhado na função):
-\dontrun{
-popbr(2012:2013)
-}
+# Por isso, quando a seleção de interesse contempla os dois períodos, como no exemplo seguinte,
+# a faixa etária detalhada não é apresentada, e o argumento \code{idade} não tem efeito.
+popbr(2012:2013) |> str()
+popbr(2012:2013, idade = TRUE) |> str()
 
 }

@@ -7,15 +7,15 @@
 idadeSUS(dados, sis = "SIH")
 }
 \arguments{
-\item{dados}{Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").}
+\item{dados}{Um objeto da classe \code{data frame} com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").}
 
 \item{sis}{O Sistema de Informação de Saúde fonte dos dados. Pode ser "SIH" [padrão], "SIM" ou "SIM-DOINF", em maiúsculas ou minúsculas}
 }
 \value{
-Quando \code{sis = "SIM-DOINF"}, devolve um fator com os componentes da Taxa de Mortalidade Infantil. Para os dados de hospitalização (\code{sis = "SIH"}) ou quando \code{sis = "SIM"}, devolve um objeto da classe \code{data frame} com três variáveis:
+Quando \code{sis = "SIM-DOINF"}, devolve um fator com os componentes da Taxa de Mortalidade Infantil. Para os dados de hospitalização (\code{sis = "SIH"}) ou de mortalidade em todas as idades (\code{sis = "SIM"}), devolve um objeto da classe \code{data frame} com três variáveis:
  \enumerate{
   \item \code{idade}: idade em anos completos;
-  \item \code{fxetar.det}: \code{factor} com 33 \code{levels}, a idade em anos completos de 0 a 19 ("<1ano", ..., "19anos"), em faixas quinquenais de "20-24" a "75-79" e "80 e +". Essa classificação é chamada pelo DATASUS de "idade detalhada";
+  \item \code{fxetar.det}: \code{factor} com 33 \code{levels}, a idade em anos completos de 0 a 19 ("<1ano", ..., "19anos"), em faixas quinquenais de "20-24" a "75-79" e "80 e +". Em algumas tabelas do TABNET e TabWin essa classificação é chamada de "idade detalhada";
   \item \code{fxetar5}: \code{factor} de 17 \code{levels} com a idade em faixas quinquenais ("0-4", ..., "75-79", "80 e +").
  }
 }
@@ -23,7 +23,7 @@ Quando \code{sis = "SIM-DOINF"}, devolve um fator com os componentes da Taxa de 
 Computa a idade em anos completos, a "faixa etária detalhada" e faixa etária quinquenal do indivíduo em registros dos bancos de dados do Sistema de Informação Hospitalar (SIH/SUS) ou do Sistema de Informação sobre Mortalidade (SIM) do SUS.
 }
 \details{
-O campo \code{IDADE} nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (\code{COD_IDADE}) no SIH, ou um "subcampo" (1º dígito do campo \code{IDADE}) no SIM. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin. Para os dados de hospitalização (\code{sis = "SIH"}) ou quando \code{sis = "SIM"}, é computada a idade em anos completos, a faixa etária quinquenal e a "faixa etária detalhada". Quando \code{sis = "SIM-DOINF"}, é computada a faixa etária em menores de um ano, classificada segundo os componentes da Taxa de Mortalidade Infantil (isto é, \emph{Neonatal precoce} (0 a 6 dias), \emph{Neonatal tardia} (7 a 27 dias), \emph{Pós-neonatal} (28 a 364 dias).
+O campo \code{IDADE} nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (\code{COD_IDADE}) no SIH, ou um "subcampo" (1º dígito do campo \code{IDADE}) no SIM. Analisar o campo \code{IDADE} como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin. Para os dados de hospitalização (\code{sis = "SIH"}) ou de mortalidade em todas as idades (\code{sis = "SIM"}), é computada a idade em anos completos, a faixa etária quinquenal e a "faixa etária detalhada". Quando \code{sis = "SIM-DOINF"}, é computada a faixa etária em menores de um ano, classificada segundo os componentes da Taxa de Mortalidade Infantil (isto é, \emph{Neonatal precoce} (0 a 6 dias), \emph{Neonatal tardia} (7 a 27 dias), \emph{Pós-neonatal} (28 a 364 dias).
 }
 \examples{
 \dontrun{
@@ -72,5 +72,5 @@ idadeSUS(dors19, "SIM-DOINF") |> summary()
 \references{
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2014. SIH – Sistema de Informação Hospitalar do SUS: Manual Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015. 87p.
 
-Brasil. Ministério da Saúde. DATASUS. Tab para Windows - TabWin. Ministério da Saúde: Brasília, 2010.
+Brasil. Ministério da Saúde. DATASUS. Tab para Windows -- TabWin. Ministério da Saúde: Brasília, 2010.
 }

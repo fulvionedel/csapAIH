@@ -16,7 +16,7 @@ nomesgruposCSAP(
 
 \item{lang}{idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.}
 
-\item{classe}{O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome  definido por \code{"data.frame"}, \code{"df"} ou \code{2})?}
+\item{classe}{O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome (definido por \code{"data.frame"}, \code{"df"} ou \code{2})?}
 
 \item{numgrupo}{No caso de se definir um "data frame" no parâmetro \code{classe}, a variável com o nome do grupo deve iniciar com o número do grupo? (v. exemplos).}
 }

@@ -5,7 +5,7 @@
 #'
 #' @param lista Lista de causas a ser considerada; pode ser \code{"MS"} (default) para a lista publicada em portaria pelo Ministério da Saúde do Brasil ou "Alfradique" para a lista publicada no artigo de Alfradique et al.
 #' @param lang idioma em que se apresentam os nomes dos grupos; pode ser: "pt.ca" (default) para nomes em português com acentos; "pt.sa" para nomes em português sem acentos; "en" para nomes em inglês; ou "es" para nomes em castelhano.
-#' @param classe O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome  definido por \code{"data.frame"}, \code{"df"} ou \code{2})?
+#' @param classe O output da função deve ser (1) um vetor com a lista dos nomes (padrão, definido por \code{"vetor"}, \code{"v"} ou \code{1}) ou (2) um "data frame" com uma variável com o código do grupo ("g01", etc.) e outra com o nome (definido por \code{"data.frame"}, \code{"df"} ou \code{2})?
 #' @param numgrupo No caso de se definir um "data frame" no parâmetro \code{classe}, a variável com o nome do grupo deve iniciar com o número do grupo? (v. exemplos).
 #'
 #' @return Um vetor da classe \code{character} ou uma tabela na classe \code{data frame} com os nomes (abreviados) dos grupos de causa segundo a lista definida pelo usuário.
@@ -252,17 +252,14 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numg
 #'
 #' Adiciona o nome dos grupos
 #'
-#' Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função `csapAIH` ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)
+#' Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função \code{\link{csapAIH}} ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)
 #' @param x Banco de dados
-#' @param lista Lista CSAP a ser utilizada. O padrão é "MS" (v. \link{nomesgruposCSAP}).
+#' @param lista Lista CSAP a ser utilizada. O padrão é "MS" (v. \code{\link{nomesgruposCSAP}}).
 #' @details
 #' Define como missing os não-CSAP
 #' @examples
 #' data("aih100")
 #' adinomes(csapAIH(aih100))[1:5, 9:11]
-#' @seealso nomesgruposCSAP()
-#' @seealso [listaBRMS()]
-#' @seealso [listaBRAlfradique]
 # @importFrom dplyr left_join
 #' @export
 adinomes <- function(x, lista = "MS") {

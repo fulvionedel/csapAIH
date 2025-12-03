@@ -63,7 +63,7 @@ Descarrega os "arquivos da AIH" (arquivos RD<UFAAMM>.DBC das Bases de Dados do S
   \item Assim, por padrão, a função exige apenas a definição do ano de início dos casos. Se o usuário definir apenas esse argumento, \code{fetchcsap} fará o download e leitura dos arquivos (de todo o Brasil) de todos os meses até junho do ano seguinte para então selecionar as internações ocorridas no ano definido em \code{anoinicio}.
 }
 
-- \code{fetchcsap} é apenas uma abreviatura para um uso específico da função \code{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha. Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}, e faz apenas o download das variáveis exigidas pela função \code{csapAIH}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
+- \code{\link{fetchcsap}} é apenas uma abreviatura para um uso específico da função \link[microdatasus]{fetch_datasus}, do pacote \code{microdatasus}, de Raphael Saldanha. Funciona apenas com o SIH/SUS, através do argumento \code{information_system = "SIH-RD"}, e faz apenas o download das variáveis exigidas pela função \code{csapAIH}, i.e., \code{DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES}.
 }
 \examples{
 # Internações de todo o Brasil, ocorridas no ano de 2023 e registradas até jun/2024:
@@ -93,5 +93,5 @@ fetchcsap(2023, mesfim = 1, regiao = "N")
 
 }
 \seealso{
-\code{\link{csapAIH}}
+\code{\link{csapAIH}}, \code{\link[microdatasus]{fetch_datasus}}
 }

@@ -6,7 +6,7 @@
 #' @param arquivo x é um arquivo de dados? Padrão é \code{TRUE}.
 #' @param vars Variáveis da AIH para seleção. O padrão (\code{vars = NULL}), seleciona o conjunto usado em \code{\link{csapAIH}}. V. details.
 #' @param procobst.rm As internações para procedimentos obstétricos devem ser excluídas? Padrão é \code{TRUE}. V. details.
-#' @param parto.rm argumento lógico, obrigatório se \code{sihsus=TRUE}; \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes});
+#' @param parto.rm \code{TRUE} (padrão) exclui as internações por parto (\code{ver detalhes});
 #' @param longa.rm As internações de longa permanência (tipo 5) devem ser excluídas? Padrão é \code{TRUE}. V. details.
 #' @param ... outros parâmetros das funções utilizadas
 #'
@@ -40,10 +40,10 @@
 #'   \item O83 Outros tipos de parto único assistido
 #'   \item O84 Parto múltiplo
 #'  }
-#'
+#' \item \code{longa.rm } TRUE (padrão) exclui as internações de "longa permanência" (Tipo 5).
+#' }
 #' É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.
 #'
-#' }
 #'
 #' @examples
 #' leraih(aih500) |> head()
@@ -54,7 +54,7 @@
 #' leraih("data-raw/RDRS1801.dbf", vars = c("DIAG_PRINC", "SEXO", "IDADE", "COD_IDADE")) |> head()
 #' }
 #'
-#' @seealso [idadeSUS()]
+#' @seealso \code{\link{proc.obst}} \code{\link{partos}}
 #'
 #' @importFrom utils hasName
 #' @export
