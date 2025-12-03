@@ -36,8 +36,7 @@ leraih(
 
 - parto.rm:
 
-  argumento lógico, obrigatório se `sihsus=TRUE`; `TRUE` (padrão) exclui
-  as internações por parto (`ver detalhes`);
+  `TRUE` (padrão) exclui as internações por parto (`ver detalhes`);
 
 - longa.rm:
 
@@ -112,13 +111,17 @@ leraih(
 
   - O84 Parto múltiplo
 
-  É retornada uma mensagem informando o número de registros lidos, o
-  número e proporção de registros excluídos e o total de registros
-  importados.
+- `longa.rm ` TRUE (padrão) exclui as internações de "longa permanência"
+  (Tipo 5).
+
+É retornada uma mensagem informando o número de registros lidos, o
+número e proporção de registros excluídos e o total de registros
+importados.
 
 ## See also
 
-\[idadeSUS()\]
+[`proc.obst`](https://fulvionedel.github.io/csapAIH/reference/proc.obst.md)
+[`partos`](https://fulvionedel.github.io/csapAIH/reference/partos.md)
 
 ## Examples
 

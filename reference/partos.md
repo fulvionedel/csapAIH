@@ -20,6 +20,10 @@ partos(cid, opus = 1)
   os partos; e 3 cria um `data.frame` com duas variáveis – `cid`, com o
   código diagnóstico, e `parto` (sim ou não).
 
+## See also
+
+[`proc.obst`](https://fulvionedel.github.io/csapAIH/reference/proc.obst.md)
+
 ## Examples
 
 ``` r

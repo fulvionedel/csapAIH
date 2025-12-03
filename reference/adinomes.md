@@ -2,8 +2,10 @@
 
 Acrescenta uma variável com o nome dos grupos de causa segundo a lista
 selecionada ("MS" ou "Alfradique") a um banco de dados resultante da
-função \`csapAIH\` ou que contenha uma variável de nome "grupo" com os
-grupos nomeados segundo aquela função ("g01", ...)
+função
+[`csapAIH`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
+ou que contenha uma variável de nome "grupo" com os grupos nomeados
+segundo aquela função ("g01", ...)
 
 ## Usage
 
@@ -20,19 +22,11 @@ adinomes(x, lista = "MS")
 - lista:
 
   Lista CSAP a ser utilizada. O padrão é "MS" (v.
-  [nomesgruposCSAP](https://fulvionedel.github.io/csapAIH/reference/nomesgruposCSAP.md)).
+  [`nomesgruposCSAP`](https://fulvionedel.github.io/csapAIH/reference/nomesgruposCSAP.md)).
 
 ## Details
 
 Define como missing os não-CSAP
-
-## See also
-
-nomesgruposCSAP()
-
-\[listaBRMS()\]
-
-\[listaBRAlfradique\]
 
 ## Examples
 

@@ -72,7 +72,7 @@
 
 
 <dt id="arg-parto-rm">parto.rm<a class="anchor" aria-label="anchor" href="#arg-parto-rm"></a></dt>
-<dd><p>argumento lógico, obrigatório se <code>sihsus=TRUE</code>; <code>TRUE</code> (padrão) exclui as internações por parto (<code>ver detalhes</code>);</p></dd>
+<dd><p><code>TRUE</code> (padrão) exclui as internações por parto (<code>ver detalhes</code>);</p></dd>
 
 
 <dt id="arg-longa-rm">longa.rm<a class="anchor" aria-label="anchor" href="#arg-longa-rm"></a></dt>
@@ -109,11 +109,13 @@
 <li><p>O82 Parto único por cesariana</p></li>
 <li><p>O83 Outros tipos de parto único assistido</p></li>
 <li><p>O84 Parto múltiplo</p></li>
-</ul><p>É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.</p></li>
-</ul></div>
+</ul></li>
+<li><p><code>longa.rm </code> TRUE (padrão) exclui as internações de "longa permanência" (Tipo 5).</p></li>
+</ul><p>É retornada uma mensagem informando o número de registros lidos, o número e proporção de registros excluídos e o total de registros importados.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>[idadeSUS()]</p></div>
+    <div class="dont-index"><p><code><a href="proc.obst.html">proc.obst</a></code> <code><a href="partos.html">partos</a></code></p></div>
     </div>
 
     <div class="section level2">

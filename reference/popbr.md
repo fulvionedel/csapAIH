@@ -6,7 +6,7 @@ brasileiros por sexo e faixa etária disponibilizados pelo DATASUS.
 ## Usage
 
 ``` r
-popbr(ano, uf = NULL, municipio = NULL, idade = FALSE)
+popbr(ano, uf = NULL, pormun = TRUE, municipio = NULL, idade = FALSE)
 ```
 
 ## Arguments
@@ -23,11 +23,19 @@ popbr(ano, uf = NULL, municipio = NULL, idade = FALSE)
 
 - uf:
 
-  Unidade(s) da Federação de interesse para seleção. O padrão é todas.
+  Unidade(s) da Federação de interesse para seleção. O padrão é `NULL`,
+  que seleciona todas.
+
+- pormun:
+
+  Se for selecionada uma (ou mais) UF, deve-se detalhar a população por
+  município ou apresentar a população de toda UF? Argumento lógico,
+  padrão é `FALSE`.
 
 - municipio:
 
-  Município(s) de interesse para seleção. O padrão é todos.
+  Município(s) de interesse para seleção. O padrão é `NULL`, que
+  seleciona todos.
 
 - idade:
 
@@ -86,6 +94,17 @@ popbr(c(2017, 2019))  |> str()
 #>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 2 3 4 5 6 7 8 9 10 ...
 #>  $ populacao: int [1:378760] 931 952 1066 1113 1049 1002 944 892 831 824 ...
 popbr(2022, "RS") |> head()
+#> Joining with `by = join_by(CO_UF)`
+#> # A tibble: 6 × 6
+#>   UF_SIGLA munic_res ano   sexo  fxetar5 populacao
+#>   <fct>    <chr>     <fct> <fct> <fct>       <int>
+#> 1 RS       430003    2022  masc  0-4           152
+#> 2 RS       430003    2022  masc  5-9           144
+#> 3 RS       430003    2022  masc  10-14         149
+#> 4 RS       430003    2022  masc  15-19         137
+#> 5 RS       430003    2022  masc  20-24         158
+#> 6 RS       430003    2022  masc  25-29         145
+popbr(2022, "RS", pormun = FALSE) |> head()
 #> Joining with `by = join_by(CO_UF)`
 #> # A tibble: 6 × 5
 #>   UF_SIGLA ano   sexo  fxetar5 populacao
@@ -152,7 +171,8 @@ xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("mu
 #> 75-79               2698  4042  10900 19897
 #> 80 e +              2566  5318  11288 27395
 
-# Até 2012 a estrutura era outra
+# A estrutura do arquivo fonte até 2012 no DATASUS é outra,
+# com outra categorização da "idade detalhada":
 popbr(c(1980, 2012))  |> str()
 #> tibble [462,099 × 6] (S3: tbl_df/tbl/data.frame)
 #>  $ munic_res: chr [1:462099] "110001" "110001" "110001" "110001" ...
@@ -161,8 +181,20 @@ popbr(c(1980, 2012))  |> str()
 #>  $ sexo     : Factor w/ 2 levels "masc","fem": 1 1 1 1 1 1 1 1 1 1 ...
 #>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 2 3 4 5 6 7 8 9 10 ...
 #>  $ populacao: int [1:462099] 943 1058 1239 1343 1090 1039 938 866 901 835 ...
-# Por isso o exemplo seguinte dá erro (e ainda não foi trabalhado na função):
-if (FALSE) { # \dontrun{
-popbr(2012:2013)
-} # }
+# Por isso, quando a seleção de interesse contempla os dois períodos, como no exemplo seguinte,
+# a faixa etária detalhada não é apresentada, e o argumento \code{idade} não tem efeito.
+popbr(2012:2013) |> str()
+#> tibble [378,590 × 5] (S3: tbl_df/tbl/data.frame)
+#>  $ munic_res: chr [1:378590] "110001" "110001" "110001" "110001" ...
+#>  $ ano      : Factor w/ 2 levels "2012","2013": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ sexo     : Factor w/ 2 levels "masc","fem": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 2 3 4 5 6 7 8 9 10 ...
+#>  $ populacao: int [1:378590] 943 1058 1239 1343 1090 1039 938 866 901 835 ...
+popbr(2012:2013, idade = TRUE) |> str()
+#> tibble [378,590 × 5] (S3: tbl_df/tbl/data.frame)
+#>  $ munic_res: chr [1:378590] "110001" "110001" "110001" "110001" ...
+#>  $ ano      : Factor w/ 2 levels "2012","2013": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ sexo     : Factor w/ 2 levels "masc","fem": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 2 3 4 5 6 7 8 9 10 ...
+#>  $ populacao: int [1:378590] 943 1058 1239 1343 1090 1039 938 866 901 835 ...
 ```

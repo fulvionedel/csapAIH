@@ -55,4 +55,5 @@ Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015.
 
 ## See also
 
-[csapAIH](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
+[`csapAIH`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
+[`partos`](https://fulvionedel.github.io/csapAIH/reference/partos.md)

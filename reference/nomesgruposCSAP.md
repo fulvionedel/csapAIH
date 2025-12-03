@@ -38,7 +38,7 @@ nomesgruposCSAP(
   O output da função deve ser (1) um vetor com a lista dos nomes
   (padrão, definido por `"vetor"`, `"v"` ou `1`) ou (2) um "data frame"
   com uma variável com o código do grupo ("g01", etc.) e outra com o
-  nome definido por `"data.frame"`, `"df"` ou `2`)?
+  nome (definido por `"data.frame"`, `"df"` ou `2`)?
 
 - numgrupo:
 

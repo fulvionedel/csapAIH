@@ -37,7 +37,13 @@ idade do óbito, nos arquivos do Sistema de Informações sobre Mortalidade
   [`desenhaCSAP`](https://fulvionedel.github.io/csapAIH/reference/desenhaCSAP.md)
   e
   [`tabCSAP`](https://fulvionedel.github.io/csapAIH/reference/tabCSAP.md))
-  foi renomeado para `lang`. Criadas as funções
+  foi renomeado para `lang`. O argumento `parto.rm` em
+  [`csapAIH`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
+  agora se vale da função
+  [`partos`](https://fulvionedel.github.io/csapAIH/reference/partos.md),
+  criada para permtir a identificação e exclusão dos partos a partir da
+  causa principal de internação e, assim, com qualquer base de dados.
+  Criadas as funções
   [`fxetar_quinq`](https://fulvionedel.github.io/csapAIH/reference/fxetar_quinq.md),
   para transformar um vetor numérico com a idade em faixas etárias
   quinquenais, e

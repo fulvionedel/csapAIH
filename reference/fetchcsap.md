@@ -123,15 +123,16 @@ variáveis:
   ocorridas no ano definido em `anoinicio`.
 
 \- `fetchcsap` é apenas uma abreviatura para um uso específico da função
-`fetch_datasus`, do pacote `microdatasus`, de Raphael Saldanha. Funciona
-apenas com o SIH/SUS, através do argumento
-`information_system = "SIH-RD"`, e faz apenas o download das variáveis
-exigidas pela função `csapAIH`, i.e.,
+[fetch_datasus](https://rfsaldanha.github.io/microdatasus/reference/fetch_datasus.html),
+do pacote `microdatasus`, de Raphael Saldanha. Funciona apenas com o
+SIH/SUS, através do argumento `information_system = "SIH-RD"`, e faz
+apenas o download das variáveis exigidas pela função `csapAIH`, i.e.,
 `DIAG_PRINC, NASC, DT_INTER, DT_SAIDA, IDADE, COD_IDADE, MUNIC_RES, MUNIC_MOV, SEXO, N_AIH, PROC_REA, IDENT, CEP, CNES`.
 
 ## See also
 
-[`csapAIH`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
+[`csapAIH`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md),
+[`fetch_datasus`](https://rfsaldanha.github.io/microdatasus/reference/fetch_datasus.html)
 
 ## Examples
 

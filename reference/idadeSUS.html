@@ -52,7 +52,7 @@
 
 
 <dl><dt id="arg-dados">dados<a class="anchor" aria-label="anchor" href="#arg-dados"></a></dt>
-<dd><p>Um objeto da classe `data frame` com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").</p></dd>
+<dd><p>Um objeto da classe <code>data frame</code> com a estrutura das bases de dados de hospitalização pelo SUS ("arquivos da AIH") ou das Declarações de Óbito ("arquivos do SIM").</p></dd>
 
 
 <dt id="arg-sis">sis<a class="anchor" aria-label="anchor" href="#arg-sis"></a></dt>
@@ -61,18 +61,18 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Quando <code>sis = "SIM-DOINF"</code>, devolve um fator com os componentes da Taxa de Mortalidade Infantil. Para os dados de hospitalização (<code>sis = "SIH"</code>) ou quando <code>sis = "SIM"</code>, devolve um objeto da classe <code>data frame</code> com três variáveis:</p><ol><li><p><code>idade</code>: idade em anos completos;</p></li>
-<li><p><code>fxetar.det</code>: <code>factor</code> com 33 <code>levels</code>, a idade em anos completos de 0 a 19 ("&lt;1ano", ..., "19anos"), em faixas quinquenais de "20-24" a "75-79" e "80 e +". Essa classificação é chamada pelo DATASUS de "idade detalhada";</p></li>
+    <p>Quando <code>sis = "SIM-DOINF"</code>, devolve um fator com os componentes da Taxa de Mortalidade Infantil. Para os dados de hospitalização (<code>sis = "SIH"</code>) ou de mortalidade em todas as idades (<code>sis = "SIM"</code>), devolve um objeto da classe <code>data frame</code> com três variáveis:</p><ol><li><p><code>idade</code>: idade em anos completos;</p></li>
+<li><p><code>fxetar.det</code>: <code>factor</code> com 33 <code>levels</code>, a idade em anos completos de 0 a 19 ("&lt;1ano", ..., "19anos"), em faixas quinquenais de "20-24" a "75-79" e "80 e +". Em algumas tabelas do TABNET e TabWin essa classificação é chamada de "idade detalhada";</p></li>
 <li><p><code>fxetar5</code>: <code>factor</code> de 17 <code>levels</code> com a idade em faixas quinquenais ("0-4", ..., "75-79", "80 e +").</p></li>
 </ol></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>O campo <code>IDADE</code> nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (<code>COD_IDADE</code>) no SIH, ou um "subcampo" (1º dígito do campo <code>IDADE</code>) no SIM. Analisar o campo <code>IDADE</code> como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin. Para os dados de hospitalização (<code>sis = "SIH"</code>) ou quando <code>sis = "SIM"</code>, é computada a idade em anos completos, a faixa etária quinquenal e a "faixa etária detalhada". Quando <code>sis = "SIM-DOINF"</code>, é computada a faixa etária em menores de um ano, classificada segundo os componentes da Taxa de Mortalidade Infantil (isto é, <em>Neonatal precoce</em> (0 a 6 dias), <em>Neonatal tardia</em> (7 a 27 dias), <em>Pós-neonatal</em> (28 a 364 dias).</p>
+    <p>O campo <code>IDADE</code> nas bases de dados do SIH e do SIM não é a idade em anos mas o tempo de vida em dias, meses, anos ou anos após a centena, de acordo com outro campo, (<code>COD_IDADE</code>) no SIH, ou um "subcampo" (1º dígito do campo <code>IDADE</code>) no SIM. Analisar o campo <code>IDADE</code> como se fosse a idade em anos completos pode gerar equívocos. A função computa a idade do indivíduo, evitando esse erro, e o classifica em faixas etárias utilizadas pelo DATASUS em suas ferramentas de tabulação, o TABNET e TabWin. Para os dados de hospitalização (<code>sis = "SIH"</code>) ou de mortalidade em todas as idades (<code>sis = "SIM"</code>), é computada a idade em anos completos, a faixa etária quinquenal e a "faixa etária detalhada". Quando <code>sis = "SIM-DOINF"</code>, é computada a faixa etária em menores de um ano, classificada segundo os componentes da Taxa de Mortalidade Infantil (isto é, <em>Neonatal precoce</em> (0 a 6 dias), <em>Neonatal tardia</em> (7 a 27 dias), <em>Pós-neonatal</em> (28 a 364 dias).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Regulação, Avaliação e Controle. Coordenação Geral de Sistemas de Informação - 2014. SIH – Sistema de Informação Hospitalar do SUS: Manual Técnico Operacional do Sistema. Ministério da Saúde: Brasília, 2015. 87p.</p>
-<p>Brasil. Ministério da Saúde. DATASUS. Tab para Windows - TabWin. Ministério da Saúde: Brasília, 2010.</p>
+<p>Brasil. Ministério da Saúde. DATASUS. Tab para Windows – TabWin. Ministério da Saúde: Brasília, 2010.</p>
     </div>
 
     <div class="section level2">

@@ -18,9 +18,9 @@ ler_popbr(x)
   Nome do arquivo armazenado no computador, ou ano da estimativa ou
   contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é
   um arquivo no computador, o nome com a extensão (dbf) deve vir entre
-  aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar
-  o argumento `ano`, com o ano (sem aspas) desejado, de 1980 a 2024.
-  Apenas arquivos em formato DBF são lidos.
+  aspas. Apenas arquivos em formato DBF são lidos. Se o alvo é um
+  arquivo do servidor FTP do DATASUS, deve-se digitar o ano (sem aspas)
+  desejado, de 1980 a 2024.
 
 ## Details
 

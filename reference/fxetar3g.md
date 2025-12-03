@@ -47,8 +47,7 @@ fxetar3g(idade) |> table()
 #>    10    51    39 
 
 # Faixa etária
-# Categorizar a faixa etária quinquenal e
-# computar a faixa etária em três grandes grupos
+## Categorizar a faixa etária quinquenal e computar a faixa etária em três grandes grupos
 fxetar_quinq(idade) |> str()
 #>  Factor w/ 17 levels "0-4","5-9","10-14",..: 17 15 2 11 14 14 1 5 7 13 ...
 fxetar_quinq(idade) |>
