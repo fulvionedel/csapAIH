@@ -57,11 +57,10 @@
 #' desenhaCSAP(df, ordenar = FALSE)
 #' #
 #' # Com a lista de Alfradique et al.:
-#' desenhaCSAP(csapAIH(aih100, "Alfradique"),
-#'             lista = "Alfradique",
-#'             titulo = "auto",
-#'             onde = "Rio Grande do Sul")
-#' desenhaCSAP(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
+#' banco <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, lista = "Alfradique")
+#' desenhaCSAP(banco, lista = "Alfradique")
+#' desenhaCSAP(banco, lista = "Alfradique", lang = "es")
+#' desenhaCSAP(banco, lista = "Alfradique", lang = "en")
 #'
 #' # Cores
 #' #-------
@@ -259,6 +258,7 @@ desenhaCSAP <- function(dados, lista = "MS", lang = "pt.ca", jaetabela = FALSE, 
         # Os níveis/grupos
         grupos <- c(paste0("g0", 1:9), paste0("g1", 0:9))
         # O banco de dados
+        if(lista == "Alfradique") grupos <- c(grupos, "g20")
         df <- droplevels(dados[dados$grupo %in% grupos, ])
         rm(grupos)
         # df$grupo <- arrumaniveis(df$grupo) # tem de aplicar novamente, pelo droplevels acima ## Parece que não precisa não

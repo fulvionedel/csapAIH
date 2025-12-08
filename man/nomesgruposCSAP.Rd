@@ -61,5 +61,5 @@ Alfradique ME et al. Internações por condições sensíveis à atenção prim�
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No 221, de 17 de abril de 2008. \url{http://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html}
 }
 \seealso{
-\code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}
+\code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}} \code{\link{adinomes}}
 }

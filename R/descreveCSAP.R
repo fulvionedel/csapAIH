@@ -8,6 +8,8 @@
 #'   \item Um vetor da classe \code{factor} ou \code{character} com os grupos de causa CSAP, nomeados de acordo com o resultado da função \code{\link{csapAIH}}. Esse vetor não precisa ser gerado pela função \code{\link{csapAIH}}, mas deve conter todos os 19 grupos de causa, ainda que sua frequência seja zero, e também devem ser rotulados da mesma forma e ordem que na função, isto é, "g01", "g02", ..., "g19".
 #'   }
 #' @param digits Número de decimais nas proporções apresentadas.
+#' @param lang Define o idioma dos nomes dos grupos. O padrão é \code{"pt.ca"} ("português com acentos"). Pode ser \code{"pt.sa"}, \code{"es"} ou \code{"en"}.
+#' @param ... Permite a inclusão de argumentos da função \link{nomesgruposCSAP}, como "\code{lista}", para definição da lista de causas usada, se "MS" ou "Alfradique".
 #'
 #' @returns Um objeto da classe \code{data.frame} com a tabulação dos códigos da CID-10 segundo os grupos de causa da Lista Brasileira de ICSAP (19 grupos), com a frequência absoluta de casos e as porcentagens sobre o total de internações e sobre o conjunto das ICSAP.
 #'
@@ -20,44 +22,85 @@
 #' data(aih100)
 #' df = csapAIH(aih100)
 #' descreveCSAP(df$grupo)
+#' descreveCSAP(df)
+#'
+#' df = csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, lista = "Alfradique")
+#' descreveCSAP(df$grupo)
+#' descreveCSAP(df, lang = "es")
 #'
 #' @export
 #'
-descreveCSAP <- function(grupos, digits = 2){
-  if(is.character(grupos)) {
-    if(length(table(grupos)) < 19) {
-      stop("O vetor precisa ter os 19 grupos, mesmo que com freq = 0")
-    }
-  }
-  if( is.factor(grupos) ) {
-    if(length(levels(grupos)) < 19) {
-      stop("O fator precisa ter como n\U00EDveis os 19 grupos, mesmo que com freq = 0")
-    }
-  }
-  if(is.data.frame(grupos)) {
-    if(nrow(grupos) < 23) {
-      tabelagrupos = grupos
-      return(tabelagrupos)
-    } else
-      grupos = grupos$grupo
-  }
+descreveCSAP <- function(grupos, digits = 2, lang = "pt.ca", ...){
+
+    if(is.data.frame(grupos)) grupos = grupos$grupo
+    if(any(grupos %in% "g20")) lista = "Alfradique" else lista = "MS"
+
+  #   if(is.factor(grupos)) tabelagrupos <- stats::addmargins(table(grupos)) else
+  #   if(is.table(grupos) | is.matrix(grupos)) tabelagrupos <- grupos
+
+  # if(is.character(grupos)) {
+  #   if(length(table(grupos)) < 19) {
+  #     stop("O vetor precisa ter todos os grupos da lista, mesmo que com freq = 0")
+  #   }
+  # }
+  # if( is.factor(grupos) ) {
+  #   if(length(levels(grupos)) < 19) {
+  #     stop("O fator precisa ter como n\U00EDveis os grupos, mesmo que com freq = 0")
+  #   }
+  # }
+  # if(is.data.frame(grupos)) {
+  #   if(nrow(grupos) < 23) {
+  #     #tabelagrupos = grupos
+  #     tabelagrupos <- cbind(c(nomesgruposCSAP(lista = lista, ...), "N\U00E3o-CSAP"),
+  #                             grupos)
+  #     tabelagrupos <- tabelagrupos[,-2]
+  #     colnames(tabelagrupos) <- c("Grupo", "Freq.")
+  #
+  #     return(tabelagrupos)
+  #   } else
+  #     grupos = grupos$grupo
+  # }
   if(is.factor(grupos)) tabelagrupos <- stats::addmargins(table(grupos))
   if(is.character(grupos)) tabelagrupos <- stats::addmargins(table(grupos))
   if(is.table(grupos) | is.matrix(grupos)) tabelagrupos <- grupos
 
-  somacsap = sum(tabelagrupos[1:19]) # total de internações por CSAP
+  # somacsap = sum(tabelagrupos[1:19]) # total de internações por CSAP
+  somacsap = sum(utils::head(tabelagrupos, -2)) # total de internações por CSAP
   psomacsap = somacsap / sum(table(grupos)) *100 # % de CSAP sobre o total de internações
-  proptotal = prop.table(tabelagrupos[1:20])*100
-  proptotal = c( proptotal[1:19],
+  proptotal = prop.table(utils::head(tabelagrupos, -1))*100
+  proptotal = c( utils::head(proptotal, -1),
+                 # proptotal[1:19],
                  totalcsap = psomacsap,
-                 proptotal[20] )
-  propcsap = prop.table(tabelagrupos[1:19])*100
-  tabelagrupos = c( tabelagrupos[1:19],
+                 # proptotal[20]
+                 utils::tail(proptotal, 1)
+                 )
+  propcsap = prop.table(#tabelagrupos[1:19]
+                        utils::head(tabelagrupos, -2))*100
+  tabelagrupos = c( #tabelagrupos[1:19],
+                    utils::head(tabelagrupos, -2),
                     "Total CSAP" = somacsap,
-                    tabelagrupos[20:21] )
-  names(tabelagrupos)[22] <- "Total de interna\U00E7\u00F5es"
-  nomesgrupos <- nomesgruposCSAP()
-  nomes <- c(nomesgrupos, names(tabelagrupos[20:22]))
+                    # tabelagrupos[20:21]
+                    utils::tail(tabelagrupos, 2)
+                    )
+
+  # names(tabelagrupos)[length(tabelagrupos)] <- "Total de interna\U00E7\u00F5es"
+  names(tabelagrupos)[length(tabelagrupos)-1:0] <- c("N\U00E3o-CSAP",
+                                                     "Total de interna\U00E7\u00F5es")
+
+  nomesfim.tabela <- c("Total CSAP", "N\U00E3o-CSAP", "Total de interna\U00E7\u00F5es")
+  if(lang =="pt.sa") {
+      nomesfim.tabela[2:3] <- c("Nao-CSAP", "Total de internacoes")
+    } else if(lang == "es") {
+      nomesfim.tabela[2:3] <- c("No-CSAP", "Total de ingresos")
+    } else if (lang == "en") {
+      nomesfim.tabela[2:3] <- c("No-CSAP", "Total admissions")
+    }
+
+  nomesgrupos <- nomesgruposCSAP(lista = lista, lang = lang, ...)
+  nomes <- c(nomesgrupos, nomesfim.tabela)
+  # nomes <- c(nomesgrupos, names(#tabelagrupos[20:22]
+  #                               utils::tail(tabelagrupos, 3)
+  #                               ))
   tabelagrupos.formatada <-
     suppressWarnings(
       formatC(tabelagrupos, digits = 0, big.mark = ".", format = "d"))

@@ -10,7 +10,7 @@
 #'
 #' @return Um vetor da classe \code{character} ou uma tabela na classe \code{data frame} com os nomes (abreviados) dos grupos de causa segundo a lista definida pelo usuário.
 #'
-#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}}
+#' @seealso \code{\link{csapAIH}}, \code{\link{descreveCSAP}}, \code{\link{desenhaCSAP}} \code{\link{adinomes}}
 #'
 #' @references
 #'
@@ -260,12 +260,13 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numg
 #' @examples
 #' data("aih100")
 #' adinomes(csapAIH(aih100))[1:5, 9:11]
+#
 # @importFrom dplyr left_join
 #' @export
-adinomes <- function(x, lista = "MS") {
+adinomes <- function(x, lista = "MS", classe = "df") {
   nomegrupo <- grupo <- NULL
   lista = lista
-  x <- dplyr::left_join(x, nomesgruposCSAP(lista = lista, classe = "df")) |>
+  x <- dplyr::left_join(x, nomesgruposCSAP(lista = lista, classe = classe)) |>
     dplyr::relocate(nomegrupo, .after = grupo)
   x
 }
