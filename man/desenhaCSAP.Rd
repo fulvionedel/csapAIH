@@ -105,11 +105,10 @@ desenhaCSAP(df, titulo = "auto", onde = "Rio Grande do Sul")
 desenhaCSAP(df, ordenar = FALSE)
 #
 # Com a lista de Alfradique et al.:
-desenhaCSAP(csapAIH(aih100, "Alfradique"),
-            lista = "Alfradique",
-            titulo = "auto",
-            onde = "Rio Grande do Sul")
-desenhaCSAP(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
+banco <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, lista = "Alfradique")
+desenhaCSAP(banco, lista = "Alfradique")
+desenhaCSAP(banco, lista = "Alfradique", lang = "es")
+desenhaCSAP(banco, lista = "Alfradique", lang = "en")
 
 # Cores
 #-------

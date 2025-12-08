@@ -391,13 +391,16 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       ################################################################################
       if(lista == "MS") {
         # Portaria MS nº 221, de 17 de abril de 2008
-        csap  <- listaBRMS(cid)[,'csap']
-        grupo <- listaBRMS(cid)[,'grupo']
+        lstmp <- listaBRMS(cid)
+        csap  <- lstmp[,'csap']
+        grupo <- lstmp[,'grupo']
       } else if (lista == "Alfradique") {
         # Alfradique et al.
-        csap  <- listaBRAlfradique(cid)[,'csap']
-        grupo <- listaBRAlfradique(cid)[,'grupo']
+        lstmp <- listaBRAlfradique(cid)
+        csap  <- lstmp[,'csap']
+        grupo <- lstmp[,'grupo']
       }
+      rm(lstmp)
 
       ###########################
       ### Montar o objeto final #

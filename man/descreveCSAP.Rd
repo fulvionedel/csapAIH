@@ -4,7 +4,7 @@
 \alias{descreveCSAP}
 \title{Tabular Condições Sensíveis à Atenção Primária}
 \usage{
-descreveCSAP(grupos, digits = 2)
+descreveCSAP(grupos, digits = 2, lang = "pt.ca", ...)
 }
 \arguments{
 \item{grupos}{Pode ser:
@@ -14,6 +14,10 @@ descreveCSAP(grupos, digits = 2)
   }}
 
 \item{digits}{Número de decimais nas proporções apresentadas.}
+
+\item{lang}{Define o idioma dos nomes dos grupos. O padrão é \code{"pt.ca"} ("português com acentos"). Pode ser \code{"pt.sa"}, \code{"es"} ou \code{"en"}.}
+
+\item{...}{Permite a inclusão de argumentos da função \link{nomesgruposCSAP}, como "\code{lista}", para definição da lista de causas usada, se "MS" ou "Alfradique".}
 }
 \value{
 Um objeto da classe \code{data.frame} com a tabulação dos códigos da CID-10 segundo os grupos de causa da Lista Brasileira de ICSAP (19 grupos), com a frequência absoluta de casos e as porcentagens sobre o total de internações e sobre o conjunto das ICSAP.
@@ -28,6 +32,11 @@ Os valores são armazenados em formato latino (vírgula como separador decimal e
 data(aih100)
 df = csapAIH(aih100)
 descreveCSAP(df$grupo)
+descreveCSAP(df)
+
+df = csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, lista = "Alfradique")
+descreveCSAP(df$grupo)
+descreveCSAP(df, lang = "es")
 
 }
 \seealso{
