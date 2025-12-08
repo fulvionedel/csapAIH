@@ -196,35 +196,29 @@
 <span class="r-plt img"><img src="desenhaCSAP-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># Com a lista de Alfradique et al.:</span></span></span>
-<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="fu"><a href="csapAIH.html">csapAIH</a></span><span class="op">(</span><span class="va">aih100</span>, <span class="st">"Alfradique"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>            lista <span class="op">=</span> <span class="st">"Alfradique"</span>,</span></span>
-<span class="r-in"><span>            titulo <span class="op">=</span> <span class="st">"auto"</span>,</span></span>
-<span class="r-in"><span>            onde <span class="op">=</span> <span class="st">"Rio Grande do Sul"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 100 registros.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 15 (15%) registros de procedimentos obstétricos.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 1 (1%) registros de AIH de longa permanência.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 84 (84%) registros.</span>
+<span class="r-in"><span><span class="va">banco</span> <span class="op">&lt;-</span> <span class="fu"><a href="csapAIH.html">csapAIH</a></span><span class="op">(</span><span class="va">eeh20</span>, sihsus <span class="op">=</span> <span class="cn">FALSE</span>, cid <span class="op">=</span> <span class="va">cau_cie10</span>, lista <span class="op">=</span> <span class="st">"Alfradique"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 1.000 registros.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 150 registros de parto (15% do total).</span>
+<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">banco</span>, lista <span class="op">=</span> <span class="st">"Alfradique"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="desenhaCSAP-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="fu"><a href="csapAIH.html">csapAIH</a></span><span class="op">(</span><span class="va">aih100</span>, <span class="st">"Alfradique"</span><span class="op">)</span>, lista <span class="op">=</span> <span class="st">"Alfradique"</span>, lang <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 100 registros.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 15 (15%) registros de procedimentos obstétricos.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 1 (1%) registros de AIH de longa permanência.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 84 (84%) registros.</span>
+<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">banco</span>, lista <span class="op">=</span> <span class="st">"Alfradique"</span>, lang <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="desenhaCSAP-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">banco</span>, lista <span class="op">=</span> <span class="st">"Alfradique"</span>, lang <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="desenhaCSAP-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cores</span></span></span>
 <span class="r-in"><span><span class="co">#-------</span></span></span>
 <span class="r-in"><span><span class="co"># Sem cores nas barras</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span>, colorir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-5.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="desenhaCSAP-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Com as barras em tons de cinza</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span>, colorir <span class="op">=</span> <span class="st">"cinza"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-6.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="desenhaCSAP-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Com as barras em outra cor</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span>, colorir <span class="op">=</span> <span class="st">"yellow"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-7.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="desenhaCSAP-8.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># Usando o banco todo pode-se tirar proveito de facilidades do ggplot2,</span></span></span>
 <span class="r-in"><span><span class="co"># como a reprodução do gráfico por estratos de outras variáveis, como no</span></span></span>
@@ -234,50 +228,57 @@
 <span class="r-in"><span><span class="co"># ela faz menos sentido.</span></span></span>
 <span class="r-in"><span>  <span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span>, ordenar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">sexo</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-8.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="desenhaCSAP-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cria o gráfico a partir de uma variável:</span></span></span>
 <span class="r-in"><span><span class="co"># ---------------------------------------</span></span></span>
 <span class="r-in"><span><span class="va">fator</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">grupo</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">fator</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-9.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="desenhaCSAP-10.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">carater</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">fator</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">carater</span>, limsup <span class="op">=</span> <span class="fl">4.4</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-10.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>number of rows of result is not a multiple of vector length (arg 2)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_bar()`).</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_text()`).</span>
+<span class="r-plt img"><img src="desenhaCSAP-11.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Se \code{titulo = "auto"}, o argumento \code{quando} é obrigatório:</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span> <span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">carater</span>, titulo <span class="op">=</span> <span class="st">"auto"</span>, onde <span class="op">=</span> <span class="st">'RS'</span><span class="op">)</span> <span class="co"># resulta em erro</span></span></span>
 <span class="r-in"><span> <span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span> <span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">carater</span>, titulo <span class="op">=</span> <span class="st">"auto"</span>, onde <span class="op">=</span> <span class="st">"RS"</span>, quando <span class="op">=</span> <span class="st">"jan/2012"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-11.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span> <span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">carater</span>, titulo <span class="op">=</span> <span class="st">"Título manual"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>number of rows of result is not a multiple of vector length (arg 2)</span>
 <span class="r-plt img"><img src="desenhaCSAP-12.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span> <span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">carater</span>, titulo <span class="op">=</span> <span class="st">"Título manual"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>number of rows of result is not a multiple of vector length (arg 2)</span>
+<span class="r-plt img"><img src="desenhaCSAP-13.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cria o gráfico a partir de uma tabela com a primeira coluna contendo</span></span></span>
 <span class="r-in"><span><span class="co"># os 19 grupos de causa e a segunda coluna contendo o número de casos:</span></span></span>
 <span class="r-in"><span><span class="co"># --------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="va">tabela</span> <span class="op">&lt;-</span> <span class="fu"><a href="descreveCSAP.html">descreveCSAP</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-13.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="desenhaCSAP-14.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># Resulta em erro, faltou o argumento 'quando'</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span>, titulo <span class="op">=</span> <span class="st">"auto"</span>, onde <span class="op">=</span> <span class="st">'RS'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>            titulo <span class="op">=</span> <span class="st">"auto"</span>, onde <span class="op">=</span> <span class="st">"RS"</span>, quando <span class="op">=</span> <span class="st">"jan/2012"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-14.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span>, titulo <span class="op">=</span> <span class="st">"Título manual"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="desenhaCSAP-15.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span>, titulo <span class="op">=</span> <span class="st">"Título manual"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="desenhaCSAP-16.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#  Gráficos com as funções básicas</span></span></span>
 <span class="r-in"><span><span class="co"># =================================</span></span></span>
 <span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span>, tipo.graf <span class="op">=</span> <span class="st">"base"</span>, titulo <span class="op">=</span> <span class="st">"dados = banco"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="desenhaCSAP-16.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">grupo</span>, tipo.graf <span class="op">=</span> <span class="st">"base"</span>, titulo <span class="op">=</span> <span class="st">"dados = fator"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="desenhaCSAP-17.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span>, tipo.graf <span class="op">=</span> <span class="st">"base"</span>, titulo <span class="op">=</span> <span class="st">"dados = tabela"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">grupo</span>, tipo.graf <span class="op">=</span> <span class="st">"base"</span>, titulo <span class="op">=</span> <span class="st">"dados = fator"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="desenhaCSAP-18.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">desenhaCSAP</span><span class="op">(</span><span class="va">tabela</span>, jaetabela <span class="op">=</span> <span class="cn">TRUE</span>, tipo.graf <span class="op">=</span> <span class="st">"base"</span>, titulo <span class="op">=</span> <span class="st">"dados = tabela"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="desenhaCSAP-19.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

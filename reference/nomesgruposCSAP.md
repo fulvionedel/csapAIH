@@ -69,6 +69,7 @@ Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. Portaria No
 [`csapAIH`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md),
 [`descreveCSAP`](https://fulvionedel.github.io/csapAIH/reference/descreveCSAP.md),
 [`desenhaCSAP`](https://fulvionedel.github.io/csapAIH/reference/desenhaCSAP.md)
+[`adinomes`](https://fulvionedel.github.io/csapAIH/reference/adinomes.md)
 
 ## Examples
 

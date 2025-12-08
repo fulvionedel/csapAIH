@@ -238,20 +238,14 @@ desenhaCSAP(df, ordenar = FALSE)
 
 #
 # Com a lista de Alfradique et al.:
-desenhaCSAP(csapAIH(aih100, "Alfradique"),
-            lista = "Alfradique",
-            titulo = "auto",
-            onde = "Rio Grande do Sul")
-#> Importados 100 registros.
-#> Excluídos 15 (15%) registros de procedimentos obstétricos.
-#> Excluídos 1 (1%) registros de AIH de longa permanência.
-#> Exportados 84 (84%) registros.
+banco <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10, lista = "Alfradique")
+#> Importados 1.000 registros.
+#> Excluídos 150 registros de parto (15% do total).
+desenhaCSAP(banco, lista = "Alfradique")
 
-desenhaCSAP(csapAIH(aih100, "Alfradique"), lista = "Alfradique", lang = "es")
-#> Importados 100 registros.
-#> Excluídos 15 (15%) registros de procedimentos obstétricos.
-#> Excluídos 1 (1%) registros de AIH de longa permanência.
-#> Exportados 84 (84%) registros.
+desenhaCSAP(banco, lista = "Alfradique", lang = "es")
+
+desenhaCSAP(banco, lista = "Alfradique", lang = "en")
 
 
 # Cores
@@ -285,6 +279,11 @@ desenhaCSAP(fator)
 
 carater <- as.character(fator)
 desenhaCSAP(carater, limsup = 4.4)
+#> Warning: number of rows of result is not a multiple of vector length (arg 2)
+#> Warning: Removed 1 row containing missing values or values outside the scale range
+#> (`geom_bar()`).
+#> Warning: Removed 1 row containing missing values or values outside the scale range
+#> (`geom_text()`).
 
 
 # Se \code{titulo = "auto"}, o argumento \code{quando} é obrigatório:
@@ -292,8 +291,10 @@ if (FALSE) { # \dontrun{
  desenhaCSAP(carater, titulo = "auto", onde = 'RS') # resulta em erro
  } # }
  desenhaCSAP(carater, titulo = "auto", onde = "RS", quando = "jan/2012")
+#> Warning: number of rows of result is not a multiple of vector length (arg 2)
 
  desenhaCSAP(carater, titulo = "Título manual")
+#> Warning: number of rows of result is not a multiple of vector length (arg 2)
 
 
 # Cria o gráfico a partir de uma tabela com a primeira coluna contendo
