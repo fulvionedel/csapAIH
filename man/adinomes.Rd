@@ -4,14 +4,12 @@
 \alias{adinomes}
 \title{Adiciona o nome dos grupos}
 \usage{
-adinomes(x, lista = "MS", classe = "df")
+adinomes(x, lista = "MS")
 }
 \arguments{
 \item{x}{Banco de dados.}
 
 \item{lista}{Lista CSAP a ser utilizada. O padrão é "MS" (v. \code{\link{nomesgruposCSAP}}).}
-
-\item{classe}{Classe do objeto retornado pela função. O padrão é "df".}
 }
 \description{
 Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função \code{\link{csapAIH}} ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)

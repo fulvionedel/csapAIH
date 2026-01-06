@@ -255,7 +255,6 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numg
 #' Acrescenta uma variável com o nome dos grupos de causa segundo a lista selecionada ("MS" ou "Alfradique") a um banco de dados resultante da função \code{\link{csapAIH}} ou que contenha uma variável de nome "grupo" com os grupos nomeados segundo aquela função ("g01", ...)
 #' @param x Banco de dados.
 #' @param lista Lista CSAP a ser utilizada. O padrão é "MS" (v. \code{\link{nomesgruposCSAP}}).
-#' @param classe Classe do objeto retornado pela função. O padrão é "df".
 #' @details
 #' Define como missing os não-CSAP
 #' @examples
@@ -264,10 +263,10 @@ nomesgruposCSAP <- function(lista = "MS", lang = "pt.ca", classe = "vetor", numg
 #
 # @importFrom dplyr left_join
 #' @export
-adinomes <- function(x, lista = "MS", classe = "df") {
+adinomes <- function(x, lista = "MS") {
   nomegrupo <- grupo <- NULL
   lista = lista
-  x <- dplyr::left_join(x, nomesgruposCSAP(lista = lista, classe = classe)) |>
+  x <- dplyr::left_join(x, nomesgruposCSAP(lista = lista, classe = "data.frame")) |>
     dplyr::relocate(nomegrupo, .after = grupo)
   x
 }
