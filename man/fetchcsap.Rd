@@ -91,6 +91,14 @@ nrow(ac.comp) - nrow(ac.int)
 # Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
 fetchcsap(2023, mesfim = 1, regiao = "N")
 
+# Internações anteriores a 2008 têm aviso de
+# "arquivos antigos, que podem conter códigos incompatíveis"
+fetchcsap(2008, uf = "AC")
+fetchcsap(2007, uf = "AC")
+\dontrun{
+microdatasus::fetch_datasus(2007, 1, 2007, 12, "AC", "SIH-RD")
+}
+
 }
 \seealso{
 \code{\link{csapAIH}}, \code{\link[microdatasus]{fetch_datasus}}

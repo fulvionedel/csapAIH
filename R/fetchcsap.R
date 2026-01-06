@@ -67,6 +67,14 @@
 #' # Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
 #' fetchcsap(2023, mesfim = 1, regiao = "N")
 #'
+#' # Internações anteriores a 2008 têm aviso de
+#' # "arquivos antigos, que podem conter códigos incompatíveis"
+#' fetchcsap(2008, uf = "AC")
+#' fetchcsap(2007, uf = "AC")
+#' \dontrun{
+#' microdatasus::fetch_datasus(2007, 1, 2007, 12, "AC", "SIH-RD")
+#' }
+#'
 #' @importFrom data.table setDT `:=`
 #'
 #' @export
@@ -78,7 +86,9 @@ fetchcsap <- function(anoinicio, anofim = NULL,
 ':=' <- setDT <- DT_INTER <- idade <- NULL
 
   # Seleção de variáveis da AIH
-  vars <- c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "IDADE", "COD_IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA", "IDENT", "CEP", "CNES")
+  vars <- c("DIAG_PRINC", "NASC", "DT_INTER", "DT_SAIDA", "IDADE", "COD_IDADE", "MUNIC_RES", "MUNIC_MOV", "SEXO", "N_AIH", "PROC_REA", "IDENT")
+  if(cep == TRUE) { vars <- c(vars, "CEP") }
+  if(cnes == TRUE) { vars <- c(vars, "CNES")}
 
   # Definir extração de dados de interesse
   mesi <- ifelse(mesinicio < 10, paste0("0", mesinicio), mesinicio)
@@ -336,7 +346,6 @@ fetchcsap <- function(anoinicio, anofim = NULL,
     aih <- aih[aih$DT_INTER <= perf, ]
   }
   aih <- data.frame(aih)
- # return(list("mesf" = mesf, "anof" = anof, "peri" = peri, "perf" = perf))
   # Classificar as CSAP
   csap <- csapAIH::csapAIH(aih, cep = cep, cnes = cnes, ...) |>
     setDT()
