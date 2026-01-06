@@ -27,7 +27,7 @@ popbr2000_2021(
 Um banco de dados de classes \code{data.table} e \code{data.frame} com oito variáveis: \code{CO_UF, UF_SIGLA, REGIAO, ano, mun, sexo, fxetar5, pop}. A variável sexo é um \code{factor} com dois \code{levels}: "masc" e "fem". A variável \code{fxetar5} representa a idade agrupada em 17 categorias -- 16 faixas quinquenais (0-4, ... 75-79) e a última aberta a partir dos 80 anos (80 e +).
 }
 \description{
-Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021, calculadas antes do Censo 2022. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote \code{brpop} (\url{https://github.com/rfsaldanha/brpop}), permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo (v. Value). Exige a instalação prévia dos pacotes \code{brpop} e \code{dplyr}. Essas estimativas foram posteriormente  atualizadas e são mantidas aqui apenas para fins de registro e comparação com as medidas e estimativas atuais. (V. Details)
+Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021, calculadas antes do Censo 2022. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote \href{https://github.com/rfsaldanha/brpop}{brpop}, permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo (v. Value). Exige a instalação prévia dos pacotes \code{brpop} e \code{dplyr}. Essas estimativas foram posteriormente  atualizadas e são mantidas aqui apenas para fins de registro e comparação com as medidas e estimativas atuais. (V. Details)
 }
 \details{
 Até a recente publicação dos dados do Censo 2022 e após um hiato na publicação de estimativas populacionais, em que o último arquivo de dados publicado no DATASUS era da população em 2012, trabalhávamos com as "Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021", que podiam ser tabuladas no TABNET mas cujos arquivos de dados não estavam disponíveis.
@@ -39,6 +39,7 @@ Com o Censo 2022 viu-se que os resultados estavam superestimados e as informaç�
 Assim, a função \code{popbr2000_2021} não é mais necessária e não deve ser usada em novos estudos, a não ser para análises metodológicas e comparação de resultados com as medidas atualizadas. Por esse motivo ela é mantida no pacote.
 }
 \examples{
+\dontrun{
 library(dplyr)
 # Ano 2021, todos os municípios brasileiros:
 popbr2000_2021(2021)
@@ -54,6 +55,7 @@ popbr2000_2021(anof = 2003, uf = "AC") \%>\%
 popbr2000_2021(2014, 2016, munic = "430520") \%>\%
   group_by(sexo, fxetar5) \%>\%
   summarise(pop = sum(pop))
+}
 
 }
 \references{

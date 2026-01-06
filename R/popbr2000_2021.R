@@ -2,7 +2,7 @@
 #'
 #' @aliases popbr2000_2021
 #'
-#' @description Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021, calculadas antes do Censo 2022. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote \code{brpop} (\url{https://github.com/rfsaldanha/brpop}), permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo (v. Value). Exige a instalação prévia dos pacotes \code{brpop} e \code{dplyr}. Essas estimativas foram posteriormente  atualizadas e são mantidas aqui apenas para fins de registro e comparação com as medidas e estimativas atuais. (V. Details)
+#' @description Estimativas populacionais anuais por sexo e faixa etária quinquenal para os municípios brasileiros, de 2000 a 2021, calculadas antes do Censo 2022. Modifica a tabela de dados resultante da função \code{\link[brpop]{mun_sex_pop}} do pacote \href{https://github.com/rfsaldanha/brpop}{brpop}, permitindo seu uso como um banco de dados, além de mudar o rótulo de faixas etárias e categorias de sexo (v. Value). Exige a instalação prévia dos pacotes \code{brpop} e \code{dplyr}. Essas estimativas foram posteriormente  atualizadas e são mantidas aqui apenas para fins de registro e comparação com as medidas e estimativas atuais. (V. Details)
 #'
 #' @param anoi Ano de início do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis, i.e., de 2000 a 2021 (v. Examples).
 #' @param anof Ano de fim do período a ser considerado, de 2000 a 2021. Argumento opcional, se não for preenchido, são consideradas as estimativas para todos os anos disponíveis, i.e., de 2000 a 2021 (v. Examples).
@@ -30,6 +30,7 @@
 #' @seealso \code{\link[brpop]{mun_sex_pop}}, \code{\link{popbr}}.
 #'
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' # Ano 2021, todos os municípios brasileiros:
 #' popbr2000_2021(2021)
@@ -45,6 +46,7 @@
 #' popbr2000_2021(2014, 2016, munic = "430520") %>%
 #'   group_by(sexo, fxetar5) %>%
 #'   summarise(pop = sum(pop))
+#' }
 #'
 #' @export
 
