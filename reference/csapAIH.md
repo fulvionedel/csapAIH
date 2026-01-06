@@ -440,11 +440,11 @@ teste5 <- csapAIH(aih500)
 #> Excluídos 3 (0,6%) registros de AIH de longa permanência.
 #> Exportados 435 (87%) registros.
 attributes(teste5)$resumo
-#>           acao freq  perc                                  objeto
-#> 1   Importados  500 100.0                              registros.
-#> 2 Excluídos \t   62  12.4 registros de procedimentos obstétricos.
-#> 3 Excluídos \t    3   0.6  registros de AIH de longa permanência.
-#> 4   Exportados  435  87.0                              registros.
+#>         acao freq  perc                                  objeto
+#> 1 Importados  500 100.0                              registros.
+#> 2  Excluídos   62  12.4 registros de procedimentos obstétricos.
+#> 3  Excluídos    3   0.6  registros de AIH de longa permanência.
+#> 4 Exportados  435  87.0                              registros.
 str(teste5)
 #> 'data.frame':    435 obs. of  16 variables:
 #>  $ n.aih     : chr  "4317109123778" "4317107038640" "4318100211370" "4317109050804" ...
@@ -477,7 +477,7 @@ str(teste5)
 #>  $ cnes      : Factor w/ 277 levels "2223538","2223546",..: 236 37 77 122 41 129 2 78 236 238 ...
 #>   ..- attr(*, "label")= chr "No. do hospital no CNES"
 #>  - attr(*, "resumo")='data.frame':   4 obs. of  4 variables:
-#>   ..$ acao  : chr [1:4] "Importados" "Excluídos \t" "Excluídos \t" "Exportados"
+#>   ..$ acao  : chr [1:4] "Importados" "Excluídos" "Excluídos" "Exportados"
 #>   ..$ freq  : num [1:4] 500 62 3 435
 #>   ..$ perc  : num [1:4] 100 12.4 0.6 87
 #>   ..$ objeto: chr [1:4] "registros." "registros de procedimentos obstétricos." "registros de AIH de longa permanência." "registros."
@@ -570,7 +570,7 @@ str(teste7)
 #>  $ cnes      : Factor w/ 277 levels "2223538","2223546",..: 236 37 77 122 41 129 2 78 236 238 ...
 #>   ..- attr(*, "label")= chr "No. do hospital no CNES"
 #>  - attr(*, "resumo")='data.frame':   4 obs. of  4 variables:
-#>   ..$ acao  : chr [1:4] "Importados" "Excluídos \t" "Excluídos \t" "Exportados"
+#>   ..$ acao  : chr [1:4] "Importados" "Excluídos" "Excluídos" "Exportados"
 #>   ..$ freq  : num [1:4] 500 62 3 435
 #>   ..$ perc  : num [1:4] 100 12.4 0.6 87
 #>   ..$ objeto: chr [1:4] "registros." "registros de procedimentos obstétricos." "registros de AIH de longa permanência." "registros."
@@ -617,7 +617,7 @@ str(teste8)
 #>  $ data.inter: Date, format: "2017-12-21" "2017-12-22" ...
 #>  $ data.saida: Date, format: "2017-12-28" "2017-12-23" ...
 #>  - attr(*, "resumo")='data.frame':   4 obs. of  4 variables:
-#>   ..$ acao  : chr [1:4] "Importados" "Excluídos \t" "Excluídos \t" "Exportados"
+#>   ..$ acao  : chr [1:4] "Importados" "Excluídos" "Excluídos" "Exportados"
 #>   ..$ freq  : num [1:4] 500 62 3 435
 #>   ..$ perc  : num [1:4] 100 12.4 0.6 87
 #>   ..$ objeto: chr [1:4] "registros." "registros de procedimentos obstétricos." "registros de AIH de longa permanência." "registros."

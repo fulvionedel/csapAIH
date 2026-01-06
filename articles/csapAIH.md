@@ -168,7 +168,7 @@ read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
  $ cnes      : int  2232189 2232928 2232928 2232928 2232928 2232928 2232928 2232928 2232928 2232081 ...
   ..- attr(*, "label")= chr "No. do hospital no CNES"
  - attr(*, "resumo")='data.frame':  4 obs. of  4 variables:
-  ..$ acao  : chr [1:4] "Importados" "Excluídos \t" "Excluídos \t" "Exportados"
+  ..$ acao  : chr [1:4] "Importados" "Excluídos" "Excluídos" "Exportados"
   ..$ freq  : num [1:4] 60529 5044 366 55119
   ..$ perc  : num [1:4] 100 8.3 0.6 91.1
   ..$ objeto: chr [1:4] "registros." "registros de procedimentos obstétricos." "registros de AIH de longa permanência." "registros."

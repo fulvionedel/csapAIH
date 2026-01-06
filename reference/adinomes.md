@@ -17,7 +17,7 @@ adinomes(x, lista = "MS")
 
 - x:
 
-  Banco de dados
+  Banco de dados.
 
 - lista:
 

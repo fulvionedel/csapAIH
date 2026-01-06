@@ -233,4 +233,79 @@ fetchcsap(2023, mesfim = 1, regiao = "N")
 #> 69876: 2023-02-03
 #> 69877: 2023-02-01
 #> 69878: 2023-01-11
+
+# Internações anteriores a 2008 têm aviso de
+# "arquivos antigos, que podem conter códigos incompatíveis"
+fetchcsap(2008, uf = "AC")
+#> ℹ Your local Internet connection seems to be ok.
+#> ℹ DataSUS FTP server seems to be up and reachable.
+#> ℹ Starting download...
+#> Importados 49.010 registros.
+#> Excluídos 14.968 (30,5%) registros de procedimentos obstétricos.
+#> Excluídos NA (NA%) registros de AIH de longa permanência.
+#> Exportados 34.042 (69,5%) registros.
+#>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter
+#>        <char> <char> <fctr> <num>  <fctr> <char>   <fctr> <char>     <Date>
+#>     1: 120010 120010   masc     2     0-4    sim      g02    E86 2008-01-07
+#>     2: 120025 120010   masc     0     0-4    sim      g02   A080 2008-01-14
+#>     3: 120025 120010   masc    15   15-19    não nao-CSAP   B159 2008-01-15
+#>     4: 120010 120010    fem    22   20-24    não nao-CSAP   N832 2008-01-14
+#>     5: 120010 120010    fem    24   20-24    não nao-CSAP   N832 2008-01-12
+#>    ---                                                                     
+#> 34038: 120070 120070    fem     3     0-4    não nao-CSAP    R69 2008-12-31
+#> 34039: 120040 120040   masc    40   40-44    não nao-CSAP   C152 2008-10-21
+#> 34040: 120035 120040   masc    32   30-34    não nao-CSAP   C917 2008-11-12
+#> 34041: 120040 120040   masc    73   70-74    não nao-CSAP   N188 2008-12-27
+#> 34042: 120040 120040   masc    59   55-59    não nao-CSAP   I629 2008-11-01
+#>        data.saida
+#>            <Date>
+#>     1: 2008-01-10
+#>     2: 2008-01-17
+#>     3: 2008-01-21
+#>     4: 2008-01-17
+#>     5: 2008-01-14
+#>    ---           
+#> 34038: 2009-01-01
+#> 34039: 2009-04-03
+#> 34040: 2009-04-29
+#> 34041: 2009-02-23
+#> 34042: 2009-03-05
+fetchcsap(2007, uf = "AC")
+#> ℹ Your local Internet connection seems to be ok.
+#> ℹ DataSUS FTP server seems to be up and reachable.
+#> ℹ Starting download...
+#> → The following dates (yymm) are from old folders and may contain incompatible codes (including old ICD codes): 0701, 0702, 0703, 0704, 0705, 0706, 0707, 0708, 0709, 0710, 0711, 0712.
+#> Importados 46.666 registros.
+#> Excluídos 10.305 (22,1%) registros de procedimentos obstétricos.
+#> Excluídos NA (NA%) registros de AIH de longa permanência.
+#> Exportados 36.361 (77,9%) registros.
+#>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter
+#>        <char> <char> <fctr> <num>  <fctr> <char>   <fctr> <char>     <Date>
+#>     1: 120025 120010   masc    33   30-34    sim      g01    B54 2007-01-05
+#>     2: 120010 120010    fem    60   60-64    não nao-CSAP   N200 2007-01-18
+#>     3: 120010 120010   masc    50   50-54    sim      g02    E86 2007-01-20
+#>     4: 120010 120010    fem    45   45-49    não nao-CSAP   K810 2007-01-15
+#>     5: 120025 120010   masc    75   75-79    sim      g11   I509 2007-01-15
+#>    ---                                                                     
+#> 36357: 120040 120040   masc    45   45-49    não nao-CSAP   F068 2007-12-03
+#> 36358: 120040 120040   masc    72   70-74    não nao-CSAP   A488 2007-12-15
+#> 36359: 120010 120040    fem     2     0-4    não nao-CSAP   A488 2007-12-25
+#> 36360: 120040 120040   masc    48   45-49    não nao-CSAP   F319 2007-12-13
+#> 36361: 120040 120040    fem    49   45-49    não nao-CSAP   I738 2007-11-22
+#>        data.saida
+#>            <Date>
+#>     1: 2007-01-07
+#>     2: 2007-01-21
+#>     3: 2007-01-24
+#>     4: 2007-01-18
+#>     5: 2007-01-21
+#>    ---           
+#> 36357: 2008-01-16
+#> 36358: 2008-01-28
+#> 36359: 2008-01-01
+#> 36360: 2008-01-27
+#> 36361: 2008-01-28
+if (FALSE) { # \dontrun{
+microdatasus::fetch_datasus(2007, 1, 2007, 12, "AC", "SIH-RD")
+} # }
 ```

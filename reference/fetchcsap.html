@@ -225,6 +225,81 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 69877: 2023-02-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 69878: 2023-01-11</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Internações anteriores a 2008 têm aviso de</span></span></span>
+<span class="r-in"><span><span class="co"># "arquivos antigos, que podem conter códigos incompatíveis"</span></span></span>
+<span class="r-in"><span><span class="fu">fetchcsap</span><span class="op">(</span><span class="fl">2008</span>, uf <span class="op">=</span> <span class="st">"AC"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 49.010 registros.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 14.968 (30,5%) registros de procedimentos obstétricos.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos NA (NA%) registros de AIH de longa permanência.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 34.042 (69,5%) registros.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;char&gt; &lt;char&gt; &lt;fctr&gt; &lt;num&gt;  &lt;fctr&gt; &lt;char&gt;   &lt;fctr&gt; &lt;char&gt;     &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1: 120010 120010   masc     2     0-4    sim      g02    E86 2008-01-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2: 120025 120010   masc     0     0-4    sim      g02   A080 2008-01-14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3: 120025 120010   masc    15   15-19    não nao-CSAP   B159 2008-01-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4: 120010 120010    fem    22   20-24    não nao-CSAP   N832 2008-01-14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5: 120010 120010    fem    24   20-24    não nao-CSAP   N832 2008-01-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ---                                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34038: 120070 120070    fem     3     0-4    não nao-CSAP    R69 2008-12-31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34039: 120040 120040   masc    40   40-44    não nao-CSAP   C152 2008-10-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34040: 120035 120040   masc    32   30-34    não nao-CSAP   C917 2008-11-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34041: 120040 120040   masc    73   70-74    não nao-CSAP   N188 2008-12-27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34042: 120040 120040   masc    59   55-59    não nao-CSAP   I629 2008-11-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        data.saida</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1: 2008-01-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2: 2008-01-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3: 2008-01-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4: 2008-01-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5: 2008-01-14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ---           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34038: 2009-01-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34039: 2009-04-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34040: 2009-04-29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34041: 2009-02-23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34042: 2009-03-05</span>
+<span class="r-in"><span><span class="fu">fetchcsap</span><span class="op">(</span><span class="fl">2007</span>, uf <span class="op">=</span> <span class="st">"AC"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Your local Internet connection seems to be ok.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> DataSUS FTP server seems to be up and reachable.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting download...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → The following dates (yymm) are from old folders and may contain incompatible codes (including old ICD codes): 0701, 0702, 0703, 0704, 0705, 0706, 0707, 0708, 0709, 0710, 0711, 0712.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 46.666 registros.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 10.305 (22,1%) registros de procedimentos obstétricos.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos NA (NA%) registros de AIH de longa permanência.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Exportados 36.361 (77,9%) registros.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;char&gt; &lt;char&gt; &lt;fctr&gt; &lt;num&gt;  &lt;fctr&gt; &lt;char&gt;   &lt;fctr&gt; &lt;char&gt;     &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1: 120025 120010   masc    33   30-34    sim      g01    B54 2007-01-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2: 120010 120010    fem    60   60-64    não nao-CSAP   N200 2007-01-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3: 120010 120010   masc    50   50-54    sim      g02    E86 2007-01-20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4: 120010 120010    fem    45   45-49    não nao-CSAP   K810 2007-01-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5: 120025 120010   masc    75   75-79    sim      g11   I509 2007-01-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ---                                                                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36357: 120040 120040   masc    45   45-49    não nao-CSAP   F068 2007-12-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36358: 120040 120040   masc    72   70-74    não nao-CSAP   A488 2007-12-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36359: 120010 120040    fem     2     0-4    não nao-CSAP   A488 2007-12-25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36360: 120040 120040   masc    48   45-49    não nao-CSAP   F319 2007-12-13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36361: 120040 120040    fem    49   45-49    não nao-CSAP   I738 2007-11-22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        data.saida</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Date&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1: 2007-01-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2: 2007-01-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3: 2007-01-24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4: 2007-01-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5: 2007-01-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ---           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36357: 2008-01-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36358: 2008-01-28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36359: 2008-01-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36360: 2008-01-27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36361: 2008-01-28</span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu">microdatasus</span><span class="fu">::</span><span class="fu"><a href="https://rfsaldanha.github.io/microdatasus/reference/fetch_datasus.html" class="external-link">fetch_datasus</a></span><span class="op">(</span><span class="fl">2007</span>, <span class="fl">1</span>, <span class="fl">2007</span>, <span class="fl">12</span>, <span class="st">"AC"</span>, <span class="st">"SIH-RD"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
