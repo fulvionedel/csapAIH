@@ -268,7 +268,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
         fr.form <- suppressWarnings(format(fr, big.mark = "."))
         pfr.form <- format(pfr, decimal.mark = ",")
         if (tipo == "proc") {
-          excluidos.obst <- c("Exclu\u00EDdos \t",
+          excluidos.obst <- c("Exclu\u00EDdos",
                               fr, pfr,
                               "registros de procedimentos obst\u00E9tricos.")
           message( c("Exclu\u00EDdos ",
@@ -314,7 +314,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
           fr.form <- suppressWarnings(format(fr, big.mark = "."))
           pfr.form <- format(pfr, decimal.mark = ",")
           x <- subset(x, x$IDENT==1)
-          excluidos.lp <- c("Exclu\u00EDdos \t", fr, pfr,
+          excluidos.lp <- c("Exclu\u00EDdos", fr, pfr,
                             "registros de AIH de longa perman\u00EAncia.")
           message("Exclu\u00EDdos ", fr.form, " (", pfr.form, "\u0025) registros de AIH de longa perman\u00EAncia.")
         }
