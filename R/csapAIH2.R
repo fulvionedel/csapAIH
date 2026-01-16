@@ -187,7 +187,7 @@ csapAIH2 <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE
   if (isFALSE(sihsus)) {
   # # Garantir o trabalho com operadores mais tarde, no CID
   #   if(!is.character(cid)) cid <- as.character(cid)
-  # if(is.labelled(cid)) cid <- haven::zap_labels(cid)
+  # if(haven::is.labelled(cid)) cid <- haven::zap_labels(cid)
     # if (is.data.frame(x)) {
       cid <- x[, deparse(substitute(cid))]
       juntar <- x
