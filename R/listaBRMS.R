@@ -47,7 +47,7 @@ listaBRMS <- function(cid){
     # Demais causas
     TRUE ~ "g00")
 
-  csap <- ifelse(grupo %in% "g00", "n\u00E3o", "sim")
+  csap <- ifelse(grupo %in% "g00", "n\u00E3o", "sim") |> factor(levels = c("sim", "n\u00E3o"))
   #
   ### Garantir todos os grupos de causa, mesmo com frequência zero, como "level" do fator.
   niveis <- c(paste0("g0", 1:9), paste0("g1", 0:9), "g00")
