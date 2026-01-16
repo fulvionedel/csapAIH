@@ -13,6 +13,7 @@ Suggests:
     brpop,
     foreign,
     ggplot2,
+    haven,
     Hmisc,
     knitr,
     lemon,
@@ -23,8 +24,7 @@ Suggests:
     scales,
     tidyr
 Imports: data.table,
-         dplyr,
-         haven
+         dplyr
 Remotes: danicat/read.dbc,
          rfsaldanha/microdatasus,
          rfsaldanha/brpop,

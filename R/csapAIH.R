@@ -215,7 +215,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
         cid <- x[,deparse(substitute(cid))]
         # cid <- x[,cid]
         juntar <- x
-        }
+      }
     }
     #
     # Leitura do arquivo de dados
@@ -383,7 +383,8 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       ##
       # Definir missings no cid:
       # cid[is.na(cid)] <- NA
-      cid[cid==""] <- NA
+      if("haven_labelled" %in% class(cid)) cid <- haven::zap_formats(cid)
+      cid[cid == ""] <- NA
       #
       ################################################################################
       #  LISTA BRASILEIRA DE INTERNAÇÕES POR CONDIÇÕES SENSÍVEIS À ATENÇÃO PRIMÁRIA  #
