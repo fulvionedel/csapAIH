@@ -200,6 +200,7 @@ teste13 <- csapAIH(aih500) |>
 merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
 names(teste13)
 
+
 }
 \references{
 Alfradique ME et al. Internações por condições sensíveis à atenção primária: a construção da lista brasileira como ferramenta para medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil). Cadernos de Saúde Pública. 2009; 25(6): 1337-1349. \url{https://doi.org/10.1590/S0102-311X2009000600016}.
