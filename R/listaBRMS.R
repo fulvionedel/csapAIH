@@ -2,7 +2,6 @@
 #               Portaria MS nº 221, de 17 de abril de 2008
 #            --- --- --- --- --- --- --- --- --- --- --- ---
 #
-#' @importFrom haven zap_labels is.labelled
 #
 listaBRMS <- function(cid){
   if(!is.character(cid)) cid <- as.character(cid)
