@@ -181,7 +181,6 @@
 #' merge(aih100[, vars], by.x = "n.aih", by.y = "N_AIH")
 #' names(teste13)
 #'
-#' @importFrom dplyr is.tbl
 #'
 #' @export
 #'
@@ -209,7 +208,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
     }
     if (is.data.frame(x)) {
       arquivo <- FALSE
-      if(is.tbl(x)) x <- as.data.frame(x)
+      if(dplyr::is.tbl(x)) x <- as.data.frame(x)
     }
     if (sihsus == FALSE) {
       if (is.data.frame(x)) {
@@ -254,7 +253,7 @@ csapAIH <- function(x, lista = "MS", grupos=TRUE, sihsus=TRUE, procobst.rm=TRUE,
       # # Garantir o trabalho com operadores mais tarde, no CID
       # if (sihsus==FALSE) {
       #   if(!is.character(cid)) cid <- as.character(cid)
-      #   # if(is.labelled(cid)) cid <- zap_labels(cid)
+      #   # if(haven::is.labelled(cid)) cid <- haven::zap_labels(cid)
       # }
 
       #-------------------------------------------------------------------------#
