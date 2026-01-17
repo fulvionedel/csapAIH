@@ -208,7 +208,7 @@ fetchcsap(2023, mesfim = 1, regiao = "N")
 #> Excluídos NA (NA%) registros de AIH de longa permanência.
 #> Exportados 69.878 (77%) registros.
 #>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter
-#>        <char> <char> <fctr> <num>  <fctr> <char>   <fctr> <char>     <Date>
+#>        <char> <char> <fctr> <num>  <fctr> <fctr>   <fctr> <char>     <Date>
 #>     1: 110020 110020   masc    31   30-34    não nao-CSAP   N288 2023-01-17
 #>     2: 110020 110020    fem    63   60-64    sim      g08   J441 2023-01-03
 #>     3: 110020 110020   masc    68   65-69    sim      g12    I64 2023-01-05
@@ -245,7 +245,7 @@ fetchcsap(2008, uf = "AC")
 #> Excluídos NA (NA%) registros de AIH de longa permanência.
 #> Exportados 34.042 (69,5%) registros.
 #>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter
-#>        <char> <char> <fctr> <num>  <fctr> <char>   <fctr> <char>     <Date>
+#>        <char> <char> <fctr> <num>  <fctr> <fctr>   <fctr> <char>     <Date>
 #>     1: 120010 120010   masc     2     0-4    sim      g02    E86 2008-01-07
 #>     2: 120025 120010   masc     0     0-4    sim      g02   A080 2008-01-14
 #>     3: 120025 120010   masc    15   15-19    não nao-CSAP   B159 2008-01-15
@@ -280,7 +280,7 @@ fetchcsap(2007, uf = "AC")
 #> Excluídos NA (NA%) registros de AIH de longa permanência.
 #> Exportados 36.361 (77,9%) registros.
 #>        munres munint   sexo idade fxetar5   csap    grupo    cid data.inter
-#>        <char> <char> <fctr> <num>  <fctr> <char>   <fctr> <char>     <Date>
+#>        <char> <char> <fctr> <num>  <fctr> <fctr>   <fctr> <char>     <Date>
 #>     1: 120025 120010   masc    33   30-34    sim      g01    B54 2007-01-05
 #>     2: 120010 120010    fem    60   60-64    não nao-CSAP   N200 2007-01-18
 #>     3: 120010 120010   masc    50   50-54    sim      g02    E86 2007-01-20

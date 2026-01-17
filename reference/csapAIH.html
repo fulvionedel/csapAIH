@@ -214,12 +214,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 S068  não nao-CSAP</span>
 <span class="r-in"><span><span class="va">teste2</span> <span class="op">&lt;-</span> <span class="fu">csapAIH</span><span class="op">(</span><span class="va">cids</span>, arquivo<span class="op">=</span><span class="cn">FALSE</span>,  grupo<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> ; <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">teste2</span><span class="op">)</span> ; <span class="va">teste2</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 0 registros de parto (0% do total).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "character"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sim" "não" "não" "sim" "sim" "sim" "não"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "factor"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] sim não não sim sim sim não</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: sim não</span>
 <span class="r-in"><span><span class="va">teste2</span> <span class="op">&lt;-</span> <span class="fu">csapAIH</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cids</span><span class="op">)</span>, grupo<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> ; <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">teste2</span><span class="op">)</span> ; <span class="va">teste2</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Excluídos 0 registros de parto (0% do total).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "character"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "sim" "não" "não" "sim" "sim" "sim" "não"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "factor"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] sim não não sim sim sim não</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: sim não</span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Um 'arquivo da AIH' armazenado no diretório de trabalho:</span></span></span>
@@ -365,7 +367,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria detalhada"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fxetar5   : Factor w/ 17 levels "0-4","5-9","10-14",..: 16 10 3 1 8 16 10 13 13 16 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria quinquenal"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : chr  "não" "não" "não" "não" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : Factor w/ 2 levels "sim","não": 2 2 2 2 1 2 2 2 2 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "CSAP"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ grupo     : Factor w/ 20 levels "g01","g02","g03",..: 20 20 20 20 10 20 20 20 20 20 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Grupo de causa CSAP"</span>
@@ -411,7 +413,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria detalhada"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fxetar5   : Factor w/ 17 levels "0-4","5-9","10-14",..: 16 6 10 3 1 8 16 10 13 13 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria quinquenal"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : chr  "não" "não" "não" "não" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : Factor w/ 2 levels "sim","não": 2 2 2 2 2 1 2 2 2 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "CSAP"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ grupo     : Factor w/ 20 levels "g01","g02","g03",..: 20 20 20 20 20 10 20 20 20 20 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Grupo de causa CSAP"</span>
@@ -458,7 +460,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria detalhada"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fxetar5   : Factor w/ 17 levels "0-4","5-9","10-14",..: 16 10 3 1 8 16 10 13 13 16 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria quinquenal"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : chr  "não" "não" "não" "não" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : Factor w/ 2 levels "sim","não": 2 2 2 2 1 2 2 2 2 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "CSAP"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ grupo     : Factor w/ 21 levels "g01","g02","g03",..: 21 21 21 21 11 21 21 21 21 21 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Grupo de causa CSAP"</span>
@@ -509,7 +511,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria detalhada"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fxetar5   : Factor w/ 17 levels "0-4","5-9","10-14",..: 16 10 3 1 8 16 10 13 13 16 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Faixa etaria quinquenal"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : chr  "não" "não" "não" "não" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : Factor w/ 2 levels "sim","não": 2 2 2 2 1 2 2 2 2 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "CSAP"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ grupo     : Factor w/ 20 levels "g01","g02","g03",..: 20 20 20 20 10 20 20 20 20 20 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "label")= chr "Grupo de causa CSAP"</span>
@@ -677,7 +679,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ..@ display_width: int 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ..@ labels       : Named num  1 2 3 4 5 6 7 8 9 10 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    .. ..- attr(*, "names")= chr [1:299] "Cólera" "Fiebres tifoidea y paratifoidea" "Shigelosis" "Amebiasis" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : chr  "não" "não" "sim" "não" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : Factor w/ 2 levels "sim","não": 2 2 1 2 2 2 2 2 2 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ grupo     : Factor w/ 20 levels "g01","g02","g03",..: 20 20 2 20 20 20 20 20 20 8 ...</span>
 <span class="r-in"><span><span class="va">teste10</span> <span class="op">&lt;-</span> <span class="fu">csapAIH</span><span class="op">(</span><span class="va">eeh20</span>, sihsus <span class="op">=</span> <span class="cn">FALSE</span>, cid <span class="op">=</span> <span class="va">cau_cie10</span>, parto.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Importados 1.000 registros.</span>
@@ -854,7 +856,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ..@ display_width: int 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ..@ labels       : Named num  1 2 3 4 5 6 7 8 9 10 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    .. ..- attr(*, "names")= chr [1:299] "Cólera" "Fiebres tifoidea y paratifoidea" "Shigelosis" "Amebiasis" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : chr  "não" "não" "sim" "não" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ csap      : Factor w/ 2 levels "sim","não": 2 2 1 2 2 2 2 2 2 2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ grupo     : Factor w/ 20 levels "g01","g02","g03",..: 20 20 2 20 20 20 20 20 20 20 ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Uma base de dados com a estrutura dos "arquivos da AIH" mantendo</span></span></span>
@@ -998,6 +1000,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "idade"      "fxetar.det" "fxetar5"    "csap"       "grupo"     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11] "cid"        "proc.rea"   "data.inter" "data.saida" "cep"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "cnes"       "RACA_COR"   "INSTRU"    </span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

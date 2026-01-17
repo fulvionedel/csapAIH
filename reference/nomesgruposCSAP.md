@@ -310,21 +310,21 @@ left_join(
 #> Joining with `by = join_by(grupo)`
 #> # A tibble: 16 × 4
 #>    csap  grupo    nomegrupo                          `n()`
-#>    <chr> <chr>    <chr>                              <int>
-#>  1 não   nao-CSAP  NA                                  339
-#>  2 sim   g03      " 3. Gastroenteritis"                  6
-#>  3 sim   g05      " 5. Nutritional deficiency"           3
-#>  4 sim   g07      " 7. Bacterial pneumonia"              7
-#>  5 sim   g09      " 9. Pulmonary"                        9
-#>  6 sim   g10      "10. Hypertension"                     2
-#>  7 sim   g11      "11. Angina"                          11
-#>  8 sim   g12      "12. Heart failure"                   13
-#>  9 sim   g13      "13. Cerebrovascular"                 11
-#> 10 sim   g14      "14. Diabetes mellitus"                8
-#> 11 sim   g15      "15. Convulsions and epilepsy"         5
-#> 12 sim   g16      "16. Urinary infection"               12
-#> 13 sim   g17      "17. Skin and subcutaneous infec."     1
-#> 14 sim   g18      "18. Pelvic inflammatory disease"      1
-#> 15 sim   g19      "19. Gastrointestinal ulcers"          1
-#> 16 sim   g20      "20. Pre-natal and childbirth"         6
+#>    <fct> <chr>    <chr>                              <int>
+#>  1 sim   g03      " 3. Gastroenteritis"                  6
+#>  2 sim   g05      " 5. Nutritional deficiency"           3
+#>  3 sim   g07      " 7. Bacterial pneumonia"              7
+#>  4 sim   g09      " 9. Pulmonary"                        9
+#>  5 sim   g10      "10. Hypertension"                     2
+#>  6 sim   g11      "11. Angina"                          11
+#>  7 sim   g12      "12. Heart failure"                   13
+#>  8 sim   g13      "13. Cerebrovascular"                 11
+#>  9 sim   g14      "14. Diabetes mellitus"                8
+#> 10 sim   g15      "15. Convulsions and epilepsy"         5
+#> 11 sim   g16      "16. Urinary infection"               12
+#> 12 sim   g17      "17. Skin and subcutaneous infec."     1
+#> 13 sim   g18      "18. Pelvic inflammatory disease"      1
+#> 14 sim   g19      "19. Gastrointestinal ulcers"          1
+#> 15 sim   g20      "20. Pre-natal and childbirth"         6
+#> 16 não   nao-CSAP  NA                                  339
 ```

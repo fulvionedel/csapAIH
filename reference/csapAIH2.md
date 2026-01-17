@@ -303,7 +303,8 @@ csapAIH2(factor(cids))
 #> 6  sim      g11
 #> 7  não nao-CSAP
 csapAIH2(cids,  grupo=FALSE)
-#> [1] "sim" "não" "não" "sim" "sim" "sim" "não"
+#> [1] sim não não sim sim sim não
+#> Levels: sim não
 
 ## Um 'arquivo da AIH' armazenado no diretório de trabalho:
 ##---------------------------------------------------------
