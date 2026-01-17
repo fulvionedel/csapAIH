@@ -39,7 +39,7 @@ de indicadores de saúde e análises ecológicas.
 
 A hospitalização por CSAP é um indicador da efetividade do sistema de
 saúde em sua primeira instância de atenção, uma vez que a internação por
-tais condições —pneumonia, infecção urinária, sarampo, diabetes etc.— só
+tais condições –pneumonia, infecção urinária, sarampo, diabetes etc.– só
 acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja
 por não prevenir a ocorrência da doença (caso das doenças evitáveis por
 vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como
@@ -186,8 +186,8 @@ partir da v0.0.4.4
 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não
 é mais. Alguns pacotes são importados por funções específicas, como
 `desenhaCSAP` que exige `ggplot2` para desenhar esse tipo de gráfico, ou
-`csapAIH` que exige o pacote `haven` para a classificação leitura de
-bancos em
+`csapAIH` que exige o pacote `haven` para a classificação das CSAP
+quando o cid é uma variável “*haven_labelled*”.
 
 Se a variável com os códigos da CID for da classe “haven_labelled”, a
 função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
@@ -195,7 +195,7 @@ função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.7.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.8.pdf>
 
 # Agradecimentos
 
