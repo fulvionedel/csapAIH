@@ -19,7 +19,10 @@
 #'    Criadas as funções \code{\link{ler_popbr}}, para leitura dos dados de população de 2008 a 2012 do DATASUS, armazenados no computador ou importados no site FTP (do DATASUS) e \code{\link{popbr2000_2021}}, com estimativas populacionais para os municípios brasileiros de 2000 a 2021.
 #'    Incluído um banco de dados com a população dos municípios brasileiros por sexo e faixa etária, contada no Censo 2010 (\code{\link{POPBR10}}), e outro com uma amostra de mil registros da \emph{Encuesta de Egresos Hospitalarios} do Equador, ano 2020 (\code{\link{eeh20}}).
 #'    Criada a função \code{\link{fetchcsap}}, uma forma abreviada da função \code{fetchdatasus} do pacote \code{microdatasus}, para o download dos arquivos da AIH e classificação das CSAP.
-#'    Com o retorno à disponibilização dos arquivos de estimativa populacional pelo DATASUS, a função \code{\link{ler_popbr}} agora lê os arquivos de 1980 a 2024.
+#'    Com o retorno à disponibilização dos arquivos de estimativa populacional pelo DATASUS, a função \code{\link{ler_popbr}} agora lê os arquivos de 1980 a 2024. Criada ainda a função \code{\lind{popbr}} para facilitar a leitura e unificação de arquivos até 2012 e daquele ano em diante, que têm diferente estrutura.
+#'    Criada a função \code{\link{adinomes}}, para incluir o nome do crupo CSAP como uma variável do banco de dados.
+#'    O nome do Grupo 8 foi modificado de "DPOC" para "Pulmonares".
+
 #'
 #'    \item \code{v0.0.3.3}
 #'
