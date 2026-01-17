@@ -41,7 +41,7 @@ de indicadores de saúde e análises ecológicas.
 
 A hospitalização por CSAP é um indicador da efetividade do sistema de
 saúde em sua primeira instância de atenção, uma vez que a internação por
-tais condições —pneumonia, infecção urinária, sarampo, diabetes etc.— só
+tais condições –pneumonia, infecção urinária, sarampo, diabetes etc.– só
 acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja
 por não prevenir a ocorrência da doença (caso das doenças evitáveis por
 vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como
@@ -186,8 +186,8 @@ partir da v0.0.4.4
 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não
 é mais. Alguns pacotes são importados por funções específicas, como
 `desenhaCSAP` que exige `ggplot2` para desenhar esse tipo de gráfico, ou
-`csapAIH` que exige o pacote `haven` para a classificação leitura de
-bancos em
+`csapAIH` que exige o pacote `haven` para a classificação das CSAP
+quando o cid é uma variável “*haven_labelled*”.
 <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
 
 Se a variável com os códigos da CID for da classe “haven_labelled”, a
@@ -196,7 +196,7 @@ função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.7.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.8.pdf>
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 

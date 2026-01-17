@@ -41,7 +41,7 @@ Pacote em **R** para a classificação de códigos da CID-10 (Classificação In
 
 ## Justificativa
 
-A hospitalização por CSAP é um indicador da efetividade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições ---pneumonia, infecção urinária, sarampo, diabetes etc.---  só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças evitáveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete). [@Nedel2011]
+A hospitalização por CSAP é um indicador da efetividade do sistema de saúde em sua primeira instância de atenção, uma vez que a internação por tais condições --pneumonia, infecção urinária, sarampo, diabetes etc.--  só acontecerá se houver uma falha do sistema nesse âmbito de atenção, seja por não prevenir a ocorrência da doença (caso das doenças evitáveis por vacinação, como o sarampo), não diagnosticá-la ou tratá-la a tempo (como na pneumonia ou infeccão urinária) ou por falhar no seu controle clínico (como é o caso da diabete). [@Nedel2011]
 
 O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. [@MS2008lista;@Alfradique2009] A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/) a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.
 
@@ -93,14 +93,14 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](h
 
 A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. 
 
-A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. A partir da v0.0.4.4 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não é mais. Alguns pacotes são importados por funções específicas, como `desenhaCSAP` que exige `ggplot2` para desenhar esse tipo de gráfico, ou `csapAIH` que exige o pacote `haven` para a classificação leitura de bancos em 
+A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. A partir da v0.0.4.4 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não é mais. Alguns pacotes são importados por funções específicas, como `desenhaCSAP` que exige `ggplot2` para desenhar esse tipo de gráfico, ou `csapAIH` que exige o pacote `haven` para a classificação das CSAP quando o cid é uma variável "_haven_labelled_".
 <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
 
 Se a variável com os códigos da CID for da classe "haven_labelled", a função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
 
 ---
 ***Veja o manual do pacote em:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.7.pdf
+https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.8.pdf
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
