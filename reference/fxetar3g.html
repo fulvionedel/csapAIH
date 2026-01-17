@@ -71,7 +71,7 @@
 <span class="r-in"><span><span class="va">idade</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## Computar a faixa etária</span></span></span>
 <span class="r-in"><span><span class="fu">fxetar3g</span><span class="op">(</span><span class="va">idade</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Factor w/ 3 levels "0-14","15-59",..: 3 3 1 2 3 3 1 2 2 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Factor w/ 3 levels "0-14","15-59",..: 3 2 3 3 1 2 3 3 1 2 ...</span>
 <span class="r-in"><span><span class="fu">fxetar3g</span><span class="op">(</span><span class="va">idade</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0-14 15-59  60e+ </span>
@@ -80,7 +80,7 @@
 <span class="r-in"><span><span class="co"># Faixa etária</span></span></span>
 <span class="r-in"><span><span class="co">## Categorizar a faixa etária quinquenal e computar a faixa etária em três grandes grupos</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="fxetar_quinq.html">fxetar_quinq</a></span><span class="op">(</span><span class="va">idade</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Factor w/ 17 levels "0-4","5-9","10-14",..: 17 15 2 11 14 14 1 5 7 13 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Factor w/ 17 levels "0-4","5-9","10-14",..: 15 4 17 15 2 11 14 14 1 5 ...</span>
 <span class="r-in"><span><span class="fu"><a href="fxetar_quinq.html">fxetar_quinq</a></span><span class="op">(</span><span class="va">idade</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">fxetar3g</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
@@ -89,7 +89,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    10    51    39 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="fxetar_quinq.html">fxetar_quinq</a></span><span class="op">(</span><span class="va">idade</span>, puer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Factor w/ 18 levels "&lt; 1","1-4","5-9",..: 18 16 3 12 15 15 2 6 8 14 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Factor w/ 18 levels "&lt; 1","1-4","5-9",..: 16 5 18 16 3 12 15 15 2 6 ...</span>
 <span class="r-in"><span><span class="fu"><a href="fxetar_quinq.html">fxetar_quinq</a></span><span class="op">(</span><span class="va">idade</span>, puer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">fxetar3g</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>

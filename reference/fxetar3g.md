@@ -40,7 +40,7 @@ fxetar3g()
 idade <- as.integer(runif(100, 0, 100))
 ## Computar a faixa etária
 fxetar3g(idade) |> str()
-#>  Factor w/ 3 levels "0-14","15-59",..: 3 3 1 2 3 3 1 2 2 3 ...
+#>  Factor w/ 3 levels "0-14","15-59",..: 3 2 3 3 1 2 3 3 1 2 ...
 fxetar3g(idade) |> table()
 #> 
 #>  0-14 15-59  60e+ 
@@ -49,7 +49,7 @@ fxetar3g(idade) |> table()
 # Faixa etária
 ## Categorizar a faixa etária quinquenal e computar a faixa etária em três grandes grupos
 fxetar_quinq(idade) |> str()
-#>  Factor w/ 17 levels "0-4","5-9","10-14",..: 17 15 2 11 14 14 1 5 7 13 ...
+#>  Factor w/ 17 levels "0-4","5-9","10-14",..: 15 4 17 15 2 11 14 14 1 5 ...
 fxetar_quinq(idade) |>
   fxetar3g() |>
   table()
@@ -58,7 +58,7 @@ fxetar_quinq(idade) |>
 #>    10    51    39 
 
 fxetar_quinq(idade, puer = TRUE) |> str()
-#>  Factor w/ 18 levels "< 1","1-4","5-9",..: 18 16 3 12 15 15 2 6 8 14 ...
+#>  Factor w/ 18 levels "< 1","1-4","5-9",..: 16 5 18 16 3 12 15 15 2 6 ...
 fxetar_quinq(idade, puer = TRUE) |>
   fxetar3g() |>
   table()

@@ -72,7 +72,13 @@ idade do óbito, nos arquivos do Sistema de Informações sobre Mortalidade
   retorno à disponibilização dos arquivos de estimativa populacional
   pelo DATASUS, a função
   [`ler_popbr`](https://fulvionedel.github.io/csapAIH/reference/ler_popbr.md)
-  agora lê os arquivos de 1980 a 2024.
+  agora lê os arquivos de 1980 a 2024. Criada ainda a função
+  [`popbr`](https://fulvionedel.github.io/csapAIH/reference/popbr.md)
+  para facilitar a leitura e unificação de arquivos até 2012 e daquele
+  ano em diante, que têm diferente estrutura. Criada a função
+  [`adinomes`](https://fulvionedel.github.io/csapAIH/reference/adinomes.md),
+  para incluir o nome do crupo CSAP como uma variável do banco de dados.
+  O nome do Grupo 8 foi modificado de "DPOC" para "Pulmonares".
 
 - `v0.0.3.3`
 

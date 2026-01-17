@@ -16,8 +16,6 @@
   : Pacote csapAIH
 - [`csapAIH()`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
   : Classificar Condições Sensíveis à Atenção Primária
-- [`csapAIH2()`](https://fulvionedel.github.io/csapAIH/reference/csapAIH2.md)
-  : Classificar Condições Sensíveis à Atenção Primária
 - [`descreveCSAP()`](https://fulvionedel.github.io/csapAIH/reference/descreveCSAP.md)
   : Tabular Condições Sensíveis à Atenção Primária
 - [`desenhaCSAP()`](https://fulvionedel.github.io/csapAIH/reference/desenhaCSAP.md)
