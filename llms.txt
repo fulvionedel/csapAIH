@@ -1,6 +1,6 @@
 # csapAIH: Classificar Condições Sensíveis à Atenção Primária
 
-16 de janeiro de 2026
+17 de janeiro de 2026
 
 - [Apresentação](#apresenta%C3%A7%C3%A3o)
   - [Justificativa](#justificativa)
@@ -98,7 +98,7 @@ remotes::install_github("fulvionedel/csapAIH")
 Na sua primeira versão ([Nedel 2017](#ref-Nedel2017)), o pacote
 `csapAIH` continha apenas uma função, homônima: `csapAIH`.
 
-Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`,
+Na versão **0.0.2**, foram acrescentadas as funções `descreveCSAP`,
 `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e
 tabular das CSAP pela lista brasileira. Esta versão também permite a
 leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia
@@ -106,7 +106,7 @@ expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de
 Daniela Petruzalek
 (<https://cran.r-project.org/web/packages/read.dbc/index.html>).
 
-A partir da versão 0.0.3 ([Nedel 2019](#ref-Nedel2019)), a função
+A partir da versão **0.0.3** ([Nedel 2019](#ref-Nedel2019)), a função
 `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros
 fatores do banco de dados, com o uso das funções `facet_wrap` e
 `facet_grid`, de `ggplot2`, e permite ainda o desenho de gráficos com as
@@ -115,14 +115,14 @@ uma função para o cálculo da idade nos arquivos da AIH: a função
 `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo
 usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
-Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das
-CSAP em 20 grupos de causa, conforme proposto no processo de construção
-da Lista Brasileira ([Alfradique et al. 2009](#ref-Alfradique2009)).
-Essa é a lista sugerida pela Organização Panamericana da Saúde
-([Organización Panamericana de la Salud (OPS) 2014](#ref-OPS2014)). As
-funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do
-idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`)
-ou inglês (`en`).  
+Na versão **0.0.4**, a função `csapAIH` oferece a opção de classificação
+das CSAP em 20 grupos de causa, conforme proposto no processo de
+construção da Lista Brasileira ([Alfradique et al.
+2009](#ref-Alfradique2009)). Essa é a lista sugerida pela Organização
+Panamericana da Saúde ([Organización Panamericana de la Salud (OPS)
+2014](#ref-OPS2014)). As funções `desenhaCSAP` e `tabCSAP` têm um
+argumento para seleção do idioma dos nomes de grupos, em português
+(`pt`, padrão), espanhol (`es`) ou inglês (`en`).  
 - Criada a função `cid10cap` para a classificação de causas por
 Capítulos da CID-10. - Criadas as funções `ler_popbr` e `popbr2000_2021`
 (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop)
