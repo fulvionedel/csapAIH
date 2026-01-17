@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/fulvionedel/csapAIH/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/fulvionedel/csapAIH/blob/v0.0.4.8/DESCRIPTION)
 
 Nedel FB (2026). *csapAIH: Classificar Condições Sensíveis à Atenção
 Primária*. R package version 0.0.4.8,
