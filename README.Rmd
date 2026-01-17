@@ -8,7 +8,7 @@ output:
     toc: yes
     toc_depth: 3
 link-citations: yes
-bibliography: inst/pacote.bib
+bibliography: inst/docus/pacote.bib
 always_allow_html: true
 # csl: docs/vancouver-superscript.csl
 # https://github.com/citation-style-language/styles
@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 # Apresentação
 
-Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. Assim, embora o pacote permita a classificação de qualquer listagem de códigos da CID-10, tem também algumas funcionalidades para facilitar o trabalho com os "arquivos da AIH" e, atualmente, do Sistema de Informações sobre Mortalidade (SIM). Inclui ainda as estimativas e contagens populacionais por sexo e faixa etária para os municípios brasileiros, de 2012 a 2024.
+Pacote em **R** para a classificação de códigos da CID-10 (Classificação Internacional de Doenças, 10ª Revisão) segundo a Lista Brasileira de Internações por Condições Sensíveis à Atenção Primária (ICSAP). É particularmente voltado ao trabalho com as bases de dados do Sistema de Informações Hospitalares do SUS, o Sistema Único de Saúde brasileiro. Tais bases (BD-SIH/SUS) contêm os "arquivos da AIH" (`RD??????.DBC`), que podem ser expandidos para o formato DBF (`RD??????.DBF`), com as informações de cada hospitalização ocorrida pelo SUS num período determinado. O pacote inclui funções para a computação da idade nos arquivos da AIH e do Sistema de Informações sobre Mortalidade (SIM), para a leitura on-line de estimativas populacionais fornecidas pelo Departamento de Informática do SUS (DATASUS) e para facilitar o cálculo de indicadores de saúde e análises ecológicas.
 
 ## Justificativa
 
@@ -45,7 +45,7 @@ A hospitalização por CSAP é um indicador da efetividade do sistema de saúde 
 
 O Ministério da Saúde brasileiro estabeleceu em 2008, após amplo processo de validação, uma lista com várias causas de internação hospitalar consideradas CSAP, definindo em portaria a Lista Brasileira. [@MS2008lista;@Alfradique2009] A Lista envolve vários códigos da CID-10 e classifica as CSAP em 19 subgrupos de causa, o que torna complexa e trabalhosa a sua decodificação. Há alguns anos o Departamento de Informática do SUS (DATASUS) incluiu em seu excelente programa de tabulação de dados [TabWin](https://datasus.saude.gov.br/transferencia-de-arquivos/) a opção de tabulação por essas causas, apresentando sua frequência segundo a tabela definida pelo usuário.
 
-Entretanto, muitas vezes a pesquisa exige a classificação de cada internação individual como uma variável na base de dados. [@Nedel2008] 
+Entretanto, eventualmente a pesquisa exige a classificação de cada internação individual como uma variável na base de dados e além disso a possibilidade de execução de todos os passos da pesquisa desde a leitura até a análise dos dados em um só _script_ e com um só programa facilita a reprodução da análise. [@Nedel2008] 
 
 # Instalação
 
@@ -53,7 +53,7 @@ A última versão lançada do pacote pode ser instalada no **R**:
 
   * baixando o arquivo de instalação no [SourceForge](https://sourceforge.net/projects/csapaih/) e depois instalando, com a IDE de preferência ou com o comando `install.packages("csapAIH_<versão>.tar.gz")` (em Linux ou Mac) ou `install.packages("csapAIH_<versão>.zip")` (em Windows); ou
   
-  * com a função `install.packages()` sobre o link da última versão no [SourceForge](https://sourceforge.net/projects/csapaih/files/):
+  * com a função `install.packages()` endereçada  ao link da última versão no [SourceForge](https://sourceforge.net/projects/csapaih/files/):
 
 ```{r eval=FALSE}
 install.packages("https://sourceforge.net/projects/csapaih/files/latest/download", type = "source", repos = NULL) 
@@ -73,12 +73,18 @@ Na sua primeira versão [@Nedel2017], o pacote `csapAIH` continha apenas uma fun
 
 Na versão 0.0.2, foram acrescentadas as funções `descreveCSAP`, `desenhaCSAP` e `nomesgruposCSAP`, para a representação gráfica e tabular das CSAP pela lista brasileira. Esta versão também permite a leitura de arquivos da AIH em formato .DBC, sem necessidade de prévia expansão a .DBF. Isso é possível pelo uso do pacote `read.dbc`, de Daniela Petruzalek (https://cran.r-project.org/web/packages/read.dbc/index.html). 
 
-A partir da versão 0.0.3 [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap()` e `facet_grid()`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
+A partir da versão 0.0.3 [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap` e `facet_grid`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
-Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009]. Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`).
-Foram criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019], para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando. Foram criadas outras funções para facilitar o manejo e apresentação de dados em estudos ecológicos, como a categorização da idade em faixas etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de parto (`partos`), particularmente para o Brasil e os arquivos do DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a lista de procedimentos obstétricos em internações por eventos não mórbidos (`procobst`). A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em que a variável `csap` registrava todos os casos como "não" (embora estivessem classificados corretamente na variável `grupo`). A v0.0.4.6 corrige um erro em `ler_popbr()` e, principalmente, acrescenta a possibilidade de leitura dos arquivos com as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além de incluir novas possiblidades em `nomesgruposCSAP()`. A atualização de `ler_popbr` foi a razão de lançamento dessa versão do pacote, mas depois percebi que o código IBGE do município vinha com sete dígitos, diferente de tudo o mais no DATASUS e então atualizei a função e lancei nova versão do pacote. A diferença da nova versão, v0.0.4.7, está apenas nessa atualização. 
+Na versão 0.0.4, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009]. Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`).  
+  - Criada a função `cid10cap` para a classificação de causas por Capítulos da CID-10.
+  - Criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019], para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando.  
+  - Criadas funções para facilitar o manejo e apresentação de dados em estudos ecológicos, como a categorização da idade em faixas etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de parto (`partos`), particularmente para o Brasil e os arquivos do DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a lista de procedimentos obstétricos em internações por eventos não mórbidos (`procobst`).   
+  - A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em que a variável "csap" registrava todos os casos como "não" (embora estivessem classificados corretamente na variável "grupo").    
+  - A v0.0.4.6 corrige um erro em `ler_popbr` e, principalmente, acrescenta a possibilidade de leitura dos arquivos com as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além de incluir novas possiblidades em `nomesgruposCSAP`. A atualização de `ler_popbr` foi a razão de lançamento dessa versão do pacote, mas depois percebi que o código IBGE do município vinha com sete dígitos, diferente de tudo o mais no DATASUS e então atualizei a função e lancei nova versão do pacote.   
+  - A v0.0.4.7 corrige esses problemas e, além disso, cria a função `adinomes` para adicionar uma variável com o nome dos grupos CSAP a um banco de dados.   
+  - A v0.0.4.8 não importa mais o pacote `haven` e corrige alguns erros introduzidos com as mudanças anteriores (como o desenho correto do gráfico e do nome "Não-CSAP" na tabela e seleção de casos e períodos na função `fetchcsap`); ajusta o nome do Grupo - 8 de "DPOC" para "Pulmonares"; cria a função `popbr`, com novas possibilidades para as estimativas populacionais.
 
-A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.4.7.pdf) ou, no R, com `?'csapAIH-package'`.
+A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.4.8.pdf) ou, no R, com `?csapAIH-package`.
 
 
 # Dependências
@@ -87,8 +93,10 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](h
 
 A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. 
 
-A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. O pacote [`haven`](https://cran.r-project.org/package=haven) também é importado. A partir da v0.0.4.4 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não é mais.
+A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. A partir da v0.0.4.4 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não é mais. Alguns pacotes são importados por funções específicas, como `desenhaCSAP` que exige `ggplot2` para desenhar esse tipo de gráfico, ou `csapAIH` que exige o pacote `haven` para a classificação leitura de bancos em 
 <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
+
+Se a variável com os códigos da CID for da classe "haven_labelled", a função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
 
 ---
 ***Veja o manual do pacote em:*** 
