@@ -7,13 +7,13 @@
 ler_popbr(x)
 }
 \arguments{
-\item{x}{Nome do arquivo armazenado no computador, ou ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Apenas arquivos em formato DBF são lidos. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se digitar o ano (sem aspas) desejado, de 1980 a 2024.}
+\item{x}{Nome do arquivo armazenado no computador, ou ano da estimativa ou contagem populacional a ser capturada no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Apenas arquivos em formato DBF são lidos. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se digitar o ano (sem aspas) desejado, de 1980 a 2025.}
 }
 \description{
 Lê os arquivos com estimativas e contagens da população dos municípios brasileiros por sexo e faixa etária disponibilizados pelo DATASUS e entrega um banco de dados com as variáveis originais mais a faixa etária quinquenal.
 }
 \details{
-Nos arquivos de 2013 a 2024 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
+Nos arquivos de 2013 a 2025 o código IBGE do município está registrado com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em outros SIS com dados disponibilizados pelo DATASUS, são registrados apenas os seis primeiros dígitos do código. \code{ler_popbr} devolve uma variável (\code{munic_res}) de caracteres com os seis primeiros dígitos.
 
  Os bancos de dados de origem têm uma estrutura até 2012, com a variável "situação" (urbano/rural) para alguns anos e a faixa etária detalhada (variável "fxetaria") em um campo de quatro dígitos com faixas anuais até os 20 anos e então quinquenais até 80 e mais anos de idade, enquanto os arquivos a partir de 2013 não têm a variável "situação" e a variável "fxetaria" é um campo com três dígitos com a idade em anos completos até os 79 anos e então 80 e mais anos de idade.
 
@@ -43,9 +43,9 @@ popBR2013 <- ler_popbr(2013)
 head(popBR2013)
 xtabs(populacao ~ fxetar5 + sexo, data = popBR2013)
 
-popBR2024 <- ler_popbr(2024)
-head(popBR2024)
-xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
+popBR2025 <- ler_popbr(2025)
+head(popBR2025)
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2025)
 
 }
 \references{

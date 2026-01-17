@@ -8,6 +8,7 @@ date: |
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  cache = TRUE,
   collapse = TRUE,
   comment = NULL
 )
@@ -18,27 +19,38 @@ library(csapAIH)
 library(dplyr) 
 ```
 
-<!-- # Apresentação de resultados  -->
+# ICSAP no RS, 2023 a 2024
 
-<!-- ## Resumo de importação de dados -->
+A função `fetchcsap` baixa os arquivos da AIH no DATASUS e entrega um banco de dados com a classificação da internação segundo a lista brasileira de ICSAP e outras ações (veja a ajuda da função digitando "`?fetchsap`" no console). 
 
-<!-- Um resumo de importação, apresentado durante a realização do trabalho, é guardado como atributo do banco de dados e pode ser recuperado com as funções `attr()` ou `attributes()`: -->
+Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP do RS de 2023 a 2024 com o seguinte comando:  
+```{r}
+icsaprs <- fetchcsap(2023, 2024, uf = "RS")
+```
 
-<!-- ```{r} -->
-<!-- csap <- fetchcsap('RS', 2018, mesfim = 1, anofim = 2018, periodo = "competencia") -->
+```{r echo=FALSE, warning=FALSE}
+import  <- formatC(attributes(icsaprs)$resumo$freq[1], big.mark = ".", format = 'fg')
+exportn <- formatC(attributes(icsaprs)$resumo$freq[4], big.mark = ".", format = 'fg')
+exportp <- formatC(attributes(icsaprs)$resumo$perc[4], decimal.mark = ",")
+```
 
-<!-- attr(csap, "resumo") -->
-<!-- # attributes(csap)$resumo -->
-<!-- ``` -->
 
-<!-- Em tabela para apresentação: -->
+Vemos nas mensagens de _download_ que foram baixados os arquivos até junho de 2025 ('RDRS2506.dbc) 
+e que foram "importados `r import` registros", excluídos alguns registros e finalmente "exportados `r exportn` registros", que representam `r exportp`% de todas as internações do período. Esse resumo de importação é guardado como atributo do banco de dados e pode ser recuperado com as funções `attr()` ou `attributes()`:
 
-<!-- ```{r} -->
-<!-- attributes(csap)$resumo |> -->
-<!--   knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","),  -->
-<!--                col.names = c("Ação", "N", "%", "Objeto") ) |> -->
-<!--   suppressWarnings() -->
-<!-- ``` -->
+```{r}
+attr(icsaprs, "resumo")
+attributes(icsaprs)$resumo
+```
+
+Em tabela para apresentação:
+
+```{r}
+attributes(icsaprs)$resumo |>
+  knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","),
+               col.names = c("Ação", "N", "%", "Objeto") ) |>
+  suppressWarnings()
+```
 
 <!-- ## Tabela "bruta" -->
 

@@ -7,7 +7,7 @@
 popbr(ano, uf = NULL, pormun = TRUE, municipio = NULL, idade = FALSE)
 }
 \arguments{
-\item{ano}{Ano ou vetor com os anos a serem lidos. Pode ser um arquivo armazenado no computador, ou ano(s) da estimativa ou contagem populacional a ser (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos em formato DBF são lidos.}
+\item{ano}{Ano ou vetor com os anos a serem lidos. Pode ser um arquivo armazenado no computador, ou ano(s) da estimativa ou contagem populacional a ser (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no computador, o nome com a extensão (dbf) deve vir entre aspas. Se o alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento \code{ano}, com o ano (sem aspas) desejado, de 1980 a 2025. Apenas arquivos em formato DBF são lidos.}
 
 \item{uf}{Unidade(s) da Federação de interesse para seleção. O padrão é \code{NULL}, que seleciona todas.}
 
@@ -22,8 +22,8 @@ Lê os arquivos com estimativas e contagens da população dos municípios brasi
 }
 \examples{
 # Arquivos no diretório FTP do DATASUS
-popbr(2024) |> head()
-popbr(2024, idade = TRUE) |> head()
+popbr(2025) |> head()
+popbr(2025, idade = TRUE) |> head()
 anos <- popbr(2017:2019)
 xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 popbr(c(2017, 2019))  |> str()
@@ -37,7 +37,8 @@ xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("mu
 
 # A estrutura do arquivo fonte até 2012 no DATASUS é outra,
 # com outra categorização da "idade detalhada":
-popbr(c(1980, 2012))  |> str()
+popbr(2012, idade = TRUE)  |> str()
+popbr(2013, idade = TRUE)  |> str()
 # Por isso, quando a seleção de interesse contempla os dois períodos, como no exemplo seguinte,
 # a faixa etária detalhada não é apresentada, e o argumento \code{idade} não tem efeito.
 popbr(2012:2013) |> str()

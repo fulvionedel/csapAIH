@@ -9,3 +9,4 @@ docs
 inst/docus
 # ^_pkgdown\.yml$
 # ^pkgdown$
+.positai

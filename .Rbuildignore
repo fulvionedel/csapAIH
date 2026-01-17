@@ -13,3 +13,5 @@ README_cache/*
 _pkgdown.yml
 ^_pkgdown\.yml$
 ^pkgdown$
+^\.positai$
+^\.claude$

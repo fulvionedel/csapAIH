@@ -1,0 +1,38 @@
+---
+title: "CSAP no RS"
+subtitle: "O pacote *territorio*"
+date: |
+  | Em atualização
+  <!-- | Atualizado em  -->
+  | `r format(Sys.Date(), c("%d de %B de %Y"))`
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = NULL
+)
+```
+
+```{r setup, message=FALSE}
+library(csapAIH)
+library(territorio)
+library(dplyr)
+```
+
+```{r}
+csaprs <- fetchcsap(2017, 2023, uf = "RS") %>% 
+  inner_join(territorio("RS"), by = c(munres = "CO_MUNICIP"))
+summary(csaprs)
+
+csaprsxmun <- csaprs %>% 
+  mutate(ano  = lubridate::year(data.inter)) %>% 
+  group_by(ano, munres, nomemun, sexo, fxetar5, csap, grupo, CO_MACSAUD, nomemacsaude, CO_MICIBGE, nomemicibge, CO_REGMETR, nomeregmetr, CO_REGSAUD, nomeregsaude) %>% 
+  count(name = "casos") %>% 
+  ungroup() %>% 
+  inner_join(csaprs %>% 
+               select(munres, NU_LATITUD, NU_LONGIT), multiple = "any") %>% 
+  relocate(casos, .after = grupo)
+
+```
+
