@@ -7,7 +7,7 @@ listaBRMS <- function(cid){
   if(!is.character(cid)) cid <- as.character(cid)
   grupo <- dplyr::case_when(
     # GRUPO 01 - Doenças preveníveis por imunização e [outras] condições evitáveis
-    grepl(x = cid, pattern = "^A1[5-9]|^I0[0-2]|^A5[1-3]|^B5[0-6]|^B77 |^A3[3-7]|^A95|^B16|^B26|G000") ~ "g01",
+    grepl(x = cid, pattern = "^A1[5-9]|^I0[0-2]|^A5[1-3]|^B0[5-6]|^B5[0-4]|^B77|^A3[3-7]|^A95|^B16|^B26|G000") ~ "g01",
     # GRUPO 02 - Gastrenterites
     grepl(x = cid, pattern = "^A0[0-9]|^E86") ~ "g02",
     # GRUPO 03 - Anemia
