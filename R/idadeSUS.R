@@ -76,6 +76,7 @@ idadeSUS <- function(dados, sis = "SIH")
     dados$IDADE <- as.numeric(substr(dados$IDADE, 2, 3))
   }
   if(sis == "sim" | sis == "sih") {
+    if(is.character(dados$IDADE)) dados$IDADE <- as.numeric(dados$IDADE)
     idade <- ifelse(COD_IDADE == 4, dados$IDADE,
                   ifelse(COD_IDADE  < 4, 0,
                          ifelse(COD_IDADE == 5, dados$IDADE+100, NA))

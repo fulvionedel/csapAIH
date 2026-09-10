@@ -1,6 +1,5 @@
-language:
+language: pt
   label:
     fig: "Figura "
     tab: "Tabela "
     exm: "Exemplo "
-    
