@@ -9,7 +9,6 @@
 #'   }
 #' @param digits Número de decimais nas proporções apresentadas.
 #' @param lang Define o idioma dos nomes dos grupos. O padrão é \code{"pt.ca"} ("português com acentos"). Pode ser \code{"pt.sa"}, \code{"es"} ou \code{"en"}.
-#' @param ... Permite a inclusão de argumentos da função \link{nomesgruposCSAP}, como "\code{lista}", para definição da lista de causas usada, se "MS" ou "Alfradique".
 #'
 #' @returns Um objeto da classe \code{data.frame} com a tabulação dos códigos da CID-10 segundo os grupos de causa da Lista Brasileira de ICSAP (19 grupos), com a frequência absoluta de casos e as porcentagens sobre o total de internações e sobre o conjunto das ICSAP.
 #'
@@ -30,7 +29,7 @@
 #'
 #' @export
 #'
-descreveCSAP <- function(grupos, digits = 2, lang = "pt.ca", ...){
+descreveCSAP <- function(grupos, digits = 2, lang = "pt.ca"){
 
     if(is.data.frame(grupos)) grupos = grupos$grupo
     if(any(grupos %in% "g20")) lista = "Alfradique" else lista = "MS"
@@ -96,7 +95,7 @@ descreveCSAP <- function(grupos, digits = 2, lang = "pt.ca", ...){
       nomesfim.tabela[2:3] <- c("No-CSAP", "Total admissions")
     }
 
-  nomesgrupos <- nomesgruposCSAP(lista = lista, lang = lang, ...)
+  nomesgrupos <- nomesgruposCSAP(lista = lista, lang = lang)
   nomes <- c(nomesgrupos, nomesfim.tabela)
   # nomes <- c(nomesgrupos, names(#tabelagrupos[20:22]
   #                               utils::tail(tabelagrupos, 3)
