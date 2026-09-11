@@ -6,7 +6,7 @@ grupo de causa
 ## Usage
 
 ``` r
-descreveCSAP(grupos, digits = 2, lang = "pt.ca", ...)
+descreveCSAP(grupos, digits = 2, lang = "pt.ca")
 ```
 
 ## Arguments
@@ -40,13 +40,6 @@ descreveCSAP(grupos, digits = 2, lang = "pt.ca", ...)
 
   Define o idioma dos nomes dos grupos. O padrão é `"pt.ca"` ("português
   com acentos"). Pode ser `"pt.sa"`, `"es"` ou `"en"`.
-
-- ...:
-
-  Permite a inclusão de argumentos da função
-  [nomesgruposCSAP](https://fulvionedel.github.io/csapAIH/reference/nomesgruposCSAP.md),
-  como "`lista`", para definição da lista de causas usada, se "MS" ou
-  "Alfradique".
 
 ## Value
 

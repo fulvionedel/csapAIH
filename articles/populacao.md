@@ -1,6 +1,7 @@
 # Estimativas populacionais por sexo e faixa etária para os municípios brasileiros, 1980 - 2024.
 
 ``` r
+
 library(csapAIH)
 library(dplyr) 
 library(Rcoisas) 
@@ -233,14 +234,14 @@ tibble [1,045,291 × 5] (S3: tbl_df/tbl/data.frame)
  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 2 3 4 5 6 7 8 9 10 ...
  $ populacao: int [1:1045291] 2328 2139 2202 1984 1677 1532 1216 932 742 641 ...
 summary(br)
-  munic_res           ano           sexo           fxetar5      
- Length:1045291     1980:135251   masc:522658   0-4    : 61514  
- Class :character   1991:152690   fem :522633   5-9    : 61514  
- Mode  :character   2010:189210                 10-14  : 61514  
-                    2013:189380                 15-19  : 61514  
-                    2022:189380                 20-24  : 61514  
-                    2024:189380                 25-29  : 61514  
-                                                (Other):676207  
+     munic_res         ano           sexo           fxetar5      
+ Length   :1045291   1980:135251   masc:522658   0-4    : 61514  
+ N.unique :   5622   1991:152690   fem :522633   5-9    : 61514  
+ N.blank  :      0   2010:189210                 10-14  : 61514  
+ Min.nchar:      6   2013:189380                 15-19  : 61514  
+ Max.nchar:      6   2022:189380                 20-24  : 61514  
+                     2024:189380                 25-29  : 61514  
+                                                 (Other):676207  
    populacao     
  Min.   :     1  
  1st Qu.:   128  
@@ -257,6 +258,7 @@ Uma tabela com a população por sexo e faixa etária para um ano
 determinado pode ser conseguida da seguinte forma:
 
 ``` r
+
 tab81 <- ler_popbr(1981) %>% 
   group_by(sexo, fxetar5) %>% 
   mutate(sexo = case_match(sexo, "masc" ~ "Masculino", "fem" ~ "Feminino")) %>% 
@@ -271,6 +273,7 @@ A tabela pode ser exportada para um arquivo .csv (veja
 [`?write.csv`](https://rdrr.io/r/utils/write.table.html)) ou impressa:
 
 ``` r
+
 knitr::kable(tab81, format.args = list(big.mark = "."))
 ```
 
@@ -300,6 +303,7 @@ visualização dos câmbios na estrutura demográfica brasileira ao longo
 desses anos:
 
 ``` r
+
 par(mfrow = c(1,2))
 plot_pir(br1980, local = "Brasil", fontsize = .8)
 plot_pir(br2024, local = "Brasil", fontsize = .8)
@@ -309,6 +313,7 @@ plot_pir(br2024, local = "Brasil", fontsize = .8)
 plot_pir](populacao_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 ggplot_pir(br, "fxetar5", "sexo", "populacao", nsize = 0) +
   facet_wrap(vars(ano)) + 
   theme_classic() +
@@ -326,10 +331,11 @@ ggplot_pir](populacao_files/figure-html/unnamed-chunk-12-1.png)
 Se quisermos uma tabulação da população brasileira por sexo e faixa
 etária quinquenal no período de 1980 a 2012, devemos pedir no
 [TABNET](http://tabnet.datasus.gov.br/cgi/tabcgi.exe?ibge/cnv/popbr.def)
-uma tabulação por “faixa etária detalhada”.[¹](#fn1) Para 1981, temos a
+uma tabulação por “faixa etária detalhada”.[^1] Para 1981, temos a
 seguinte tabela:
 
 ``` r
+
 knitr::include_graphics("figuras/tabnetpop81.png")
 ```
 
@@ -343,6 +349,7 @@ Vamos ler essa tabela, salva como arquivo .CSV através do botão “Copia
 para .csv”, no TABNET.
 
 ``` r
+
 tab81tabnet <- read.csv2("../../data-raw/ibge_cnv_popbr1981.csv", skip = 3, nrows = 18, encoding = "latin1")
 tab81tabnet |> kable(format.args = list(big.mark = "."))
 ```
@@ -379,6 +386,7 @@ all.equal(tab81[2:4], tab81tabnet[2:4], check.attributes = FALSE)
 Para 2024, temos a seguinte tabela, e um resultado análogo:
 
 ``` r
+
 knitr::include_graphics("figuras/tabnetpop24.png")
 ```
 
@@ -389,6 +397,7 @@ População por sexo e faixa etária. Brasil, 2024. Tabulação no TABNET,
 25/02/2025.
 
 ``` r
+
 tab24tabnet <- read.csv2("../../data-raw/ibge_cnv_popbr2024.csv", skip = 3, nrows = 18, encoding = "latin1")
 tab24tabnet |> kable(format.args = list(big.mark = "."))
 ```
@@ -415,6 +424,7 @@ tab24tabnet |> kable(format.args = list(big.mark = "."))
 | Total              | 103.662.286 | 108.921.464 | 212.583.750 |
 
 ``` r
+
 tab24 <- ler_popbr(2024) %>% 
   group_by(sexo, fxetar5) %>% 
   mutate(sexo = case_match(sexo, "masc" ~ "Masculino", "fem" ~ "Feminino")) %>% 
@@ -454,6 +464,4 @@ all.equal(tab24[2:4], tab24tabnet[2:4], check.attributes = FALSE)
 [1] TRUE
 ```
 
-------------------------------------------------------------------------
-
-1.  A opção “faixa etária” tem faixas decenais após os 20 anos.
+[^1]: A opção “faixa etária” tem faixas decenais após os 20 anos.

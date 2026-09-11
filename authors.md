@@ -7,16 +7,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/fulvionedel/csapAIH/blob/v0.0.4.8/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/fulvionedel/csapAIH/blob/master/DESCRIPTION)
 
 Nedel FB (2026). *csapAIH: Classificar Condições Sensíveis à Atenção
-Primária*. R package version 0.0.4.8,
+Primária*. R package version 0.0.4.9,
 <https://github.com/fulvionedel/csapAIH>.
 
     @Manual{,
       title = {csapAIH: Classificar Condições Sensíveis à Atenção Primária},
       author = {Fúlvio Borges Nedel},
       year = {2026},
-      note = {R package version 0.0.4.8},
+      note = {R package version 0.0.4.9},
       url = {https://github.com/fulvionedel/csapAIH},
     }

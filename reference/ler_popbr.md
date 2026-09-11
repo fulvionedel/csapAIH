@@ -20,11 +20,11 @@ ler_popbr(x)
   um arquivo no computador, o nome com a extensão (dbf) deve vir entre
   aspas. Apenas arquivos em formato DBF são lidos. Se o alvo é um
   arquivo do servidor FTP do DATASUS, deve-se digitar o ano (sem aspas)
-  desejado, de 1980 a 2024.
+  desejado, de 1980 a 2025.
 
 ## Details
 
-Nos arquivos de 2013 a 2024 o código IBGE do município está registrado
+Nos arquivos de 2013 a 2025 o código IBGE do município está registrado
 com todos os sete dígitos, enquanto nos arquivos de 1980 a 2012, como em
 outros SIS com dados disponibilizados pelo DATASUS, são registrados
 apenas os seis primeiros dígitos do código. `ler_popbr` devolve uma
@@ -125,33 +125,33 @@ xtabs(populacao ~ fxetar5 + sexo, data = popBR2013)
 #>   75-79  1248516 1687030
 #>   80 e + 1268870 2049336
 
-popBR2024 <- ler_popbr(2024)
-head(popBR2024)
+popBR2025 <- ler_popbr(2025)
+head(popBR2025)
 #>   munic_res  ano sexo fxetar5 fxetaria populacao
-#> 1    110001 2024 masc     0-4      000       158
-#> 2    110001 2024 masc     0-4      001       159
-#> 3    110001 2024 masc     0-4      002       161
-#> 4    110001 2024 masc     0-4      003       163
-#> 5    110001 2024 masc     0-4      004       168
-#> 6    110001 2024 masc     5-9      005       176
-xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
+#> 1    110001 2025 masc     0-4      000       148
+#> 2    110002 2025 masc     0-4      000       732
+#> 3    110003 2025 masc     0-4      000        31
+#> 4    110004 2025 masc     0-4      000       640
+#> 5    110005 2025 masc     0-4      000       112
+#> 6    110006 2025 masc     0-4      000        86
+xtabs(populacao ~ fxetar5 + sexo, data = popBR2025)
 #>         sexo
 #> fxetar5     masc     fem
-#>   0-4    6661380 6356612
-#>   5-9    7439000 7092027
-#>   10-14  7429136 7076552
-#>   15-19  7651069 7320566
-#>   20-24  8044783 7821129
-#>   25-29  8193616 8219079
-#>   30-34  7992515 8181015
-#>   35-39  8115656 8419414
-#>   40-44  8073611 8525842
-#>   45-49  7171760 7693627
-#>   50-54  6215140 6798626
-#>   55-59  5603775 6318206
-#>   60-64  4833395 5622638
-#>   65-69  3806961 4582309
-#>   70-74  2768674 3500843
-#>   75-79  1840490 2463099
-#>   80 e + 1821325 2929880
+#>   0-4    6485679 6188735
+#>   5-9    7321743 6981876
+#>   10-14  7480784 7125225
+#>   15-19  7544138 7218879
+#>   20-24  7928180 7673700
+#>   25-29  8183676 8173692
+#>   30-34  8003264 8182466
+#>   35-39  8031248 8321113
+#>   40-44  8111472 8546246
+#>   45-49  7381590 7915399
+#>   50-54  6317166 6898608
+#>   55-59  5663477 6371783
+#>   60-64  4947164 5757438
+#>   65-69  3934641 4740135
+#>   70-74  2878618 3646007
+#>   75-79  1927758 2582930
+#>   80 e + 1906030 3050177
 ```

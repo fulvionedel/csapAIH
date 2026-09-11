@@ -18,7 +18,7 @@ popbr(ano, uf = NULL, pormun = TRUE, municipio = NULL, idade = FALSE)
   (em) capturado(s) no site FTP DATASUS. Se o alvo é um arquivo no
   computador, o nome com a extensão (dbf) deve vir entre aspas. Se o
   alvo é um arquivo do servidor FTP do DATASUS, deve-se usar o argumento
-  `ano`, com o ano (sem aspas) desejado, de 1980 a 2024. Apenas arquivos
+  `ano`, com o ano (sem aspas) desejado, de 1980 a 2025. Apenas arquivos
   em formato DBF são lidos.
 
 - uf:
@@ -46,24 +46,24 @@ popbr(ano, uf = NULL, pormun = TRUE, municipio = NULL, idade = FALSE)
 
 ``` r
 # Arquivos no diretório FTP do DATASUS
-popbr(2024) |> head()
+popbr(2025) |> head()
 #> # A tibble: 6 × 5
 #>   munic_res ano   sexo  fxetar5 populacao
 #>   <chr>     <fct> <fct> <fct>       <int>
-#> 1 110001    2024  masc  0-4           809
-#> 2 110001    2024  masc  5-9           876
-#> 3 110001    2024  masc  10-14         890
-#> 4 110001    2024  masc  15-19         908
-#> 5 110001    2024  masc  20-24         894
-#> 6 110001    2024  masc  25-29         831
-popbr(2024, idade = TRUE) |> head()
+#> 1 110001    2025  masc  0-4           774
+#> 2 110001    2025  masc  5-9           869
+#> 3 110001    2025  masc  10-14         884
+#> 4 110001    2025  masc  15-19         881
+#> 5 110001    2025  masc  20-24         886
+#> 6 110001    2025  masc  25-29         819
+popbr(2025, idade = TRUE) |> head()
 #>   munic_res  ano sexo fxetar5 fxetaria populacao
-#> 1    110001 2024 masc     0-4      000       158
-#> 2    110001 2024 masc     0-4      001       159
-#> 3    110001 2024 masc     0-4      002       161
-#> 4    110001 2024 masc     0-4      003       163
-#> 5    110001 2024 masc     0-4      004       168
-#> 6    110001 2024 masc     5-9      005       176
+#> 1    110001 2025 masc     0-4      000       148
+#> 2    110002 2025 masc     0-4      000       732
+#> 3    110003 2025 masc     0-4      000        31
+#> 4    110004 2025 masc     0-4      000       640
+#> 5    110005 2025 masc     0-4      000       112
+#> 6    110006 2025 masc     0-4      000        86
 anos <- popbr(2017:2019)
 xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 #>         ano     2017            2018            2019        
@@ -95,15 +95,15 @@ popbr(c(2017, 2019))  |> str()
 #>  $ populacao: int [1:378760] 931 952 1066 1113 1049 1002 944 892 831 824 ...
 popbr(2022, "RS") |> head()
 #> Joining with `by = join_by(CO_UF)`
-#> # A tibble: 6 × 6
-#>   UF_SIGLA munic_res ano   sexo  fxetar5 populacao
-#>   <fct>    <chr>     <fct> <fct> <fct>       <int>
-#> 1 RS       430003    2022  masc  0-4           152
-#> 2 RS       430003    2022  masc  5-9           144
-#> 3 RS       430003    2022  masc  10-14         149
-#> 4 RS       430003    2022  masc  15-19         137
-#> 5 RS       430003    2022  masc  20-24         158
-#> 6 RS       430003    2022  masc  25-29         145
+#> # A tibble: 6 × 8
+#>   munic_res ano   sexo  fxetar5 CO_UF UF_SIGLA REGIAO populacao
+#>   <chr>     <fct> <fct> <fct>   <chr> <fct>    <fct>      <int>
+#> 1 430003    2022  masc  0-4     43    RS       S            152
+#> 2 430003    2022  masc  5-9     43    RS       S            144
+#> 3 430003    2022  masc  10-14   43    RS       S            149
+#> 4 430003    2022  masc  15-19   43    RS       S            137
+#> 5 430003    2022  masc  20-24   43    RS       S            158
+#> 6 430003    2022  masc  25-29   43    RS       S            145
 popbr(2022, "RS", pormun = FALSE) |> head()
 #> Joining with `by = join_by(CO_UF)`
 #> # A tibble: 6 × 5
@@ -173,14 +173,25 @@ xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("mu
 
 # A estrutura do arquivo fonte até 2012 no DATASUS é outra,
 # com outra categorização da "idade detalhada":
-popbr(c(1980, 2012))  |> str()
-#> tibble [462,099 × 6] (S3: tbl_df/tbl/data.frame)
-#>  $ munic_res: chr [1:462099] "110001" "110001" "110001" "110001" ...
-#>  $ situacao : Factor w/ 2 levels "urbana","rural": 1 1 1 1 1 1 1 1 1 1 ...
-#>  $ ano      : Factor w/ 2 levels "1980","2012": 2 2 2 2 2 2 2 2 2 2 ...
+popbr(2012, idade = TRUE)  |> str()
+#> 'data.frame':    367290 obs. of  7 variables:
+#>  $ munic_res: chr  "110001" "110001" "110001" "110001" ...
+#>  $ situacao : Factor w/ 1 level "urbana": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ ano      : Factor w/ 1 level "2012": 1 1 1 1 1 1 1 1 1 1 ...
 #>  $ sexo     : Factor w/ 2 levels "masc","fem": 1 1 1 1 1 1 1 1 1 1 ...
-#>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 2 3 4 5 6 7 8 9 10 ...
-#>  $ populacao: int [1:462099] 943 1058 1239 1343 1090 1039 938 866 901 835 ...
+#>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 1 1 1 1 2 2 2 2 2 ...
+#>  $ fxetaria : Factor w/ 33 levels "0000","0101",..: 1 2 3 4 5 6 7 8 9 10 ...
+#>  $ populacao: int  187 186 187 190 193 198 204 211 219 226 ...
+#>  - attr(*, "data_types")= chr [1:6] "C" "C" "C" "C" ...
+popbr(2013, idade = TRUE)  |> str()
+#> 'data.frame':    902340 obs. of  6 variables:
+#>  $ munic_res: chr  "110001" "110001" "110001" "110001" ...
+#>  $ ano      : Factor w/ 1 level "2013": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ sexo     : Factor w/ 2 levels "masc","fem": 1 1 1 1 1 1 1 1 1 1 ...
+#>  $ fxetar5  : Factor w/ 17 levels "0-4","5-9","10-14",..: 1 1 1 1 1 2 2 2 2 2 ...
+#>  $ fxetaria : Factor w/ 81 levels "000","001","002",..: 1 2 3 4 5 6 7 8 9 10 ...
+#>  $ populacao: int  201 204 202 198 197 195 201 210 220 226 ...
+#>  - attr(*, "data_types")= chr [1:5] "C" "C" "C" "C" ...
 # Por isso, quando a seleção de interesse contempla os dois períodos, como no exemplo seguinte,
 # a faixa etária detalhada não é apresentada, e o argumento \code{idade} não tem efeito.
 popbr(2012:2013) |> str()
