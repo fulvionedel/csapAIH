@@ -3,9 +3,10 @@ title: "Classificar códigos da CID-10 em Condições Sensíveis à Atenção Pr
 subtitle: "A função `csapAIH`"
 lang: pt
 date: |
-  | Em atualização
-  <!-- | Atualizado em  -->
+  <!-- | Em atualização -->
+  <!-- | Atualizado em -->
   | `r format(Sys.Date(), c("%d de %B de %Y"))`
+bibliography: ../pacote.bib 
 ---
 
 ```{r, include = FALSE}
@@ -23,11 +24,29 @@ library(dplyr)
 
 # Em arquivos de dados
 
-É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV, sem necessidade da leitura prévia dos dados. Para outras extensões de arquivo é necessária a prévia importação dos dados para um objeto de classe `data.frame`.
+É possível classificar as CSAP diretamente a partir de arquivos com extensão .DBC, .DBF, ou .CSV, sem necessidade da leitura prévia dos dados. Para outras extensões de arquivo é necessária a importação dos dados para um objeto de classe `data.frame`.
 
-### Arquivos do DATASUS
+## Arquivos do DATASUS
 
-Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet, sem necessidade de download.
+Através de seu site FTP, o DATASUS disponibiliza dados de diferentes Sistemas de Informação em Saúde do SUS, em arquivos comprimidos de extensão DBC. Os arquivos podem ser baixados na página de [transferência de arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) do DATASUS e expandidos para DBF ou CSV (entre várias outras possibilidades de manejo) pelo TabWin, disponível na mesma página. Graças ao pacote [read.dbc](https://github.com/danicat/read.dbc), de Daniela Petruzalek, também podemos ler os arquivos comprimidos do DATASUS no R, e graças ao pacote [microdatasus](https://github.com/rfsaldanha/microdatasus), de Raphael Saldanha [@Saldanha2019], podemos ler com facilidade esses arquivos na internet e guardá-los em arquivos temporários, sem necessidade de download prévio dos arquivos pela página web.
+
+Os arquivos têm o nome com a estrutura "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.
+
+### Arquivo .dbc, .dbf ou .csv armazenado no computador
+
+Se o arquivo de dados estiver armazenado no computador, basta digitar, entre aspas, o nome do arquivo --- com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw').
+
+```{r}
+csap.dbc <- csapAIH("../../data-raw/RDRS1801.dbc")
+csap.dbf <- csapAIH("../../data-raw/RDRS1801.dbf")
+```
+
+- No caso de arquivos CSV é mandatório indicar o tipo de separador de campos, com o argumento `sep`: 
+```{r}
+csap.csv <- csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
+```
+
+### Arquivos no servidor FTP do DATASUS 
 
 O código abaixo cria um banco com as informações das AIHs do "ano de competência" 2021 ocorridas no RS e outro com as informações das Declarações de Óbito (DO) de residentes no RS ocorridas em 2021:
 
@@ -40,21 +59,6 @@ ncol(AIHRS2021) # colunas
 DORS2021 <- microdatasus::fetch_datasus(year_start = 2021, year_end = 2021, uf = "RS", information_system = "SIM-DO")
 nrow(DORS2021)
 ncol(DORS2021)
-```
-
-Se o arquivo de dados estiver armazenado no computador, basta digitar, entre aspas, o nome do arquivo --- com o "_path_" se o arquivo estiver em diretório diferente daquele da sessão de trabalho ativa (neste exemplo, num sub-diretório do diretório de trabalho da sessão ativa, chamado 'data-raw').
-
-<!-- têm o nome de acordo à seguinte estrutura: "RDUFAAMM.DBC", onde "UF" é a Unidade da Federação do hospital de internação e "AA" e "MM" são, respectivamente, o ano e mês "_de referência_", isto é, de faturamento da AIH. Os arquivos são disponibilizados em formato comprimido com a extensão "DBC", na página de ["transferência de arquivos"](https://datasus.saude.gov.br/transferencia-de-arquivos/) do site do DATASUS.  -->
-
-```{r}
-csap.dbc <- csapAIH("../../data-raw/RDRS1801.dbc")
-csap.dbf <- csapAIH("../../data-raw/RDRS1801.dbf")
-```
-
-- No caso de arquivos CSV é mandatório indicar o tipo de separador de campos, com o argumento `sep`.
-
-```{r}
-csap.csv <- csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
 ```
 
 A função `fetchcsap` foi pensada para apresentar um extrato dos registros por período de internação e não de "competência" da AIH, que é commo se organizam os arquivos de dados. Assim, precisamos modificar alguns argumentos para ter os mesmos registros:
@@ -108,7 +112,7 @@ read.csv("../../data-raw/RDRS1801.csv") |> # criar o data.frame
 
 ### Sem o padrão dos arquivos da AIH
 
-Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se `csapAIH(..., grupos = TRUE, ...)`) são acrescentadas ao final do banco de dados alvo da função.
+Mude o argumento `sihsus` para `FALSE` e indique no argumento `cid` qual variável contém os códigos diagnósticos. As variáveis `csap` e `grupo` (se se mantiver o argumento `grupos`como `TRUE`) são acrescentadas ao final do banco de dados alvo da função.
 
 #### A _Encuesta de Egresos Hospitalarios_ do Equador.
 
@@ -117,7 +121,7 @@ data("eeh20") # Amostra da "Encuesta de egresos hospitalarios" do Equador, ano 2
 names(eeh20) # Os nomes das variáveis
 ```
 
-A variável `cau_cie10` (posição `r which(names(eeh20) == 'cau_cie10')`) tem o código do diagnóstico de internação. A função csapAIH acrescenta à base duas (se `grupo == TRUE`) variáveis, `csap` e `grupo`, dispostas nas últimas colunas (posição `r paste(which(names(eeh20) == 'csap'), "e", which(names(eeh20) == 'grupo'), "respectivamente.")`)
+A variável `cau_cie10` (posição `r which(names(eeh20) == 'cau_cie10')`) tem o código do diagnóstico de internação. A função csapAIH acrescenta à base duas (se `grupos = TRUE`) variáveis, `csap` e `grupo`, dispostas nas últimas colunas (posição `r paste(which(names(eeh20) == 'csap'), "e", which(names(eeh20) == 'grupo'), "respectivamente.")`)
 
 ```{r}
 csap.eeh20 <- csapAIH(eeh20, sihsus = FALSE, cid = cau_cie10)
@@ -143,10 +147,12 @@ DORS2021[1:3, (ncol(DORS2021)-5):ncol(DORS2021)]
 ```
 
 
-## A partir de uma variável com códigos da CID-10:
+# A partir de uma variável com códigos da CID-10:
 
 ```{r}
 cids <- aih100$DIAG_PRINC[1:10]
 cids
 csapAIH(cids)
 ```
+
+# Referências 

@@ -2,9 +2,8 @@
 title: "O pacote csapAIH"
 date: |
   <!-- | Em atualização -->
-  | Atualizado em
   | `r format(Sys.Date(), c("%d de %B de %Y"))`
-bibliography: ../../inst/pacote.bib
+bibliography: pacote.bib
 ---
 
 ```{r, include = FALSE}
@@ -20,9 +19,23 @@ library(csapAIH)
 library(dplyr) 
 ```
 
-O pacote csapAIH foi criado para facilitar a distribuição da função `csapAIH()`, então sua única função. Seu objetivo principal é a classificação de códigos da Classificação Internacional de Doenças -- 10ª Revisão (CID-10), segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária, publicada em Portaria Ministerial em 2008,[@MS2008lista] mas além disso a função é particularmente voltada ao trabalho com os arquivos das internações ocorridas no SUS, com argumentos facilitando a extração e manejo dos dados nesse sentido.[@Nedel2017] 
+O pacote csapAIH foi criado para facilitar a distribuição da função `csapAIH()`, então sua única função, para a classificação de códigos da Classificação Internacional de Doenças -- 10ª Revisão (CID-10) segundo a Lista Brasileira de Condições Sensíveis à Atenção Primária, publicada em Portaria Ministerial em 2008[@MS2008lista]. A função classifica qualquer vetor com códigos da CID-10, mas é particularmente voltada ao trabalho com os arquivos "RD*.DBC" das Bases de Dados do Sistema de Informação em Saúde (BD-SIH/SUS), com argumentos facilitando a extração e manejo dos dados nesse sentido.[@Nedel2017] 
 
-```{r}
+A construção da lista brasileira foi relatada em artigo científico.[@Alfradique2009] Entretanto, a lista publicada na Portaria Ministerial[@MS2008lista] difere do artigo pelo agrupamento dos dois primeiros grupos (*1. Doenças imunizáveis* e *2. Condições evitáveis*). Há então duas versões da lista, a da Portaria Ministerial, com 19 grupos, e a que desmembra o primeiro grupo em dois, totalizando então 20 grupos (Tabela). Não há diferença nos códigos considerados. A versão com o desdobramento do primeiro grupo da Portaria e, consequentemente, com 20 grupos ao final, é a recomendada pela Organização Panamericana da Saúde (OPAS).[@OPS2014]    
+
+```{r lista}
+ms <- nomesgruposCSAP()
+artigo <- nomesgruposCSAP(lista = "Alfradique")
+cbind(ms = c(ms[1], "-", ms[-1]), artigo) |> 
+  kableExtra::kable(col.names = c("Portaria Ministerial", "Alfradique et al."), 
+                    caption = "Grupos da Lista Brasileira de ICSAP segundo a fonte de publicação.")
+```
+
+A função `csapAIH()` permite a classificação segundo as duas versões, definidas pelo argumento "`lista`". Esse argumento aparece em `desenhaCSAP()` para desenhar o gráfico adequado. As funções `tabCSAP()` e `descreveCSAP()` identificam a lista utilizada e portanto não têm o argumento. Os grupos em cada lista podem ser citados pela função `nomesgruposCSAP()`, em português, espanhol ou inglês. 
+
+Os "arquivos da AIH" são disponibilizados pelo DATASUS em arquivos nos formatos DBF, CSV e DBC (arquivo DBC comprimido pelo DATASUS)
+
+```{r eval=FALSE}
 data.frame(arquivo = c("RDRS1801.dbf", "RDRS1801.csv", "RDRS1801.dbc"),
            tamanho = c(round(file.size("../../data-raw/RDRS1801.dbf") / 1024^2, 1),
                        round(file.size("../../data-raw/RDRS1801.csv") / 1024^2, 1),
@@ -34,10 +47,7 @@ csapAIH("../../data-raw/RDRS1801.dbc")
 ```
 
 
-## A Lista Brasileira de Condições S
-
-Em seu desenvolvimento foram criadas outras 
-
+ 
 Atualmente, a forma mais fácil
 
 # ICSAP no RS, 2023 a 2024
@@ -46,7 +56,8 @@ A função `fetchcsap` baixa os arquivos da AIH no DATASUS e entrega um banco de
 
 Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP do RS de 2023 a 2024 com o seguinte comando:  
 ```{r}
-icsaprs <- fetchcsap(2023, 2024, uf = "RS")
+# icsaprs <- fetchcsap(2023, 2024, uf = "RS")
+icsaprs <- fetchcsap(2018, mesfim = 1, periodo = "c", uf = "RS")
 ```
 
 ```{r echo=FALSE, warning=FALSE}
