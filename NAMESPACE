@@ -18,22 +18,30 @@ export(popbr2000_2021)
 export(proc.obst)
 export(tabCSAP)
 export(ufbr)
-importFrom(data.table,`:=`)
-importFrom(data.table,setDT)
-importFrom(dplyr,`%>%`)
-importFrom(dplyr,across)
-importFrom(dplyr,case_when)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,inner_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,reframe)
-importFrom(dplyr,relocate)
+importFrom(data.table,
+  `:=`,
+  setDT
+)
+importFrom(dplyr,
+  `%>%`,
+  across,
+  case_when,
+  filter,
+  group_by,
+  inner_join,
+  mutate,
+  reframe,
+  relocate
+)
 importFrom(grDevices,rainbow)
-importFrom(graphics,barplot)
-importFrom(graphics,par)
+importFrom(graphics,
+  barplot,
+  par
+)
 importFrom(stats,reorder)
-importFrom(utils,download.file)
-importFrom(utils,hasName)
-importFrom(utils,installed.packages)
-importFrom(utils,unzip)
+importFrom(utils,
+  download.file,
+  hasName,
+  installed.packages,
+  unzip
+)
