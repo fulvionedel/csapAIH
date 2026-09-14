@@ -66,6 +66,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/fulvionedel/csapAIH}
   \item \url{https://fulvionedel.github.io/csapAIH/}
+  \item Report bugs at \url{https://github.com/fulvionedel/csapAIH/issues}
 }
 
 }

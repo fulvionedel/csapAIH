@@ -8,7 +8,7 @@ output:
     toc: yes
     toc_depth: 3
 link-citations: yes
-bibliography: inst/docus/pacote.bib
+bibliography: vignettes/articles/pacote.bib
 always_allow_html: true
 # csl: docs/vancouver-superscript.csl
 # https://github.com/citation-style-language/styles
@@ -34,6 +34,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+> [!IMPORTANT] **Atualização recomendada**  ([*issue*](https://github.com/fulvionedel/csapAIH/issues/17))
 
 # Apresentação
 
@@ -75,44 +77,50 @@ Na versão **0.0.2**, foram acrescentadas as funções `descreveCSAP`, `desenhaC
 
 A partir da versão **0.0.3** [@Nedel2019], a função `desenhaCSAP` permite o detalhamento do gráfico por categorias de outros fatores do banco de dados, com o uso das funções `facet_wrap` e `facet_grid`, de `ggplot2`, e permite ainda o desenho de gráficos com as funções básicas, sem a instalação do pacote `ggplot2`. Foi ainda criada uma função para o cálculo da idade nos arquivos da AIH: a função `idadeSUS` é usada internamente por `csapAIH` e pode ser chamada pelo usuário para calcular a idade sem a necessidade de classificar as CSAP.
 
-Na versão **0.0.4**, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009]. Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. As funções `desenhaCSAP` e `tabCSAP` têm um argumento para seleção do idioma dos nomes de grupos, em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`).   
-  - Criada a função `cid10cap` para a classificação de causas por Capítulos da CID-10.
-  - Criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019], para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando.  
+Na versão **0.0.4**, a função `csapAIH` oferece a opção de classificação das CSAP em 20 grupos de causa, conforme proposto no processo de construção da Lista Brasileira [@Alfradique2009]. Essa é a lista sugerida pela Organização Panamericana da Saúde [@OPS2014]. Ambas listas podem ser apresentadas em português (`pt`, padrão), espanhol (`es`) ou inglês (`en`).   
+  - Criada a função `cid10cap` para a classificação de causas por Capítulos da CID-10.  
+  - Criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop) de @brpopref) para acesso às estimativas populacionais publicadas pelo DATASUS e funções para categorização da idade em faixas etárias. 
   - Criadas funções para facilitar o manejo e apresentação de dados em estudos ecológicos, como a categorização da idade em faixas etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de parto (`partos`), particularmente para o Brasil e os arquivos do DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a lista de procedimentos obstétricos em internações por eventos não mórbidos (`procobst`).   
+  - Criada a função `fetchcsap` (a partir da função `fetchdatasus` do pacote `microdatasus`[@Saldanha2019]), para ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único comando.  
   - A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em que a variável "csap" registrava todos os casos como "não" (embora estivessem classificados corretamente na variável "grupo").    
   - A v0.0.4.6 corrige um erro em `ler_popbr` e, principalmente, acrescenta a possibilidade de leitura dos arquivos com as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além de incluir novas possiblidades em `nomesgruposCSAP`. A atualização de `ler_popbr` foi a razão de lançamento dessa versão do pacote, mas depois percebi que o código IBGE do município vinha com sete dígitos, diferente de tudo o mais no DATASUS e então atualizei a função e lancei nova versão do pacote.   
   - A v0.0.4.7 corrige esses problemas e, além disso, cria a função `adinomes` para adicionar uma variável com o nome dos grupos CSAP a um banco de dados.   
-  - A v0.0.4.8 não importa mais o pacote `haven` e corrige alguns erros introduzidos com as mudanças anteriores (como o desenho correto do gráfico e do nome "Não-CSAP" na tabela e seleção de casos e períodos na função `fetchcsap`); ajusta o nome do Grupo - 8 de "DPOC" para "Pulmonares"; cria a função `popbr`, com novas possibilidades para as estimativas populacionais.
+  - A v0.0.4.8 não importa mais o pacote `haven` e corrige alguns erros introduzidos com as mudanças anteriores (como o desenho correto do gráfico e do nome "Não-CSAP" na tabela e seleção de casos e períodos na função `fetchcsap`); ajusta o nome do Grupo - 8 de "DPOC" para "Pulmonares"; cria a função `popbr`, com novas possibilidades para as estimativas populacionais.  
+  [!WARNING] Foi identificado um erro na classificação do Grupo 1 pela lista da Portaria Ministerial através da função interna `listaBRMS()`, usada por `csapAIH()` (v. [*issue* 17](https://github.com/fulvionedel/csapAIH/issues/17), em 07/09/2026). Introduzido na versão em desenvolvimento em 16/07/2024, está presente desde a v0.0.4.5.  Agradeço a [Sidney Bissoli](https://github.com/SidneyBissoli)[@healthbR] a identificação e detalhada descrição do erro.  
+  - A v0.0.4.9 aparece apenas como versão em desenvolvimento (não é feita uma "*release*") para a correção desso erro, em 11/09/2026.  
+  - A **v0.0.5** apresenta as novas mudanças com as correções realizadas e a documentação atualizada. 
 
-A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.4.8.pdf) ou, no R, com `?csapAIH-package`.
+A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso. Veja no [manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.5.pdf) ou, no R, com `?csapAIH-package`.
 
 
 # Dependências
 
-A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato). Da mesma forma,  `popbr2000_2021` exige a instalação do pacote[`brpop`](https://rfsaldanha.github.io/brpop/) (mas a função é mantida apenas para documentação) e  `fetchcsap` exige a instalação do pacote [`microdatasus`](https://github.com/rfsaldanha/microdatasus). 
+A leitura de arquivos .DBC exige a instalação prévia do pacote [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html) [@readdbc]. Sua falta não impede o funcionamento das demais funções do pacote (inclusive de leitura de arquivos em outro formato, ou mesmo de `fetchcsap()`). Da mesma forma, `popbr2000_2021` exige a instalação do pacote[`brpop`](https://rfsaldanha.github.io/brpop/) (mas a função é mantida apenas para documentação) e `fetchcsap` exige a instalação do pacote [`microdatasus`](https://github.com/rfsaldanha/microdatasus). 
 
 A função `desenhaCSAP` tem melhor desempenho com o pacote `ggplot2` instalado, mas sua instalação não é necessária para que ela funcione. 
 
 A função `popbr2000_2021` usa o pacote [`dplyr`](https://cran.r-project.org/package=dplyr), que é importado. A partir da v0.0.4.4 [`Hmisc`](https://cran.r-project.org/web/packages/Hmisc/index.html) não é mais. Alguns pacotes são importados por funções específicas, como `desenhaCSAP` que exige `ggplot2` para desenhar esse tipo de gráfico, ou `csapAIH` que exige o pacote `haven` para a classificação das CSAP quando o cid é uma variável "_haven_labelled_".
 <!-- O código da função `???` é escrito com a função de encadeamento de comandos  ("_piping_") própria do R ("|>") e seu uso exige, portanto, R>=4.1.0 (espero não gerar outro problema como [esse](https://github.com/fulvionedel/csapAIH/issues/5). -->
 
-Se a variável com os códigos da CID for da classe "haven_labelled", a função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
+Se a variável com os códigos da CID for da classe "haven_labelled", a função `csapAIH` usará a função `zap_formats`, do pacote `haven`, que deverá então estar instalado. 
 
 ---
 ***Veja o manual do pacote em:*** 
-https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.8.pdf
+https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.5.pdf
 
 <!-- You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>. -->
 
 
 # Agradecimentos
 
-Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas e sugere mudanças, como \@laiovictor e \@igortadeu \@rafadbarros, e (muito!!) a quem apresenta soluções, como \@denis-or. 
+Agradeço a todxs os usuárixs do pacote, particularmente a quem informa problemas, sugere mudanças e apresenta soluções, como [\@laiovictor](https://github.com/laiovictor), [\@igortadeu](https://github.com/igortadeu) [\@rafadbarros](https://github.com/rafadbarros), [\@denis-or](https://github.com/denis-or) e [\@SidneyBissoli](https://github.com/SidneyBissoli). 
 
-E, sempre, meus profundos agradecimentos a  
+Sempre meus profundos agradecimentos a  
 
-  - Daniela Petruzalek, pelo pacote [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html); e
-  - A Raphael Saldanha, pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
+  - [Daniela Petruzalek](https://github.com/danicat), pelo pacote [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html); e
+  - A [Raphael Saldanha](https://github.com/rfsaldanha), pelos pacotes [microdatasus](https://github.com/rfsaldanha/microdatasus) e [brpop](https://github.com/rfsaldanha/brpop).
+
+  - E, agora, pelo aviso do erro e apresentação de solução na função `csapAIH` da versão 0.0.4.8 (v. [issue](https://github.com/fulvionedel/csapAIH/issues/17)), e pelo pacote [healthbR](https://sidneybissoli.github.io/healthbR/index.html), a [SidneyBissoli](https://github.com/SidneyBissoli).  
 
 
 # Referências
