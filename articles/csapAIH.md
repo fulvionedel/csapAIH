@@ -117,18 +117,6 @@ Não obstante, os arquivos RD\* ocupam muito espaço em disco, apesar da
 grande compressão do formato DBC, e pode ser preferível baixar o arquivo
 da internet, fazer o processamento desejado e então apagá-lo.
 
-``` r
-
-data.frame(arquivo = c("RDRS1801.dbf", "RDRS1801.csv", "RDRS1801.dbc"),
-           tamanho = c(round(file.size("../../data-raw/RDRS1801.dbf") / 1024^2, 1),
-                       round(file.size("../../data-raw/RDRS1801.csv") / 1024^2, 1),
-                       round(file.size("../../data-raw/RDRS1801.dbc") / 1024^2, 1))) |> 
-  kableExtra::kable(caption = "Tamanho do arquivo segundo o formato disponibilizado.", 
-                    format.args = list(decimal.mark = ","), 
-                    col.names = c("Arquivo", "Tamanho (MB)")) |> 
-  kableExtra::kable_styling(full_width = FALSE)
-```
-
 | Arquivo      | Tamanho (MB) |
 |:-------------|-------------:|
 | RDRS1801.dbf |         40,5 |
@@ -161,19 +149,6 @@ Importados 60.529 registros.
 Excluídos 8.240 (13,6%) registros de procedimentos obstétricos.
 Excluídos 366 (0,6%) registros de AIH de longa permanência.
 Exportados 51.923 (85,8%) registros.
-       munres munint   sexo idade fxetar5   csap    grupo    cid data.inter data.saida
-       <char> <char> <fctr> <num>  <fctr> <fctr>   <fctr> <char>     <Date>     <Date>
-    1: 431560 431560    fem    53   50-54    não nao-CSAP   B207 2017-11-14 2017-11-22
-    2: 431560 431560    fem     0     0-4    não nao-CSAP   P704 2017-11-04 2017-11-11
-    3: 431560 431560   masc     0     0-4    não nao-CSAP   P220 2017-11-03 2017-11-13
-    4: 431560 431560   masc     0     0-4    não nao-CSAP   A419 2017-10-18 2017-11-08
-    5: 431560 431560    fem     0     0-4    não nao-CSAP   P073 2017-11-08 2017-12-14
-   ---                                                                                
-51919: 430786 432280   masc    75   75-79    sim      g06   J158 2018-01-04 2018-01-10
-51920: 430786 432280    fem    90  80 e +    sim      g12    I64 2018-01-15 2018-01-23
-51921: 430786 432280   masc    75   75-79    não nao-CSAP   J180 2018-01-26 2018-01-29
-51922: 430595 432280    fem    91  80 e +    sim      g08   J439 2018-01-02 2018-01-05
-51923: 430786 432280   masc    20   20-24    não nao-CSAP   L988 2018-01-09 2018-01-13
 ```
 
 O argumento `periodo = "comp"` garante que o data frame resultante
@@ -211,19 +186,6 @@ Importados 62.748 registros.
 Excluídos 8.667 (13,8%) registros de procedimentos obstétricos.
 Excluídos 324 (0,5%) registros de AIH de longa permanência.
 Exportados 53.757 (85,7%) registros.
-       munres munint   sexo idade fxetar5   csap    grupo    cid data.inter data.saida
-       <char> <char> <fctr> <num>  <fctr> <fctr>   <fctr> <char>     <Date>     <Date>
-    1: 432200 431240   masc    89  80 e +    não nao-CSAP    C61 2018-01-03 2018-01-08
-    2: 432200 431240   masc    71   70-74    não nao-CSAP   N180 2018-01-02 2018-01-20
-    3: 432200 431240   masc    78   75-79    não nao-CSAP   I472 2018-01-02 2018-01-07
-    4: 432200 431240   masc    47   45-49    sim      g11   I509 2018-01-12 2018-01-18
-    5: 432200 431240   masc    61   60-64    não nao-CSAP   N189 2018-01-13 2018-01-25
-   ---                                                                                
-53753: 430085 431490   masc    42   40-44    não nao-CSAP    I48 2018-01-28 2018-03-07
-53754: 431350 431490   masc    23   20-24    não nao-CSAP   M532 2018-01-22 2018-01-26
-53755: 430920 431490    fem    70   70-74    não nao-CSAP   H330 2018-01-19 2018-01-20
-53756: 431440 431490    fem    66   65-69    não nao-CSAP   H330 2018-01-18 2018-01-19
-53757: 431560 431490    fem    21   20-24    não nao-CSAP   H330 2018-01-16 2018-01-17
 ```
 
 O pacote [healthbR](https://sidneybissoli.github.io/healthbR/)(Bissoli
@@ -266,10 +228,10 @@ healthbR::sih_data(2025, 1:6, uf = "RS") |>
 ⠸ Downloading [3/6]  [32m■■■■■■■■■■■■■■■■                 [39m | ETA:  1m
 
  [1m [22m [36mℹ [39m Downloading SIH data: RS 2025/04...
-⠼ Downloading [4/6]  [32m■■■■■■■■■■■■■■■■■■■■■            [39m | ETA: 38s
+⠼ Downloading [4/6]  [32m■■■■■■■■■■■■■■■■■■■■■            [39m | ETA: 37s
 
  [1m [22m [36mℹ [39m Downloading SIH data: RS 2025/05...
-⠴ Downloading [5/6]  [32m■■■■■■■■■■■■■■■■■■■■■■■■■■       [39m | ETA: 21s
+⠴ Downloading [5/6]  [32m■■■■■■■■■■■■■■■■■■■■■■■■■■       [39m | ETA: 20s
 
  [1m [22m [36mℹ [39m Downloading SIH data: RS 2025/06...
 ⠴ Downloading [6/6]  [32m■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  [39m | ETA:  0s
