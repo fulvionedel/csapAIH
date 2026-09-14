@@ -50,29 +50,30 @@
 #'   fetchcsap(2023)
 #' }
 #' # Diferença entre o mês e ano de "competência" da AIH e a data de internação da pessoa,
-#' # exemplo com as internações no Acre:
+#' # exemplo com as internações em Roraima:
 #' # - todas as internações registradas no mês de competência jan 2023:
-#' ac.comp <- fetchcsap(2023, uf = "AC", mesfim = 1, periodo = 'competencia')
-#' nrow(ac.comp)
-#' summary(ac.comp$data.inter)
+#' rr.comp <- fetchcsap(2023, uf = "RR", mesfim = 1, periodo = 'competencia')
+#' nrow(rr.comp)
+#' summary(rr.comp$data.inter)
 #' # - internações ocorridas em jan/2023 e registradas nos meses de competência
 #' # janeiro a junho de 2023:
-#' ac.int <- fetchcsap(2023, mesfim = 1, uf = "AC")
-#' nrow(ac.int)
-#' summary(ac.int$data.inter)
+#' rr.int <- fetchcsap(2023, mesfim = 1, uf = "RR")
+#' nrow(rr.int)
+#' summary(rr.int$data.inter)
 #' # Assim, há
-#' nrow(ac.comp) - nrow(ac.int)
+#' nrow(rr.comp) - nrow(rr.int)
 #' # internações registradas naquele mês de competência, mas que ocorreram antes.
 #'
 #' # Internações ocorridas na Região Norte no mês de janeiro de 2023 e registradas naquele mês:
-#' fetchcsap(2023, mesfim = 1, regiao = "N")
-#'
-#' # Internações anteriores a 2008 têm aviso de
-#' # "arquivos antigos, que podem conter códigos incompatíveis"
-#' fetchcsap(2008, uf = "AC")
-#' fetchcsap(2007, uf = "AC")
 #' \dontrun{
-#' microdatasus::fetch_datasus(2007, 1, 2007, 12, "AC", "SIH-RD")
+#' fetchcsap(2023, mesfim = 1, regiao = "N")
+#' }
+#'
+#' # Internações anteriores a 2008 carregam do pacote microdatasus os avisos de
+#' # "arquivos antigos, que podem conter códigos incompatíveis"
+#' \dontrun{
+#' microdatasus::fetch_datasus(2007, 1, 2007, 12, "RR", "SIH-RD")
+#' fetchcsap(2007, uf = "RR")
 #' }
 #'
 #' @importFrom data.table setDT `:=`
