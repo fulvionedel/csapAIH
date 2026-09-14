@@ -28,7 +28,6 @@
 #' popBR2024 <- ler_popbr("data-raw/POPBR24.DBF")
 #' head(popBR2024)
 #' xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
-#' }
 #'
 #' # Um arquivo no diretório FTP do DATASUS
 #' popBR2010 <- ler_popbr(2010)
@@ -42,6 +41,7 @@
 #' popBR2025 <- ler_popbr(2025)
 #' head(popBR2025)
 #' xtabs(populacao ~ fxetar5 + sexo, data = popBR2025)
+#' }
 #'
 #' @importFrom utils download.file unzip
 #' @importFrom dplyr relocate
@@ -150,6 +150,7 @@ ler_popbr <- function(x) {
 #' # Arquivos no diretório FTP do DATASUS
 #' popbr(2025) |> head()
 #' popbr(2025, idade = TRUE) |> head()
+#' \dontrun{
 #' anos <- popbr(2017:2019)
 #' xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 #' popbr(c(2017, 2019))  |> str()
@@ -160,6 +161,7 @@ ler_popbr <- function(x) {
 #' popbr(2013, municipio = "430520") |> head()
 #' popcap <- popbr(2013, municipio = c("431490", "420540"))
 #' xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("munic_res", "sexo"))
+#' }
 #'
 #' # A estrutura do arquivo fonte até 2012 no DATASUS é outra,
 #' # com outra categorização da "idade detalhada":

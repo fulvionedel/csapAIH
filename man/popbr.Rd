@@ -24,6 +24,7 @@ Lê os arquivos com estimativas e contagens da população dos municípios brasi
 # Arquivos no diretório FTP do DATASUS
 popbr(2025) |> head()
 popbr(2025, idade = TRUE) |> head()
+\dontrun{
 anos <- popbr(2017:2019)
 xtabs(populacao ~ fxetar5 + sexo + ano, anos) |> ftable(col.vars = c("ano", "sexo"))
 popbr(c(2017, 2019))  |> str()
@@ -34,6 +35,7 @@ xtabs(populacao ~ fxetar5 + sexo + UF_SIGLA, popsul22) |> ftable(col.vars = c("U
 popbr(2013, municipio = "430520") |> head()
 popcap <- popbr(2013, municipio = c("431490", "420540"))
 xtabs(populacao ~ fxetar5 + sexo + munic_res, popcap) |> ftable(col.vars = c("munic_res", "sexo"))
+}
 
 # A estrutura do arquivo fonte até 2012 no DATASUS é outra,
 # com outra categorização da "idade detalhada":

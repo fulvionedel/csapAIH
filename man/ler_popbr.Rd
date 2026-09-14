@@ -32,7 +32,6 @@ xtabs(populacao ~ fxetar5 + sexo, data = popBR2010)
 popBR2024 <- ler_popbr("data-raw/POPBR24.DBF")
 head(popBR2024)
 xtabs(populacao ~ fxetar5 + sexo, data = popBR2024)
-}
 
 # Um arquivo no diretório FTP do DATASUS
 popBR2010 <- ler_popbr(2010)
@@ -46,6 +45,7 @@ xtabs(populacao ~ fxetar5 + sexo, data = popBR2013)
 popBR2025 <- ler_popbr(2025)
 head(popBR2025)
 xtabs(populacao ~ fxetar5 + sexo, data = popBR2025)
+}
 
 }
 \references{
