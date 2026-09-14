@@ -35,7 +35,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-> [!IMPORTANT] **Atualização recomendada**  ([*issue*](https://github.com/fulvionedel/csapAIH/issues/17))
+> [!WARNING]   
+> **Atualização recomendada**  ([*issue*](https://github.com/fulvionedel/csapAIH/issues/17))
 
 # Apresentação
 
@@ -86,7 +87,8 @@ Na versão **0.0.4**, a função `csapAIH` oferece a opção de classificação 
   - A v0.0.4.6 corrige um erro em `ler_popbr` e, principalmente, acrescenta a possibilidade de leitura dos arquivos com as estimativas populacionais atualizadas após o Censo 2022 do IBGE, além de incluir novas possiblidades em `nomesgruposCSAP`. A atualização de `ler_popbr` foi a razão de lançamento dessa versão do pacote, mas depois percebi que o código IBGE do município vinha com sete dígitos, diferente de tudo o mais no DATASUS e então atualizei a função e lancei nova versão do pacote.   
   - A v0.0.4.7 corrige esses problemas e, além disso, cria a função `adinomes` para adicionar uma variável com o nome dos grupos CSAP a um banco de dados.   
   - A v0.0.4.8 não importa mais o pacote `haven` e corrige alguns erros introduzidos com as mudanças anteriores (como o desenho correto do gráfico e do nome "Não-CSAP" na tabela e seleção de casos e períodos na função `fetchcsap`); ajusta o nome do Grupo - 8 de "DPOC" para "Pulmonares"; cria a função `popbr`, com novas possibilidades para as estimativas populacionais.  
-  [!WARNING] Foi identificado um erro na classificação do Grupo 1 pela lista da Portaria Ministerial através da função interna `listaBRMS()`, usada por `csapAIH()` (v. [*issue* 17](https://github.com/fulvionedel/csapAIH/issues/17), em 07/09/2026). Introduzido na versão em desenvolvimento em 16/07/2024, está presente desde a v0.0.4.5.  Agradeço a [Sidney Bissoli](https://github.com/SidneyBissoli)[@healthbR] a identificação e detalhada descrição do erro.  
+  [!WARNING] 
+  Foi identificado um erro na classificação do Grupo 1 pela lista da Portaria Ministerial através da função interna `listaBRMS()`, usada por `csapAIH()` (v. [*issue* 17](https://github.com/fulvionedel/csapAIH/issues/17), em 07/09/2026). Introduzido na versão em desenvolvimento em 16/07/2024, está presente desde a v0.0.4.5.  Agradeço a [Sidney Bissoli](https://github.com/SidneyBissoli)[@healthbR] a identificação e detalhada descrição do erro.  
   - A v0.0.4.9 aparece apenas como versão em desenvolvimento (não é feita uma "*release*") para a correção desso erro, em 11/09/2026.  
   - A **v0.0.5** apresenta as novas mudanças com as correções realizadas e a documentação atualizada. 
 
