@@ -47,7 +47,7 @@ csapAIH("../../data-raw/RDRS1801.dbc")
 
 Não obstante, os arquivos RD* ocupam muito espaço em disco, apesar da grande compressão do formato DBC, e pode ser preferível baixar o arquivo da internet, fazer o processamento desejado e então apagá-lo. 
 
-```{r}
+```{r echo=FALSE}
 data.frame(arquivo = c("RDRS1801.dbf", "RDRS1801.csv", "RDRS1801.dbc"),
            tamanho = c(round(file.size("../../data-raw/RDRS1801.dbf") / 1024^2, 1),
                        round(file.size("../../data-raw/RDRS1801.csv") / 1024^2, 1),
@@ -62,7 +62,7 @@ Para esses casos foi criada a função `fetchcsap()`, um "atalho" para `fetchdat
 
 Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP do RS no "mês de competência" jan/2018 com o seguinte comando, que retorna os mesmos resultados vistos acima:  
 
-```{r}
+```{r results='hide'}
 options(width = 120)
 fetchcsap(2018, mesfim = 1, periodo = "comp", uf = "RS")
 ```
@@ -73,7 +73,7 @@ Por padrão, esse argumento é `periodo = "interna"`, o que leva ao download dos
 
 Veja o resultado com `periodo = "interna"` (que por ser o padrão é desnecessário no comando): 
 
-```{r}
+```{r results='hide'}
 fetchcsap(2018, mesfim = 1, uf = "RS")
 ```
 
