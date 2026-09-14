@@ -266,7 +266,7 @@ healthbR::sih_data(2025, 1:6, uf = "RS") |>
 ⠸ Downloading [3/6]  [32m■■■■■■■■■■■■■■■■                 [39m | ETA:  1m
 
  [1m [22m [36mℹ [39m Downloading SIH data: RS 2025/04...
-⠼ Downloading [4/6]  [32m■■■■■■■■■■■■■■■■■■■■■            [39m | ETA: 39s
+⠼ Downloading [4/6]  [32m■■■■■■■■■■■■■■■■■■■■■            [39m | ETA: 38s
 
  [1m [22m [36mℹ [39m Downloading SIH data: RS 2025/05...
 ⠴ Downloading [5/6]  [32m■■■■■■■■■■■■■■■■■■■■■■■■■■       [39m | ETA: 21s

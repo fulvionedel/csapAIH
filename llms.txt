@@ -19,7 +19,8 @@ csapAIH](https://img.shields.io/sourceforge/dm/csapaih.svg)](https://sourceforge
 
 ------------------------------------------------------------------------
 
-> \[!IMPORTANT\] **Atualização recomendada**
+> \[!WARNING\]  
+> **Atualização recomendada**
 > ([*issue*](https://github.com/fulvionedel/csapAIH/issues/17))
 
 # Apresentação
