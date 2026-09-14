@@ -1,6 +1,6 @@
 # csapAIH: Classificar Condições Sensíveis à Atenção Primária
 
-17 de janeiro de 2026
+14 de setembro de 2026
 
 - [Apresentação](#apresenta%C3%A7%C3%A3o)
   - [Justificativa](#justificativa)
@@ -18,6 +18,9 @@ csapAIH](https://img.shields.io/sourceforge/dt/csapaih.svg)](https://sourceforge
 csapAIH](https://img.shields.io/sourceforge/dm/csapaih.svg)](https://sourceforge.net/projects/csapaih/files/latest/download)
 
 ------------------------------------------------------------------------
+
+> \[!IMPORTANT\] **Atualização recomendada**
+> ([*issue*](https://github.com/fulvionedel/csapAIH/issues/17))
 
 # Apresentação
 
@@ -122,26 +125,25 @@ das CSAP em 20 grupos de causa, conforme proposto no processo de
 construção da Lista Brasileira ([Alfradique et al.
 2009](#ref-Alfradique2009)). Essa é a lista sugerida pela Organização
 Panamericana da Saúde ([Organización Panamericana de la Salud (OPS)
-2014](#ref-OPS2014)). As funções `desenhaCSAP` e `tabCSAP` têm um
-argumento para seleção do idioma dos nomes de grupos, em português
+2014](#ref-OPS2014)). Ambas listas podem ser apresentadas em português
 (`pt`, padrão), espanhol (`es`) ou inglês (`en`).  
 - Criada a função `cid10cap` para a classificação de causas por
-Capítulos da CID-10. - Criadas as funções `ler_popbr` e `popbr2000_2021`
-(esta sobre o pacote [brpop](https://cran.r-project.org/package=brpop)
-de R. Saldanha ([2022](#ref-brpopref))) para acesso às estimativas
-populacionais publicadas pelo DATASUS e funções para categorização da
-idade em faixas etárias. Foi ainda criada uma função (`fetchcsap`) a
-partir da função `fetchdatasus` do pacote `microdatasus`([R. de F.
-Saldanha, Bastos, and Barcellos 2019](#ref-Saldanha2019)), para ler os
-arquivos no site FTP do DATASUS e classificar as CSAP em um único
-comando.  
-- Criadas funções para facilitar o manejo e apresentação de dados em
-estudos ecológicos, como a categorização da idade em faixas etárias
-(`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos de
-parto (`partos`), particularmente para o Brasil e os arquivos do
+Capítulos da CID-10.  
+- Criadas as funções `ler_popbr` e `popbr2000_2021` (esta sobre o pacote
+[brpop](https://cran.r-project.org/package=brpop) de Saldanha
+([2022](#ref-brpopref))) para acesso às estimativas populacionais
+publicadas pelo DATASUS e funções para categorização da idade em faixas
+etárias. - Criadas funções para facilitar o manejo e apresentação de
+dados em estudos ecológicos, como a categorização da idade em faixas
+etárias (`fxetar_quinq` e `fxetar3g`) e a identificação dos diagnósticos
+de parto (`partos`), particularmente para o Brasil e os arquivos do
 DATASUS, como a listagem das Unidades da Federação do país (`ufbr`) e a
 lista de procedimentos obstétricos em internações por eventos não
 mórbidos (`procobst`).  
+- Criada a função `fetchcsap` (a partir da função `fetchdatasus` do
+pacote `microdatasus`([Saldanha et al. 2019](#ref-Saldanha2019))), para
+ler os arquivos no site FTP do DATASUS e classificar as CSAP em um único
+comando.  
 - A v0.0.4.5 corrige um erro introduzido na v0.0.4.4 em `csapAIH`, em
 que a variável “csap” registrava todos os casos como “não” (embora
 estivessem classificados corretamente na variável “grupo”).  
@@ -161,11 +163,24 @@ introduzidos com as mudanças anteriores (como o desenho correto do
 gráfico e do nome “Não-CSAP” na tabela e seleção de casos e períodos na
 função `fetchcsap`); ajusta o nome do Grupo - 8 de “DPOC” para
 “Pulmonares”; cria a função `popbr`, com novas possibilidades para as
-estimativas populacionais.
+estimativas populacionais.  
+\[!WARNING\] Foi identificado um erro na classificação do Grupo 1 pela
+lista da Portaria Ministerial através da função interna `listaBRMS()`,
+usada por
+[`csapAIH()`](https://fulvionedel.github.io/csapAIH/reference/csapAIH.md)
+(v. [*issue* 17](https://github.com/fulvionedel/csapAIH/issues/17), em
+07/09/2026). Introduzido na versão em desenvolvimento em 16/07/2024,
+está presente desde a v0.0.4.5. Agradeço a [Sidney
+Bissoli](https://github.com/SidneyBissoli)([Bissoli
+2025](#ref-healthbR)) a identificação e detalhada descrição do erro.  
+- A v0.0.4.9 aparece apenas como versão em desenvolvimento (não é feita
+uma “*release*”) para a correção desso erro, em 11/09/2026.  
+- A **v0.0.5** apresenta as novas mudanças com as correções realizadas e
+a documentação atualizada.
 
 A ajuda sobre o pacote oferece mais detalhes sobre as funções e seu uso.
 Veja no
-[manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.4.8.pdf)
+[manual](https://github.com/fulvionedel/csapAIH/tree/master/inst/manual/csapAIH_0.0.5.pdf)
 ou, no R, com `?csapAIH-package`.
 
 # Dependências
@@ -174,7 +189,9 @@ A leitura de arquivos .DBC exige a instalação prévia do pacote
 [`read.dbc`](https://cran.r-project.org/web/packages/read.dbc/index.html)
 ([Petruzalek 2016](#ref-readdbc)). Sua falta não impede o funcionamento
 das demais funções do pacote (inclusive de leitura de arquivos em outro
-formato). Da mesma forma, `popbr2000_2021` exige a instalação do
+formato, ou mesmo de
+[`fetchcsap()`](https://fulvionedel.github.io/csapAIH/reference/fetchcsap.md)).
+Da mesma forma, `popbr2000_2021` exige a instalação do
 pacote[`brpop`](https://rfsaldanha.github.io/brpop/) (mas a função é
 mantida apenas para documentação) e `fetchcsap` exige a instalação do
 pacote [`microdatasus`](https://github.com/rfsaldanha/microdatasus).
@@ -192,41 +209,55 @@ partir da v0.0.4.4
 quando o cid é uma variável “*haven_labelled*”.
 
 Se a variável com os códigos da CID for da classe “haven_labelled”, a
-função `csapAIH` usará a função `zap_formats`, do pacote `haven`.
+função `csapAIH` usará a função `zap_formats`, do pacote `haven`, que
+deverá então estar instalado.
 
 ------------------------------------------------------------------------
 
 ***Veja o manual do pacote em:***
-<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.4.8.pdf>
+<https://github.com/fulvionedel/csapAIH/blob/master/inst/manual/csapAIH_0.0.5.pdf>
 
 # Agradecimentos
 
 Agradeço a todxs os usuárixs do pacote, particularmente a quem informa
-problemas e sugere mudanças, como @laiovictor e @igortadeu @rafadbarros,
-e (muito!!) a quem apresenta soluções, como @denis-or.
+problemas, sugere mudanças e apresenta soluções, como
+[@laiovictor](https://github.com/laiovictor),
+[@igortadeu](https://github.com/igortadeu)
+[@rafadbarros](https://github.com/rafadbarros),
+[@denis-or](https://github.com/denis-or) e
+[@SidneyBissoli](https://github.com/SidneyBissoli).
 
-E, sempre, meus profundos agradecimentos a
+Sempre meus profundos agradecimentos a
 
-- Daniela Petruzalek, pelo pacote
+- [Daniela Petruzalek](https://github.com/danicat), pelo pacote
   [read.dbc](https://cran.r-project.org/web/packages/read.dbc/index.html);
   e
-- A Raphael Saldanha, pelos pacotes
+
+- A [Raphael Saldanha](https://github.com/rfsaldanha), pelos pacotes
   [microdatasus](https://github.com/rfsaldanha/microdatasus) e
   [brpop](https://github.com/rfsaldanha/brpop).
 
+- E, agora, pelo aviso do erro e apresentação de solução na função
+  `csapAIH` da versão 0.0.4.8 (v.
+  [issue](https://github.com/fulvionedel/csapAIH/issues/17)), e pelo
+  pacote
+  [healthbR](https://sidneybissoli.github.io/healthbR/index.html), a
+  [SidneyBissoli](https://github.com/SidneyBissoli).
+
 # Referências
 
-Alfradique, Maria Elmira, Palmira de Fátima Bonolo, Inês Dourado, Maria
-Fernanda Lima-Costa, James Macinko, Claunara Schilling Mendonça, Veneza
-Berenice Oliveira, Luís Fernando Rolim Sampaio, Carmen de Simoni, and
-Maria Aparecida Turci. 2009. “Internações por condições sensíveis à
-atenção primária: a construção da lista brasileira como ferramenta para
-medir o desempenho do sistema de saúde (Projeto ICSAP - Brasil).”
-*Cadernos de Saúde Pública* 25 (6): 1337–49.
+Alfradique, Maria Elmira, Palmira de Fátima Bonolo, Inês Dourado, et al.
+2009. “Internações por condições sensíveis à atenção primária: a
+construção da lista brasileira como ferramenta para medir o desempenho
+do sistema de saúde (Projeto ICSAP - Brasil).” *Cadernos de Saúde
+Pública* 25 (6): 1337–49.
 <https://doi.org/10.1590/S0102-311X2009000600016>.
 
+Bissoli, Sidney. 2025. *healthbR: Access Brazilian Public Health Data*.
+<https://github.com/SidneyBissoli/healthbR>.
+
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. 2008.
-“Portaria Nº 221, de 17 de abril de 2008.” Ministério da Saúde.
+*Portaria Nº 221, de 17 de abril de 2008.* Ministério da Saúde.
 <https://bvsms.saude.gov.br/bvs/saudelegis/sas/2008/prt0221_17_04_2008.html>.
 
 Nedel, Fúlvio Borges. 2017. “csapAIH: uma função para a classificação
@@ -234,9 +265,9 @@ das condições sensíveis à atenção primária no programa estatístico R.”
 *Epidemiologia e Serviços de Saúde* 26 (01): 199–209.
 <https://doi.org/10.5123/S1679-49742017000100021>.
 
-———. 2019. “Pacote csapAIH: a Lista Brasileira de Internações por
-Condições Sensíveis à Atenção Primária no programa R.” *Epidemiologia e
-Serviços de Saúde* 28 (2): e2019084.
+Nedel, Fúlvio Borges. 2019. “Pacote csapAIH: a Lista Brasileira de
+Internações por Condições Sensíveis à Atenção Primária no programa R.”
+*Epidemiologia e Serviços de Saúde* 28 (2): e2019084.
 <https://doi.org/10.5123/S1679-49742019000200021>.
 
 Nedel, Fúlvio Borges, Luiz Augusto Facchini, João Luiz Bastos, and
@@ -260,7 +291,7 @@ Edited by OPS. Washington.
 Petruzalek, Daniela. 2016. *Read.dbc: Read Data Stored in DBC
 (Compressed DBF) Files*. <https://CRAN.R-project.org/package=read.dbc>.
 
-Saldanha, Raphael. 2022. “Brpop: Brazilian Population Estimatives.”
+Saldanha, Raphael. 2022. *Brpop: Brazilian Population Estimatives*.
 <https://CRAN.R-project.org/package=brpop>.
 
 Saldanha, Raphael de Freitas, Ronaldo Rocha Bastos, and Christovam

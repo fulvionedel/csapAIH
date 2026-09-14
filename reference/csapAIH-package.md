@@ -223,3 +223,5 @@ Useful links:
 - <https://github.com/fulvionedel/csapAIH>
 
 - <https://fulvionedel.github.io/csapAIH/>
+
+- Report bugs at <https://github.com/fulvionedel/csapAIH/issues>

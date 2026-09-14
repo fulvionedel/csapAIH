@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">csapAIH</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,98 +78,20 @@
 <span class="r-in"><span><span class="va">popBR2024</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="st">"data-raw/POPBR24.DBF"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2024</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2024</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Um arquivo no diretório FTP do DATASUS</span></span></span>
 <span class="r-in"><span><span class="va">popBR2010</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2010</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2010</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res situacao  ano sexo fxetar5 fxetaria populacao</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001   urbana 2010 masc     0-4     0000       100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001   urbana 2010 masc     0-4     0101        92</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001   urbana 2010 masc     0-4     0202        95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001   urbana 2010 masc     0-4     0303       131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001   urbana 2010 masc     0-4     0404       107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001   urbana 2010 masc     5-9     0505       125</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2010</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         sexo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5     masc     fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4    7016987 6779172</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9    7624144 7345231</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14  8725413 8441348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19  8558868 8432002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24  8630227 8614963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29  8460995 8643418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34  7717657 8026855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39  6766665 7121916</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44  6320570 6688797</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49  5692013 6141338</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54  4834995 5305407</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59  3902344 4373875</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64  3041034 3468085</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69  2224065 2616745</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74  1667373 2074264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79  1090518 1472930</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   80 e + 1133122 1802463</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">popBR2013</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2013</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2013</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetar5 fxetaria populacao</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2013 masc     0-4      000       201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110001 2013 masc     0-4      001       204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110001 2013 masc     0-4      002       202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110001 2013 masc     0-4      003       198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110001 2013 masc     0-4      004       197</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110001 2013 masc     5-9      005       195</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2013</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         sexo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5     masc     fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4    7463884 7121178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9    7805624 7454699</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14  8426065 8138707</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19  8644694 8561467</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24  8412732 8488814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29  8524675 8724932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34  8310811 8648899</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39  7282908 7660500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44  6497525 6928918</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49  6021673 6540506</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54  5313955 5850019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59  4391704 4896250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64  3437752 3903087</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69  2536782 2951155</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74  1804579 2228456</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79  1248516 1687030</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   80 e + 1268870 2049336</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">popBR2025</span> <span class="op">&lt;-</span> <span class="fu">ler_popbr</span><span class="op">(</span><span class="fl">2025</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">popBR2025</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   munic_res  ano sexo fxetar5 fxetaria populacao</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    110001 2025 masc     0-4      000       148</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    110002 2025 masc     0-4      000       732</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    110003 2025 masc     0-4      000        31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    110004 2025 masc     0-4      000       640</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    110005 2025 masc     0-4      000       112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    110006 2025 masc     0-4      000        86</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html" class="external-link">xtabs</a></span><span class="op">(</span><span class="va">populacao</span> <span class="op">~</span> <span class="va">fxetar5</span> <span class="op">+</span> <span class="va">sexo</span>, data <span class="op">=</span> <span class="va">popBR2025</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         sexo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fxetar5     masc     fem</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0-4    6485679 6188735</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5-9    7321743 6981876</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   10-14  7480784 7125225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15-19  7544138 7218879</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   20-24  7928180 7673700</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   25-29  8183676 8173692</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   30-34  8003264 8182466</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   35-39  8031248 8321113</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   40-44  8111472 8546246</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   45-49  7381590 7915399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   50-54  6317166 6898608</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   55-59  5663477 6371783</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   60-64  4947164 5757438</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   65-69  3934641 4740135</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   70-74  2878618 3646007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   75-79  1927758 2582930</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   80 e + 1906030 3050177</span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

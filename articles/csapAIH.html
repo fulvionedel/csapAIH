@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">csapAIH</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@
 
 
 
-
+<script src="csapAIH_files/kePrint-0.0.1/kePrint.js"></script><link href="csapAIH_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
@@ -60,7 +60,7 @@
             
             <h4 data-toc-skip class="date">
 <!-- | Em atualização -->
-<div class="line-block">11 de September de 2026</div>
+<div class="line-block">14 de September de 2026</div>
 </h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fulvionedel/csapAIH/blob/master/vignettes/articles/csapAIH.Rmd" class="external-link"><code>vignettes/articles/csapAIH.Rmd</code></a></small>
@@ -94,6 +94,13 @@ considerados. A versão com o desdobramento do primeiro grupo da Portaria
 e, consequentemente, com 20 grupos ao final, é a recomendada pela
 Organização Panamericana da Saúde (OPAS).<span class="citation">(Organización Panamericana de la Salud (OPS)
 2014)</span></p>
+<p>A função <code><a href="../reference/csapAIH.html">csapAIH()</a></code> permite a classificação segundo as
+duas versões, definidas pelo argumento “<code>lista</code>”. Esse
+argumento aparece em <code><a href="../reference/desenhaCSAP.html">desenhaCSAP()</a></code> para desenhar o gráfico
+adequado. As funções <code><a href="../reference/tabCSAP.html">tabCSAP()</a></code> e
+<code><a href="../reference/descreveCSAP.html">descreveCSAP()</a></code> identificam a lista utilizada e portanto não
+têm o argumento. Os grupos em cada lista podem ser citados pela função
+<code><a href="../reference/nomesgruposCSAP.html">nomesgruposCSAP()</a></code>, em português, espanhol ou inglês.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nomesgruposCSAP.html">nomesgruposCSAP</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">artigo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nomesgruposCSAP.html">nomesgruposCSAP</a></span><span class="op">(</span>lista <span class="op">=</span> <span class="st">"Alfradique"</span><span class="op">)</span></span>
@@ -194,106 +201,293 @@ publicação.</caption>
 </tr>
 </tbody>
 </table>
-<p>A função <code><a href="../reference/csapAIH.html">csapAIH()</a></code> permite a classificação segundo as
-duas versões, definidas pelo argumento “<code>lista</code>”. Esse
-argumento aparece em <code><a href="../reference/desenhaCSAP.html">desenhaCSAP()</a></code> para desenhar o gráfico
-adequado. As funções <code><a href="../reference/tabCSAP.html">tabCSAP()</a></code> e
-<code><a href="../reference/descreveCSAP.html">descreveCSAP()</a></code> identificam a lista utilizada e portanto não
-têm o argumento. Os grupos em cada lista podem ser citados pela função
-<code><a href="../reference/nomesgruposCSAP.html">nomesgruposCSAP()</a></code>, em português, espanhol ou inglês.</p>
 <p>Os “arquivos da AIH” são disponibilizados pelo DATASUS em arquivos
-nos formatos DBF, CSV e DBC (arquivo DBC comprimido pelo DATASUS)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+nos formatos DBF, CSV e DBC (arquivo DBF comprimido pelo DATASUS).
+Arquivos nesses formatos são importados por <code><a href="../reference/csapAIH.html">csapAIH()</a></code>, sem
+necessidade de importação prévia do arquivo para leitura dos dados. Para
+os arquivos em CSV deve-se indicar o separador, se vírgula (“,”) ou
+ponto-e-vírgula (“;”). Os arquivos DBC são lidos pela função
+<code><a href="https://rdrr.io/pkg/read.dbc/man/read.dbc.html" class="external-link">read.dbc::read.dbc()</a></code>.</p>
+<p>Para os “arquivos da AIH”, não é necessária outra informação que o
+<em>path</em> do arquivo, ou o nome do <em>data frame</em>, se for um
+objeto no espaço de trabalho. A função retorna uma mensagem com o número
+de registros importados, salva como atributo do banco de dados
+criado.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">csapAIH</span>(<span class="st">"../../data-raw/RDRS1801.dbf"</span>) </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>Importados <span class="fl">60.529</span> registros.</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>Excluídos <span class="fl">8.240</span> (<span class="dv">13</span>,<span class="dv">6</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>Excluídos <span class="dv">366</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>Exportados <span class="fl">51.923</span> (<span class="dv">85</span>,<span class="dv">8</span>%) registros.</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">csapAIH</span>(<span class="st">"../../data-raw/RDRS1801.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>Importados <span class="fl">60.529</span> registros.</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>Excluídos <span class="fl">8.240</span> (<span class="dv">13</span>,<span class="dv">6</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>Excluídos <span class="dv">366</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>Exportados <span class="fl">51.923</span> (<span class="dv">85</span>,<span class="dv">8</span>%) registros.</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="fu">csapAIH</span>(<span class="st">"../../data-raw/RDRS1801.dbc"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>Importados <span class="fl">60.529</span> registros.</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>Excluídos <span class="fl">8.240</span> (<span class="dv">13</span>,<span class="dv">6</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>Excluídos <span class="dv">366</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>Exportados <span class="fl">51.923</span> (<span class="dv">85</span>,<span class="dv">8</span>%) registros.</span></code></pre></div>
+<p>Não obstante, os arquivos RD* ocupam muito espaço em disco, apesar da
+grande compressão do formato DBC, e pode ser preferível baixar o arquivo
+da internet, fazer o processamento desejado e então apagá-lo.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>arquivo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RDRS1801.dbf"</span>, <span class="st">"RDRS1801.csv"</span>, <span class="st">"RDRS1801.dbc"</span><span class="op">)</span>,</span>
 <span>           tamanho <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.size</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.dbf"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                       <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.size</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.csv"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                       <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.size</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.dbc"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/csapAIH.html">csapAIH</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.dbf"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/csapAIH.html">csapAIH</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.csv"</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/csapAIH.html">csapAIH</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.dbc"</span><span class="op">)</span></span></code></pre></div>
-<p>Atualmente, a forma mais fácil</p>
-<div class="section level2">
-<h2 id="icsap-no-rs-2023-a-2024">ICSAP no RS, 2023 a 2024<a class="anchor" aria-label="anchor" href="#icsap-no-rs-2023-a-2024"></a>
-</h2>
-<p>A função <code>fetchcsap</code> baixa os arquivos da AIH no DATASUS e
-entrega um banco de dados com a classificação da internação segundo a
-lista brasileira de ICSAP e outras ações (veja a ajuda da função
-digitando “<code>?fetchsap</code>” no console).</p>
-<p>Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP
-do RS de 2023 a 2024 com o seguinte comando:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># icsaprs &lt;- fetchcsap(2023, 2024, uf = "RS")</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>icsaprs <span class="ot">&lt;-</span> <span class="fu">fetchcsap</span>(<span class="dv">2018</span>, <span class="at">mesfim =</span> <span class="dv">1</span>, <span class="at">periodo =</span> <span class="st">"c"</span>, <span class="at">uf =</span> <span class="st">"RS"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Discovering available files on DataSUS...</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Preparing to download and read <span class="dv">1</span> DataSUS file...</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1801.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1801.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a> [<span class="dv">32</span>m✔ [<span class="dv">39</span>m Downloaded and read <span class="dv">1</span> of <span class="dv">1</span> DataSUS file.</span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>Importados <span class="fl">60.529</span> registros.</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>Excluídos <span class="fl">8.240</span> (<span class="dv">13</span>,<span class="dv">6</span>%) registros de procedimentos obstétricos.</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>Excluídos <span class="dv">366</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>Exportados <span class="fl">51.923</span> (<span class="dv">85</span>,<span class="dv">8</span>%) registros.</span></code></pre></div>
-<p>Vemos nas mensagens de <em>download</em> que foram baixados os
-arquivos até junho de 2025 (’RDRS2506.dbc) e que foram “importados
-60.529 registros”, excluídos alguns registros e finalmente “exportados
-51.923 registros”, que representam 85,8% de todas as internações do
-período. Esse resumo de importação é guardado como atributo do banco de
-dados e pode ser recuperado com as funções <code><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr()</a></code> ou
-<code><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes()</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">attr</span>(icsaprs, <span class="st">"resumo"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>        acao  freq  perc                                  objeto</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="dv">1</span> Importados <span class="dv">60529</span> <span class="fl">100.0</span>                              registros.</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="dv">2</span>  Excluídos  <span class="dv">8240</span>  <span class="fl">13.6</span> registros de procedimentos obstétricos.</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="dv">3</span>  Excluídos   <span class="dv">366</span>   <span class="fl">0.6</span>  registros de AIH de longa permanência.</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="dv">4</span> Exportados <span class="dv">51923</span>  <span class="fl">85.8</span>                              registros.</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="fu">attributes</span>(icsaprs)<span class="sc">$</span>resumo</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>        acao  freq  perc                                  objeto</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="dv">1</span> Importados <span class="dv">60529</span> <span class="fl">100.0</span>                              registros.</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="dv">2</span>  Excluídos  <span class="dv">8240</span>  <span class="fl">13.6</span> registros de procedimentos obstétricos.</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="dv">3</span>  Excluídos   <span class="dv">366</span>   <span class="fl">0.6</span>  registros de AIH de longa permanência.</span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="dv">4</span> Exportados <span class="dv">51923</span>  <span class="fl">85.8</span>                              registros.</span></code></pre></div>
-<p>Em tabela para apresentação:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">icsaprs</span><span class="op">)</span><span class="op">$</span><span class="va">resumo</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>big.mark <span class="op">=</span> <span class="st">"."</span>, decimal.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
-<span>               col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ação"</span>, <span class="st">"N"</span>, <span class="st">"%"</span>, <span class="st">"Objeto"</span><span class="op">)</span> <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Ação</th>
-<th align="right">N</th>
-<th align="right">%</th>
-<th align="left">Objeto</th>
+<span>                       <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.size</a></span><span class="op">(</span><span class="st">"../../data-raw/RDRS1801.dbc"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1024</span><span class="op">^</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Tamanho do arquivo segundo o formato disponibilizado."</span>, </span>
+<span>                    format.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>decimal.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>, </span>
+<span>                    col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arquivo"</span>, <span class="st">"Tamanho (MB)"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tamanho do arquivo segundo o formato disponibilizado.
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+Arquivo
+</th>
+<th style="text-align:right;">
+Tamanho (MB)
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">Importados</td>
-<td align="right">60.529</td>
-<td align="right">100,0</td>
-<td align="left">registros.</td>
+<tr>
+<td style="text-align:left;">
+RDRS1801.dbf
+</td>
+<td style="text-align:right;">
+40,5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Excluídos</td>
-<td align="right">8.240</td>
-<td align="right">13,6</td>
-<td align="left">registros de procedimentos obstétricos.</td>
+<tr>
+<td style="text-align:left;">
+RDRS1801.csv
+</td>
+<td style="text-align:right;">
+35,9
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Excluídos</td>
-<td align="right">366</td>
-<td align="right">0,6</td>
-<td align="left">registros de AIH de longa permanência.</td>
-</tr>
-<tr class="even">
-<td align="left">Exportados</td>
-<td align="right">51.923</td>
-<td align="right">85,8</td>
-<td align="left">registros.</td>
+<tr>
+<td style="text-align:left;">
+RDRS1801.dbc
+</td>
+<td style="text-align:right;">
+4,5
+</td>
 </tr>
 </tbody>
 </table>
-<!-- ## Tabela "bruta" --><!-- A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela pronta para apresentação, com as frequências brutas e absolutas das CSAP por grupo de causa. --><!-- ```{r} --><!-- descreveCSAP(csap) --><!-- ``` --><!-- ## Tabela para apresentação --><!-- ```{r} --><!-- descreveCSAP(csap) |> --><!--   knitr::kable(align = c('l', rep('r', 3))) --><!-- ``` --><!-- Entretanto, ao transformar os valores para o formato latino, sua classe se transforma em `character` e assim é impossível realizar cálculos com esse output. Além disso, não serve para publicações em inglês. Por isso a função `descreveCSAP` permanecerá no pacote mas seu desenvolvimento seguirá em outra função, agora de nome `tabCSAP`. Nessa nova função, a apresentação de uma tabela formatada se faz a partir do argumento `format = TRUE`. Por padrão esse argumento é `FALSE`, o que permite operações matemáticas com os valores da tabela (um `data.frame`, na verdade), como veremos em seguida. --><!-- A função `tabCSAP` permite também a apresentação da tabela em inglês ou espanhol, através do argumento `lang`: --><!-- ```{r} --><!-- tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |> --><!--   knitr::kable(align = c('l', rep('r', 3))) --><!-- tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |> --><!--   knitr::kable(align = c('l', rep('r', 3))) --><!-- ``` --><!-- Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`. Note ainda que, à diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas. --><!-- ```{r} --><!-- AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", information_system = "SIH-RD") --><!-- listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique") --><!-- # descreveCSAP(listaOPS) # Retorna o erro: "O vetor precisa ter os 19 grupos da Lista Brasileira. --><!-- #   Se essa for a lista 'Alfradique' use 'tabCSAP'."" --><!-- tabCSAP(listaOPS$grupo) --><!-- ``` --><!-- ## Calcular taxas --><!-- **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:** --><!-- O código IBGE (os seis primeiros dígitos) de Cerro Largo é "430520". --><!-- ### As ICSAP --><!-- Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021. --><!-- ```{r} --><!-- claih <- AIHRS2021 %>%  --><!--   filter(MUNIC_RES == "430520") %>%  --><!--   droplevels() %>%  --><!--   csapAIH() --><!-- ``` --><!-- ### A população --><!-- ```{r} --><!-- clpop <- ler_popbr(2021) %>%  --><!--   filter(munic_res == "430520") %>%  --><!--   group_by(sexo, fxetar5) %>%  --><!--   reframe(pop = sum(populacao)) --><!-- clpop %>%  --><!--   tidyr::pivot_wider(names_from = sexo, values_from = pop) --><!-- ``` --><!-- ### A tabela com as taxas --><!-- ```{r} --><!-- tabCSAP(claih$grupo) %>%  --><!--   mutate(taxa = casos / sum(clpop$pop)*10000) %>%  --><!--   knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por 10.000 hab.")) --><!-- ``` --><!-- ## Gráficos --><!-- ```{r out.width="50%", fig.align='center', message=FALSE} --><!-- #| fig.alt: > --><!-- #|   Gráfico de barras com a distribuição proporcional  --><!-- #|   dos grupos de causa CSAP entre as ICSAP --><!-- gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4) --><!-- gr --><!-- ``` --><!-- ### Estratificado por categorias de outra variável presente no banco de dados: --><!-- Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão). --><!-- ```{r out.width="75%", fig.align='center', fig.show='hold', fig.height=4} --><!-- #| fig.alt: > --><!-- #|   O gráfico anterior por estratos de sexo --><!-- rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total")) --><!-- gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot) --><!-- gr + ggplot2::facet_wrap(~ munres == "431490",  --><!--                          labeller = ggplot2::as_labeller(c("FALSE" = "Interior",  --><!--                                                            "TRUE" = "Capital"))) --><!-- ``` --><!-- ```{r out.width="80%", fig.cap="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021."} --><!-- #| fig.alt: > --><!-- #|   Gráfico da distribuição proporcional por grupo de causa entre as ICSAP, --><!-- #|   por estratos de sexo --><!-- DORS2021 %>%  --><!--   filter(!is.na(SEXO), !is.na(idade)) %>%  --><!--   desenhaCSAP(x.size = 7, y.size = 8) +  --><!--     ggplot2::facet_grid(SEXO ~ fxetar3) --><!-- ``` -->
-</div>
+<p>Para esses casos foi criada a função <code><a href="../reference/fetchcsap.html">fetchcsap()</a></code>, um
+“atalho” para <code>fetchdatasus()</code>, do pacote
+<em>microdatasus</em><span class="citation">(Saldanha 2019)</span>, que
+baixa os arquivos da AIH no DATASUS e então aplica
+<code><a href="../reference/csapAIH.html">csapAIH()</a></code> sobre o banco de dados.</p>
+<p>Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP
+do RS no “mês de competência” jan/2018 com o seguinte comando, que
+retorna os mesmos resultados vistos acima:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">120</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">fetchcsap</span>(<span class="dv">2018</span>, <span class="at">mesfim =</span> <span class="dv">1</span>, <span class="at">periodo =</span> <span class="st">"comp"</span>, <span class="at">uf =</span> <span class="st">"RS"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Discovering available files on DataSUS...</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Preparing to download and read <span class="dv">1</span> DataSUS file...</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1801.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1801.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a> [<span class="dv">32</span>m✔ [<span class="dv">39</span>m Downloaded and read <span class="dv">1</span> of <span class="dv">1</span> DataSUS file.</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>Importados <span class="fl">60.529</span> registros.</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>Excluídos <span class="fl">8.240</span> (<span class="dv">13</span>,<span class="dv">6</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>Excluídos <span class="dv">366</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>Exportados <span class="fl">51.923</span> (<span class="dv">85</span>,<span class="dv">8</span>%) registros.</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>       munres munint   sexo idade fxetar5   csap    grupo    cid data.inter data.saida</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>       <span class="sc">&lt;</span>char<span class="sc">&gt;</span> <span class="er">&lt;</span>char<span class="sc">&gt;</span> <span class="er">&lt;</span>fctr<span class="sc">&gt;</span> <span class="er">&lt;</span>num<span class="sc">&gt;</span>  <span class="er">&lt;</span>fctr<span class="sc">&gt;</span> <span class="er">&lt;</span>fctr<span class="sc">&gt;</span>   <span class="er">&lt;</span>fctr<span class="sc">&gt;</span> <span class="er">&lt;</span>char<span class="sc">&gt;</span>     <span class="er">&lt;</span>Date<span class="sc">&gt;</span>     <span class="er">&lt;</span>Date<span class="sc">&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span> <span class="dv">431560</span> <span class="dv">431560</span>    fem    <span class="dv">53</span>   <span class="dv">50-54</span>    não nao<span class="sc">-</span>CSAP   B207 <span class="dv">2017-11-14</span> <span class="dv">2017-11-22</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>    <span class="dv">2</span><span class="sc">:</span> <span class="dv">431560</span> <span class="dv">431560</span>    fem     <span class="dv">0</span>     <span class="dv">0-4</span>    não nao<span class="sc">-</span>CSAP   P704 <span class="dv">2017-11-04</span> <span class="dv">2017-11-11</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>    <span class="dv">3</span><span class="sc">:</span> <span class="dv">431560</span> <span class="dv">431560</span>   masc     <span class="dv">0</span>     <span class="dv">0-4</span>    não nao<span class="sc">-</span>CSAP   P220 <span class="dv">2017-11-03</span> <span class="dv">2017-11-13</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>    <span class="dv">4</span><span class="sc">:</span> <span class="dv">431560</span> <span class="dv">431560</span>   masc     <span class="dv">0</span>     <span class="dv">0-4</span>    não nao<span class="sc">-</span>CSAP   A419 <span class="dv">2017-10-18</span> <span class="dv">2017-11-08</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>    <span class="dv">5</span><span class="sc">:</span> <span class="dv">431560</span> <span class="dv">431560</span>    fem     <span class="dv">0</span>     <span class="dv">0-4</span>    não nao<span class="sc">-</span>CSAP   P073 <span class="dv">2017-11-08</span> <span class="dv">2017-12-14</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>   <span class="sc">---</span>                                                                                </span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="dv">51919</span><span class="sc">:</span> <span class="dv">430786</span> <span class="dv">432280</span>   masc    <span class="dv">75</span>   <span class="dv">75-79</span>    sim      g06   J158 <span class="dv">2018-01-04</span> <span class="dv">2018-01-10</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="dv">51920</span><span class="sc">:</span> <span class="dv">430786</span> <span class="dv">432280</span>    fem    <span class="dv">90</span>  <span class="dv">80</span> e <span class="sc">+</span>    sim      g12    I64 <span class="dv">2018-01-15</span> <span class="dv">2018-01-23</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="dv">51921</span><span class="sc">:</span> <span class="dv">430786</span> <span class="dv">432280</span>   masc    <span class="dv">75</span>   <span class="dv">75-79</span>    não nao<span class="sc">-</span>CSAP   J180 <span class="dv">2018-01-26</span> <span class="dv">2018-01-29</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="dv">51922</span><span class="sc">:</span> <span class="dv">430595</span> <span class="dv">432280</span>    fem    <span class="dv">91</span>  <span class="dv">80</span> e <span class="sc">+</span>    sim      g08   J439 <span class="dv">2018-01-02</span> <span class="dv">2018-01-05</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="dv">51923</span><span class="sc">:</span> <span class="dv">430786</span> <span class="dv">432280</span>   masc    <span class="dv">20</span>   <span class="dv">20-24</span>    não nao<span class="sc">-</span>CSAP   L988 <span class="dv">2018-01-09</span> <span class="dv">2018-01-13</span></span></code></pre></div>
+<p>O argumento <code>periodo = "comp"</code> garante que o data frame
+resultante contenha todas as internações do(s) arquivo(s) RD
+considerados e o período se refira, portanto, ao “mês de competência”
+(i.e., mês em que foi registrado o faturamento) da internação.</p>
+<p>Por padrão, esse argumento é <code>periodo = "interna"</code>, o que
+leva ao download dos arquivos RD de até seis meses após o definido em
+<code>mesfim</code> e então a seleção dos casos pela data de internação,
+para retornar um banco apenas com as internações ocorridas no período
+definido e registradas em até seis meses após a internação.</p>
+<p>Veja o resultado com <code>periodo = "interna"</code> (que por ser o
+padrão é desnecessário no comando):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">fetchcsap</span>(<span class="dv">2018</span>, <span class="at">mesfim =</span> <span class="dv">1</span>, <span class="at">uf =</span> <span class="st">"RS"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Discovering available files on DataSUS...</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Preparing to download and read <span class="dv">6</span> DataSUS files...</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1801.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1801.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">2</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1802.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">2</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1802.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">3</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1803.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">3</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1803.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">4</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1804.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">4</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1804.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1805.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1805.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading [<span class="dv">6</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1806.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Reading [<span class="dv">6</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">34</span>m [<span class="dv">34</span>mRDRS1806.dbc [<span class="dv">34</span>m [<span class="dv">39</span>m...</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a> [<span class="dv">32</span>m✔ [<span class="dv">39</span>m Downloaded and read <span class="dv">6</span> of <span class="dv">6</span> DataSUS files.</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>Importados <span class="fl">62.748</span> registros.</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>Excluídos <span class="fl">8.667</span> (<span class="dv">13</span>,<span class="dv">8</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>Excluídos <span class="dv">324</span> (<span class="dv">0</span>,<span class="dv">5</span>%) registros de AIH de longa permanência.</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>Exportados <span class="fl">53.757</span> (<span class="dv">85</span>,<span class="dv">7</span>%) registros.</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>       munres munint   sexo idade fxetar5   csap    grupo    cid data.inter data.saida</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>       <span class="sc">&lt;</span>char<span class="sc">&gt;</span> <span class="er">&lt;</span>char<span class="sc">&gt;</span> <span class="er">&lt;</span>fctr<span class="sc">&gt;</span> <span class="er">&lt;</span>num<span class="sc">&gt;</span>  <span class="er">&lt;</span>fctr<span class="sc">&gt;</span> <span class="er">&lt;</span>fctr<span class="sc">&gt;</span>   <span class="er">&lt;</span>fctr<span class="sc">&gt;</span> <span class="er">&lt;</span>char<span class="sc">&gt;</span>     <span class="er">&lt;</span>Date<span class="sc">&gt;</span>     <span class="er">&lt;</span>Date<span class="sc">&gt;</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span> <span class="dv">432200</span> <span class="dv">431240</span>   masc    <span class="dv">89</span>  <span class="dv">80</span> e <span class="sc">+</span>    não nao<span class="sc">-</span>CSAP    C61 <span class="dv">2018-01-03</span> <span class="dv">2018-01-08</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>    <span class="dv">2</span><span class="sc">:</span> <span class="dv">432200</span> <span class="dv">431240</span>   masc    <span class="dv">71</span>   <span class="dv">70-74</span>    não nao<span class="sc">-</span>CSAP   N180 <span class="dv">2018-01-02</span> <span class="dv">2018-01-20</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>    <span class="dv">3</span><span class="sc">:</span> <span class="dv">432200</span> <span class="dv">431240</span>   masc    <span class="dv">78</span>   <span class="dv">75-79</span>    não nao<span class="sc">-</span>CSAP   I472 <span class="dv">2018-01-02</span> <span class="dv">2018-01-07</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>    <span class="dv">4</span><span class="sc">:</span> <span class="dv">432200</span> <span class="dv">431240</span>   masc    <span class="dv">47</span>   <span class="dv">45-49</span>    sim      g11   I509 <span class="dv">2018-01-12</span> <span class="dv">2018-01-18</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>    <span class="dv">5</span><span class="sc">:</span> <span class="dv">432200</span> <span class="dv">431240</span>   masc    <span class="dv">61</span>   <span class="dv">60-64</span>    não nao<span class="sc">-</span>CSAP   N189 <span class="dv">2018-01-13</span> <span class="dv">2018-01-25</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>   <span class="sc">---</span>                                                                                </span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="dv">53753</span><span class="sc">:</span> <span class="dv">430085</span> <span class="dv">431490</span>   masc    <span class="dv">42</span>   <span class="dv">40-44</span>    não nao<span class="sc">-</span>CSAP    I48 <span class="dv">2018-01-28</span> <span class="dv">2018-03-07</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="dv">53754</span><span class="sc">:</span> <span class="dv">431350</span> <span class="dv">431490</span>   masc    <span class="dv">23</span>   <span class="dv">20-24</span>    não nao<span class="sc">-</span>CSAP   M532 <span class="dv">2018-01-22</span> <span class="dv">2018-01-26</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="dv">53755</span><span class="sc">:</span> <span class="dv">430920</span> <span class="dv">431490</span>    fem    <span class="dv">70</span>   <span class="dv">70-74</span>    não nao<span class="sc">-</span>CSAP   H330 <span class="dv">2018-01-19</span> <span class="dv">2018-01-20</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="dv">53756</span><span class="sc">:</span> <span class="dv">431440</span> <span class="dv">431490</span>    fem    <span class="dv">66</span>   <span class="dv">65-69</span>    não nao<span class="sc">-</span>CSAP   H330 <span class="dv">2018-01-18</span> <span class="dv">2018-01-19</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="dv">53757</span><span class="sc">:</span> <span class="dv">431560</span> <span class="dv">431490</span>    fem    <span class="dv">21</span>   <span class="dv">20-24</span>    não nao<span class="sc">-</span>CSAP   H330 <span class="dv">2018-01-16</span> <span class="dv">2018-01-17</span></span></code></pre></div>
+<p>O pacote <a href="https://sidneybissoli.github.io/healthbR/" class="external-link">healthbR</a><span class="citation">(Bissoli 2025)</span> é uma nova alternativa para
+download de dados do SIH/SUS (entre outros). Abaixo é exemplificado seu
+uso com <code><a href="../reference/csapAIH.html">csapAIH()</a></code> para jan/2025.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>healthbR<span class="sc">::</span><span class="fu">sih_data</span>(<span class="dv">2025</span>, <span class="dv">1</span>, <span class="at">uf =</span> <span class="st">"RS"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">csapAIH</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">pull</span>(data.inter) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Package  [<span class="dv">34</span>marrow [<span class="dv">39</span>m is not installed; using DATASUS directly.</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Install  [<span class="dv">34</span>marrow [<span class="dv">39</span>m to enable <span class="fu">the</span> (faster) R2 backend.</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">01</span>...</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>Importados <span class="fl">66.998</span> registros.</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>Excluídos <span class="fl">6.591</span> (<span class="dv">9</span>,<span class="dv">8</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>Excluídos <span class="dv">378</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>Exportados <span class="fl">60.029</span> (<span class="dv">89</span>,<span class="dv">6</span>%) registros.</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>healthbR<span class="sc">::</span><span class="fu">sih_data</span>(<span class="dv">2025</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">uf =</span> <span class="st">"RS"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>  <span class="fu">filter</span>(DT_INTER <span class="sc">&gt;=</span> <span class="st">"2025-01-01"</span>, DT_INTER <span class="sc">&lt;=</span> <span class="st">"2025-01-31"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>  <span class="fu">csapAIH</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>  <span class="fu">pull</span>(data.inter) <span class="sc">|&gt;</span> </span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Package  [<span class="dv">34</span>marrow [<span class="dv">39</span>m is not installed; using DATASUS directly.</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a> [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Install  [<span class="dv">34</span>marrow [<span class="dv">39</span>m to enable <span class="fu">the</span> (faster) R2 backend.</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading <span class="dv">6</span> <span class="fu">file</span>(s) (<span class="dv">1</span> <span class="fu">UF</span>(s) x <span class="dv">1</span> <span class="fu">year</span>(s) x <span class="dv">6</span> <span class="fu">month</span>(s))...</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">01</span>...</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>⠙ Downloading [<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">32</span>m■■■■■■                           [<span class="dv">39</span>m <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>m</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">02</span>...</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>⠹ Downloading [<span class="dv">2</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">32</span>m■■■■■■■■■■■                      [<span class="dv">39</span>m <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>m</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">03</span>...</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>⠸ Downloading [<span class="dv">3</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">32</span>m■■■■■■■■■■■■■■■■                 [<span class="dv">39</span>m <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">1</span>m</span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">04</span>...</span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>⠼ Downloading [<span class="dv">4</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">32</span>m■■■■■■■■■■■■■■■■■■■■■            [<span class="dv">39</span>m <span class="sc">|</span> ETA<span class="sc">:</span> <span class="dv">41</span>s</span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">05</span>...</span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>⠴ Downloading [<span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">32</span>m■■■■■■■■■■■■■■■■■■■■■■■■■■       [<span class="dv">39</span>m <span class="sc">|</span> ETA<span class="sc">:</span> <span class="dv">22</span>s</span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a> [<span class="dv">1</span>m [<span class="dv">22</span>m [<span class="dv">36</span>mℹ [<span class="dv">39</span>m Downloading SIH data<span class="sc">:</span> RS <span class="dv">2025</span><span class="sc">/</span><span class="dv">06</span>...</span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>⠴ Downloading [<span class="dv">6</span><span class="sc">/</span><span class="dv">6</span>]  [<span class="dv">32</span>m■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  [<span class="dv">39</span>m <span class="sc">|</span> ETA<span class="sc">:</span>  <span class="dv">0</span>s</span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>Importados <span class="fl">69.018</span> registros.</span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>Excluídos <span class="fl">6.807</span> (<span class="dv">9</span>,<span class="dv">9</span>%) registros de procedimentos obstétricos.</span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>Excluídos <span class="dv">437</span> (<span class="dv">0</span>,<span class="dv">6</span>%) registros de AIH de longa permanência.</span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>Exportados <span class="fl">61.774</span> (<span class="dv">89</span>,<span class="dv">5</span>%) registros.</span></code></pre></div>
+<!-- ## Tabela "bruta" -->
+<!-- A função `descreveCSAP` gera, a partir de um comando muito simples, uma tabela pronta para apresentação, com as frequências brutas e absolutas das CSAP por grupo de causa. -->
+<!-- ```{r} -->
+<!-- descreveCSAP(csap) -->
+<!-- ``` -->
+<!-- ## Tabela para apresentação -->
+<!-- ```{r} -->
+<!-- descreveCSAP(csap) |> -->
+<!--   knitr::kable(align = c('l', rep('r', 3))) -->
+<!-- ``` -->
+<!-- Entretanto, ao transformar os valores para o formato latino, sua classe se transforma em `character` e assim é impossível realizar cálculos com esse output. Além disso, não serve para publicações em inglês. Por isso a função `descreveCSAP` permanecerá no pacote mas seu desenvolvimento seguirá em outra função, agora de nome `tabCSAP`. Nessa nova função, a apresentação de uma tabela formatada se faz a partir do argumento `format = TRUE`. Por padrão esse argumento é `FALSE`, o que permite operações matemáticas com os valores da tabela (um `data.frame`, na verdade), como veremos em seguida. -->
+<!-- A função `tabCSAP` permite também a apresentação da tabela em inglês ou espanhol, através do argumento `lang`: -->
+<!-- ```{r} -->
+<!-- tabCSAP(csap$grupo, digits = 1, lang = "en", format = T) |> -->
+<!--   knitr::kable(align = c('l', rep('r', 3))) -->
+<!-- tabCSAP(csap$grupo, digits = 1, lang = "es", format = T) |> -->
+<!--   knitr::kable(align = c('l', rep('r', 3))) -->
+<!-- ``` -->
+<!-- Finalmente, [vimos](#lista) que a função `tabCSAP` permite ainda a apresentação da lista em 20 grupos de causa. Assim, se as CSAP foram classificadas em 20 grupos -- usando, por exemplo o argumento `lista = "Alfradique"` em `csapAIH()` --, essa tabela deve ser apresentada com `tabCSAP` e não com `descreveCSAP`. Note ainda que, à diferença de `descreveCSAP`, `tabCSAP` exige o nome da variável com o grupo de causas. -->
+<!-- ```{r} -->
+<!-- AIHRS2021 <- microdatasus::fetch_datasus(year_start = 2021, 1, 2021, 12, uf = "RS", information_system = "SIH-RD") -->
+<!-- listaOPS <- csapAIH(AIHRS2021, lista = "Alfradique") -->
+<!-- # descreveCSAP(listaOPS) # Retorna o erro: "O vetor precisa ter os 19 grupos da Lista Brasileira. -->
+<!-- #   Se essa for a lista 'Alfradique' use 'tabCSAP'."" -->
+<!-- tabCSAP(listaOPS$grupo) -->
+<!-- ``` -->
+<!-- ## Calcular taxas -->
+<!-- **Exemplo: cálculo das taxas brutas de ICSAP por grupo de causa em Cerro Largo, RS, 2021:** -->
+<!-- O código IBGE (os seis primeiros dígitos) de Cerro Largo é "430520". -->
+<!-- ### As ICSAP -->
+<!-- Selecionamos as informações sobre residentes de Cerro Largo em nosso banco de dados da AIH em 2021. -->
+<!-- ```{r} -->
+<!-- claih <- AIHRS2021 %>%  -->
+<!--   filter(MUNIC_RES == "430520") %>%  -->
+<!--   droplevels() %>%  -->
+<!--   csapAIH() -->
+<!-- ``` -->
+<!-- ### A população -->
+<!-- ```{r} -->
+<!-- clpop <- ler_popbr(2021) %>%  -->
+<!--   filter(munic_res == "430520") %>%  -->
+<!--   group_by(sexo, fxetar5) %>%  -->
+<!--   reframe(pop = sum(populacao)) -->
+<!-- clpop %>%  -->
+<!--   tidyr::pivot_wider(names_from = sexo, values_from = pop) -->
+<!-- ``` -->
+<!-- ### A tabela com as taxas -->
+<!-- ```{r} -->
+<!-- tabCSAP(claih$grupo) %>%  -->
+<!--   mutate(taxa = casos / sum(clpop$pop)*10000) %>%  -->
+<!--   knitr::kable(format.args = list(decimal.mark = ",", big.mark = "."), digits = 1, caption = paste("ICSAP em Cerro Largo, RS, 2021. Taxas por 10.000 hab.")) -->
+<!-- ``` -->
+<!-- ## Gráficos -->
+<!-- ```{r out.width="50%", fig.align='center', message=FALSE} -->
+<!-- #| fig.alt: > -->
+<!-- #|   Gráfico de barras com a distribuição proporcional  -->
+<!-- #|   dos grupos de causa CSAP entre as ICSAP -->
+<!-- gr <- desenhaCSAP(csap, titulo = "auto", onde = "RS", quando = 2018, limsup = .18, x.size = 4) -->
+<!-- gr -->
+<!-- ``` -->
+<!-- ### Estratificado por categorias de outra variável presente no banco de dados: -->
+<!-- Observe que ao estratificar o gráfico mantém a ordenação por frequência da variável em seu todo, sem a estratificação, quando o argumento `ordenar = TRUE`(padrão). -->
+<!-- ```{r out.width="75%", fig.align='center', fig.show='hold', fig.height=4} -->
+<!-- #| fig.alt: > -->
+<!-- #|   O gráfico anterior por estratos de sexo -->
+<!-- rot <- ggplot2::as_labeller(c("masc" = "Masculino", "fem" = "Feminino", "(all)" = "Total")) -->
+<!-- gr + ggplot2::facet_grid(~ sexo, margins = TRUE, labeller = rot) -->
+<!-- gr + ggplot2::facet_wrap(~ munres == "431490",  -->
+<!--                          labeller = ggplot2::as_labeller(c("FALSE" = "Interior",  -->
+<!--                                                            "TRUE" = "Capital"))) -->
+<!-- ``` -->
+<!-- ```{r out.width="80%", fig.cap="Mortalidade por CSAP por grupos de causa, por sexo e faixa etária. RS, 2021."} -->
+<!-- #| fig.alt: > -->
+<!-- #|   Gráfico da distribuição proporcional por grupo de causa entre as ICSAP, -->
+<!-- #|   por estratos de sexo -->
+<!-- DORS2021 %>%  -->
+<!--   filter(!is.na(SEXO), !is.na(idade)) %>%  -->
+<!--   desenhaCSAP(x.size = 7, y.size = 8) +  -->
+<!--     ggplot2::facet_grid(SEXO ~ fxetar3) -->
+<!-- ``` -->
 <div class="section level2">
 <h2 class="unnumbered" id="referências">Referências<a class="anchor" aria-label="anchor" href="#refer%C3%AAncias"></a>
 </h2>
@@ -304,6 +498,10 @@ Alfradique, Maria Elmira, Palmira de Fátima Bonolo, Inês Dourado, et al.
 o desempenho do sistema de sa<span class="nocase">ú</span>de (Projeto
 ICSAP - Brasil)</span>.”</span> <em>Cadernos de Sa<span>ú</span>de
 P<span>ú</span>blica</em> 25 (6): 1337–49. <a href="https://doi.org/10.1590/S0102-311X2009000600016" class="external-link">https://doi.org/10.1590/S0102-311X2009000600016</a>.
+</div>
+<div id="ref-healthbR" class="csl-entry">
+Bissoli, Sidney. 2025. <em>healthbR: Access Brazilian Public Health
+Data</em>. <a href="https://github.com/SidneyBissoli/healthbR" class="external-link">https://github.com/SidneyBissoli/healthbR</a>.
 </div>
 <div id="ref-MS2008lista" class="csl-entry">
 Brasil. Ministério da Saúde. Secretaria de Atenção à Saúde. 2008.
@@ -325,6 +523,10 @@ Organización Panamericana de la Salud (OPS). 2014. <em><span class="nocase">Com
 intermedios. Plan estrat<span class="nocase">é</span>gico de la OPS
 2014-2019: "En pro de la salud: Desarrollo sostenible y
 equidad"</span></em>. Edited by OPS. Washington. <a href="https://www.paho.org/hq/dmdocuments/2016/ops-pe-14-19-compendium-indicadores-nov-2014.pdf" class="external-link">https://www.paho.org/hq/dmdocuments/2016/ops-pe-14-19-compendium-indicadores-nov-2014.pdf</a>.
+</div>
+<div id="ref-Saldanha" class="csl-entry">
+Saldanha, Raphael de Freitas. 2019. <em>Microdatasus: Download and
+Preprocess DataSUS Files</em>. <a href="https://github.com/rfsaldanha/microdatasus" class="external-link">https://github.com/rfsaldanha/microdatasus</a>.
 </div>
 </div>
 </div>
