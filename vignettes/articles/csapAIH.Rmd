@@ -23,6 +23,8 @@ O pacote csapAIH foi criado para facilitar a distribuição da função `csapAIH
 
 A construção da lista brasileira foi relatada em artigo científico.[@Alfradique2009] Entretanto, a lista publicada na Portaria Ministerial[@MS2008lista] difere do artigo pelo agrupamento dos dois primeiros grupos (*1. Doenças imunizáveis* e *2. Condições evitáveis*). Há então duas versões da lista, a da Portaria Ministerial, com 19 grupos, e a que desmembra o primeiro grupo em dois, totalizando então 20 grupos (Tabela). Não há diferença nos códigos considerados. A versão com o desdobramento do primeiro grupo da Portaria e, consequentemente, com 20 grupos ao final, é a recomendada pela Organização Panamericana da Saúde (OPAS).[@OPS2014]    
 
+A função `csapAIH()` permite a classificação segundo as duas versões, definidas pelo argumento "`lista`". Esse argumento aparece em `desenhaCSAP()` para desenhar o gráfico adequado. As funções `tabCSAP()` e `descreveCSAP()` identificam a lista utilizada e portanto não têm o argumento. Os grupos em cada lista podem ser citados pela função `nomesgruposCSAP()`, em português, espanhol ou inglês. 
+
 ```{r lista}
 ms <- nomesgruposCSAP()
 artigo <- nomesgruposCSAP(lista = "Alfradique")
@@ -31,57 +33,63 @@ cbind(ms = c(ms[1], "-", ms[-1]), artigo) |>
                     caption = "Grupos da Lista Brasileira de ICSAP segundo a fonte de publicação.")
 ```
 
-A função `csapAIH()` permite a classificação segundo as duas versões, definidas pelo argumento "`lista`". Esse argumento aparece em `desenhaCSAP()` para desenhar o gráfico adequado. As funções `tabCSAP()` e `descreveCSAP()` identificam a lista utilizada e portanto não têm o argumento. Os grupos em cada lista podem ser citados pela função `nomesgruposCSAP()`, em português, espanhol ou inglês. 
+Os "arquivos da AIH" são disponibilizados pelo DATASUS em arquivos nos formatos DBF, CSV e DBC (arquivo DBF comprimido pelo DATASUS). Arquivos nesses formatos são importados por `csapAIH()`, sem necessidade de importação prévia do arquivo para leitura dos dados. Para os arquivos em CSV deve-se indicar o separador, se vírgula (",") ou ponto-e-vírgula (";"). Os arquivos DBC são lidos pela função `read.dbc::read.dbc()`. 
 
-Os "arquivos da AIH" são disponibilizados pelo DATASUS em arquivos nos formatos DBF, CSV e DBC (arquivo DBC comprimido pelo DATASUS)
+Para os "arquivos da AIH", não é necessária outra informação que o *path* do arquivo, ou o nome do *data frame*, se for um objeto no espaço de trabalho. A função retorna uma mensagem com o número de registros importados, salva como atributo do banco de dados criado. 
 
-```{r eval=FALSE}
-data.frame(arquivo = c("RDRS1801.dbf", "RDRS1801.csv", "RDRS1801.dbc"),
-           tamanho = c(round(file.size("../../data-raw/RDRS1801.dbf") / 1024^2, 1),
-                       round(file.size("../../data-raw/RDRS1801.csv") / 1024^2, 1),
-                       round(file.size("../../data-raw/RDRS1801.dbc") / 1024^2, 1)))
+```{r results='hide'}
+csapAIH("../../data-raw/RDRS1801.dbf") 
 
-csapAIH("../../data-raw/RDRS1801.dbf")
 csapAIH("../../data-raw/RDRS1801.csv", sep = ",")
+
 csapAIH("../../data-raw/RDRS1801.dbc")
 ```
 
-
- 
-Atualmente, a forma mais fácil
-
-# ICSAP no RS, 2023 a 2024
-
-A função `fetchcsap` baixa os arquivos da AIH no DATASUS e entrega um banco de dados com a classificação da internação segundo a lista brasileira de ICSAP e outras ações (veja a ajuda da função digitando "`?fetchsap`" no console). 
-
-Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP do RS de 2023 a 2024 com o seguinte comando:  
-```{r}
-# icsaprs <- fetchcsap(2023, 2024, uf = "RS")
-icsaprs <- fetchcsap(2018, mesfim = 1, periodo = "c", uf = "RS")
-```
-
-```{r echo=FALSE, warning=FALSE}
-import  <- formatC(attributes(icsaprs)$resumo$freq[1], big.mark = ".", format = 'fg')
-exportn <- formatC(attributes(icsaprs)$resumo$freq[4], big.mark = ".", format = 'fg')
-exportp <- formatC(attributes(icsaprs)$resumo$perc[4], decimal.mark = ",")
-```
-
-
-Vemos nas mensagens de _download_ que foram baixados os arquivos até junho de 2025 ('RDRS2506.dbc) 
-e que foram "importados `r import` registros", excluídos alguns registros e finalmente "exportados `r exportn` registros", que representam `r exportp`% de todas as internações do período. Esse resumo de importação é guardado como atributo do banco de dados e pode ser recuperado com as funções `attr()` ou `attributes()`:
+Não obstante, os arquivos RD* ocupam muito espaço em disco, apesar da grande compressão do formato DBC, e pode ser preferível baixar o arquivo da internet, fazer o processamento desejado e então apagá-lo. 
 
 ```{r}
-attr(icsaprs, "resumo")
-attributes(icsaprs)$resumo
+data.frame(arquivo = c("RDRS1801.dbf", "RDRS1801.csv", "RDRS1801.dbc"),
+           tamanho = c(round(file.size("../../data-raw/RDRS1801.dbf") / 1024^2, 1),
+                       round(file.size("../../data-raw/RDRS1801.csv") / 1024^2, 1),
+                       round(file.size("../../data-raw/RDRS1801.dbc") / 1024^2, 1))) |> 
+  kableExtra::kable(caption = "Tamanho do arquivo segundo o formato disponibilizado.", 
+                    format.args = list(decimal.mark = ","), 
+                    col.names = c("Arquivo", "Tamanho (MB)")) |> 
+  kableExtra::kable_styling(full_width = FALSE)
 ```
 
-Em tabela para apresentação:
+Para esses casos foi criada a função `fetchcsap()`, um "atalho" para `fetchdatasus()`, do pacote *microdatasus*[@Saldanha], que baixa os arquivos da AIH no DATASUS e então aplica `csapAIH()` sobre o banco de dados. 
+
+Assim, com uma conexão de internet ativa, podemos conhecer as ICSAP do RS no "mês de competência" jan/2018 com o seguinte comando, que retorna os mesmos resultados vistos acima:  
 
 ```{r}
-attributes(icsaprs)$resumo |>
-  knitr::kable(format.args = c(big.mark = ".", decimal.mark = ","),
-               col.names = c("Ação", "N", "%", "Objeto") ) |>
-  suppressWarnings()
+options(width = 120)
+fetchcsap(2018, mesfim = 1, periodo = "comp", uf = "RS")
+```
+
+O argumento `periodo = "comp"` garante que o data frame resultante contenha todas as internações do(s) arquivo(s) RD considerados e o período se refira, portanto, ao "mês de competência" (i.e., mês em que foi registrado o faturamento) da internação. 
+
+Por padrão, esse argumento é `periodo = "interna"`, o que leva ao download dos arquivos RD de até seis meses após o definido em `mesfim` e então a seleção dos casos pela data de internação, para retornar um banco apenas com as internações ocorridas no período definido e registradas em até seis meses após a internação. 
+
+Veja o resultado com `periodo = "interna"` (que por ser o padrão é desnecessário no comando): 
+
+```{r}
+fetchcsap(2018, mesfim = 1, uf = "RS")
+```
+
+O pacote [healthbR](https://sidneybissoli.github.io/healthbR/)[@healthbR] é uma nova alternativa para download de dados do SIH/SUS (entre outros). Abaixo é exemplificado seu uso com `csapAIH()` para jan/2025. 
+
+```{r results='hide'}
+healthbR::sih_data(2025, 1, uf = "RS") |> 
+  csapAIH() |> 
+  pull(data.inter) |> 
+  summary()
+
+healthbR::sih_data(2025, 1:6, uf = "RS") |> 
+  filter(DT_INTER >= "2025-01-01", DT_INTER <= "2025-01-31") |>
+  csapAIH() |> 
+  pull(data.inter) |> 
+  summary()
 ```
 
 <!-- ## Tabela "bruta" -->
